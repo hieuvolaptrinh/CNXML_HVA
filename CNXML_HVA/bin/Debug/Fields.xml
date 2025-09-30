@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fields>
+  <field id="F01">
+    <name>Sân A1</name>
+    <field_type_id>FT01</field_type_id>
+    <branch_id>B01</branch_id>
+    <address>
+      <city>Hanoi</city>
+      <district>Cau Giay</district>
+      <street>Tran Thai Tong</street>
+      <house_number>123</house_number>
+    </address>
+    <price_per_hour>100000</price_per_hour>
+    <capacity>10</capacity>
+    <description>Sân 5 người có mái che</description>
+    <facilities>Mái che, Đèn chiếu sáng, Phòng thay đồ</facilities>
+    <status>Available</status>
+    <created_date>2024-01-01</created_date>
+    <last_maintenance>2024-08-15</last_maintenance>
+  </field>
+
+  <field id="F02">
+    <name>Sân B2</name>
+    <field_type_id>FT02</field_type_id>
+    <branch_id>B02</branch_id>
+    <address>
+      <city>Da Nang</city>
+      <district>Hai Chau</district>
+      <street>Nguyen Van Linh</street>
+      <house_number>456</house_number>
+    </address>
+    <price_per_hour>150000</price_per_hour>
+    <capacity>14</capacity>
+    <description>Sân 7 người cỏ nhân tạo</description>
+    <facilities>Cỏ nhân tạo, Đèn chiếu sáng, Khu vệ sinh</facilities>
+    <status>Booked</status>
+    <created_date>2024-01-15</created_date>
+    <last_maintenance>2024-09-01</last_maintenance>
+  </field>
+
+  <field id="F03">
+    <name>Sân C3</name>
+    <field_type_id>FT03</field_type_id>
+    <branch_id>B03</branch_id>
+    <address>
+      <city>Ho Chi Minh City</city>
+      <district>Binh Thanh</district>
+      <street>Xo Viet Nghe Tinh</street>
+      <house_number>789</house_number>
+    </address>
+    <price_per_hour>200000</price_per_hour>
+    <capacity>22</capacity>
+    <description>Sân 11 người tiêu chuẩn FIFA</description>
+    <facilities>Cỏ tự nhiên, Hệ thống tưới tự động, Khán đài</facilities>
+    <status>Maintenance</status>
+    <created_date>2024-02-01</created_date>
+    <last_maintenance>2024-09-20</last_maintenance>
+  </field>
+
+  <field id="F04">
+    <name>Sân D4</name>
+    <field_type_id>FT01</field_type_id>
+    <branch_id>B01</branch_id>
+    <address>
+      <city>Hanoi</city>
+      <district>Dong Da</district>
+      <street>Lang Ha</street>
+      <house_number>321</house_number>
+    </address>
+    <price_per_hour>120000</price_per_hour>
+    <capacity>10</capacity>
+    <description>Sân 5 người trong nhà</description>
+    <facilities>Sân trong nhà, Điều hòa, WiFi</facilities>
+    <status>Available</status>
+    <created_date>2024-03-01</created_date>
+    <last_maintenance>2024-09-10</last_maintenance>
+  </field>
+</fields>

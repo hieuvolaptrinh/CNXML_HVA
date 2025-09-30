@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<branches>
+  <branch id="B01">
+    <name>Chi nhánh Hà Nội</name>
+    <code>CN-HN</code>
+    <address>
+      <city>Hà Nội</city>
+      <district>Cầu Giấy</district>
+      <street>Duy Tân</street>
+      <house_number>123</house_number>
+      <postal_code>100000</postal_code>
+    </address>
+    <contact>
+      <phone>024-1234567</phone>
+      <email>hanoi@footballfield.com</email>
+      <fax>024-1234568</fax>
+    </contact>
+    <manager_id>U001</manager_id>
+    <manager_name>Nguyễn Văn Admin</manager_name>
+    <opening_hours>
+      <weekday>06:00-22:00</weekday>
+      <weekend>05:00-23:00</weekend>
+    </opening_hours>
+    <total_fields>2</total_fields>
+    <established_date>2023-01-15</established_date>
+    <monthly_revenue>50000000</monthly_revenue>
+    <staff_count>8</staff_count>
+    <description>Chi nhánh chính tại Hà Nội</description>
+    <status>Active</status>
+  </branch>
+
+  <branch id="B02">
+    <name>Chi nhánh Đà Nẵng</name>
+    <code>CN-DN</code>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Thanh Khê</district>
+      <street>Lê Duẩn</street>
+      <house_number>456</house_number>
+      <postal_code>550000</postal_code>
+    </address>
+    <contact>
+      <phone>0236-1234567</phone>
+      <email>danang@footballfield.com</email>
+      <fax>0236-1234568</fax>
+    </contact>
+    <manager_id>U002</manager_id>
+    <manager_name>Trần Thị Manager</manager_name>
+    <opening_hours>
+      <weekday>06:00-22:00</weekday>
+      <weekend>05:00-23:00</weekend>
+    </opening_hours>
+    <total_fields>1</total_fields>
+    <established_date>2023-05-20</established_date>
+    <monthly_revenue>35000000</monthly_revenue>
+    <staff_count>5</staff_count>
+    <description>Chi nhánh miền Trung</description>
+    <status>Active</status>
+  </branch>
+
+  <branch id="B03">
+    <name>Chi nhánh TP. Hồ Chí Minh</name>
+    <code>CN-HCM</code>
+    <address>
+      <city>TP. Hồ Chí Minh</city>
+      <district>Quận 1</district>
+      <street>Nguyễn Huệ</street>
+      <house_number>789</house_number>
+      <postal_code>700000</postal_code>
+    </address>
+    <contact>
+      <phone>028-1234567</phone>
+      <email>hcmc@footballfield.com</email>
+      <fax>028-1234568</fax>
+    </contact>
+    <manager_id>U003</manager_id>
+    <manager_name>Lê Văn Staff</manager_name>
+    <opening_hours>
+      <weekday>06:00-22:00</weekday>
+      <weekend>05:00-23:00</weekend>
+    </opening_hours>
+    <total_fields>1</total_fields>
+    <established_date>2023-08-10</established_date>
+    <monthly_revenue>45000000</monthly_revenue>
+    <staff_count>6</staff_count>
+    <description>Chi nhánh miền Nam - tạm đóng cửa bảo trì</description>
+    <status>Inactive</status>
+  </branch>
+</branches>
