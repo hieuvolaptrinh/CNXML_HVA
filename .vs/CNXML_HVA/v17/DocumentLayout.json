@@ -3,6 +3,42 @@
   "WorkspaceRootPath": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|f:\\new\\onedrive - university of technology and education\\dai_hoc\\2025-2026\\xml\\cnxml_hva\\cnxml_hva\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
@@ -23,6 +59,115 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DatLich.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DatLich.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DatLich.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DatLich.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DatLich.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:33:25.955Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashBoard.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:32:51.29Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ChiNhanh.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:32:36.963Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DungCu.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:32:13.608Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KhachHang.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:31:59.712Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LoaiSan.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\LoaiSan.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\LoaiSan.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:31:43.673Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "San.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\San.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\San.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:31:12.014Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\Program.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\Program.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\Program.cs",
+              "RelativeToolTip": "CNXML_HVA\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:16:51.829Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Login.cs [Design]",
+              "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\Login.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\Login.cs",
+              "ToolTip": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\Login.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\Login.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T15:16:45.158Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "F:\\new\\OneDrive - University of Technology and Education\\Dai_hoc\\2025-2026\\XML\\CNXML_HVA\\CNXML_HVA\\Form1.cs",
               "RelativeDocumentMoniker": "CNXML_HVA\\Form1.cs",
