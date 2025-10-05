@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <branches>
   <branch id="B01">
     <name>Chi nhánh Hà Nội</name>
@@ -28,7 +28,6 @@
     <description>Chi nhánh chính tại Hà Nội</description>
     <status>Active</status>
   </branch>
-
   <branch id="B02">
     <name>Chi nhánh Đà Nẵng</name>
     <code>CN-DN</code>
@@ -57,7 +56,6 @@
     <description>Chi nhánh miền Trung</description>
     <status>Active</status>
   </branch>
-
   <branch id="B03">
     <name>Chi nhánh TP. Hồ Chí Minh</name>
     <code>CN-HCM</code>
@@ -85,5 +83,34 @@
     <staff_count>6</staff_count>
     <description>Chi nhánh miền Nam - tạm đóng cửa bảo trì</description>
     <status>Inactive</status>
+  </branch>
+  <branch id="B04">
+    <name>Chi nhánh-123</name>
+    <code>CN-123</code>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Hải Châu</district>
+      <street>Cao Thắng</street>
+      <house_number>48</house_number>
+      <postal_code>456</postal_code>
+    </address>
+    <contact>
+      <phone>0905507622</phone>
+      <email>vietnguyen@gmail.com</email>
+      <fax>0234412</fax>
+    </contact>
+    <manager_id>UD002</manager_id>
+    <manager_name>Nguyễn Đăng Việt</manager_name>
+    <opening_hours>
+      <weekday>6:00 - 22:00</weekday>
+      <weekend>8:00 - 20:00</weekend>
+    </opening_hours>
+    <total_fields>3</total_fields>
+    <established_date>2025-10-05</established_date>
+    <monthly_revenue>0</monthly_revenue>
+    <staff_count>4</staff_count>
+    <description>
+    </description>
+    <status>Active</status>
   </branch>
 </branches>

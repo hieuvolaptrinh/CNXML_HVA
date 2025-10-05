@@ -16,5 +16,10 @@ namespace CNXML_HVA
         {
             InitializeComponent();
         }
+
+        private void picLogo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
