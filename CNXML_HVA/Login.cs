@@ -21,5 +21,10 @@ namespace CNXML_HVA
         {
 
         }
+
+        private void lblWelcome_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

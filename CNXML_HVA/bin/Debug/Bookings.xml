@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Bookings>
+  <Booking id="B001">
+    <customer>Nguyen Van A</customer>
+    <field>Sân B2</field>
+    <type>7 người</type>
+    <date>2025-10-06</date>
+    <time>7:30</time>
+    <duration>1</duration>
+    <note>
+    </note>
+  </Booking>
+</Bookings>

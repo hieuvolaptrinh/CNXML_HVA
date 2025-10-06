@@ -1,26 +1,90 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\",
+  "WorkspaceRootPath": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\phuc an\\onedrive - university of technology and education\\desktop\\nhap\\cnxml_hva\\cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\clone_xml\\cnxml_hva\\cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\clone_xml\\cnxml_hva\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\datlich.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\datlich.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\datlich.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\khachhang.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\dungcu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\datlich.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\datlich.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\khachhang.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\cnxml_hva\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\chinhanh.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\cnxml_hva\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\login.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,78 +94,294 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "Name": "ST:0:0:{25f7e850-ffa1-11d0-b63f-00a0c922e851}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DungCu.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
-              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\DungCu.cs [Design]",
-              "RelativeToolTip": "CNXML_HVA\\DungCu.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:29:12.655Z",
-              "EditorCaption": " [Design]"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Program.cs",
               "RelativeDocumentMoniker": "CNXML_HVA\\Program.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Program.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Program.cs",
               "RelativeToolTip": "CNXML_HVA\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwA8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-05T09:43:35.679Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Login.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.Designer.cs",
-              "RelativeDocumentMoniker": "CNXML_HVA\\Login.Designer.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.Designer.cs",
-              "RelativeToolTip": "CNXML_HVA\\Login.Designer.cs",
-              "ViewState": "AgIAABMBAAAAAAAAAAAwwBUBAACJAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "KhachHang.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.cs",
+              "ViewState": "AgIAAFcBAAAAAAAAAAAgwGcBAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T09:39:55.268Z",
+              "WhenOpened": "2025-10-06T14:16:21.682Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DungCu.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.Designer.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.Designer.cs",
+              "ViewState": "AgIAALUCAAAAAAAAAAAAAJoCAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:04:28.292Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DatLich.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DatLich.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.cs",
+              "RelativeToolTip": "CNXML_HVA\\DatLich.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAAAKgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:15:41.576Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "KhachHang.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:03:45.557Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DatLich.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DatLich.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DatLich.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:03:49.747Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Login.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.cs",
-              "RelativeDocumentMoniker": "CNXML_HVA\\Login.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.cs",
-              "RelativeToolTip": "CNXML_HVA\\Login.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAQwBEAAAAJAAAAAAAAAA==",
+              "Title": "DatLich.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DatLich.Designer.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\DatLich.Designer.cs",
+              "ViewState": "AgIAADMBAAAAAAAAAAAAAIUAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T09:39:52.822Z",
+              "WhenOpened": "2025-10-06T14:13:33.149Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KhachHang.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.Designer.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.Designer.cs",
+              "ViewState": "AgIAADEBAAAAAAAAAAAgwLgAAAB3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:04:16.596Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Login.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.cs",
+              "DocumentIndex": 7,
+              "Title": "DashBoard.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:03:50.594Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DatLich.resx",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.resx",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DatLich.resx",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DatLich.resx",
+              "RelativeToolTip": "CNXML_HVA\\DatLich.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-10-06T14:16:03.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Form1.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\Form1.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Form1.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:11:58.243Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "KhachHang.resx",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.resx",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.resx",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\KhachHang.resx",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-10-06T14:21:34.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DungCu.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.cs",
+              "ViewState": "AgIAALgBAAAAAAAAAAAQwOQBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:16:28.174Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ChiNhanh.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:03:51.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DungCu.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\DungCu.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T10:29:12.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ChiNhanh.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.Designer.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:15:23.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ChiNhanh.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswE4AAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:14:20.26Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.cs",
               "RelativeDocumentMoniker": "CNXML_HVA\\Login.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\clone_xml\\CNXML_HVA\\CNXML_HVA\\Login.cs [Design]",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.cs",
+              "RelativeToolTip": "CNXML_HVA\\Login.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAkwBoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T09:39:52.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Login.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\Login.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.cs [Design]",
               "RelativeToolTip": "CNXML_HVA\\Login.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T09:39:46.532Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-10-05T09:39:46.532Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "LoaiSan.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\LoaiSan.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\LoaiSan.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T14:03:56.574Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Login.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\Login.Designer.cs",
+              "ToolTip": "C:\\Users\\PHUC AN\\OneDrive - University of Technology and Education\\Desktop\\NHAP\\CNXML_HVA\\CNXML_HVA\\Login.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\Login.Designer.cs",
+              "ViewState": "AgIAABMBAAAAAAAAAAAwwBUBAACJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-05T09:39:55.268Z"
             }
           ]
         }

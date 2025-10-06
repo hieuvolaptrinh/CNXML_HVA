@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <customers>
   <customer id="KH001">
     <name>Nguyen Van A</name>
@@ -8,7 +8,6 @@
     <registration_date>2024-01-15</registration_date>
     <status>Active</status>
   </customer>
-  
   <customer id="KH002">
     <name>Tran Thi B</name>
     <phone>0912345678</phone>
@@ -17,7 +16,6 @@
     <registration_date>2024-02-20</registration_date>
     <status>Active</status>
   </customer>
-  
   <customer id="KH003">
     <name>Le Van C</name>
     <phone>0923456789</phone>
@@ -26,7 +24,6 @@
     <registration_date>2024-03-10</registration_date>
     <status>Active</status>
   </customer>
-  
   <customer id="KH004">
     <name>Pham Thi D</name>
     <phone>0934567890</phone>
@@ -35,13 +32,27 @@
     <registration_date>2024-04-05</registration_date>
     <status>Inactive</status>
   </customer>
-  
   <customer id="KH005">
-    <name>Hoang Van E</name>
+    <name>Hoang Van EE</name>
     <phone>0945678901</phone>
     <email>hoangvane@email.com</email>
-    <address>654 Nguyen Hue, Can Tho</address>
+    <address>654 Nguyen Hue, Can Tho<city></city><district></district><street></street></address>
     <registration_date>2024-05-12</registration_date>
     <status>Active</status>
+    <membership>Silver</membership>
+    <notes>
+    </notes>
+  </customer>
+  <customer id="C001">
+    <name>Nguyễn Phúc AN</name>
+    <phone>0775222</phone>
+    <email>ấcd</email>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Liên Chiểu</district>
+      <street>Trần Đình Tri</street>
+    </address>
+    <membership>Silver</membership>
+    <notes>fdsa</notes>
   </customer>
 </customers>
