@@ -59,7 +59,7 @@ namespace CNXML_HVA
         {
             try
             {
-                // TODO: Load fieldtypes.xml vào BindingSource
+                // Load fieldtypes.xml với cấu trúc XML đầy đủ
                 if (!File.Exists(xmlFilePath))
                 {
                     MessageBox.Show("File FieldTypes.xml không tồn tại!", "Lỗi",
@@ -70,16 +70,37 @@ namespace CNXML_HVA
                 XDocument doc = XDocument.Load(xmlFilePath);
                 allFieldTypes = doc.Descendants("field_type").Select(ft => new FieldType
                 {
-                    Id = ft.Element("id")?.Value,
-                    Name = ft.Element("name")?.Value,
-                    Code = ft.Element("code")?.Value,
-                    SizeDisplay = ft.Element("size_display")?.Value,
+                    Id = ft.Attribute("id")?.Value ?? "",
+                    Name = ft.Element("name")?.Value ?? "",
+                    Code = ft.Element("code")?.Value ?? "",
+                    
+                    // Dimensions
+                    Length = decimal.TryParse(ft.Element("dimensions")?.Element("length")?.Value, out var len) ? len : 0,
+                    Width = decimal.TryParse(ft.Element("dimensions")?.Element("width")?.Value, out var wid) ? wid : 0,
+                    DimensionUnit = ft.Element("dimensions")?.Element("unit")?.Value ?? "mét",
+                    SizeDisplay = ft.Element("size_display")?.Value ?? "",
+                    
+                    // Players
                     PlayersPerTeam = int.TryParse(ft.Element("players_per_team")?.Value, out int ppt) ? ppt : 0,
                     TotalCapacity = int.TryParse(ft.Element("total_capacity")?.Value, out int tc) ? tc : 0,
-                    SurfaceType = ft.Element("surface_type")?.Value,
+                    
+                    // Goal Size
+                    GoalHeight = decimal.TryParse(ft.Element("goal_size")?.Element("height")?.Value, out var gh) ? gh : 0,
+                    GoalWidth = decimal.TryParse(ft.Element("goal_size")?.Element("width")?.Value, out var gw) ? gw : 0,
+                    GoalUnit = ft.Element("goal_size")?.Element("unit")?.Value ?? "mét",
+                    
+                    // Field Info
+                    SurfaceType = ft.Element("surface_type")?.Value ?? "",
                     BasePrice = decimal.TryParse(ft.Element("base_price")?.Value, out decimal bp) ? bp : 0,
-                    Description = ft.Element("description")?.Value,
-                    Status = ft.Element("status")?.Value
+                    PeakHourMultiplier = decimal.TryParse(ft.Element("peak_hour_multiplier")?.Value, out var pm) ? pm : 1.5m,
+                    WeekendMultiplier = decimal.TryParse(ft.Element("weekend_multiplier")?.Value, out var wm) ? wm : 1.3m,
+                    
+                    // Details
+                    Description = ft.Element("description")?.Value ?? "",
+                    Features = ft.Element("features")?.Value ?? "",
+                    MinimumBookingHours = int.TryParse(ft.Element("minimum_booking_hours")?.Value, out var minh) ? minh : 1,
+                    MaximumBookingHours = int.TryParse(ft.Element("maximum_booking_hours")?.Value, out var maxh) ? maxh : 4,
+                    Status = ft.Element("status")?.Value ?? "Active"
                 }).ToList();
 
                 bindingFieldTypes.DataSource = allFieldTypes;
@@ -104,30 +125,30 @@ namespace CNXML_HVA
                     new XDeclaration("1.0", "UTF-8", null),
                     new XElement("field_types",
                         allFieldTypes.Select(ft => new XElement("field_type",
-                            new XElement("id", ft.Id),
-                            new XElement("name", ft.Name),
-                            new XElement("code", ft.Code),
+                            new XAttribute("id", ft.Id ?? ""),
+                            new XElement("name", ft.Name ?? ""),
+                            new XElement("code", ft.Code ?? ""),
                             new XElement("dimensions",
-                                new XElement("length", "0"),
-                                new XElement("width", "0"),
-                                new XElement("unit", "mét")
+                                new XElement("length", ft.Length),
+                                new XElement("width", ft.Width),
+                                new XElement("unit", ft.DimensionUnit ?? "mét")
                             ),
-                            new XElement("size_display", ft.SizeDisplay ?? "N/A"),
+                            new XElement("size_display", ft.SizeDisplay ?? ft.GetFullDimensions()),
                             new XElement("players_per_team", ft.PlayersPerTeam),
                             new XElement("total_capacity", ft.TotalCapacity),
                             new XElement("goal_size",
-                                new XElement("height", "0"),
-                                new XElement("width", "0"),
-                                new XElement("unit", "mét")
+                                new XElement("height", ft.GoalHeight),
+                                new XElement("width", ft.GoalWidth),
+                                new XElement("unit", ft.GoalUnit ?? "mét")
                             ),
                             new XElement("surface_type", ft.SurfaceType ?? "Cỏ nhân tạo"),
                             new XElement("base_price", ft.BasePrice),
-                            new XElement("peak_hour_multiplier", "1.5"),
-                            new XElement("weekend_multiplier", "1.3"),
+                            new XElement("peak_hour_multiplier", ft.PeakHourMultiplier),
+                            new XElement("weekend_multiplier", ft.WeekendMultiplier),
                             new XElement("description", ft.Description ?? ""),
-                            new XElement("features", ""),
-                            new XElement("minimum_booking_hours", "1"),
-                            new XElement("maximum_booking_hours", "8"),
+                            new XElement("features", ft.Features ?? ""),
+                            new XElement("minimum_booking_hours", ft.MinimumBookingHours),
+                            new XElement("maximum_booking_hours", ft.MaximumBookingHours),
                             new XElement("status", ft.Status ?? "Active")
                         ))
                     )
