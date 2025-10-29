@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- 
   Sample XML file for importing equipments
   File format must match this structure
@@ -86,6 +86,24 @@
     <branch_id>B02</branch_id>
     <supplier>Mitre Sports</supplier>
     <purchase_date>2023-06-15</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ006">
+    <name>Bóng PickleBall</name>
+    <category>Bóng</category>
+    <brand>Nike</brand>
+    <model>Bóng PickleBall 2024</model>
+    <quantity_total>300</quantity_total>
+    <quantity_available>300</quantity_available>
+    <rental_price>20000</rental_price>
+    <purchase_price>150000</purchase_price>
+    <condition>Tốt</condition>
+    <description>bóng nhẹ, đàn hồi, bền bỉ theo thời gian</description>
+    <branch_id>B01</branch_id>
+    <supplier>
+    </supplier>
+    <purchase_date>2025-10-30</purchase_date>
     <warranty_period>12</warranty_period>
     <status>Active</status>
   </equipment>

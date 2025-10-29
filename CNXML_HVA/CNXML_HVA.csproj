@@ -110,6 +110,9 @@
     <EmbeddedResource Include="ChiNhanh.resx">
       <DependentUpon>ChiNhanh.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DungCu.resx">
+      <DependentUpon>DungCu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FieldTypeEditForm.resx">
       <DependentUpon>FieldTypeEditForm.cs</DependentUpon>
     </EmbeddedResource>

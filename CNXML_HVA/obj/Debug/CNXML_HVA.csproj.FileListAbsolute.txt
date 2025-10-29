@@ -27,3 +27,4 @@ F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\C
 C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.San.resources
 C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.FieldTypeEditForm.resources
 C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.ChiNhanh.resources
+C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DungCu.resources

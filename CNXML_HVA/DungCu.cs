@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace CNXML_HVA
 {
@@ -38,18 +38,18 @@ namespace CNXML_HVA
             equipmentTable.Columns.Add("Thương hiệu", typeof(string));
             equipmentTable.Columns.Add("Model", typeof(string));
             equipmentTable.Columns.Add("Tổng SL", typeof(int));
-            equipmentTable.Columns.Add("SL khả dụng", typeof(int));
+            equipmentTable.Columns.Add("SL có sẵn", typeof(int));
             equipmentTable.Columns.Add("Giá thuê", typeof(decimal));
             equipmentTable.Columns.Add("Giá mua", typeof(decimal));
             equipmentTable.Columns.Add("Tình trạng", typeof(string));
-            equipmentTable.Columns.Add("Mô tả", typeof(string));
             equipmentTable.Columns.Add("Chi nhánh", typeof(string));
             equipmentTable.Columns.Add("Nhà cung cấp", typeof(string));
             equipmentTable.Columns.Add("Ngày mua", typeof(DateTime));
             equipmentTable.Columns.Add("BH (tháng)", typeof(int));
             equipmentTable.Columns.Add("Trạng thái", typeof(string));
+            equipmentTable.Columns.Add("Mô tả", typeof(string));
 
-            dataGridViewEquipments.DataSource = equipmentTable;
+            dataGridViewEquipment.DataSource = equipmentTable;
         }
 
         private void DungCu_Load(object sender, EventArgs e)
@@ -77,24 +77,27 @@ namespace CNXML_HVA
                         row["Danh mục"] = GetNodeValue(equipmentNode, "category");
                         row["Thương hiệu"] = GetNodeValue(equipmentNode, "brand");
                         row["Model"] = GetNodeValue(equipmentNode, "model");
-                        row["Tổng SL"] = Convert.ToInt32(GetNodeValue(equipmentNode, "quantity_total"));
-                        row["SL khả dụng"] = Convert.ToInt32(GetNodeValue(equipmentNode, "quantity_available"));
-                        row["Giá thuê"] = Convert.ToDecimal(GetNodeValue(equipmentNode, "rental_price"));
-                        row["Giá mua"] = Convert.ToDecimal(GetNodeValue(equipmentNode, "purchase_price"));
+                        row["Tổng SL"] = ParseInt(GetNodeValue(equipmentNode, "quantity_total"));
+                        row["SL có sẵn"] = ParseInt(GetNodeValue(equipmentNode, "quantity_available"));
+                        row["Giá thuê"] = ParseDecimal(GetNodeValue(equipmentNode, "rental_price"));
+                        row["Giá mua"] = ParseDecimal(GetNodeValue(equipmentNode, "purchase_price"));
                         row["Tình trạng"] = GetNodeValue(equipmentNode, "condition");
-                        row["Mô tả"] = GetNodeValue(equipmentNode, "description");
                         row["Chi nhánh"] = GetNodeValue(equipmentNode, "branch_id");
                         row["Nhà cung cấp"] = GetNodeValue(equipmentNode, "supplier");
-                        row["Ngày mua"] = DateTime.Parse(GetNodeValue(equipmentNode, "purchase_date"));
-                        row["BH (tháng)"] = Convert.ToInt32(GetNodeValue(equipmentNode, "warranty_period"));
+                        
+                        string purchaseDate = GetNodeValue(equipmentNode, "purchase_date");
+                        row["Ngày mua"] = string.IsNullOrEmpty(purchaseDate) ? DateTime.Now : DateTime.Parse(purchaseDate);
+                        
+                        row["BH (tháng)"] = ParseInt(GetNodeValue(equipmentNode, "warranty_period"));
                         row["Trạng thái"] = GetNodeValue(equipmentNode, "status");
+                        row["Mô tả"] = GetNodeValue(equipmentNode, "description");
 
                         equipmentTable.Rows.Add(row);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("File XML không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LoadEquipmentsFromXML();
                 }
             }
             catch (Exception ex)
@@ -109,26 +112,58 @@ namespace CNXML_HVA
             return node?.InnerText ?? "";
         }
 
-        private void SetupDataGridView()
+        private decimal ParseDecimal(string value)
         {
-            dataGridViewEquipments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewEquipments.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewEquipments.MultiSelect = false;
-            dataGridViewEquipments.ReadOnly = true;
-            
-            // Thiết lập màu sắc
-            dataGridViewEquipments.BackgroundColor = Color.White;
-            dataGridViewEquipments.GridColor = Color.FromArgb(76, 175, 80);
-            dataGridViewEquipments.DefaultCellStyle.SelectionBackColor = Color.FromArgb(200, 230, 201);
-            dataGridViewEquipments.DefaultCellStyle.SelectionForeColor = Color.FromArgb(27, 94, 32);
-            dataGridViewEquipments.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(76, 175, 80);
-            dataGridViewEquipments.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dataGridViewEquipments.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold);
+            if (string.IsNullOrEmpty(value)) return 0;
+            decimal result;
+            return decimal.TryParse(value, out result) ? result : 0;
         }
 
-        private void dataGridViewEquipments_SelectionChanged(object sender, EventArgs e)
+        private int ParseInt(string value)
         {
-            if (dataGridViewEquipments.CurrentRow != null && !isAdding && !isEditing)
+            if (string.IsNullOrEmpty(value)) return 0;
+            int result;
+            return int.TryParse(value, out result) ? result : 0;
+        }
+
+        private void SetupDataGridView()
+        {
+            dataGridViewEquipment.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewEquipment.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewEquipment.MultiSelect = false;
+            dataGridViewEquipment.ReadOnly = true;
+            
+            // Thiết lập màu sắc
+            dataGridViewEquipment.BackgroundColor = Color.White;
+            dataGridViewEquipment.GridColor = Color.FromArgb(76, 175, 80);
+            dataGridViewEquipment.DefaultCellStyle.SelectionBackColor = Color.FromArgb(200, 230, 201);
+            dataGridViewEquipment.DefaultCellStyle.SelectionForeColor = Color.FromArgb(27, 94, 32);
+            dataGridViewEquipment.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(76, 175, 80);
+            dataGridViewEquipment.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridViewEquipment.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+
+            // Ẩn một số cột chi tiết trong DataGridView
+            if (dataGridViewEquipment.Columns.Count > 0)
+            {
+                HideColumn("Nhà cung cấp");
+                HideColumn("Ngày mua");
+                HideColumn("BH (tháng)");
+                HideColumn("Trạng thái");
+                HideColumn("Mô tả");
+            }
+        }
+
+        private void HideColumn(string columnName)
+        {
+            if (dataGridViewEquipment.Columns.Contains(columnName))
+            {
+                dataGridViewEquipment.Columns[columnName].Visible = false;
+            }
+        }
+
+        private void dataGridViewEquipment_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewEquipment.CurrentRow != null && !isAdding && !isEditing)
             {
                 LoadSelectedEquipmentToForm();
             }
@@ -136,66 +171,118 @@ namespace CNXML_HVA
 
         private void LoadSelectedEquipmentToForm()
         {
-            if (dataGridViewEquipments.CurrentRow != null)
+            if (dataGridViewEquipment.CurrentRow != null)
             {
-                DataGridViewRow row = dataGridViewEquipments.CurrentRow;
+                DataGridViewRow row = dataGridViewEquipment.CurrentRow;
+
+                // Tab 1 - Cơ bản: id, name, brand, category (Tình trạng dropdown), model (Model text)
                 textBoxId.Text = row.Cells["Mã DC"].Value?.ToString();
                 textBoxName.Text = row.Cells["Tên dụng cụ"].Value?.ToString();
-                comboBoxCategory.Text = row.Cells["Danh mục"].Value?.ToString();
-                textBoxBrand.Text = row.Cells["Thương hiệu"].Value?.ToString();
-                textBoxModel.Text = row.Cells["Model"].Value?.ToString();
-                numericUpDownQuantityTotal.Value = Convert.ToDecimal(row.Cells["Tổng SL"].Value ?? 0);
-                numericUpDownQuantityAvailable.Value = Convert.ToDecimal(row.Cells["SL khả dụng"].Value ?? 0);
-                numericUpDownRentalPrice.Value = Convert.ToDecimal(row.Cells["Giá thuê"].Value ?? 0);
-                numericUpDownPurchasePrice.Value = Convert.ToDecimal(row.Cells["Giá mua"].Value ?? 0);
-                comboBoxCondition.Text = row.Cells["Tình trạng"].Value?.ToString();
-                textBoxDescription.Text = row.Cells["Mô tả"].Value?.ToString();
-                textBoxBranchId.Text = row.Cells["Chi nhánh"].Value?.ToString();
-                textBoxSupplier.Text = row.Cells["Nhà cung cấp"].Value?.ToString();
-                if (row.Cells["Ngày mua"].Value != null)
+                textBoxBranch.Text = row.Cells["Thương hiệu"].Value?.ToString(); // brand
+                comboBoxCondition.Text = row.Cells["Danh mục"].Value?.ToString(); // category (Tình trạng dropdown: Bóng, Trang phục...)
+                comboBox.Text = row.Cells["Model"].Value?.ToString(); // model (Model dropdown/text: Premier League...)
+
+                // Tab 2 - Chi tiết: quantity_total, quantity_available, purchase_date, warranty_period  
+                textBoxManufacturer.Text = row.Cells["Tổng SL"].Value?.ToString(); // Tổng SL (reuse as text display)
+                textBoxModel.Text = row.Cells["SL có sẵn"].Value?.ToString(); // SL có sẵn (reuse as text display)
+                if (row.Cells["Ngày mua"].Value != null && row.Cells["Ngày mua"].Value != DBNull.Value)
                     dateTimePickerPurchaseDate.Value = Convert.ToDateTime(row.Cells["Ngày mua"].Value);
-                numericUpDownWarrantyPeriod.Value = Convert.ToDecimal(row.Cells["BH (tháng)"].Value ?? 0);
-                comboBoxStatus.Text = row.Cells["Trạng thái"].Value?.ToString();
+                
+                // textBoxSerialNumber hiển thị warranty_period (BH tháng)
+                int warrantyMonths = Convert.ToInt32(row.Cells["BH (tháng)"].Value ?? 0);
+                textBoxSerialNumber.Text = warrantyMonths.ToString();
+
+                // Tab 3 - Giá cả: purchase_price, rental_price
+                numericUpDownPurchasePrice.Value = Convert.ToDecimal(row.Cells["Giá mua"].Value ?? 0);
+                numericUpDownRentalPriceHour.Value = Convert.ToDecimal(row.Cells["Giá thuê"].Value ?? 0);
+
+                // Tab 4 - Tồn kho: quantity_total, quantity_available, (quantity_rented), branch_id
+                numericUpDownQuantityTotal.Value = Convert.ToDecimal(row.Cells["Tổng SL"].Value ?? 0);
+                numericUpDownQuantityAvailable.Value = Convert.ToDecimal(row.Cells["SL có sẵn"].Value ?? 0);
+                // SL đang thuê = Tổng SL - SL có sẵn
+                int totalQty = Convert.ToInt32(row.Cells["Tổng SL"].Value ?? 0);
+                int availableQty = Convert.ToInt32(row.Cells["SL có sẵn"].Value ?? 0);
+                textBoxBranchId.Text = row.Cells["Chi nhánh"].Value?.ToString();
+
+                // Tab 5 - Mô tả (description)
+                textBoxDescription.Text = row.Cells["Mô tả"].Value?.ToString();
             }
         }
 
         private void ClearForm()
         {
+            // Tab 1 - Cơ bản
             textBoxId.Clear();
             textBoxName.Clear();
-            comboBoxCategory.SelectedIndex = -1;
-            textBoxBrand.Clear();
-            textBoxModel.Clear();
+            textBoxBranch.Clear(); // brand
+            comboBoxCondition.SelectedIndex = -1; // category (Tình trạng dropdown)
+            comboBox.Text = ""; // model (Model text/dropdown)
+
+            // Tab 2 - Chi tiết
+            textBoxManufacturer.Clear(); // Tổng SL (display)
+            textBoxModel.Clear(); // SL có sẵn (display)
+            textBoxSerialNumber.Clear(); // warranty_period
+            dateTimePickerPurchaseDate.Value = DateTime.Now;
+
+            // Tab 3 - Giá cả
+            numericUpDownPurchasePrice.Value = 0;
+            numericUpDownRentalPriceHour.Value = 0;
+
+            // Tab 4 - Tồn kho
             numericUpDownQuantityTotal.Value = 0;
             numericUpDownQuantityAvailable.Value = 0;
-            numericUpDownRentalPrice.Value = 0;
-            numericUpDownPurchasePrice.Value = 0;
-            comboBoxCondition.SelectedIndex = -1;
-            textBoxDescription.Clear();
             textBoxBranchId.Clear();
-            textBoxSupplier.Clear();
-            dateTimePickerPurchaseDate.Value = DateTime.Now;
-            numericUpDownWarrantyPeriod.Value = 0;
-            comboBoxStatus.SelectedIndex = -1;
+
+            // Tab 5 - Mô tả
+            textBoxDescription.Clear();
         }
 
         private void SetEditMode(bool editMode)
         {
             isEditing = editMode;
-            
-            groupBoxEquipmentInfo.Enabled = editMode;
+
+            // Enable/Disable các controls trong tabs (không disable tab control)
+            foreach (TabPage tab in tabControlEquipmentInfo.TabPages)
+            {
+                foreach (Control ctrl in tab.Controls)
+                {
+                    if (ctrl is TableLayoutPanel tlp)
+                    {
+                        foreach (Control c in tlp.Controls)
+                        {
+                            if (!(c is Label))
+                            {
+                                c.Enabled = editMode;
+                            }
+                        }
+                    }
+                    else if (!(ctrl is Label))
+                    {
+                        ctrl.Enabled = editMode;
+                    }
+                }
+            }
+
+            // Buttons trong form
             buttonSave.Enabled = editMode;
             buttonCancel.Enabled = editMode;
-            
+
+            // Buttons trong grid
             buttonAdd.Enabled = !editMode;
-            buttonEdit.Enabled = !editMode && dataGridViewEquipments.CurrentRow != null;
-            buttonDelete.Enabled = !editMode && dataGridViewEquipments.CurrentRow != null;
+            buttonEdit.Enabled = !editMode && dataGridViewEquipment.CurrentRow != null;
+            buttonDelete.Enabled = !editMode && dataGridViewEquipment.CurrentRow != null;
+
+            // Toolbar buttons
             buttonRefresh.Enabled = !editMode;
             buttonExportExcel.Enabled = !editMode;
             buttonImportXml.Enabled = !editMode;
-            
-            dataGridViewEquipments.Enabled = !editMode;
+
+            // DataGridView và Search
+            dataGridViewEquipment.Enabled = !editMode;
             textBoxSearch.Enabled = !editMode;
+
+            // Readonly cho textBoxId - luôn readonly
+            textBoxId.ReadOnly = true;
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -204,6 +291,7 @@ namespace CNXML_HVA
             ClearForm();
             SetEditMode(true);
             textBoxId.Text = GenerateNewId();
+            tabControlEquipmentInfo.SelectedIndex = 0; // Chuyển về tab đầu
             textBoxName.Focus();
         }
 
@@ -226,35 +314,36 @@ namespace CNXML_HVA
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if (dataGridViewEquipments.CurrentRow == null)
+            if (dataGridViewEquipment.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn dụng cụ cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            
+
             isAdding = false;
             SetEditMode(true);
+            tabControlEquipmentInfo.SelectedIndex = 0;
             textBoxName.Focus();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridViewEquipments.CurrentRow == null)
+            if (dataGridViewEquipment.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn dụng cụ cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            string equipmentName = dataGridViewEquipments.CurrentRow.Cells["Tên dụng cụ"].Value?.ToString();
-            DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa dụng cụ '{equipmentName}'?", 
+            string equipmentName = dataGridViewEquipment.CurrentRow.Cells["Tên dụng cụ"].Value?.ToString();
+            DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa dụng cụ '{equipmentName}'?",
                 "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 try
                 {
-                    string equipmentId = dataGridViewEquipments.CurrentRow.Cells["Mã DC"].Value?.ToString();
-                    
+                    string equipmentId = dataGridViewEquipment.CurrentRow.Cells["Mã DC"].Value?.ToString();
+
                     // Xóa khỏi XML
                     XmlNode equipmentNode = xmlDoc.SelectSingleNode($"//equipment[@id='{equipmentId}']");
                     if (equipmentNode != null)
@@ -308,24 +397,27 @@ namespace CNXML_HVA
 
         private bool ValidateInput()
         {
-            if (string.IsNullOrWhiteSpace(textBoxId.Text))
-            {
-                MessageBox.Show("Vui lòng nhập mã dụng cụ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxId.Focus();
-                return false;
-            }
-
             if (string.IsNullOrWhiteSpace(textBoxName.Text))
             {
                 MessageBox.Show("Vui lòng nhập tên dụng cụ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControlEquipmentInfo.SelectedIndex = 0;
                 textBoxName.Focus();
                 return false;
             }
 
-            if (comboBoxCategory.SelectedIndex == -1)
+            if (comboBoxCondition.SelectedIndex == -1)
             {
-                MessageBox.Show("Vui lòng chọn danh mục!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                comboBoxCategory.Focus();
+                MessageBox.Show("Vui lòng chọn tình trạng (danh mục)!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControlEquipmentInfo.SelectedIndex = 0;
+                comboBoxCondition.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBox.Text))
+            {
+                MessageBox.Show("Vui lòng nhập model!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControlEquipmentInfo.SelectedIndex = 0;
+                comboBox.Focus();
                 return false;
             }
 
@@ -337,6 +429,7 @@ namespace CNXML_HVA
                     if (row["Mã DC"].ToString() == textBoxId.Text)
                     {
                         MessageBox.Show("Mã dụng cụ đã tồn tại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        tabControlEquipmentInfo.SelectedIndex = 0;
                         textBoxId.Focus();
                         return false;
                     }
@@ -350,24 +443,42 @@ namespace CNXML_HVA
         {
             // Thêm vào XML
             XmlNode equipmentsNode = xmlDoc.SelectSingleNode("equipments");
+            if (equipmentsNode == null)
+            {
+                equipmentsNode = xmlDoc.CreateElement("equipments");
+                xmlDoc.AppendChild(equipmentsNode);
+            }
+
             XmlElement newEquipment = xmlDoc.CreateElement("equipment");
             newEquipment.SetAttribute("id", textBoxId.Text);
 
             AddXmlElement(newEquipment, "name", textBoxName.Text);
-            AddXmlElement(newEquipment, "category", comboBoxCategory.Text);
-            AddXmlElement(newEquipment, "brand", textBoxBrand.Text);
-            AddXmlElement(newEquipment, "model", textBoxModel.Text);
-            AddXmlElement(newEquipment, "quantity_total", numericUpDownQuantityTotal.Value.ToString());
-            AddXmlElement(newEquipment, "quantity_available", numericUpDownQuantityAvailable.Value.ToString());
-            AddXmlElement(newEquipment, "rental_price", numericUpDownRentalPrice.Value.ToString());
-            AddXmlElement(newEquipment, "purchase_price", numericUpDownPurchasePrice.Value.ToString());
-            AddXmlElement(newEquipment, "condition", comboBoxCondition.Text);
+            AddXmlElement(newEquipment, "category", comboBoxCondition.Text); // category từ comboBoxCondition (Tình trạng dropdown)
+            AddXmlElement(newEquipment, "brand", textBoxBranch.Text);
+            AddXmlElement(newEquipment, "model", comboBox.Text); // model từ comboBox (Model text)
+            AddXmlElement(newEquipment, "quantity_total", ((int)numericUpDownQuantityTotal.Value).ToString());
+            AddXmlElement(newEquipment, "quantity_available", ((int)numericUpDownQuantityAvailable.Value).ToString());
+            AddXmlElement(newEquipment, "rental_price", numericUpDownRentalPriceHour.Value.ToString("0"));
+            AddXmlElement(newEquipment, "purchase_price", numericUpDownPurchasePrice.Value.ToString("0"));
+            AddXmlElement(newEquipment, "condition", "Tốt"); // Default condition
             AddXmlElement(newEquipment, "description", textBoxDescription.Text);
             AddXmlElement(newEquipment, "branch_id", textBoxBranchId.Text);
-            AddXmlElement(newEquipment, "supplier", textBoxSupplier.Text);
+            AddXmlElement(newEquipment, "supplier", ""); // Supplier không có trong form
             AddXmlElement(newEquipment, "purchase_date", dateTimePickerPurchaseDate.Value.ToString("yyyy-MM-dd"));
-            AddXmlElement(newEquipment, "warranty_period", numericUpDownWarrantyPeriod.Value.ToString());
-            AddXmlElement(newEquipment, "status", comboBoxStatus.Text);
+            
+            // warranty_period từ textBoxSerialNumber
+            int warrantyMonths;
+            if (int.TryParse(textBoxSerialNumber.Text, out warrantyMonths))
+            {
+                AddXmlElement(newEquipment, "warranty_period", warrantyMonths.ToString());
+            }
+            else
+            {
+                // Fallback: tính từ dateTimePicker nếu textBoxSerialNumber không phải số
+                AddXmlElement(newEquipment, "warranty_period", warrantyMonths.ToString());
+            }
+            
+            AddXmlElement(newEquipment, "status", "Active");
 
             equipmentsNode.AppendChild(newEquipment);
             xmlDoc.Save(xmlFilePath);
@@ -381,26 +492,38 @@ namespace CNXML_HVA
         private void UpdateEquipment()
         {
             string equipmentId = textBoxId.Text;
-            
+
             // Cập nhật XML
             XmlNode equipmentNode = xmlDoc.SelectSingleNode($"//equipment[@id='{equipmentId}']");
             if (equipmentNode != null)
             {
                 UpdateXmlElement(equipmentNode, "name", textBoxName.Text);
-                UpdateXmlElement(equipmentNode, "category", comboBoxCategory.Text);
-                UpdateXmlElement(equipmentNode, "brand", textBoxBrand.Text);
-                UpdateXmlElement(equipmentNode, "model", textBoxModel.Text);
-                UpdateXmlElement(equipmentNode, "quantity_total", numericUpDownQuantityTotal.Value.ToString());
-                UpdateXmlElement(equipmentNode, "quantity_available", numericUpDownQuantityAvailable.Value.ToString());
-                UpdateXmlElement(equipmentNode, "rental_price", numericUpDownRentalPrice.Value.ToString());
-                UpdateXmlElement(equipmentNode, "purchase_price", numericUpDownPurchasePrice.Value.ToString());
-                UpdateXmlElement(equipmentNode, "condition", comboBoxCondition.Text);
+                UpdateXmlElement(equipmentNode, "category", comboBoxCondition.Text); // category từ comboBoxCondition
+                UpdateXmlElement(equipmentNode, "brand", textBoxBranch.Text);
+                UpdateXmlElement(equipmentNode, "model", comboBox.Text); // model từ comboBox
+                UpdateXmlElement(equipmentNode, "quantity_total", ((int)numericUpDownQuantityTotal.Value).ToString());
+                UpdateXmlElement(equipmentNode, "quantity_available", ((int)numericUpDownQuantityAvailable.Value).ToString());
+                UpdateXmlElement(equipmentNode, "rental_price", numericUpDownRentalPriceHour.Value.ToString("0"));
+                UpdateXmlElement(equipmentNode, "purchase_price", numericUpDownPurchasePrice.Value.ToString("0"));
+                UpdateXmlElement(equipmentNode, "condition", "Tốt"); // Default condition
                 UpdateXmlElement(equipmentNode, "description", textBoxDescription.Text);
                 UpdateXmlElement(equipmentNode, "branch_id", textBoxBranchId.Text);
-                UpdateXmlElement(equipmentNode, "supplier", textBoxSupplier.Text);
+                UpdateXmlElement(equipmentNode, "supplier", ""); // Supplier không có trong form
                 UpdateXmlElement(equipmentNode, "purchase_date", dateTimePickerPurchaseDate.Value.ToString("yyyy-MM-dd"));
-                UpdateXmlElement(equipmentNode, "warranty_period", numericUpDownWarrantyPeriod.Value.ToString());
-                UpdateXmlElement(equipmentNode, "status", comboBoxStatus.Text);
+                
+                // warranty_period từ textBoxSerialNumber
+                int warrantyMonths;
+                if (int.TryParse(textBoxSerialNumber.Text, out warrantyMonths))
+                {
+                    UpdateXmlElement(equipmentNode, "warranty_period", warrantyMonths.ToString());
+                }
+                else
+                {
+                    // Fallback: tính từ dateTimePicker nếu textBoxSerialNumber không phải số
+                    UpdateXmlElement(equipmentNode, "warranty_period", warrantyMonths.ToString());
+                }
+                
+                UpdateXmlElement(equipmentNode, "status", "Active");
 
                 xmlDoc.Save(xmlFilePath);
             }
@@ -416,28 +539,34 @@ namespace CNXML_HVA
 
         private void PopulateDataRow(DataRow row)
         {
-            row["Mã DC"] = textBoxId.Text;
-            row["Tên dụng cụ"] = textBoxName.Text;
-            row["Danh mục"] = comboBoxCategory.Text;
-            row["Thương hiệu"] = textBoxBrand.Text;
-            row["Model"] = textBoxModel.Text;
-            row["Tổng SL"] = (int)numericUpDownQuantityTotal.Value;
-            row["SL khả dụng"] = (int)numericUpDownQuantityAvailable.Value;
-            row["Giá thuê"] = numericUpDownRentalPrice.Value;
-            row["Giá mua"] = numericUpDownPurchasePrice.Value;
-            row["Tình trạng"] = comboBoxCondition.Text;
-            row["Mô tả"] = textBoxDescription.Text;
-            row["Chi nhánh"] = textBoxBranchId.Text;
-            row["Nhà cung cấp"] = textBoxSupplier.Text;
-            row["Ngày mua"] = dateTimePickerPurchaseDate.Value;
-            row["BH (tháng)"] = (int)numericUpDownWarrantyPeriod.Value;
-            row["Trạng thái"] = comboBoxStatus.Text;
+            row["Mã DC"] = textBoxId.Text; // id
+            row["Tên dụng cụ"] = textBoxName.Text; // name
+            row["Danh mục"] = comboBoxCondition.Text; // category từ comboBoxCondition
+            row["Thương hiệu"] = textBoxBranch.Text; // brand
+            row["Model"] = comboBox.Text; // model từ comboBox
+            row["Tổng SL"] = (int)numericUpDownQuantityTotal.Value; // quantity_total (from Tab 4)
+            row["SL có sẵn"] = (int)numericUpDownQuantityAvailable.Value; // quantity_available (from Tab 4)
+            row["Giá thuê"] = numericUpDownRentalPriceHour.Value; // rental_price
+            row["Giá mua"] = numericUpDownPurchasePrice.Value; // purchase_price
+            row["Tình trạng"] = "Tốt"; // condition (default, không có control riêng)
+            row["Chi nhánh"] = textBoxBranchId.Text; // branch_id
+            row["Nhà cung cấp"] = ""; // supplier (không có trong form hiện tại)
+            row["Ngày mua"] = dateTimePickerPurchaseDate.Value; // purchase_date
+            
+            // warranty_period từ textBoxSerialNumber hoặc tính từ dateTimePicker
+            int warrantyMonths;
+            if (int.TryParse(textBoxSerialNumber.Text, out warrantyMonths))
+            {
+                row["BH (tháng)"] = warrantyMonths;
+            }
+            row["Trạng thái"] = "Active"; // status
+            row["Mô tả"] = textBoxDescription.Text; // description
         }
 
         private void AddXmlElement(XmlElement parent, string elementName, string value)
         {
             XmlElement element = xmlDoc.CreateElement(elementName);
-            element.InnerText = value;
+            element.InnerText = value ?? "";
             parent.AppendChild(element);
         }
 
@@ -446,7 +575,13 @@ namespace CNXML_HVA
             XmlNode element = parent.SelectSingleNode(elementName);
             if (element != null)
             {
-                element.InnerText = value;
+                element.InnerText = value ?? "";
+            }
+            else
+            {
+                XmlElement newElement = xmlDoc.CreateElement(elementName);
+                newElement.InnerText = value ?? "";
+                parent.AppendChild(newElement);
             }
         }
 
@@ -454,7 +589,7 @@ namespace CNXML_HVA
         {
             SetEditMode(false);
             isAdding = false;
-            if (dataGridViewEquipments.CurrentRow != null)
+            if (dataGridViewEquipment.CurrentRow != null)
             {
                 LoadSelectedEquipmentToForm();
             }
@@ -463,6 +598,7 @@ namespace CNXML_HVA
                 ClearForm();
             }
         }
+
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
@@ -473,14 +609,14 @@ namespace CNXML_HVA
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            string searchText = textBoxSearch.Text.ToLower();
+            string searchText = textBoxSearch.Text.Trim();
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                equipmentTable.DefaultView.RowFilter = "";
+                equipmentTable.DefaultView.RowFilter = string.Empty;
             }
             else
             {
-                equipmentTable.DefaultView.RowFilter = $"[Tên dụng cụ] LIKE '%{searchText}%' OR [Danh mục] LIKE '%{searchText}%' OR [Thương hiệu] LIKE '%{searchText}%'";
+                equipmentTable.DefaultView.RowFilter = $"[Tên dụng cụ] LIKE '%{searchText}%' OR [Mã DC] LIKE '%{searchText}%' OR [Danh mục] LIKE '%{searchText}%' OR [Thương hiệu] LIKE '%{searchText}%'";
             }
         }
 
@@ -544,7 +680,7 @@ namespace CNXML_HVA
                         values.Add(CleanValue(row["Thương hiệu"]));
                         values.Add(CleanValue(row["Model"]));
                         values.Add(CleanValue(row["Tổng SL"]));
-                        values.Add(CleanValue(row["SL khả dụng"]));
+                        values.Add(CleanValue(row["SL có sẵn"]));
                         values.Add(CleanValue(row["Giá thuê"]));
                         values.Add(CleanValue(row["Giá mua"]));
                         values.Add(CleanValue(row["Tình trạng"]));
