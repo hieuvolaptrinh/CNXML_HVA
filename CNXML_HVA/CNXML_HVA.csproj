@@ -107,6 +107,9 @@
     <Compile Include="San.Designer.cs">
       <DependentUpon>San.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ChiNhanh.resx">
+      <DependentUpon>ChiNhanh.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FieldTypeEditForm.resx">
       <DependentUpon>FieldTypeEditForm.cs</DependentUpon>
     </EmbeddedResource>

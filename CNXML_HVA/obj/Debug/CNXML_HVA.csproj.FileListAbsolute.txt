@@ -24,3 +24,6 @@ F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\C
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.pdb
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.San.resources
+C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.San.resources
+C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.FieldTypeEditForm.resources
+C:\Users\Admin\Downloads\clone_xml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.ChiNhanh.resources

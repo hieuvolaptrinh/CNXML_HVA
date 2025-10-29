@@ -72,6 +72,8 @@
             this.labelSearch = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
+            this.buttonExportExcel = new System.Windows.Forms.Button();
+            this.buttonImportXml = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEquipments)).BeginInit();
             this.groupBoxEquipmentInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQuantityTotal)).BeginInit();
@@ -566,6 +568,34 @@
             this.buttonRefresh.UseVisualStyleBackColor = false;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
+            // buttonExportExcel
+            // 
+            this.buttonExportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(136)))));
+            this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExportExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
+            this.buttonExportExcel.Location = new System.Drawing.Point(560, 460);
+            this.buttonExportExcel.Name = "buttonExportExcel";
+            this.buttonExportExcel.Size = new System.Drawing.Size(100, 35);
+            this.buttonExportExcel.TabIndex = 11;
+            this.buttonExportExcel.Text = "Xuất Excel";
+            this.buttonExportExcel.UseVisualStyleBackColor = false;
+            this.buttonExportExcel.Click += new System.EventHandler(this.buttonExportExcel_Click);
+            // 
+            // buttonImportXml
+            // 
+            this.buttonImportXml.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(58)))), ((int)(((byte)(183)))));
+            this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonImportXml.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonImportXml.ForeColor = System.Drawing.Color.White;
+            this.buttonImportXml.Location = new System.Drawing.Point(670, 460);
+            this.buttonImportXml.Name = "buttonImportXml";
+            this.buttonImportXml.Size = new System.Drawing.Size(100, 35);
+            this.buttonImportXml.TabIndex = 12;
+            this.buttonImportXml.Text = "Import XML";
+            this.buttonImportXml.UseVisualStyleBackColor = false;
+            this.buttonImportXml.Click += new System.EventHandler(this.buttonImportXml_Click);
+            // 
             // textBoxSearch
             // 
             this.textBoxSearch.Location = new System.Drawing.Point(120, 100);
@@ -615,6 +645,8 @@
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.labelSearch);
             this.Controls.Add(this.textBoxSearch);
+            this.Controls.Add(this.buttonImportXml);
+            this.Controls.Add(this.buttonExportExcel);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
@@ -690,5 +722,7 @@
         private System.Windows.Forms.Label labelSearch;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonExportExcel;
+        private System.Windows.Forms.Button buttonImportXml;
     }
 }

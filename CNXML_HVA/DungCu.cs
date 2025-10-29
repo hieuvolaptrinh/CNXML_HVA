@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace CNXML_HVA
 {
@@ -190,6 +191,8 @@ namespace CNXML_HVA
             buttonEdit.Enabled = !editMode && dataGridViewEquipments.CurrentRow != null;
             buttonDelete.Enabled = !editMode && dataGridViewEquipments.CurrentRow != null;
             buttonRefresh.Enabled = !editMode;
+            buttonExportExcel.Enabled = !editMode;
+            buttonImportXml.Enabled = !editMode;
             
             dataGridViewEquipments.Enabled = !editMode;
             textBoxSearch.Enabled = !editMode;
@@ -478,6 +481,186 @@ namespace CNXML_HVA
             else
             {
                 equipmentTable.DefaultView.RowFilter = $"[Tên dụng cụ] LIKE '%{searchText}%' OR [Danh mục] LIKE '%{searchText}%' OR [Thương hiệu] LIKE '%{searchText}%'";
+            }
+        }
+
+        private void buttonExportExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "CSV Files (*.csv)|*.csv|Excel Files (*.xls)|*.xls|All Files (*.*)|*.*";
+                saveFileDialog.FilterIndex = 1;
+                saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.FileName = $"DungCu_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ExportToCSV(saveFileDialog.FileName);
+                    MessageBox.Show($"Xuất file thành công!\nĐã xuất {equipmentTable.Rows.Count} dụng cụ.", 
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                    // Hỏi người dùng có muốn mở file không
+                    DialogResult result = MessageBox.Show("Bạn có muốn mở file vừa xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(saveFileDialog.FileName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xuất file: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ExportToCSV(string filePath)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(filePath, false, new UTF8Encoding(true)))
+                {
+                    // Header - viết từng cột rõ ràng
+                    var headers = new List<string>
+                    {
+                        "Mã DC", "Tên dụng cụ", "Danh mục", "Thương hiệu", "Model",
+                        "Tổng SL", "SL khả dụng", "Giá thuê", "Giá mua", "Tình trạng",
+                        "Mô tả", "Chi nhánh", "Nhà cung cấp", "Ngày mua", 
+                        "BH (tháng)", "Trạng thái"
+                    };
+                    
+                    // Ghi header với dấu phân cách rõ ràng
+                    sw.WriteLine(string.Join(";", headers));
+
+                    // Dữ liệu - ghi từng dòng
+                    foreach (DataRow row in equipmentTable.Rows)
+                    {
+                        var values = new List<string>();
+                        
+                        // Lấy giá trị từng cột theo thứ tự
+                        values.Add(CleanValue(row["Mã DC"]));
+                        values.Add(CleanValue(row["Tên dụng cụ"]));
+                        values.Add(CleanValue(row["Danh mục"]));
+                        values.Add(CleanValue(row["Thương hiệu"]));
+                        values.Add(CleanValue(row["Model"]));
+                        values.Add(CleanValue(row["Tổng SL"]));
+                        values.Add(CleanValue(row["SL khả dụng"]));
+                        values.Add(CleanValue(row["Giá thuê"]));
+                        values.Add(CleanValue(row["Giá mua"]));
+                        values.Add(CleanValue(row["Tình trạng"]));
+                        values.Add(CleanValue(row["Mô tả"]));
+                        values.Add(CleanValue(row["Chi nhánh"]));
+                        values.Add(CleanValue(row["Nhà cung cấp"]));
+                        
+                        // Format ngày tháng
+                        if (row["Ngày mua"] != DBNull.Value)
+                        {
+                            DateTime date = Convert.ToDateTime(row["Ngày mua"]);
+                            values.Add(date.ToString("dd/MM/yyyy"));
+                        }
+                        else
+                        {
+                            values.Add("");
+                        }
+                        
+                        values.Add(CleanValue(row["BH (tháng)"]));
+                        values.Add(CleanValue(row["Trạng thái"]));
+
+                        // Ghi dòng dữ liệu với dấu phân cách ;
+                        sw.WriteLine(string.Join(";", values));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi ghi file CSV: {ex.Message}");
+            }
+        }
+
+        private string CleanValue(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return "";
+            
+            string strValue = value.ToString().Trim();
+            
+            // Loại bỏ dấu xuống dòng và ký tự đặc biệt
+            strValue = strValue.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
+            
+            // Nếu có dấu phẩy, chấm phẩy hoặc dấu ngoặc kép thì bao quanh bằng dấu ngoặc kép
+            if (strValue.Contains(";") || strValue.Contains(",") || strValue.Contains("\""))
+            {
+                strValue = "\"" + strValue.Replace("\"", "\"\"") + "\"";
+            }
+            
+            return strValue;
+        }
+
+        private void buttonImportXml_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "XML Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    DialogResult result = MessageBox.Show(
+                        "Bạn có chắc chắn muốn import dữ liệu từ file XML?\nDữ liệu hiện tại sẽ được thay thế!",
+                        "Xác nhận Import",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        ImportFromXML(openFileDialog.FileName);
+                        MessageBox.Show("Import dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi import file: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ImportFromXML(string filePath)
+        {
+            try
+            {
+                // Đọc file XML mới
+                XmlDocument importDoc = new XmlDocument();
+                importDoc.Load(filePath);
+
+                // Kiểm tra cấu trúc XML
+                XmlNodeList equipmentNodes = importDoc.SelectNodes("//equipment");
+                if (equipmentNodes == null || equipmentNodes.Count == 0)
+                {
+                    throw new Exception("File XML không có dữ liệu dụng cụ hoặc cấu trúc không đúng!");
+                }
+
+                // Sao chép file hiện tại thành backup
+                string backupPath = xmlFilePath.Replace(".xml", $"_backup_{DateTime.Now:yyyyMMdd_HHmmss}.xml");
+                if (File.Exists(xmlFilePath))
+                {
+                    File.Copy(xmlFilePath, backupPath, true);
+                }
+
+                // Thay thế file XML hiện tại
+                File.Copy(filePath, xmlFilePath, true);
+
+                // Tải lại dữ liệu
+                LoadEquipmentsFromXML();
+                ClearForm();
+
+                MessageBox.Show($"Import thành công {equipmentNodes.Count} dụng cụ!\nFile gốc đã được backup tại:\n{backupPath}",
+                    "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi import XML: {ex.Message}");
             }
         }
     }

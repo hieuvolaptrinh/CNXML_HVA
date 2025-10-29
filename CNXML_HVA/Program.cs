@@ -16,7 +16,7 @@ namespace CNXML_HVA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoaiSan());
+            Application.Run(new DungCu());
         }
     }
 }
