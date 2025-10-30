@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Sample XML file for importing equipments
+  File format must match this structure
+-->
+<equipments>
+  <equipment id="EQ001">
+    <name>Bóng đá Nike Premier League</name>
+    <category>Bóng</category>
+    <brand>Nike</brand>
+    <model>Premier League 2023</model>
+    <quantity_total>50</quantity_total>
+    <quantity_available>45</quantity_available>
+    <rental_price>50000</rental_price>
+    <purchase_price>800000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Bóng đá chính hãng Nike cho giải Premier League</description>
+    <branch_id>B01</branch_id>
+    <supplier>Nike Vietnam</supplier>
+    <purchase_date>2023-01-15</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ002">
+    <name>Áo đấu Manchester United</name>
+    <category>Trang phục</category>
+    <brand>Adidas</brand>
+    <model>Home Kit 2023/24</model>
+    <quantity_total>100</quantity_total>
+    <quantity_available>85</quantity_available>
+    <rental_price>100000</rental_price>
+    <purchase_price>1200000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Áo đấu sân nhà Manchester United mùa giải 2023/24</description>
+    <branch_id>B01</branch_id>
+    <supplier>Adidas Sports</supplier>
+    <purchase_date>2023-08-01</purchase_date>
+    <warranty_period>6</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ003">
+    <name>Lưới khung thành</name>
+    <category>Thiết bị sân</category>
+    <brand>Sportmaster</brand>
+    <model>Pro Net 3x2m</model>
+    <quantity_total>20</quantity_total>
+    <quantity_available>18</quantity_available>
+    <rental_price>0</rental_price>
+    <purchase_price>2500000</purchase_price>
+    <condition>Khá</condition>
+    <description>Lưới khung thành chất lượng cao, kích thước 3x2m</description>
+    <branch_id>B02</branch_id>
+    <supplier>Sportmaster Vietnam</supplier>
+    <purchase_date>2022-05-20</purchase_date>
+    <warranty_period>24</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ004">
+    <name>Găng tay thủ môn Adidas Predator</name>
+    <category>Phụ kiện</category>
+    <brand>Adidas</brand>
+    <model>Predator Pro 2023</model>
+    <quantity_total>30</quantity_total>
+    <quantity_available>25</quantity_available>
+    <rental_price>80000</rental_price>
+    <purchase_price>1500000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Găng tay thủ môn chuyên nghiệp Adidas Predator</description>
+    <branch_id>B01</branch_id>
+    <supplier>Adidas Sports</supplier>
+    <purchase_date>2023-03-10</purchase_date>
+    <warranty_period>6</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ005">
+    <name>Cọc tập luyện (Set 20 cọc)</name>
+    <category>Thiết bị tập luyện</category>
+    <brand>Mitre</brand>
+    <model>Training Cone Set</model>
+    <quantity_total>10</quantity_total>
+    <quantity_available>10</quantity_available>
+    <rental_price>0</rental_price>
+    <purchase_price>500000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Bộ 20 cọc tập luyện đa năng</description>
+    <branch_id>B02</branch_id>
+    <supplier>Mitre Sports</supplier>
+    <purchase_date>2023-06-15</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+  <equipment id="EQ006">
+    <name>Bóng PickleBall</name>
+    <category>Bóng</category>
+    <brand>Nike</brand>
+    <model>Bóng PickleBall 2024</model>
+    <quantity_total>300</quantity_total>
+    <quantity_available>300</quantity_available>
+    <rental_price>20000</rental_price>
+    <purchase_price>150000</purchase_price>
+    <condition>Tốt</condition>
+    <description>bóng nhẹ, đàn hồi, bền bỉ theo thời gian</description>
+    <branch_id>B01</branch_id>
+    <supplier>
+    </supplier>
+    <purchase_date>2025-10-30</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+</equipments>

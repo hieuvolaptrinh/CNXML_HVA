@@ -16,5 +16,10 @@ namespace CNXML_HVA
         {
             InitializeComponent();
         }
+
+        private void DashBoard_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

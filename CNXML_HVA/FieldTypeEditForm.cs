@@ -19,6 +19,12 @@ namespace CNXML_HVA
         private NumericUpDown numLength, numWidth, numGoalHeight, numGoalWidth;
         private NumericUpDown numCapacity, numDefaultPrice, numPlayersPerTeam;
         private NumericUpDown numPeakMultiplier, numWeekendMultiplier;
+
+        private void FieldTypeEditForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private NumericUpDown numMinBookingHours, numMaxBookingHours;
         private ComboBox cmbStatus, cmbSurfaceType, cmbColor, cmbIcon;
         private Button btnSaveType, btnCancelType, btnPickColor;
@@ -36,9 +42,14 @@ namespace CNXML_HVA
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            this.ClientSize = new Size(700, 780);
+            // 
+            // FieldTypeEditForm
+            // 
+            this.ClientSize = new System.Drawing.Size(700, 780);
             this.Name = "FieldTypeEditForm";
+            this.Load += new System.EventHandler(this.FieldTypeEditForm_Load);
             this.ResumeLayout(false);
+
         }
 
         private void InitializeFormControls()
