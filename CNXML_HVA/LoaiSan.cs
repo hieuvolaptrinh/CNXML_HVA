@@ -23,7 +23,7 @@ namespace CNXML_HVA
         public LoaiSan()
         {
             InitializeComponent();
-            xmlFilePath = Path.Combine(Application.StartupPath, "FieldTypes.xml");
+            xmlFilePath = DataPaths.GetXmlFilePath("FieldTypes.xml");
             bindingFieldTypes = new BindingSource();
             allFieldTypes = new List<FieldType>();
         }

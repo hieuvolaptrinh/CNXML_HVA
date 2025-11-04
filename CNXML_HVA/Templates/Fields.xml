@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fields>
+  <field id="F001">
+    <name>Sân A1 - Mini Soccer</name>
+    <field_type_id>FT01</field_type_id>
+    <branch_id>B01</branch_id>
+    <address>
+      <city>Hà Nội</city>
+      <district>Cầu Giấy</district>
+      <street>Trần Thái Tông</street>
+      <house_number>123</house_number>
+    </address>
+    <price_per_hour>120000</price_per_hour>
+    <capacity>10</capacity>
+    <description>Sân 5 người có mái che, cỏ nhân tạo cao cấp</description>
+    <facilities>Mái che, Đèn chiếu sáng LED, Phòng thay đồ, Nước uống miễn phí</facilities>
+    <status>Available</status>
+    <created_date>2024-01-15</created_date>
+    <last_maintenance>2024-09-20</last_maintenance>
+  </field>
+
+  <field id="F002">
+    <name>Sân B2 - Standard 7</name>
+    <field_type_id>FT02</field_type_id>
+    <branch_id>B01</branch_id>
+    <address>
+      <city>Hà Nội</city>
+      <district>Đống Đa</district>
+      <street>Láng Hạ</street>
+      <house_number>456</house_number>
+    </address>
+    <price_per_hour>180000</price_per_hour>
+    <capacity>14</capacity>
+    <description>Sân 7 người tiêu chuẩn, phù hợp tổ chức giải đấu</description>
+    <facilities>Hệ thống tưới tự động, Đèn chiếu sáng, Khán đài 50 chỗ, Bảng điện tử</facilities>
+    <status>Available</status>
+    <created_date>2024-02-01</created_date>
+    <last_maintenance>2024-10-01</last_maintenance>
+  </field>
+
+  <field id="F003">
+    <name>Sân C1 - Professional 11</name>
+    <field_type_id>FT03</field_type_id>
+    <branch_id>B02</branch_id>
+    <address>
+      <city>TP Hồ Chí Minh</city>
+      <district>Bình Thạnh</district>
+      <street>Xô Viết Nghệ Tĩnh</street>
+      <house_number>789</house_number>
+    </address>
+    <price_per_hour>350000</price_per_hour>
+    <capacity>22</capacity>
+    <description>Sân 11 người tiêu chuẩn FIFA, cỏ tự nhiên cao cấp</description>
+    <facilities>Cỏ tự nhiên, Hệ thống tưới tự động, Khán đài 200 chỗ, Phòng thay đồ VIP, Căng tin</facilities>
+    <status>Booked</status>
+    <created_date>2024-01-10</created_date>
+    <last_maintenance>2024-09-15</last_maintenance>
+  </field>
+
+  <field id="F004">
+    <name>Sân D3 - Indoor 5</name>
+    <field_type_id>FT01</field_type_id>
+    <branch_id>B02</branch_id>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Hải Châu</district>
+      <street>Nguyễn Văn Linh</street>
+      <house_number>321</house_number>
+    </address>
+    <price_per_hour>150000</price_per_hour>
+    <capacity>10</capacity>
+    <description>Sân 5 người trong nhà, điều hòa mát mẻ</description>
+    <facilities>Sân trong nhà, Điều hòa, WiFi miễn phí, Tủ đồ cá nhân</facilities>
+    <status>Available</status>
+    <created_date>2024-03-05</created_date>
+    <last_maintenance>2024-10-05</last_maintenance>
+  </field>
+
+  <field id="F005">
+    <name>Sân E1 - Premium 7</name>
+    <field_type_id>FT02</field_type_id>
+    <branch_id>B03</branch_id>
+    <address>
+      <city>Hải Phòng</city>
+      <district>Lê Chân</district>
+      <street>Điện Biên Phủ</street>
+      <house_number>567</house_number>
+    </address>
+    <price_per_hour>200000</price_per_hour>
+    <capacity>14</capacity>
+    <description>Sân 7 người cao cấp với hệ thống âm thanh hiện đại</description>
+    <facilities>Cỏ nhân tạo Hàn Quốc, Hệ thống âm thanh, Camera ghi hình, Phòng massage</facilities>
+    <status>Maintenance</status>
+    <created_date>2024-02-20</created_date>
+    <last_maintenance>2024-10-08</last_maintenance>
+  </field>
+
+  <field id="F006">
+    <name>Sân F2 - Youth Training</name>
+    <field_type_id>FT01</field_type_id>
+    <branch_id>B03</branch_id>
+    <address>
+      <city>Cần Thơ</city>
+      <district>Ninh Kiều</district>
+      <street>Mậu Thân</street>
+      <house_number>234</house_number>
+    </address>
+    <price_per_hour>100000</price_per_hour>
+    <capacity>10</capacity>
+    <description>Sân 5 người dành cho đào tạo trẻ em và thanh thiếu niên</description>
+    <facilities>Vây bảo vệ cao, Mái che, Ghế dự bị, Bóng tập luyện miễn phí</facilities>
+    <status>Available</status>
+    <created_date>2024-04-01</created_date>
+    <last_maintenance>2024-09-25</last_maintenance>
+  </field>
+</fields>

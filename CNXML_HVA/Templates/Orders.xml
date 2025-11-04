@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+  <order id="HD001">
+    <customer_id>KH001</customer_id>
+    <branch_id>B01</branch_id>
+    <order_date>2024-09-15</order_date>
+    <total_amount>500000</total_amount>
+    <payment_method>Cash</payment_method>
+    <payment_status>Paid</payment_status>
+    <status>Completed</status>
+    <staff_id>U001</staff_id>
+    <notes>Đặt sân và thuê dụng cụ</notes>
+  </order>
+  
+  <order id="HD002">
+    <customer_id>KH002</customer_id>
+    <branch_id>B02</branch_id>
+    <order_date>2024-09-20</order_date>
+    <total_amount>750000</total_amount>
+    <payment_method>Card</payment_method>
+    <payment_status>Paid</payment_status>
+    <status>Completed</status>
+    <staff_id>U002</staff_id>
+    <notes>Đặt sân chung kết</notes>
+  </order>
+  
+  <order id="HD003">
+    <customer_id>KH003</customer_id>
+    <branch_id>B01</branch_id>
+    <order_date>2024-09-25</order_date>
+    <total_amount>350000</total_amount>
+    <payment_method>Transfer</payment_method>
+    <payment_status>Pending</payment_status>
+    <status>Processing</status>
+    <staff_id>U001</staff_id>
+    <notes>Tập luyện đội nhà</notes>
+  </order>
+  
+  <order id="HD004">
+    <customer_id>KH004</customer_id>
+    <branch_id>B03</branch_id>
+    <order_date>2024-09-30</order_date>
+    <total_amount>400000</total_amount>
+    <payment_method>Cash</payment_method>
+    <payment_status>Refunded</payment_status>
+    <status>Cancelled</status>
+    <staff_id>U003</staff_id>
+    <notes>Hủy do thời tiết xấu</notes>
+  </order>
+  
+  <order id="HD005">
+    <customer_id>KH005</customer_id>
+    <branch_id>B02</branch_id>
+    <order_date>2024-10-05</order_date>
+    <total_amount>600000</total_amount>
+    <payment_method>Card</payment_method>
+    <payment_status>Paid</payment_status>
+    <status>Confirmed</status>
+    <staff_id>U002</staff_id>
+    <notes>Giải đấu địa phương</notes>
+  </order>
+</orders>

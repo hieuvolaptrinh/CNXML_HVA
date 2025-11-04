@@ -27,8 +27,13 @@ namespace CNXML_HVA
         public San()
         {
             InitializeComponent();
-            xmlFieldsPath = Path.Combine(Application.StartupPath, "Fields.xml");
-            xmlFieldTypesPath = Path.Combine(Application.StartupPath, "FieldTypes.xml");
+            // mở comment chỗ này là đc
+            //             xmlFieldsPath = Path.Combine(Application.StartupPath, "Fields.xml");
+            // xmlFieldTypesPath = Path.Combine(Application.StartupPath, "FieldTypes.xml");
+
+              xmlFieldsPath = DataPaths.GetXmlFilePath("Fields.xml");
+            xmlFieldTypesPath = DataPaths.GetXmlFilePath("FieldTypes.xml");
+           
             bindingFields = new BindingSource();
             allFields = new List<Field>();
             allFieldTypes = new List<FieldType>();
