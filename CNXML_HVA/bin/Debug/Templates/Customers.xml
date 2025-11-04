@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customers>
+  <customer id="KH001">
+    <name>Nguyen Van A</name>
+    <phone>0901234567</phone>
+    <email>nguyenvana@email.com</email>
+    <address>123 Nguyen Trai, Ha Noi</address>
+    <registration_date>2024-01-15</registration_date>
+    <status>Active</status>
+  </customer>
+  
+  <customer id="KH002">
+    <name>Tran Thi B</name>
+    <phone>0912345678</phone>
+    <email>tranthib@email.com</email>
+    <address>456 Le Loi, Da Nang</address>
+    <registration_date>2024-02-20</registration_date>
+    <status>Active</status>
+  </customer>
+  
+  <customer id="KH003">
+    <name>Le Van C</name>
+    <phone>0923456789</phone>
+    <email>levanc@email.com</email>
+    <address>789 Hai Ba Trung, Ho Chi Minh</address>
+    <registration_date>2024-03-10</registration_date>
+    <status>Active</status>
+  </customer>
+  
+  <customer id="KH004">
+    <name>Pham Thi D</name>
+    <phone>0934567890</phone>
+    <email>phamthid@email.com</email>
+    <address>321 Tran Phu, Hue</address>
+    <registration_date>2024-04-05</registration_date>
+    <status>Inactive</status>
+  </customer>
+  
+  <customer id="KH005">
+    <name>Hoang Van E</name>
+    <phone>0945678901</phone>
+    <email>hoangvane@email.com</email>
+    <address>654 Nguyen Hue, Can Tho</address>
+    <registration_date>2024-05-12</registration_date>
+    <status>Active</status>
+  </customer>
+</customers>

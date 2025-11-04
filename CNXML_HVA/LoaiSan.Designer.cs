@@ -345,6 +345,8 @@
             this.panelToolbar.ResumeLayout(false);
             this.panelToolbar.PerformLayout();
             this.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.LoaiSan_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoaiSan_KeyDown);
 
         }
 

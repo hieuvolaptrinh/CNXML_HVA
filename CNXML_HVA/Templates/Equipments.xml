@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<equipments>
+  <equipment id="EQ001">
+    <name>Quả bóng đá FIFA</name>
+    <category>Bóng</category>
+    <brand>Nike</brand>
+    <model>Premier League</model>
+    <quantity_total>50</quantity_total>
+    <quantity_available>35</quantity_available>
+    <rental_price>10000</rental_price>
+    <purchase_price>500000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Quả bóng chuẩn FIFA size 5</description>
+    <branch_id>B01</branch_id>
+    <supplier>Nike Vietnam</supplier>
+    <purchase_date>2024-01-15</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+
+  <equipment id="EQ002">
+    <name>Áo phân biệt đội</name>
+    <category>Trang phục</category>
+    <brand>Adidas</brand>
+    <model>Training Vest</model>
+    <quantity_total>100</quantity_total>
+    <quantity_available>80</quantity_available>
+    <rental_price>5000</rental_price>
+    <purchase_price>150000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Áo lưới phân biệt đội màu đỏ/xanh</description>
+    <branch_id>B01</branch_id>
+    <supplier>Adidas Store</supplier>
+    <purchase_date>2024-02-01</purchase_date>
+    <warranty_period>6</warranty_period>
+    <status>Active</status>
+  </equipment>
+
+  <equipment id="EQ003">
+    <name>Khung thành mini</name>
+    <category>Thiết bị sân</category>
+    <brand>Goal Pro</brand>
+    <model>Mini Goal 5x2</model>
+    <quantity_total>8</quantity_total>
+    <quantity_available>6</quantity_available>
+    <rental_price>50000</rental_price>
+    <purchase_price>2000000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Khung thành 5x2m cho sân 7 người</description>
+    <branch_id>B02</branch_id>
+    <supplier>Sports Equipment Co.</supplier>
+    <purchase_date>2024-01-20</purchase_date>
+    <warranty_period>24</warranty_period>
+    <status>Active</status>
+  </equipment>
+
+  <equipment id="EQ004">
+    <name>Còi trọng tài</name>
+    <category>Phụ kiện</category>
+    <brand>Fox 40</brand>
+    <model>Classic</model>
+    <quantity_total>20</quantity_total>
+    <quantity_available>18</quantity_available>
+    <rental_price>3000</rental_price>
+    <purchase_price>50000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Còi trọng tài chuyên nghiệp</description>
+    <branch_id>B01</branch_id>
+    <supplier>Referee Shop</supplier>
+    <purchase_date>2024-03-01</purchase_date>
+    <warranty_period>12</warranty_period>
+    <status>Active</status>
+  </equipment>
+
+  <equipment id="EQ005">
+    <name>Cọc tập luyện</name>
+    <category>Thiết bị tập luyện</category>
+    <brand>Training Pro</brand>
+    <model>Cone Set</model>
+    <quantity_total>100</quantity_total>
+    <quantity_available>85</quantity_available>
+    <rental_price>2000</rental_price>
+    <purchase_price>20000</purchase_price>
+    <condition>Tốt</condition>
+    <description>Bộ cọc tập luyện đa màu</description>
+    <branch_id>B03</branch_id>
+    <supplier>Training Equipment Ltd</supplier>
+    <purchase_date>2024-02-15</purchase_date>
+    <warranty_period>6</warranty_period>
+    <status>Active</status>
+  </equipment>
+</equipments>

@@ -16,7 +16,25 @@ namespace CNXML_HVA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DatLich());
+
+            
+            // Khởi tạo tất cả file XML vào AppData khi lần đầu chạy
+            try
+            {
+                DataPaths.InitializeAllXmlFiles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Lỗi khởi tạo dữ liệu:\n{ex.Message}", 
+                    "Lỗi", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error
+                );
+            }
+            
+            Application.Run(new LoaiSan());
+
         }
     }
 }
