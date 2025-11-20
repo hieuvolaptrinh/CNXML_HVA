@@ -34,4 +34,32 @@ F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\C
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Matches.xml
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Orders.xml
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Users.xml
->>>>>>> hieuvo
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.AssemblyReference.cache
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe.config
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.ChiNhanh.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DashBoard.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DatLich.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DungCu.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.FieldTypeEditForm.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.Form1.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.KhachHang.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.Login.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.Properties.Resources.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.San.resources
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.GenerateResource.cache
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.CoreCompileInputs.cache
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe
+D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.pdb
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Branches.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Customers.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\EquipmentMatch.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Equipments.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldEquipment.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Fields.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldTypes.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Matches.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Orders.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Users.xml
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe.config
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe
+D:\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.pdb

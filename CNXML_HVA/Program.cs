@@ -33,7 +33,7 @@ namespace CNXML_HVA
                 );
             }
             
-            Application.Run(new LoaiSan());
+            Application.Run(new DashBoard());
 
         }
     }
