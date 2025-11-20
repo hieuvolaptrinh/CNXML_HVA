@@ -746,5 +746,71 @@ namespace CNXML_HVA
                 throw new Exception($"Lỗi khi import XML: {ex.Message}");
             }
         }
+
+        private void dataGridViewBranches_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void tabPageBasicInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panelMain_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tabControlBranchInfo_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            TabPage tabPage = tabControlBranchInfo.TabPages[e.Index];
+            Rectangle tabBounds = tabControlBranchInfo.GetTabRect(e.Index);
+
+            // Màu nền cho tab
+            Brush backgroundBrush;
+            Brush textBrush;
+            Font tabFont;
+
+            if (e.Index == tabControlBranchInfo.SelectedIndex)
+            {
+                // Tab đang active - màu xanh lá
+                backgroundBrush = new SolidBrush(Color.FromArgb(76, 175, 80));
+                textBrush = new SolidBrush(Color.White);
+                tabFont = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            }
+            else
+            {
+                // Tab không active - màu xám nhạt
+                backgroundBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
+                textBrush = new SolidBrush(Color.FromArgb(27, 94, 32));
+                tabFont = new Font("Segoe UI", 9.5F, FontStyle.Regular);
+            }
+
+            // Vẽ nền tab
+            g.FillRectangle(backgroundBrush, tabBounds);
+
+            // Vẽ viền dưới cho tab active
+            if (e.Index == tabControlBranchInfo.SelectedIndex)
+            {
+                Pen borderPen = new Pen(Color.FromArgb(56, 142, 60), 3);
+                g.DrawLine(borderPen, tabBounds.Left, tabBounds.Bottom - 1, 
+                    tabBounds.Right, tabBounds.Bottom - 1);
+                borderPen.Dispose();
+            }
+
+            // Vẽ text tab ở giữa
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+            
+            g.DrawString(tabPage.Text, tabFont, textBrush, tabBounds, stringFormat);
+
+            // Dispose resources
+            backgroundBrush.Dispose();
+            textBrush.Dispose();
+            stringFormat.Dispose();
+        }
     }
 }

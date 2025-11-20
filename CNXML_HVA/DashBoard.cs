@@ -23,6 +23,7 @@ namespace CNXML_HVA
         private Dictionary<Label, int> currentValues = new Dictionary<Label, int>();
         private Dictionary<Label, decimal> targetDecimalValues = new Dictionary<Label, decimal>();
         private Dictionary<Label, decimal> currentDecimalValues = new Dictionary<Label, decimal>();
+        private Form currentChildForm = null;
 
         public DashBoard()
         {
@@ -33,24 +34,17 @@ namespace CNXML_HVA
         private void DashBoard_Load(object sender, EventArgs e)
         {
             timerClock.Start();
-            UpdateClock();
+ 
             ApplyModernStyles();
             PrepareAnimations();
             LoadCounters();
             LoadRevenueStats();
             UpdateChart();
             LoadRecentActivities();
+            ShowDashboardContent(true); // Hiển thị nội dung dashboard mặc định
         }
 
-        private void timerClock_Tick(object sender, EventArgs e)
-        {
-            UpdateClock();
-        }
 
-        private void UpdateClock()
-        {
-            lblClock.Text = "🕐 " + DateTime.Now.ToString("dddd, dd/MM/yyyy HH:mm:ss");
-        }
 
         private void LoadCounters()
         {
@@ -634,60 +628,48 @@ namespace CNXML_HVA
 
         private void btnChiNhanh_Click(object sender, EventArgs e)
         {
-            using (var f = new ChiNhanh())
-            {
-                f.ShowDialog();
-            }
-            LoadCounters();
-            UpdateChart();
+            LoadFormIntoPanel(new ChiNhanh());
         }
 
         private void btnSan_Click(object sender, EventArgs e)
         {
-            using (var f = new San())
-            {
-                f.ShowDialog();
-            }
-            LoadCounters();
-            UpdateChart();
+            LoadFormIntoPanel(new San());
         }
 
         private void btnLoaiSan_Click(object sender, EventArgs e)
         {
-            using (var f = new LoaiSan())
-            {
-                f.ShowDialog();
-            }
-            LoadCounters();
-            UpdateChart();
+            LoadFormIntoPanel(new LoaiSan());
         }
 
         private void btnDungCu_Click(object sender, EventArgs e)
         {
-            using (var f = new DungCu())
-            {
-                f.ShowDialog();
-            }
-            LoadCounters();
-            UpdateChart();
+            LoadFormIntoPanel(new DungCu());
         }
 
         private void btnKhachHang_Click(object sender, EventArgs e)
         {
-            using (var f = new KhachHang())
-            {
-                f.ShowDialog();
-            }
-            LoadCounters();
-            UpdateChart();
+            LoadFormIntoPanel(new KhachHang());
         }
 
         private void btnDatLich_Click(object sender, EventArgs e)
         {
-            using (var f = new DatLich())
+            LoadFormIntoPanel(new DatLich());
+        }
+
+        private void btnTrangChu_Click(object sender, EventArgs e)
+        {
+            // Đóng form con hiện tại nếu có
+            if (currentChildForm != null)
             {
-                f.ShowDialog();
+                currentChildForm.Close();
+                currentChildForm.Dispose();
+                currentChildForm = null;
             }
+
+            // Hiển thị lại nội dung dashboard
+            ShowDashboardContent(true);
+            
+            // Cập nhật dữ liệu
             LoadCounters();
             UpdateChart();
             LoadRevenueStats();
@@ -708,9 +690,80 @@ namespace CNXML_HVA
             this.Hide();
         }
 
-        private void panelContent_Paint(object sender, PaintEventArgs e)
+        // Phương thức để load form vào panel
+        private void LoadFormIntoPanel(Form childForm)
         {
-            // Event handler giữ nguyên từ code gốc
+            // Ẩn nội dung dashboard
+            ShowDashboardContent(false);
+
+            // Đóng form con hiện tại nếu có
+            if (currentChildForm != null)
+            {
+                currentChildForm.Close();
+                currentChildForm.Dispose();
+            }
+
+            // Thiết lập form con mới
+            currentChildForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+
+            // Reset scroll position
+            panelContent.AutoScrollPosition = new Point(0, 0);
+
+            // Thêm form vào panel content
+            panelContent.Controls.Clear();
+            panelContent.Controls.Add(childForm);
+            childForm.BringToFront();
+            childForm.Show();
+
+            // Khi form con đóng, hiển thị lại dashboard và cập nhật dữ liệu
+            childForm.FormClosed += (s, args) =>
+            {
+                panelContent.Controls.Clear();
+                ShowDashboardContent(true);
+                LoadCounters();
+                UpdateChart();
+                LoadRevenueStats();
+                LoadRecentActivities();
+            };
+        }
+
+        // Phương thức để ẩn/hiện nội dung dashboard
+        private void ShowDashboardContent(bool show)
+        {
+            if (show)
+            {
+                // Đảm bảo các panel dashboard có trong panelContent
+                if (!panelContent.Controls.Contains(panelTiles))
+                {
+                    panelContent.Controls.Add(panelTiles);
+                    panelContent.Controls.Add(panelRevenueContainer);
+                    panelContent.Controls.Add(panelChartContainer);
+                    panelContent.Controls.Add(panelActivitiesContainer);
+                }
+                
+                panelTiles.Visible = true;
+                panelRevenueContainer.Visible = true;
+                panelChartContainer.Visible = true;
+                panelActivitiesContainer.Visible = true;
+                
+                // Reset scroll position
+                panelContent.AutoScrollPosition = new Point(0, 0);
+            }
+            else
+            {
+                panelTiles.Visible = false;
+                panelRevenueContainer.Visible = false;
+                panelChartContainer.Visible = false;
+                panelActivitiesContainer.Visible = false;
+            }
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

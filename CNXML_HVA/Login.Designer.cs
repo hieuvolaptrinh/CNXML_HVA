@@ -89,12 +89,13 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.lblTitle.Location = new System.Drawing.Point(0, 12);
+            this.lblTitle.Location = new System.Drawing.Point(8, 9);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(218, 50);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Đăng Nhập";
+            this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
             // 
             // lblSubtitleLogin
             // 

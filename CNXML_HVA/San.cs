@@ -472,7 +472,7 @@ namespace CNXML_HVA
                     try
                     {
                         var csv = new StringBuilder();
-                        csv.AppendLine("Mã sân,Tên sân,Loại sân,Trạng thái,Giá/giờ,Địa chỉ,Mô tả");
+                        csv.AppendLine("Mã sân,Tên sân,Loại sân,Trạng thái,Địa chỉ,Mô tả");
 
                         var currentList = bindingFields.DataSource as List<Field>;
                         if (currentList != null)
@@ -480,8 +480,7 @@ namespace CNXML_HVA
                             foreach (var field in currentList)
                             {
                                 csv.AppendLine($"\"{field.Id}\",\"{field.Name}\",\"{field.TypeName}\"," +
-                                    $"\"{field.Status}\",{field.PricePerHour}," +
-                                    $"\"{field.Address}\",\"{field.Description}\"");
+                                    $"\"{field.Status}\",\"{field.Address}\",\"{field.Description}\"");
                             }
                         }
 

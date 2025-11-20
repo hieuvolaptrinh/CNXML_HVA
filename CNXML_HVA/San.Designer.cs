@@ -29,21 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblUserAvatar = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabFieldManagement = new System.Windows.Forms.TabPage();
-            this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.panelLeft = new System.Windows.Forms.Panel();
             this.dgvFields = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNextBooking = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -73,6 +70,8 @@
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.btnEditField = new System.Windows.Forms.Button();
             this.btnCloseDetail = new System.Windows.Forms.Button();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.panelLeft = new System.Windows.Forms.Panel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuItemAll = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,15 +81,12 @@
             this.panelHeader.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFieldManagement.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
-            this.splitContainer.Panel1.SuspendLayout();
-            this.splitContainer.Panel2.SuspendLayout();
-            this.splitContainer.SuspendLayout();
-            this.panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).BeginInit();
             this.panelToolbar.SuspendLayout();
             this.pnlFieldDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.SuspendLayout();
             this.contextMenuStatus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -103,7 +99,7 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1600, 74);
+            this.panelHeader.Size = new System.Drawing.Size(1400, 74);
             this.panelHeader.TabIndex = 0;
             // 
             // lblUserAvatar
@@ -140,100 +136,72 @@
             this.tabMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1600, 788);
+            this.tabMain.Size = new System.Drawing.Size(1400, 726);
             this.tabMain.TabIndex = 1;
             // 
             // tabFieldManagement
             // 
             this.tabFieldManagement.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabFieldManagement.Controls.Add(this.splitContainer);
+            this.tabFieldManagement.Controls.Add(this.dgvFields);
+            this.tabFieldManagement.Controls.Add(this.panelToolbar);
+            this.tabFieldManagement.Controls.Add(this.pnlFieldDetails);
             this.tabFieldManagement.Location = new System.Drawing.Point(4, 32);
             this.tabFieldManagement.Margin = new System.Windows.Forms.Padding(4);
             this.tabFieldManagement.Name = "tabFieldManagement";
             this.tabFieldManagement.Padding = new System.Windows.Forms.Padding(4);
-            this.tabFieldManagement.Size = new System.Drawing.Size(1592, 752);
+            this.tabFieldManagement.Size = new System.Drawing.Size(1392, 690);
             this.tabFieldManagement.TabIndex = 0;
             this.tabFieldManagement.Text = "🏟️ Quản lý Sân";
-            // 
-            // splitContainer
-            // 
-            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContainer.Location = new System.Drawing.Point(4, 4);
-            this.splitContainer.Margin = new System.Windows.Forms.Padding(4);
-            this.splitContainer.Name = "splitContainer";
-            // 
-            // splitContainer.Panel1
-            // 
-            this.splitContainer.Panel1.Controls.Add(this.panelLeft);
-            // 
-            // splitContainer.Panel2
-            // 
-            this.splitContainer.Panel2.Controls.Add(this.pnlFieldDetails);
-            this.splitContainer.Size = new System.Drawing.Size(1584, 744);
-            this.splitContainer.SplitterDistance = 1216;
-            this.splitContainer.SplitterWidth = 5;
-            this.splitContainer.TabIndex = 0;
-            // 
-            // panelLeft
-            // 
-            this.panelLeft.Controls.Add(this.dgvFields);
-            this.panelLeft.Controls.Add(this.panelToolbar);
-            this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLeft.Location = new System.Drawing.Point(0, 0);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(4);
-            this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(1216, 744);
-            this.panelLeft.TabIndex = 0;
             // 
             // dgvFields
             // 
             this.dgvFields.AllowUserToAddRows = false;
             this.dgvFields.AllowUserToDeleteRows = false;
+            this.dgvFields.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvFields.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvFields.BackgroundColor = System.Drawing.Color.White;
             this.dgvFields.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvFields.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvFields.ColumnHeadersHeight = 40;
             this.dgvFields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colName,
             this.colType,
             this.colStatus,
-            this.colPrice,
             this.colNextBooking,
             this.colEdit,
             this.colDelete,
             this.colSchedule});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(247)))), ((int)(((byte)(230)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvFields.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvFields.Dock = System.Windows.Forms.DockStyle.Fill;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(247)))), ((int)(((byte)(230)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvFields.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvFields.EnableHeadersVisualStyles = false;
             this.dgvFields.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvFields.Location = new System.Drawing.Point(0, 98);
+            this.dgvFields.Location = new System.Drawing.Point(10, 150);
             this.dgvFields.Margin = new System.Windows.Forms.Padding(4);
             this.dgvFields.MultiSelect = false;
             this.dgvFields.Name = "dgvFields";
             this.dgvFields.ReadOnly = true;
             this.dgvFields.RowHeadersVisible = false;
             this.dgvFields.RowHeadersWidth = 51;
-            this.dgvFields.RowTemplate.Height = 45;
+            this.dgvFields.RowTemplate.Height = 40;
             this.dgvFields.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFields.Size = new System.Drawing.Size(1216, 646);
+            this.dgvFields.Size = new System.Drawing.Size(1000, 510);
             this.dgvFields.TabIndex = 1;
             this.dgvFields.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFields_CellContentClick);
             this.dgvFields.SelectionChanged += new System.EventHandler(this.dgvFields_SelectionChanged);
@@ -271,14 +239,6 @@
             this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
             this.colStatus.ReadOnly = true;
-            // 
-            // colPrice
-            // 
-            this.colPrice.DataPropertyName = "PricePerHour";
-            this.colPrice.HeaderText = "Giá/giờ";
-            this.colPrice.MinimumWidth = 6;
-            this.colPrice.Name = "colPrice";
-            this.colPrice.ReadOnly = true;
             // 
             // colNextBooking
             // 
@@ -320,6 +280,8 @@
             // 
             // panelToolbar
             // 
+            this.panelToolbar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelToolbar.BackColor = System.Drawing.Color.White;
             this.panelToolbar.Controls.Add(this.lblSearch);
             this.panelToolbar.Controls.Add(this.txtSearch);
@@ -328,12 +290,11 @@
             this.panelToolbar.Controls.Add(this.btnAddField);
             this.panelToolbar.Controls.Add(this.btnImportXml);
             this.panelToolbar.Controls.Add(this.btnExportCsv);
-            this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelToolbar.Location = new System.Drawing.Point(0, 0);
+            this.panelToolbar.Location = new System.Drawing.Point(10, 10);
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.panelToolbar.Size = new System.Drawing.Size(1216, 98);
+            this.panelToolbar.Size = new System.Drawing.Size(1000, 135);
             this.panelToolbar.TabIndex = 0;
             // 
             // lblSearch
@@ -341,7 +302,7 @@
             this.lblSearch.AutoSize = true;
             this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.lblSearch.Location = new System.Drawing.Point(5, 12);
+            this.lblSearch.Location = new System.Drawing.Point(13, 15);
             this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSearch.Name = "lblSearch";
             this.lblSearch.Size = new System.Drawing.Size(95, 20);
@@ -352,10 +313,10 @@
             // 
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(9, 39);
+            this.txtSearch.Location = new System.Drawing.Point(13, 42);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(332, 30);
+            this.txtSearch.Size = new System.Drawing.Size(280, 30);
             this.txtSearch.TabIndex = 1;
             this.txtSearch.Text = "Tìm theo tên, mã sân...";
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -367,10 +328,10 @@
             this.cmbTypeFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTypeFilter.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cmbTypeFilter.FormattingEnabled = true;
-            this.cmbTypeFilter.Location = new System.Drawing.Point(360, 47);
+            this.cmbTypeFilter.Location = new System.Drawing.Point(307, 42);
             this.cmbTypeFilter.Margin = new System.Windows.Forms.Padding(4);
             this.cmbTypeFilter.Name = "cmbTypeFilter";
-            this.cmbTypeFilter.Size = new System.Drawing.Size(199, 31);
+            this.cmbTypeFilter.Size = new System.Drawing.Size(220, 31);
             this.cmbTypeFilter.TabIndex = 2;
             this.cmbTypeFilter.SelectedIndexChanged += new System.EventHandler(this.cmbTypeFilter_SelectedIndexChanged);
             // 
@@ -381,7 +342,7 @@
             this.btnStatusFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStatusFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnStatusFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.btnStatusFilter.Location = new System.Drawing.Point(571, 47);
+            this.btnStatusFilter.Location = new System.Drawing.Point(540, 41);
             this.btnStatusFilter.Margin = new System.Windows.Forms.Padding(4);
             this.btnStatusFilter.Name = "btnStatusFilter";
             this.btnStatusFilter.Size = new System.Drawing.Size(160, 33);
@@ -392,16 +353,15 @@
             // 
             // btnAddField
             // 
-            this.btnAddField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddField.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.btnAddField.FlatAppearance.BorderSize = 0;
             this.btnAddField.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddField.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnAddField.ForeColor = System.Drawing.Color.White;
-            this.btnAddField.Location = new System.Drawing.Point(739, 34);
+            this.btnAddField.Location = new System.Drawing.Point(13, 85);
             this.btnAddField.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddField.Name = "btnAddField";
-            this.btnAddField.Size = new System.Drawing.Size(147, 43);
+            this.btnAddField.Size = new System.Drawing.Size(140, 38);
             this.btnAddField.TabIndex = 4;
             this.btnAddField.Text = "➕ Thêm sân";
             this.btnAddField.UseVisualStyleBackColor = false;
@@ -409,16 +369,15 @@
             // 
             // btnImportXml
             // 
-            this.btnImportXml.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportXml.BackColor = System.Drawing.Color.White;
             this.btnImportXml.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.btnImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImportXml.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnImportXml.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.btnImportXml.Location = new System.Drawing.Point(896, 39);
+            this.btnImportXml.Location = new System.Drawing.Point(163, 85);
             this.btnImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.btnImportXml.Name = "btnImportXml";
-            this.btnImportXml.Size = new System.Drawing.Size(147, 43);
+            this.btnImportXml.Size = new System.Drawing.Size(140, 38);
             this.btnImportXml.TabIndex = 5;
             this.btnImportXml.Text = "📥 Import XML";
             this.btnImportXml.UseVisualStyleBackColor = false;
@@ -426,16 +385,15 @@
             // 
             // btnExportCsv
             // 
-            this.btnExportCsv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExportCsv.BackColor = System.Drawing.Color.White;
             this.btnExportCsv.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.btnExportCsv.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportCsv.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnExportCsv.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.btnExportCsv.Location = new System.Drawing.Point(1052, 41);
+            this.btnExportCsv.Location = new System.Drawing.Point(313, 85);
             this.btnExportCsv.Margin = new System.Windows.Forms.Padding(4);
             this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(147, 43);
+            this.btnExportCsv.Size = new System.Drawing.Size(140, 38);
             this.btnExportCsv.TabIndex = 6;
             this.btnExportCsv.Text = "📤 Export CSV";
             this.btnExportCsv.UseVisualStyleBackColor = false;
@@ -443,6 +401,8 @@
             // 
             // pnlFieldDetails
             // 
+            this.pnlFieldDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFieldDetails.BackColor = System.Drawing.Color.White;
             this.pnlFieldDetails.Controls.Add(this.lblDetailTitle);
             this.pnlFieldDetails.Controls.Add(this.pictureBoxPhoto);
@@ -460,13 +420,12 @@
             this.pnlFieldDetails.Controls.Add(this.txtDescription);
             this.pnlFieldDetails.Controls.Add(this.btnEditField);
             this.pnlFieldDetails.Controls.Add(this.btnCloseDetail);
-            this.pnlFieldDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFieldDetails.Location = new System.Drawing.Point(0, 0);
+            this.pnlFieldDetails.Location = new System.Drawing.Point(1020, 10);
             this.pnlFieldDetails.Margin = new System.Windows.Forms.Padding(4);
             this.pnlFieldDetails.Name = "pnlFieldDetails";
             this.pnlFieldDetails.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.pnlFieldDetails.Size = new System.Drawing.Size(363, 744);
-            this.pnlFieldDetails.TabIndex = 0;
+            this.pnlFieldDetails.Size = new System.Drawing.Size(350, 650);
+            this.pnlFieldDetails.TabIndex = 2;
             this.pnlFieldDetails.Visible = false;
             this.pnlFieldDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlFieldDetails_Paint);
             // 
@@ -485,10 +444,10 @@
             // pictureBoxPhoto
             // 
             this.pictureBoxPhoto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(31, 68);
+            this.pictureBoxPhoto.Location = new System.Drawing.Point(30, 85);
             this.pictureBoxPhoto.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(419, 196);
+            this.pictureBoxPhoto.Size = new System.Drawing.Size(270, 148);
             this.pictureBoxPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxPhoto.TabIndex = 1;
             this.pictureBoxPhoto.TabStop = false;
@@ -636,7 +595,7 @@
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ReadOnly = true;
             this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDescription.Size = new System.Drawing.Size(419, 67);
+            this.txtDescription.Size = new System.Drawing.Size(285, 67);
             this.txtDescription.TabIndex = 13;
             // 
             // btnEditField
@@ -646,10 +605,10 @@
             this.btnEditField.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditField.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEditField.ForeColor = System.Drawing.Color.White;
-            this.btnEditField.Location = new System.Drawing.Point(31, 671);
+            this.btnEditField.Location = new System.Drawing.Point(31, 665);
             this.btnEditField.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditField.Name = "btnEditField";
-            this.btnEditField.Size = new System.Drawing.Size(193, 43);
+            this.btnEditField.Size = new System.Drawing.Size(285, 38);
             this.btnEditField.TabIndex = 14;
             this.btnEditField.Text = "✏️ Chỉnh sửa";
             this.btnEditField.UseVisualStyleBackColor = false;
@@ -662,14 +621,28 @@
             this.btnCloseDetail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseDetail.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnCloseDetail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.btnCloseDetail.Location = new System.Drawing.Point(257, 671);
+            this.btnCloseDetail.Location = new System.Drawing.Point(50, 241);
             this.btnCloseDetail.Margin = new System.Windows.Forms.Padding(4);
             this.btnCloseDetail.Name = "btnCloseDetail";
-            this.btnCloseDetail.Size = new System.Drawing.Size(193, 43);
+            this.btnCloseDetail.Size = new System.Drawing.Size(235, 38);
             this.btnCloseDetail.TabIndex = 15;
             this.btnCloseDetail.Text = "✖️ Đóng";
             this.btnCloseDetail.UseVisualStyleBackColor = false;
             this.btnCloseDetail.Click += new System.EventHandler(this.btnCloseDetail_Click);
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer.Name = "splitContainer";
+            this.splitContainer.Size = new System.Drawing.Size(150, 100);
+            this.splitContainer.TabIndex = 0;
+            // 
+            // panelLeft
+            // 
+            this.panelLeft.Location = new System.Drawing.Point(0, 0);
+            this.panelLeft.Name = "panelLeft";
+            this.panelLeft.Size = new System.Drawing.Size(200, 100);
+            this.panelLeft.TabIndex = 0;
             // 
             // contextMenuStatus
             // 
@@ -714,8 +687,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1600, 862);
+            this.ClientSize = new System.Drawing.Size(1300, 700);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.panelHeader);
             this.KeyPreview = true;
@@ -729,17 +703,14 @@
             this.panelHeader.PerformLayout();
             this.tabMain.ResumeLayout(false);
             this.tabFieldManagement.ResumeLayout(false);
-            this.splitContainer.Panel1.ResumeLayout(false);
-            this.splitContainer.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
-            this.splitContainer.ResumeLayout(false);
-            this.panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFields)).EndInit();
             this.panelToolbar.ResumeLayout(false);
             this.panelToolbar.PerformLayout();
             this.pnlFieldDetails.ResumeLayout(false);
             this.pnlFieldDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
             this.contextMenuStatus.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -790,7 +761,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNextBooking;
         private System.Windows.Forms.DataGridViewButtonColumn colEdit;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;

@@ -4,18 +4,12 @@ using System.Reflection;
 
 namespace CNXML_HVA
 {
-    /// <summary>
-    /// Quản lý đường dẫn file XML trong AppData để ứng dụng có thể triển khai độc lập
-    /// </summary>
+     
     public static class DataPaths
     {
-        // Tên thư mục trong AppData - Sửa theo tên công ty/dự án của bạn
+         
         public static string AppFolderName => "CNXML_HVA\\Data";
-
-        /// <summary>
-        /// Lấy đường dẫn thư mục AppData của ứng dụng
-        /// Ví dụ: C:\Users\YourName\AppData\Roaming\CNXML_HVA\Data
-        /// </summary>
+ 
         public static string GetAppDataFolder()
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -29,23 +23,18 @@ namespace CNXML_HVA
             
             return folder;
         }
-
-        /// <summary>
-        /// Lấy đường dẫn đầy đủ của file XML trong AppData
-        /// </summary>
+ 
         public static string GetXmlFilePath(string filename)
         {
             return Path.Combine(GetAppDataFolder(), filename);
         }
 
-        /// <summary>
-        /// Sao chép file XML mẫu từ thư mục Templates vào AppData khi lần đầu chạy
-        /// </summary>
+        
         public static void InitializeXmlFile(string filename)
         {
             string targetPath = GetXmlFilePath(filename);
             
-            // Nếu file đã tồn tại trong AppData, bỏ qua
+             
             if (File.Exists(targetPath))
             {
                 return;
@@ -73,9 +62,7 @@ namespace CNXML_HVA
             CreateEmptyXmlFile(filename, targetPath);
         }
 
-        /// <summary>
-        /// Tạo file XML rỗng với cấu trúc cơ bản
-        /// </summary>
+        
         private static void CreateEmptyXmlFile(string filename, string targetPath)
         {
             string rootElement = GetRootElementName(filename);
@@ -84,14 +71,12 @@ namespace CNXML_HVA
             File.WriteAllText(targetPath, xmlContent, System.Text.Encoding.UTF8);
         }
 
-        /// <summary>
-        /// Xác định tên root element dựa trên tên file
-        /// </summary>
+        
         private static string GetRootElementName(string filename)
         {
             string name = Path.GetFileNameWithoutExtension(filename);
             
-            // Mapping tên file sang tên root element
+             
             switch (name)
             {
                 case "Fields": return "fields";
@@ -107,10 +92,7 @@ namespace CNXML_HVA
                 default: return "data";
             }
         }
-
-        /// <summary>
-        /// Khởi tạo tất cả file XML cần thiết khi ứng dụng chạy lần đầu
-        /// </summary>
+ 
         public static void InitializeAllXmlFiles()
         {
             string[] xmlFiles = new[]

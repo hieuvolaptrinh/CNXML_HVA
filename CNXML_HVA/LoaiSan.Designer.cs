@@ -31,10 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.lblUserInfo = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabFieldTypes = new System.Windows.Forms.TabPage();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -47,11 +46,11 @@
             this.colSurfaceType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelToolbar = new System.Windows.Forms.Panel();
-            this.txtTypeSearch = new System.Windows.Forms.TextBox();
-            this.lblSearch = new System.Windows.Forms.Label();
-            this.btnDeleteType = new System.Windows.Forms.Button();
-            this.btnEditType = new System.Windows.Forms.Button();
             this.btnAddType = new System.Windows.Forms.Button();
+            this.btnEditType = new System.Windows.Forms.Button();
+            this.btnDeleteType = new System.Windows.Forms.Button();
+            this.lblSearch = new System.Windows.Forms.Label();
+            this.txtTypeSearch = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.panelHeader.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -68,20 +67,10 @@
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1200, 60);
+            this.panelHeader.Size = new System.Drawing.Size(1300, 74);
             this.panelHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(20, 15);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(310, 32);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "⚽ QUẢN LÝ LOẠI SÂN";
             // 
             // lblUserInfo
             // 
@@ -89,31 +78,47 @@
             this.lblUserInfo.AutoSize = true;
             this.lblUserInfo.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblUserInfo.ForeColor = System.Drawing.Color.White;
-            this.lblUserInfo.Location = new System.Drawing.Point(1030, 20);
+            this.lblUserInfo.Location = new System.Drawing.Point(1073, 25);
+            this.lblUserInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserInfo.Name = "lblUserInfo";
-            this.lblUserInfo.Size = new System.Drawing.Size(150, 20);
+            this.lblUserInfo.Size = new System.Drawing.Size(136, 25);
             this.lblUserInfo.TabIndex = 1;
             this.lblUserInfo.Text = "👤 Admin User";
+            this.lblUserInfo.Click += new System.EventHandler(this.lblUserInfo_Click);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(27, 18);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(344, 41);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "⚽ QUẢN LÝ LOẠI SÂN";
             // 
             // tabMain
             // 
             this.tabMain.Controls.Add(this.tabFieldTypes);
             this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabMain.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.tabMain.Location = new System.Drawing.Point(0, 60);
+            this.tabMain.Location = new System.Drawing.Point(0, 74);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1200, 640);
+            this.tabMain.Size = new System.Drawing.Size(1300, 626);
             this.tabMain.TabIndex = 1;
             // 
             // tabFieldTypes
             // 
             this.tabFieldTypes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(247)))));
             this.tabFieldTypes.Controls.Add(this.panelMain);
-            this.tabFieldTypes.Location = new System.Drawing.Point(4, 26);
+            this.tabFieldTypes.Location = new System.Drawing.Point(4, 32);
+            this.tabFieldTypes.Margin = new System.Windows.Forms.Padding(4);
             this.tabFieldTypes.Name = "tabFieldTypes";
-            this.tabFieldTypes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFieldTypes.Size = new System.Drawing.Size(1192, 610);
+            this.tabFieldTypes.Padding = new System.Windows.Forms.Padding(4);
+            this.tabFieldTypes.Size = new System.Drawing.Size(1292, 590);
             this.tabFieldTypes.TabIndex = 0;
             this.tabFieldTypes.Text = "📋 Quản lý Loại Sân";
             // 
@@ -122,9 +127,10 @@
             this.panelMain.Controls.Add(this.dgvFieldTypes);
             this.panelMain.Controls.Add(this.panelToolbar);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(3, 3);
+            this.panelMain.Location = new System.Drawing.Point(4, 4);
+            this.panelMain.Margin = new System.Windows.Forms.Padding(4);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1186, 604);
+            this.panelMain.Size = new System.Drawing.Size(1284, 582);
             this.panelMain.TabIndex = 0;
             // 
             // dgvFieldTypes
@@ -137,7 +143,7 @@
             this.dgvFieldTypes.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
             dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -163,22 +169,16 @@
             this.dgvFieldTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFieldTypes.EnableHeadersVisualStyles = false;
             this.dgvFieldTypes.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvFieldTypes.Location = new System.Drawing.Point(0, 70);
+            this.dgvFieldTypes.Location = new System.Drawing.Point(0, 86);
+            this.dgvFieldTypes.Margin = new System.Windows.Forms.Padding(4);
             this.dgvFieldTypes.MultiSelect = false;
             this.dgvFieldTypes.Name = "dgvFieldTypes";
             this.dgvFieldTypes.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFieldTypes.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvFieldTypes.RowHeadersVisible = false;
+            this.dgvFieldTypes.RowHeadersWidth = 51;
             this.dgvFieldTypes.RowTemplate.Height = 40;
             this.dgvFieldTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFieldTypes.Size = new System.Drawing.Size(1186, 534);
+            this.dgvFieldTypes.Size = new System.Drawing.Size(1284, 496);
             this.dgvFieldTypes.TabIndex = 1;
             this.dgvFieldTypes.SelectionChanged += new System.EventHandler(this.dgvFieldTypes_SelectionChanged);
             this.dgvFieldTypes.DoubleClick += new System.EventHandler(this.dgvFieldTypes_DoubleClick);
@@ -188,6 +188,7 @@
             this.colId.DataPropertyName = "Id";
             this.colId.FillWeight = 80F;
             this.colId.HeaderText = "Mã Loại";
+            this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             // 
@@ -196,6 +197,7 @@
             this.colName.DataPropertyName = "Name";
             this.colName.FillWeight = 120F;
             this.colName.HeaderText = "Tên Loại";
+            this.colName.MinimumWidth = 6;
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
             // 
@@ -204,6 +206,7 @@
             this.colDescription.DataPropertyName = "Description";
             this.colDescription.FillWeight = 180F;
             this.colDescription.HeaderText = "Mô Tả";
+            this.colDescription.MinimumWidth = 6;
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
             // 
@@ -211,6 +214,7 @@
             // 
             this.colCapacity.DataPropertyName = "TotalCapacity";
             this.colCapacity.HeaderText = "Sức Chứa";
+            this.colCapacity.MinimumWidth = 6;
             this.colCapacity.Name = "colCapacity";
             this.colCapacity.ReadOnly = true;
             // 
@@ -218,6 +222,7 @@
             // 
             this.colDefaultPrice.DataPropertyName = "BasePrice";
             this.colDefaultPrice.HeaderText = "Giá Mặc Định";
+            this.colDefaultPrice.MinimumWidth = 6;
             this.colDefaultPrice.Name = "colDefaultPrice";
             this.colDefaultPrice.ReadOnly = true;
             // 
@@ -225,6 +230,7 @@
             // 
             this.colSurfaceType.DataPropertyName = "SurfaceType";
             this.colSurfaceType.HeaderText = "Loại Bề Mặt";
+            this.colSurfaceType.MinimumWidth = 6;
             this.colSurfaceType.Name = "colSurfaceType";
             this.colSurfaceType.ReadOnly = true;
             // 
@@ -232,6 +238,7 @@
             // 
             this.colStatus.DataPropertyName = "Status";
             this.colStatus.HeaderText = "Trạng Thái";
+            this.colStatus.MinimumWidth = 6;
             this.colStatus.Name = "colStatus";
             this.colStatus.ReadOnly = true;
             // 
@@ -245,34 +252,12 @@
             this.panelToolbar.Controls.Add(this.txtTypeSearch);
             this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelToolbar.Location = new System.Drawing.Point(0, 0);
+            this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
-            this.panelToolbar.Padding = new System.Windows.Forms.Padding(15, 10, 15, 10);
-            this.panelToolbar.Size = new System.Drawing.Size(1186, 70);
+            this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 12, 20, 12);
+            this.panelToolbar.Size = new System.Drawing.Size(1284, 86);
             this.panelToolbar.TabIndex = 0;
-            // 
-            // txtTypeSearch
-            // 
-            this.txtTypeSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.txtTypeSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtTypeSearch.Location = new System.Drawing.Point(18, 33);
-            this.txtTypeSearch.Name = "txtTypeSearch";
-            this.txtTypeSearch.Size = new System.Drawing.Size(300, 25);
-            this.txtTypeSearch.TabIndex = 1;
-            this.txtTypeSearch.Text = "Tìm loại sân...";
-            this.txtTypeSearch.Enter += new System.EventHandler(this.txtTypeSearch_Enter);
-            this.txtTypeSearch.Leave += new System.EventHandler(this.txtTypeSearch_Leave);
-            this.txtTypeSearch.TextChanged += new System.EventHandler(this.txtTypeSearch_TextChanged);
-            // 
-            // lblSearch
-            // 
-            this.lblSearch.AutoSize = true;
-            this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.lblSearch.Location = new System.Drawing.Point(18, 13);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(62, 15);
-            this.lblSearch.TabIndex = 0;
-            this.lblSearch.Text = "🔍 Tìm kiếm";
+            this.panelToolbar.Paint += new System.Windows.Forms.PaintEventHandler(this.panelToolbar_Paint);
             // 
             // btnAddType
             // 
@@ -282,9 +267,10 @@
             this.btnAddType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnAddType.ForeColor = System.Drawing.Color.White;
-            this.btnAddType.Location = new System.Drawing.Point(854, 23);
+            this.btnAddType.Location = new System.Drawing.Point(842, 28);
+            this.btnAddType.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddType.Name = "btnAddType";
-            this.btnAddType.Size = new System.Drawing.Size(100, 35);
+            this.btnAddType.Size = new System.Drawing.Size(133, 43);
             this.btnAddType.TabIndex = 2;
             this.btnAddType.Text = "➕ Thêm";
             this.btnAddType.UseVisualStyleBackColor = false;
@@ -298,9 +284,10 @@
             this.btnEditType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEditType.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnEditType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            this.btnEditType.Location = new System.Drawing.Point(966, 23);
+            this.btnEditType.Location = new System.Drawing.Point(991, 28);
+            this.btnEditType.Margin = new System.Windows.Forms.Padding(4);
             this.btnEditType.Name = "btnEditType";
-            this.btnEditType.Size = new System.Drawing.Size(100, 35);
+            this.btnEditType.Size = new System.Drawing.Size(133, 43);
             this.btnEditType.TabIndex = 3;
             this.btnEditType.Text = "✏️ Sửa";
             this.btnEditType.UseVisualStyleBackColor = false;
@@ -314,23 +301,52 @@
             this.btnDeleteType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteType.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnDeleteType.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
-            this.btnDeleteType.Location = new System.Drawing.Point(1078, 23);
+            this.btnDeleteType.Location = new System.Drawing.Point(1140, 28);
+            this.btnDeleteType.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteType.Name = "btnDeleteType";
-            this.btnDeleteType.Size = new System.Drawing.Size(100, 35);
+            this.btnDeleteType.Size = new System.Drawing.Size(133, 43);
             this.btnDeleteType.TabIndex = 4;
             this.btnDeleteType.Text = "🗑️ Xóa";
             this.btnDeleteType.UseVisualStyleBackColor = false;
             this.btnDeleteType.Click += new System.EventHandler(this.btnDeleteType_Click);
             // 
+            // lblSearch
+            // 
+            this.lblSearch.AutoSize = true;
+            this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            this.lblSearch.Location = new System.Drawing.Point(24, 16);
+            this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(95, 20);
+            this.lblSearch.TabIndex = 0;
+            this.lblSearch.Text = "🔍 Tìm kiếm";
+            // 
+            // txtTypeSearch
+            // 
+            this.txtTypeSearch.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.txtTypeSearch.ForeColor = System.Drawing.Color.Gray;
+            this.txtTypeSearch.Location = new System.Drawing.Point(24, 41);
+            this.txtTypeSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTypeSearch.Name = "txtTypeSearch";
+            this.txtTypeSearch.Size = new System.Drawing.Size(399, 30);
+            this.txtTypeSearch.TabIndex = 1;
+            this.txtTypeSearch.Text = "Tìm loại sân...";
+            this.txtTypeSearch.TextChanged += new System.EventHandler(this.txtTypeSearch_TextChanged);
+            this.txtTypeSearch.Enter += new System.EventHandler(this.txtTypeSearch_Enter);
+            this.txtTypeSearch.Leave += new System.EventHandler(this.txtTypeSearch_Leave);
+            // 
             // LoaiSan
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(251)))), ((int)(((byte)(247)))));
-            this.ClientSize = new System.Drawing.Size(1200, 700);
+            this.ClientSize = new System.Drawing.Size(1300, 700);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.panelHeader);
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "LoaiSan";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý Loại Sân";
@@ -345,8 +361,6 @@
             this.panelToolbar.ResumeLayout(false);
             this.panelToolbar.PerformLayout();
             this.ResumeLayout(false);
-            this.Load += new System.EventHandler(this.LoaiSan_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LoaiSan_KeyDown);
 
         }
 

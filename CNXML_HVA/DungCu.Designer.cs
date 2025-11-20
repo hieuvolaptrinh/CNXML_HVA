@@ -119,7 +119,7 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1867, 86);
+            this.panelHeader.Size = new System.Drawing.Size(1315, 69);
             this.panelHeader.TabIndex = 0;
             // 
             // labelTitle
@@ -143,11 +143,11 @@
             this.panelToolbar.Controls.Add(this.textBoxSearch);
             this.panelToolbar.Controls.Add(this.labelSearch);
             this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelToolbar.Location = new System.Drawing.Point(0, 86);
+            this.panelToolbar.Location = new System.Drawing.Point(0, 69);
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelToolbar.Size = new System.Drawing.Size(1867, 74);
+            this.panelToolbar.Size = new System.Drawing.Size(1315, 74);
             this.panelToolbar.TabIndex = 1;
             // 
             // buttonImportXml
@@ -158,7 +158,7 @@
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImportXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonImportXml.ForeColor = System.Drawing.Color.White;
-            this.buttonImportXml.Location = new System.Drawing.Point(1707, 17);
+            this.buttonImportXml.Location = new System.Drawing.Point(1155, 17);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
             this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
@@ -175,7 +175,7 @@
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportExcel.Location = new System.Drawing.Point(1547, 17);
+            this.buttonExportExcel.Location = new System.Drawing.Point(995, 17);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
             this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
@@ -227,11 +227,11 @@
             this.panelMain.Controls.Add(this.panelLeft);
             this.panelMain.Controls.Add(this.panelRight);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 160);
+            this.panelMain.Location = new System.Drawing.Point(0, 143);
             this.panelMain.Margin = new System.Windows.Forms.Padding(4);
             this.panelMain.Name = "panelMain";
             this.panelMain.Padding = new System.Windows.Forms.Padding(20, 12, 20, 18);
-            this.panelMain.Size = new System.Drawing.Size(1867, 825);
+            this.panelMain.Size = new System.Drawing.Size(1315, 557);
             this.panelMain.TabIndex = 2;
             // 
             // panelLeft
@@ -243,7 +243,7 @@
             this.panelLeft.Margin = new System.Windows.Forms.Padding(4);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Padding = new System.Windows.Forms.Padding(0, 0, 13, 0);
-            this.panelLeft.Size = new System.Drawing.Size(1160, 795);
+            this.panelLeft.Size = new System.Drawing.Size(608, 527);
             this.panelLeft.TabIndex = 0;
             // 
             // dataGridViewEquipment
@@ -268,7 +268,7 @@
             this.dataGridViewEquipment.RowHeadersWidth = 51;
             this.dataGridViewEquipment.RowTemplate.Height = 35;
             this.dataGridViewEquipment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewEquipment.Size = new System.Drawing.Size(1147, 721);
+            this.dataGridViewEquipment.Size = new System.Drawing.Size(595, 453);
             this.dataGridViewEquipment.TabIndex = 0;
             this.dataGridViewEquipment.SelectionChanged += new System.EventHandler(this.dataGridViewEquipment_SelectionChanged);
             // 
@@ -279,11 +279,11 @@
             this.panelGridActions.Controls.Add(this.buttonEdit);
             this.panelGridActions.Controls.Add(this.buttonAdd);
             this.panelGridActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelGridActions.Location = new System.Drawing.Point(0, 721);
+            this.panelGridActions.Location = new System.Drawing.Point(0, 453);
             this.panelGridActions.Margin = new System.Windows.Forms.Padding(4);
             this.panelGridActions.Name = "panelGridActions";
             this.panelGridActions.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.panelGridActions.Size = new System.Drawing.Size(1147, 74);
+            this.panelGridActions.Size = new System.Drawing.Size(595, 74);
             this.panelGridActions.TabIndex = 1;
             // 
             // buttonDelete
@@ -340,10 +340,10 @@
             this.panelRight.Controls.Add(this.tabControlEquipmentInfo);
             this.panelRight.Controls.Add(this.panelFormActions);
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelRight.Location = new System.Drawing.Point(1180, 12);
+            this.panelRight.Location = new System.Drawing.Point(628, 12);
             this.panelRight.Margin = new System.Windows.Forms.Padding(4);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(667, 795);
+            this.panelRight.Size = new System.Drawing.Size(667, 527);
             this.panelRight.TabIndex = 1;
             // 
             // tabControlEquipmentInfo
@@ -361,7 +361,7 @@
             this.tabControlEquipmentInfo.Name = "tabControlEquipmentInfo";
             this.tabControlEquipmentInfo.Padding = new System.Drawing.Point(10, 5);
             this.tabControlEquipmentInfo.SelectedIndex = 0;
-            this.tabControlEquipmentInfo.Size = new System.Drawing.Size(667, 721);
+            this.tabControlEquipmentInfo.Size = new System.Drawing.Size(667, 453);
             this.tabControlEquipmentInfo.TabIndex = 0;
             // 
             // tabPageBasicInfo
@@ -372,7 +372,7 @@
             this.tabPageBasicInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(659, 678);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(659, 410);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Cơ bản";
             // 
@@ -919,7 +919,7 @@
             this.panelFormActions.Controls.Add(this.buttonCancel);
             this.panelFormActions.Controls.Add(this.buttonSave);
             this.panelFormActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFormActions.Location = new System.Drawing.Point(0, 721);
+            this.panelFormActions.Location = new System.Drawing.Point(0, 453);
             this.panelFormActions.Margin = new System.Windows.Forms.Padding(4);
             this.panelFormActions.Name = "panelFormActions";
             this.panelFormActions.Padding = new System.Windows.Forms.Padding(20, 12, 20, 12);
@@ -964,8 +964,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
-            this.ClientSize = new System.Drawing.Size(1867, 985);
+            this.ClientSize = new System.Drawing.Size(1315, 700);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelToolbar);
             this.Controls.Add(this.panelHeader);

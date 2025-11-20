@@ -337,5 +337,15 @@ namespace CNXML_HVA
         }
 
         #endregion
+
+        private void panelToolbar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblUserInfo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

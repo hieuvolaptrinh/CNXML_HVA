@@ -39,15 +39,11 @@
             this.btnLoaiSan = new System.Windows.Forms.Button();
             this.btnSan = new System.Windows.Forms.Button();
             this.btnChiNhanh = new System.Windows.Forms.Button();
+            this.btnTrangChu = new System.Windows.Forms.Button();
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.lblAppName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
-            this.panelTop = new System.Windows.Forms.Panel();
-            this.panelTopRight = new System.Windows.Forms.Panel();
-            this.lblClock = new System.Windows.Forms.Label();
-            this.panelTopLeft = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelActivitiesContainer = new System.Windows.Forms.Panel();
             this.listBoxActivities = new System.Windows.Forms.ListBox();
@@ -93,9 +89,6 @@
             this.panelMenuItems.SuspendLayout();
             this.panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
-            this.panelTop.SuspendLayout();
-            this.panelTopRight.SuspendLayout();
-            this.panelTopLeft.SuspendLayout();
             this.panelContent.SuspendLayout();
             this.panelActivitiesContainer.SuspendLayout();
             this.panelChartContainer.SuspendLayout();
@@ -118,9 +111,9 @@
             this.panelLeft.Controls.Add(this.panelLogo);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(4);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(320, 886);
+            this.panelLeft.Size = new System.Drawing.Size(320, 933);
             this.panelLeft.TabIndex = 0;
             // 
             // panelMenuItems
@@ -132,12 +125,13 @@
             this.panelMenuItems.Controls.Add(this.btnLoaiSan);
             this.panelMenuItems.Controls.Add(this.btnSan);
             this.panelMenuItems.Controls.Add(this.btnChiNhanh);
+            this.panelMenuItems.Controls.Add(this.btnTrangChu);
             this.panelMenuItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMenuItems.Location = new System.Drawing.Point(0, 172);
-            this.panelMenuItems.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelMenuItems.Margin = new System.Windows.Forms.Padding(4);
             this.panelMenuItems.Name = "panelMenuItems";
             this.panelMenuItems.Padding = new System.Windows.Forms.Padding(20, 25, 20, 25);
-            this.panelMenuItems.Size = new System.Drawing.Size(320, 635);
+            this.panelMenuItems.Size = new System.Drawing.Size(320, 682);
             this.panelMenuItems.TabIndex = 9;
             // 
             // btnDatLich
@@ -149,8 +143,8 @@
             this.btnDatLich.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnDatLich.ForeColor = System.Drawing.Color.White;
             this.btnDatLich.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDatLich.Location = new System.Drawing.Point(20, 335);
-            this.btnDatLich.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDatLich.Location = new System.Drawing.Point(20, 397);
+            this.btnDatLich.Margin = new System.Windows.Forms.Padding(4);
             this.btnDatLich.Name = "btnDatLich";
             this.btnDatLich.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnDatLich.Size = new System.Drawing.Size(280, 62);
@@ -169,8 +163,8 @@
             this.btnKhachHang.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnKhachHang.ForeColor = System.Drawing.Color.White;
             this.btnKhachHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnKhachHang.Location = new System.Drawing.Point(20, 273);
-            this.btnKhachHang.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnKhachHang.Location = new System.Drawing.Point(20, 335);
+            this.btnKhachHang.Margin = new System.Windows.Forms.Padding(4);
             this.btnKhachHang.Name = "btnKhachHang";
             this.btnKhachHang.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnKhachHang.Size = new System.Drawing.Size(280, 62);
@@ -189,8 +183,8 @@
             this.btnDungCu.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnDungCu.ForeColor = System.Drawing.Color.White;
             this.btnDungCu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDungCu.Location = new System.Drawing.Point(20, 211);
-            this.btnDungCu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDungCu.Location = new System.Drawing.Point(20, 273);
+            this.btnDungCu.Margin = new System.Windows.Forms.Padding(4);
             this.btnDungCu.Name = "btnDungCu";
             this.btnDungCu.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnDungCu.Size = new System.Drawing.Size(280, 62);
@@ -209,8 +203,8 @@
             this.btnLoaiSan.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnLoaiSan.ForeColor = System.Drawing.Color.White;
             this.btnLoaiSan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoaiSan.Location = new System.Drawing.Point(20, 149);
-            this.btnLoaiSan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLoaiSan.Location = new System.Drawing.Point(20, 211);
+            this.btnLoaiSan.Margin = new System.Windows.Forms.Padding(4);
             this.btnLoaiSan.Name = "btnLoaiSan";
             this.btnLoaiSan.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnLoaiSan.Size = new System.Drawing.Size(280, 62);
@@ -229,8 +223,8 @@
             this.btnSan.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnSan.ForeColor = System.Drawing.Color.White;
             this.btnSan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSan.Location = new System.Drawing.Point(20, 87);
-            this.btnSan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSan.Location = new System.Drawing.Point(20, 149);
+            this.btnSan.Margin = new System.Windows.Forms.Padding(4);
             this.btnSan.Name = "btnSan";
             this.btnSan.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnSan.Size = new System.Drawing.Size(280, 62);
@@ -249,8 +243,8 @@
             this.btnChiNhanh.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnChiNhanh.ForeColor = System.Drawing.Color.White;
             this.btnChiNhanh.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnChiNhanh.Location = new System.Drawing.Point(20, 25);
-            this.btnChiNhanh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChiNhanh.Location = new System.Drawing.Point(20, 87);
+            this.btnChiNhanh.Margin = new System.Windows.Forms.Padding(4);
             this.btnChiNhanh.Name = "btnChiNhanh";
             this.btnChiNhanh.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
             this.btnChiNhanh.Size = new System.Drawing.Size(280, 62);
@@ -260,6 +254,26 @@
             this.btnChiNhanh.UseVisualStyleBackColor = false;
             this.btnChiNhanh.Click += new System.EventHandler(this.btnChiNhanh_Click);
             // 
+            // btnTrangChu
+            // 
+            this.btnTrangChu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnTrangChu.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnTrangChu.FlatAppearance.BorderSize = 0;
+            this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTrangChu.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.btnTrangChu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(35)))), ((int)(((byte)(126)))));
+            this.btnTrangChu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTrangChu.Location = new System.Drawing.Point(20, 25);
+            this.btnTrangChu.Margin = new System.Windows.Forms.Padding(4);
+            this.btnTrangChu.Name = "btnTrangChu";
+            this.btnTrangChu.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnTrangChu.Size = new System.Drawing.Size(280, 62);
+            this.btnTrangChu.TabIndex = 0;
+            this.btnTrangChu.Text = "🏠  Trang chủ";
+            this.btnTrangChu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTrangChu.UseVisualStyleBackColor = false;
+            this.btnTrangChu.Click += new System.EventHandler(this.btnTrangChu_Click);
+            // 
             // btnDangXuat
             // 
             this.btnDangXuat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
@@ -268,7 +282,7 @@
             this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
-            this.btnDangXuat.Location = new System.Drawing.Point(0, 807);
+            this.btnDangXuat.Location = new System.Drawing.Point(0, 854);
             this.btnDangXuat.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -285,7 +299,7 @@
             this.panelLogo.Controls.Add(this.picLogo);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelLogo.Location = new System.Drawing.Point(0, 0);
-            this.panelLogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelLogo.Margin = new System.Windows.Forms.Padding(4);
             this.panelLogo.Name = "panelLogo";
             this.panelLogo.Size = new System.Drawing.Size(320, 172);
             this.panelLogo.TabIndex = 8;
@@ -309,73 +323,12 @@
             this.picLogo.BackColor = System.Drawing.Color.ForestGreen;
             this.picLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.picLogo.Location = new System.Drawing.Point(0, 0);
-            this.picLogo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picLogo.Margin = new System.Windows.Forms.Padding(4);
             this.picLogo.Name = "picLogo";
             this.picLogo.Size = new System.Drawing.Size(320, 123);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picLogo.TabIndex = 0;
             this.picLogo.TabStop = false;
-            // 
-            // panelTop
-            // 
-            this.panelTop.BackColor = System.Drawing.Color.White;
-            this.panelTop.Controls.Add(this.panelTopRight);
-            this.panelTop.Controls.Add(this.panelTopLeft);
-            this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTop.Location = new System.Drawing.Point(320, 0);
-            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1387, 98);
-            this.panelTop.TabIndex = 1;
-            // 
-            // panelTopRight
-            // 
-            this.panelTopRight.Controls.Add(this.lblClock);
-            this.panelTopRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTopRight.Location = new System.Drawing.Point(854, 0);
-            this.panelTopRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panelTopRight.Name = "panelTopRight";
-            this.panelTopRight.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelTopRight.Size = new System.Drawing.Size(533, 98);
-            this.panelTopRight.TabIndex = 1;
-            // 
-            // lblClock
-            // 
-            this.lblClock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(248)))), ((int)(((byte)(250)))));
-            this.lblClock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblClock.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
-            this.lblClock.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
-            this.lblClock.Location = new System.Drawing.Point(27, 25);
-            this.lblClock.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblClock.Name = "lblClock";
-            this.lblClock.Size = new System.Drawing.Size(479, 48);
-            this.lblClock.TabIndex = 1;
-            this.lblClock.Text = "🕐 --:--:--";
-            this.lblClock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panelTopLeft
-            // 
-            this.panelTopLeft.Controls.Add(this.lblTitle);
-            this.panelTopLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelTopLeft.Location = new System.Drawing.Point(0, 0);
-            this.panelTopLeft.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.panelTopLeft.Name = "panelTopLeft";
-            this.panelTopLeft.Padding = new System.Windows.Forms.Padding(40, 25, 27, 25);
-            this.panelTopLeft.Size = new System.Drawing.Size(853, 98);
-            this.panelTopLeft.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
-            this.lblTitle.Location = new System.Drawing.Point(40, 25);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(786, 48);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "📊 Tổng Quan Hệ Thống";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelContent
             // 
@@ -386,13 +339,11 @@
             this.panelContent.Controls.Add(this.panelRevenueContainer);
             this.panelContent.Controls.Add(this.panelTiles);
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(320, 98);
-            this.panelContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelContent.Location = new System.Drawing.Point(320, 0);
+            this.panelContent.Margin = new System.Windows.Forms.Padding(4);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(33, 25, 33, 25);
-            this.panelContent.Size = new System.Drawing.Size(1387, 788);
+            this.panelContent.Size = new System.Drawing.Size(1464, 933);
             this.panelContent.TabIndex = 2;
-            this.panelContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContent_Paint);
             // 
             // panelActivitiesContainer
             // 
@@ -400,10 +351,10 @@
             this.panelActivitiesContainer.Controls.Add(this.listBoxActivities);
             this.panelActivitiesContainer.Controls.Add(this.lblActivitiesTitle);
             this.panelActivitiesContainer.Location = new System.Drawing.Point(873, 332);
-            this.panelActivitiesContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelActivitiesContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelActivitiesContainer.Name = "panelActivitiesContainer";
             this.panelActivitiesContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelActivitiesContainer.Size = new System.Drawing.Size(480, 431);
+            this.panelActivitiesContainer.Size = new System.Drawing.Size(480, 504);
             this.panelActivitiesContainer.TabIndex = 3;
             // 
             // listBoxActivities
@@ -414,9 +365,9 @@
             this.listBoxActivities.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.listBoxActivities.ItemHeight = 21;
             this.listBoxActivities.Location = new System.Drawing.Point(27, 74);
-            this.listBoxActivities.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBoxActivities.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(426, 332);
+            this.listBoxActivities.Size = new System.Drawing.Size(426, 405);
             this.listBoxActivities.TabIndex = 1;
             // 
             // lblActivitiesTitle
@@ -438,10 +389,10 @@
             this.panelChartContainer.Controls.Add(this.chartOverview);
             this.panelChartContainer.Controls.Add(this.lblChartTitle);
             this.panelChartContainer.Location = new System.Drawing.Point(33, 332);
-            this.panelChartContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelChartContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelChartContainer.Name = "panelChartContainer";
             this.panelChartContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelChartContainer.Size = new System.Drawing.Size(827, 431);
+            this.panelChartContainer.Size = new System.Drawing.Size(827, 504);
             this.panelChartContainer.TabIndex = 1;
             // 
             // chartOverview
@@ -452,9 +403,9 @@
             legend2.Name = "Legend1";
             this.chartOverview.Legends.Add(legend2);
             this.chartOverview.Location = new System.Drawing.Point(27, 74);
-            this.chartOverview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chartOverview.Margin = new System.Windows.Forms.Padding(4);
             this.chartOverview.Name = "chartOverview";
-            this.chartOverview.Size = new System.Drawing.Size(773, 332);
+            this.chartOverview.Size = new System.Drawing.Size(773, 405);
             this.chartOverview.TabIndex = 5;
             this.chartOverview.Text = "chartOverview";
             // 
@@ -482,7 +433,7 @@
             this.panelRevenueContainer.Controls.Add(this.labelTotalRevenue);
             this.panelRevenueContainer.Controls.Add(this.lblTotalRevenue);
             this.panelRevenueContainer.Location = new System.Drawing.Point(33, 185);
-            this.panelRevenueContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelRevenueContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelRevenueContainer.Name = "panelRevenueContainer";
             this.panelRevenueContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
             this.panelRevenueContainer.Size = new System.Drawing.Size(1320, 135);
@@ -576,7 +527,7 @@
             this.panelTiles.Controls.Add(this.panelTile2);
             this.panelTiles.Controls.Add(this.panelTile1);
             this.panelTiles.Location = new System.Drawing.Point(33, 25);
-            this.panelTiles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTiles.Margin = new System.Windows.Forms.Padding(4);
             this.panelTiles.Name = "panelTiles";
             this.panelTiles.Size = new System.Drawing.Size(1320, 148);
             this.panelTiles.TabIndex = 0;
@@ -588,7 +539,7 @@
             this.panelTile6.Controls.Add(this.labelTile6);
             this.panelTile6.Controls.Add(this.panelTile6Icon);
             this.panelTile6.Location = new System.Drawing.Point(1093, 0);
-            this.panelTile6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile6.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile6.Name = "panelTile6";
             this.panelTile6.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile6.Size = new System.Drawing.Size(213, 135);
@@ -625,7 +576,7 @@
             this.panelTile6Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
             this.panelTile6Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile6Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile6Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile6Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile6Icon.Name = "panelTile6Icon";
             this.panelTile6Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile6Icon.TabIndex = 0;
@@ -637,7 +588,7 @@
             this.panelTile5.Controls.Add(this.labelTile5);
             this.panelTile5.Controls.Add(this.panelTile5Icon);
             this.panelTile5.Location = new System.Drawing.Point(875, 0);
-            this.panelTile5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile5.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile5.Name = "panelTile5";
             this.panelTile5.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile5.Size = new System.Drawing.Size(213, 135);
@@ -674,7 +625,7 @@
             this.panelTile5Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(224)))));
             this.panelTile5Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile5Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile5Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile5Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile5Icon.Name = "panelTile5Icon";
             this.panelTile5Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile5Icon.TabIndex = 0;
@@ -686,7 +637,7 @@
             this.panelTile4.Controls.Add(this.labelTile4);
             this.panelTile4.Controls.Add(this.panelTile4Icon);
             this.panelTile4.Location = new System.Drawing.Point(656, 0);
-            this.panelTile4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile4.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile4.Name = "panelTile4";
             this.panelTile4.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile4.Size = new System.Drawing.Size(213, 135);
@@ -723,7 +674,7 @@
             this.panelTile4Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(229)))), ((int)(((byte)(245)))));
             this.panelTile4Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile4Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile4Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile4Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile4Icon.Name = "panelTile4Icon";
             this.panelTile4Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile4Icon.TabIndex = 0;
@@ -735,7 +686,7 @@
             this.panelTile3.Controls.Add(this.labelTile3);
             this.panelTile3.Controls.Add(this.panelTile3Icon);
             this.panelTile3.Location = new System.Drawing.Point(437, 0);
-            this.panelTile3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile3.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile3.Name = "panelTile3";
             this.panelTile3.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile3.Size = new System.Drawing.Size(213, 135);
@@ -772,7 +723,7 @@
             this.panelTile3Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(224)))));
             this.panelTile3Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile3Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile3Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile3Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile3Icon.Name = "panelTile3Icon";
             this.panelTile3Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile3Icon.TabIndex = 0;
@@ -784,7 +735,7 @@
             this.panelTile2.Controls.Add(this.labelTile2);
             this.panelTile2.Controls.Add(this.panelTile2Icon);
             this.panelTile2.Location = new System.Drawing.Point(219, 0);
-            this.panelTile2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile2.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile2.Name = "panelTile2";
             this.panelTile2.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile2.Size = new System.Drawing.Size(213, 135);
@@ -821,7 +772,7 @@
             this.panelTile2Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
             this.panelTile2Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile2Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile2Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile2Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile2Icon.Name = "panelTile2Icon";
             this.panelTile2Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile2Icon.TabIndex = 0;
@@ -833,7 +784,7 @@
             this.panelTile1.Controls.Add(this.labelTile1);
             this.panelTile1.Controls.Add(this.panelTile1Icon);
             this.panelTile1.Location = new System.Drawing.Point(0, 0);
-            this.panelTile1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile1.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile1.Name = "panelTile1";
             this.panelTile1.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.panelTile1.Size = new System.Drawing.Size(213, 135);
@@ -870,26 +821,26 @@
             this.panelTile1Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(242)))), ((int)(((byte)(253)))));
             this.panelTile1Icon.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelTile1Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile1Icon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelTile1Icon.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile1Icon.Name = "panelTile1Icon";
             this.panelTile1Icon.Size = new System.Drawing.Size(67, 99);
             this.panelTile1Icon.TabIndex = 0;
             // 
             // timerClock
             // 
-            this.timerClock.Interval = 1000;
-            this.timerClock.Tick += new System.EventHandler(this.timerClock_Tick);
+
+
             // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1707, 886);
+            this.ClientSize = new System.Drawing.Size(1784, 933);
             this.Controls.Add(this.panelContent);
-            this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelLeft);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DashBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "⚽ Hệ thống quản lý sân bóng - Dashboard";
@@ -898,9 +849,6 @@
             this.panelMenuItems.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
-            this.panelTop.ResumeLayout(false);
-            this.panelTopRight.ResumeLayout(false);
-            this.panelTopLeft.ResumeLayout(false);
             this.panelContent.ResumeLayout(false);
             this.panelActivitiesContainer.ResumeLayout(false);
             this.panelChartContainer.ResumeLayout(false);
@@ -928,9 +876,6 @@
         private System.Windows.Forms.Button btnLoaiSan;
         private System.Windows.Forms.Button btnSan;
         private System.Windows.Forms.Button btnChiNhanh;
-        private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Label lblClock;
         private System.Windows.Forms.Panel panelContent;
         private System.Windows.Forms.Panel panelTile1;
         private System.Windows.Forms.Label lblCustomersCount;
@@ -949,8 +894,6 @@
         private System.Windows.Forms.Panel panelLogo;
         private System.Windows.Forms.Label lblAppName;
         private System.Windows.Forms.Panel panelMenuItems;
-        private System.Windows.Forms.Panel panelTopLeft;
-        private System.Windows.Forms.Panel panelTopRight;
         private System.Windows.Forms.Panel panelTiles;
         private System.Windows.Forms.Panel panelChartContainer;
         private System.Windows.Forms.Label lblChartTitle;
@@ -977,5 +920,6 @@
         private System.Windows.Forms.Panel panelActivitiesContainer;
         private System.Windows.Forms.Label lblActivitiesTitle;
         private System.Windows.Forms.ListBox listBoxActivities;
+        private System.Windows.Forms.Button btnTrangChu;
     }
 }
