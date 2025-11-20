@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelMenuItems = new System.Windows.Forms.Panel();
             this.btnDatLich = new System.Windows.Forms.Button();
@@ -63,27 +63,21 @@
             this.panelTile6 = new System.Windows.Forms.Panel();
             this.lblOrdersCount = new System.Windows.Forms.Label();
             this.labelTile6 = new System.Windows.Forms.Label();
-            this.panelTile6Icon = new System.Windows.Forms.Panel();
             this.panelTile5 = new System.Windows.Forms.Panel();
             this.lblBranchesCount = new System.Windows.Forms.Label();
             this.labelTile5 = new System.Windows.Forms.Label();
-            this.panelTile5Icon = new System.Windows.Forms.Panel();
             this.panelTile4 = new System.Windows.Forms.Panel();
             this.lblBookingsCount = new System.Windows.Forms.Label();
             this.labelTile4 = new System.Windows.Forms.Label();
-            this.panelTile4Icon = new System.Windows.Forms.Panel();
             this.panelTile3 = new System.Windows.Forms.Panel();
             this.lblEquipmentsCount = new System.Windows.Forms.Label();
             this.labelTile3 = new System.Windows.Forms.Label();
-            this.panelTile3Icon = new System.Windows.Forms.Panel();
             this.panelTile2 = new System.Windows.Forms.Panel();
             this.lblFieldsCount = new System.Windows.Forms.Label();
             this.labelTile2 = new System.Windows.Forms.Label();
-            this.panelTile2Icon = new System.Windows.Forms.Panel();
             this.panelTile1 = new System.Windows.Forms.Panel();
             this.lblCustomersCount = new System.Windows.Forms.Label();
             this.labelTile1 = new System.Windows.Forms.Label();
-            this.panelTile1Icon = new System.Windows.Forms.Panel();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.panelLeft.SuspendLayout();
             this.panelMenuItems.SuspendLayout();
@@ -256,12 +250,12 @@
             // 
             // btnTrangChu
             // 
-            this.btnTrangChu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnTrangChu.BackColor = System.Drawing.Color.Green;
             this.btnTrangChu.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnTrangChu.FlatAppearance.BorderSize = 0;
             this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTrangChu.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            this.btnTrangChu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(35)))), ((int)(((byte)(126)))));
+            this.btnTrangChu.ForeColor = System.Drawing.Color.White;
             this.btnTrangChu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTrangChu.Location = new System.Drawing.Point(20, 25);
             this.btnTrangChu.Margin = new System.Windows.Forms.Padding(4);
@@ -350,11 +344,11 @@
             this.panelActivitiesContainer.BackColor = System.Drawing.Color.White;
             this.panelActivitiesContainer.Controls.Add(this.listBoxActivities);
             this.panelActivitiesContainer.Controls.Add(this.lblActivitiesTitle);
-            this.panelActivitiesContainer.Location = new System.Drawing.Point(873, 332);
+            this.panelActivitiesContainer.Location = new System.Drawing.Point(764, 332);
             this.panelActivitiesContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelActivitiesContainer.Name = "panelActivitiesContainer";
             this.panelActivitiesContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelActivitiesContainer.Size = new System.Drawing.Size(480, 504);
+            this.panelActivitiesContainer.Size = new System.Drawing.Size(589, 504);
             this.panelActivitiesContainer.TabIndex = 3;
             // 
             // listBoxActivities
@@ -367,18 +361,18 @@
             this.listBoxActivities.Location = new System.Drawing.Point(27, 74);
             this.listBoxActivities.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(426, 405);
+            this.listBoxActivities.Size = new System.Drawing.Size(535, 405);
             this.listBoxActivities.TabIndex = 1;
             // 
             // lblActivitiesTitle
             // 
             this.lblActivitiesTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblActivitiesTitle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.lblActivitiesTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.lblActivitiesTitle.ForeColor = System.Drawing.Color.Green;
             this.lblActivitiesTitle.Location = new System.Drawing.Point(27, 25);
             this.lblActivitiesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblActivitiesTitle.Name = "lblActivitiesTitle";
-            this.lblActivitiesTitle.Size = new System.Drawing.Size(426, 49);
+            this.lblActivitiesTitle.Size = new System.Drawing.Size(535, 49);
             this.lblActivitiesTitle.TabIndex = 0;
             this.lblActivitiesTitle.Text = "📋 Hoạt Động Gần Đây";
             this.lblActivitiesTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -392,20 +386,20 @@
             this.panelChartContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelChartContainer.Name = "panelChartContainer";
             this.panelChartContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelChartContainer.Size = new System.Drawing.Size(827, 504);
+            this.panelChartContainer.Size = new System.Drawing.Size(723, 504);
             this.panelChartContainer.TabIndex = 1;
             // 
             // chartOverview
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartOverview.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this.chartOverview.ChartAreas.Add(chartArea1);
             this.chartOverview.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this.chartOverview.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this.chartOverview.Legends.Add(legend1);
             this.chartOverview.Location = new System.Drawing.Point(27, 74);
             this.chartOverview.Margin = new System.Windows.Forms.Padding(4);
             this.chartOverview.Name = "chartOverview";
-            this.chartOverview.Size = new System.Drawing.Size(773, 405);
+            this.chartOverview.Size = new System.Drawing.Size(669, 405);
             this.chartOverview.TabIndex = 5;
             this.chartOverview.Text = "chartOverview";
             // 
@@ -413,11 +407,11 @@
             // 
             this.lblChartTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblChartTitle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.lblChartTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.lblChartTitle.ForeColor = System.Drawing.Color.Green;
             this.lblChartTitle.Location = new System.Drawing.Point(27, 25);
             this.lblChartTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblChartTitle.Name = "lblChartTitle";
-            this.lblChartTitle.Size = new System.Drawing.Size(773, 49);
+            this.lblChartTitle.Size = new System.Drawing.Size(669, 49);
             this.lblChartTitle.TabIndex = 4;
             this.lblChartTitle.Text = "📈 Biểu Đồ Thống Kê";
             this.lblChartTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -537,7 +531,6 @@
             this.panelTile6.BackColor = System.Drawing.Color.White;
             this.panelTile6.Controls.Add(this.lblOrdersCount);
             this.panelTile6.Controls.Add(this.labelTile6);
-            this.panelTile6.Controls.Add(this.panelTile6Icon);
             this.panelTile6.Location = new System.Drawing.Point(1093, 0);
             this.panelTile6.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile6.Name = "panelTile6";
@@ -553,7 +546,7 @@
             this.lblOrdersCount.Location = new System.Drawing.Point(20, 56);
             this.lblOrdersCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblOrdersCount.Name = "lblOrdersCount";
-            this.lblOrdersCount.Size = new System.Drawing.Size(106, 61);
+            this.lblOrdersCount.Size = new System.Drawing.Size(173, 61);
             this.lblOrdersCount.TabIndex = 2;
             this.lblOrdersCount.Text = "0";
             this.lblOrdersCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -562,31 +555,20 @@
             // 
             this.labelTile6.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile6.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile6.ForeColor = System.Drawing.Color.Green;
             this.labelTile6.Location = new System.Drawing.Point(20, 18);
             this.labelTile6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile6.Name = "labelTile6";
-            this.labelTile6.Size = new System.Drawing.Size(106, 38);
+            this.labelTile6.Size = new System.Drawing.Size(173, 38);
             this.labelTile6.TabIndex = 1;
             this.labelTile6.Text = "🛒 Đơn hàng";
             this.labelTile6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile6Icon
-            // 
-            this.panelTile6Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
-            this.panelTile6Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile6Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile6Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile6Icon.Name = "panelTile6Icon";
-            this.panelTile6Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile6Icon.TabIndex = 0;
             // 
             // panelTile5
             // 
             this.panelTile5.BackColor = System.Drawing.Color.White;
             this.panelTile5.Controls.Add(this.lblBranchesCount);
             this.panelTile5.Controls.Add(this.labelTile5);
-            this.panelTile5.Controls.Add(this.panelTile5Icon);
             this.panelTile5.Location = new System.Drawing.Point(875, 0);
             this.panelTile5.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile5.Name = "panelTile5";
@@ -602,7 +584,7 @@
             this.lblBranchesCount.Location = new System.Drawing.Point(20, 56);
             this.lblBranchesCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBranchesCount.Name = "lblBranchesCount";
-            this.lblBranchesCount.Size = new System.Drawing.Size(106, 61);
+            this.lblBranchesCount.Size = new System.Drawing.Size(173, 61);
             this.lblBranchesCount.TabIndex = 2;
             this.lblBranchesCount.Text = "0";
             this.lblBranchesCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -611,31 +593,20 @@
             // 
             this.labelTile5.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile5.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile5.ForeColor = System.Drawing.Color.Green;
             this.labelTile5.Location = new System.Drawing.Point(20, 18);
             this.labelTile5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile5.Name = "labelTile5";
-            this.labelTile5.Size = new System.Drawing.Size(106, 38);
+            this.labelTile5.Size = new System.Drawing.Size(173, 38);
             this.labelTile5.TabIndex = 1;
             this.labelTile5.Text = "🏢 Chi nhánh";
             this.labelTile5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile5Icon
-            // 
-            this.panelTile5Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(224)))));
-            this.panelTile5Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile5Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile5Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile5Icon.Name = "panelTile5Icon";
-            this.panelTile5Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile5Icon.TabIndex = 0;
             // 
             // panelTile4
             // 
             this.panelTile4.BackColor = System.Drawing.Color.White;
             this.panelTile4.Controls.Add(this.lblBookingsCount);
             this.panelTile4.Controls.Add(this.labelTile4);
-            this.panelTile4.Controls.Add(this.panelTile4Icon);
             this.panelTile4.Location = new System.Drawing.Point(656, 0);
             this.panelTile4.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile4.Name = "panelTile4";
@@ -651,7 +622,7 @@
             this.lblBookingsCount.Location = new System.Drawing.Point(20, 56);
             this.lblBookingsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBookingsCount.Name = "lblBookingsCount";
-            this.lblBookingsCount.Size = new System.Drawing.Size(106, 61);
+            this.lblBookingsCount.Size = new System.Drawing.Size(173, 61);
             this.lblBookingsCount.TabIndex = 2;
             this.lblBookingsCount.Text = "0";
             this.lblBookingsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -660,31 +631,20 @@
             // 
             this.labelTile4.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile4.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile4.ForeColor = System.Drawing.Color.Green;
             this.labelTile4.Location = new System.Drawing.Point(20, 18);
             this.labelTile4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile4.Name = "labelTile4";
-            this.labelTile4.Size = new System.Drawing.Size(106, 38);
+            this.labelTile4.Size = new System.Drawing.Size(173, 38);
             this.labelTile4.TabIndex = 1;
             this.labelTile4.Text = "📅 Đặt lịch";
             this.labelTile4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile4Icon
-            // 
-            this.panelTile4Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(243)))), ((int)(((byte)(229)))), ((int)(((byte)(245)))));
-            this.panelTile4Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile4Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile4Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile4Icon.Name = "panelTile4Icon";
-            this.panelTile4Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile4Icon.TabIndex = 0;
             // 
             // panelTile3
             // 
             this.panelTile3.BackColor = System.Drawing.Color.White;
             this.panelTile3.Controls.Add(this.lblEquipmentsCount);
             this.panelTile3.Controls.Add(this.labelTile3);
-            this.panelTile3.Controls.Add(this.panelTile3Icon);
             this.panelTile3.Location = new System.Drawing.Point(437, 0);
             this.panelTile3.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile3.Name = "panelTile3";
@@ -700,7 +660,7 @@
             this.lblEquipmentsCount.Location = new System.Drawing.Point(20, 56);
             this.lblEquipmentsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEquipmentsCount.Name = "lblEquipmentsCount";
-            this.lblEquipmentsCount.Size = new System.Drawing.Size(106, 61);
+            this.lblEquipmentsCount.Size = new System.Drawing.Size(173, 61);
             this.lblEquipmentsCount.TabIndex = 2;
             this.lblEquipmentsCount.Text = "0";
             this.lblEquipmentsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -709,31 +669,20 @@
             // 
             this.labelTile3.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile3.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile3.ForeColor = System.Drawing.Color.Green;
             this.labelTile3.Location = new System.Drawing.Point(20, 18);
             this.labelTile3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile3.Name = "labelTile3";
-            this.labelTile3.Size = new System.Drawing.Size(106, 38);
+            this.labelTile3.Size = new System.Drawing.Size(173, 38);
             this.labelTile3.TabIndex = 1;
             this.labelTile3.Text = "⚽ Dụng cụ";
             this.labelTile3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile3Icon
-            // 
-            this.panelTile3Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(243)))), ((int)(((byte)(224)))));
-            this.panelTile3Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile3Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile3Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile3Icon.Name = "panelTile3Icon";
-            this.panelTile3Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile3Icon.TabIndex = 0;
             // 
             // panelTile2
             // 
             this.panelTile2.BackColor = System.Drawing.Color.White;
             this.panelTile2.Controls.Add(this.lblFieldsCount);
             this.panelTile2.Controls.Add(this.labelTile2);
-            this.panelTile2.Controls.Add(this.panelTile2Icon);
             this.panelTile2.Location = new System.Drawing.Point(219, 0);
             this.panelTile2.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile2.Name = "panelTile2";
@@ -749,7 +698,7 @@
             this.lblFieldsCount.Location = new System.Drawing.Point(20, 56);
             this.lblFieldsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFieldsCount.Name = "lblFieldsCount";
-            this.lblFieldsCount.Size = new System.Drawing.Size(106, 61);
+            this.lblFieldsCount.Size = new System.Drawing.Size(173, 61);
             this.lblFieldsCount.TabIndex = 2;
             this.lblFieldsCount.Text = "0";
             this.lblFieldsCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -758,31 +707,20 @@
             // 
             this.labelTile2.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile2.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile2.ForeColor = System.Drawing.Color.Green;
             this.labelTile2.Location = new System.Drawing.Point(20, 18);
             this.labelTile2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile2.Name = "labelTile2";
-            this.labelTile2.Size = new System.Drawing.Size(106, 38);
+            this.labelTile2.Size = new System.Drawing.Size(173, 38);
             this.labelTile2.TabIndex = 1;
             this.labelTile2.Text = "🏟️ Sân";
             this.labelTile2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile2Icon
-            // 
-            this.panelTile2Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(232)))), ((int)(((byte)(245)))), ((int)(((byte)(233)))));
-            this.panelTile2Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile2Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile2Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile2Icon.Name = "panelTile2Icon";
-            this.panelTile2Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile2Icon.TabIndex = 0;
             // 
             // panelTile1
             // 
             this.panelTile1.BackColor = System.Drawing.Color.White;
             this.panelTile1.Controls.Add(this.lblCustomersCount);
             this.panelTile1.Controls.Add(this.labelTile1);
-            this.panelTile1.Controls.Add(this.panelTile1Icon);
             this.panelTile1.Location = new System.Drawing.Point(0, 0);
             this.panelTile1.Margin = new System.Windows.Forms.Padding(4);
             this.panelTile1.Name = "panelTile1";
@@ -798,7 +736,7 @@
             this.lblCustomersCount.Location = new System.Drawing.Point(20, 56);
             this.lblCustomersCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCustomersCount.Name = "lblCustomersCount";
-            this.lblCustomersCount.Size = new System.Drawing.Size(106, 61);
+            this.lblCustomersCount.Size = new System.Drawing.Size(173, 61);
             this.lblCustomersCount.TabIndex = 2;
             this.lblCustomersCount.Text = "0";
             this.lblCustomersCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -807,29 +745,14 @@
             // 
             this.labelTile1.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTile1.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(117)))), ((int)(((byte)(117)))));
+            this.labelTile1.ForeColor = System.Drawing.Color.Green;
             this.labelTile1.Location = new System.Drawing.Point(20, 18);
             this.labelTile1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTile1.Name = "labelTile1";
-            this.labelTile1.Size = new System.Drawing.Size(106, 38);
+            this.labelTile1.Size = new System.Drawing.Size(173, 38);
             this.labelTile1.TabIndex = 1;
             this.labelTile1.Text = "👥 Khách hàng";
             this.labelTile1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelTile1Icon
-            // 
-            this.panelTile1Icon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(242)))), ((int)(((byte)(253)))));
-            this.panelTile1Icon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelTile1Icon.Location = new System.Drawing.Point(126, 18);
-            this.panelTile1Icon.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile1Icon.Name = "panelTile1Icon";
-            this.panelTile1Icon.Size = new System.Drawing.Size(67, 99);
-            this.panelTile1Icon.TabIndex = 0;
-            // 
-            // timerClock
-            // 
-
-
             // 
             // DashBoard
             // 
@@ -897,18 +820,12 @@
         private System.Windows.Forms.Panel panelTiles;
         private System.Windows.Forms.Panel panelChartContainer;
         private System.Windows.Forms.Label lblChartTitle;
-        private System.Windows.Forms.Panel panelTile1Icon;
-        private System.Windows.Forms.Panel panelTile2Icon;
-        private System.Windows.Forms.Panel panelTile3Icon;
-        private System.Windows.Forms.Panel panelTile4Icon;
         private System.Windows.Forms.Panel panelTile5;
         private System.Windows.Forms.Label lblBranchesCount;
         private System.Windows.Forms.Label labelTile5;
-        private System.Windows.Forms.Panel panelTile5Icon;
         private System.Windows.Forms.Panel panelTile6;
         private System.Windows.Forms.Label lblOrdersCount;
         private System.Windows.Forms.Label labelTile6;
-        private System.Windows.Forms.Panel panelTile6Icon;
         private System.Windows.Forms.Panel panelRevenueContainer;
         private System.Windows.Forms.Label lblRevenueTitle;
         private System.Windows.Forms.Label lblTotalRevenue;

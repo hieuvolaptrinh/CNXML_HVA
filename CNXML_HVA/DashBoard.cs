@@ -34,13 +34,13 @@ namespace CNXML_HVA
         private void DashBoard_Load(object sender, EventArgs e)
         {
             timerClock.Start();
- 
+            UpdateChart();
             ApplyModernStyles();
             PrepareAnimations();
             LoadCounters();
             LoadRevenueStats();
-            UpdateChart();
             LoadRecentActivities();
+            LoadCandlestickChart(); // Load biểu đồ nến doanh thu
             ShowDashboardContent(true); // Hiển thị nội dung dashboard mặc định
         }
 
@@ -217,61 +217,99 @@ namespace CNXML_HVA
         }
 
         private void LoadRecentActivities()
+{
+    try
+    {
+        listBoxActivities.Items.Clear();
+        var activities = new List<(DateTime dateTime, string text)>();
+
+        // Load bookings
+        string bookingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bookings.xml");
+        if (File.Exists(bookingsPath))
         {
-            try
+            var bookingsDoc = XDocument.Load(bookingsPath);
+            var bookings = bookingsDoc.Root.Elements("Booking")
+                .Take(10);
+
+            foreach (var booking in bookings)
             {
-                listBoxActivities.Items.Clear();
+                string customer = booking.Element("customer")?.Value ?? "N/A";
+                string field = booking.Element("field")?.Value ?? "N/A";
+                string dateStr = booking.Element("date")?.Value ?? "";
+                string timeStr = booking.Element("time")?.Value ?? "";
 
-                string bookingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bookings.xml");
-                if (File.Exists(bookingsPath))
+                // Parse date for sorting
+                if (DateTime.TryParse(dateStr, out DateTime bookingDate))
                 {
-                    var bookingsDoc = XDocument.Load(bookingsPath);
-                    var bookings = bookingsDoc.Root.Elements("Booking")
-                        .OrderByDescending(b => b.Attribute("id")?.Value)
-                        .Take(5);
-
-                    foreach (var booking in bookings)
-                    {
-                        string customer = booking.Element("customer")?.Value ?? "N/A";
-                        string field = booking.Element("field")?.Value ?? "N/A";
-                        string date = booking.Element("date")?.Value ?? "N/A";
-                        string time = booking.Element("time")?.Value ?? "N/A";
-
-                        listBoxActivities.Items.Add($"🏟️  {customer} đặt {field} - {date} {time}h");
-                    }
+                    string displayText = $"🏟️  ĐẶT SÂN";
+                    displayText += $"\n     {customer} • {field}";
+                    displayText += $"\n     📅 {dateStr} ⏰ {timeStr}h";
+                    
+                    activities.Add((bookingDate, displayText));
                 }
-
-                string ordersPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
-                if (File.Exists(ordersPath) && listBoxActivities.Items.Count < 10)
-                {
-                    var ordersDoc = XDocument.Load(ordersPath);
-                    var orders = ordersDoc.Root.Elements("order")
-                        .OrderByDescending(o => o.Element("order_date")?.Value)
-                        .Take(10 - listBoxActivities.Items.Count);
-
-                    foreach (var order in orders)
-                    {
-                        string orderId = order.Attribute("id")?.Value ?? "N/A";
-                        string amount = order.Element("total_amount")?.Value ?? "0";
-                        string status = order.Element("payment_status")?.Value ?? "N/A";
-                        string statusIcon = status == "Paid" ? "✅" : status == "Pending" ? "⏳" : "❌";
-
-                        decimal amt = decimal.Parse(amount);
-                        listBoxActivities.Items.Add($"{statusIcon}  Đơn {orderId} - {FormatCurrency(amt)} - {status}");
-                    }
-                }
-
-                if (listBoxActivities.Items.Count == 0)
-                {
-                    listBoxActivities.Items.Add("Chưa có hoạt động nào");
-                }
-            }
-            catch
-            {
-                listBoxActivities.Items.Clear();
-                listBoxActivities.Items.Add("Không thể tải dữ liệu");
             }
         }
+
+        // Load orders
+        string ordersPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+        if (File.Exists(ordersPath))
+        {
+            var ordersDoc = XDocument.Load(ordersPath);
+            var orders = ordersDoc.Root.Elements("order")
+                .Take(10);
+
+            foreach (var order in orders)
+            {
+                string orderId = order.Attribute("id")?.Value ?? "N/A";
+                string amount = order.Element("total_amount")?.Value ?? "0";
+                string status = order.Element("payment_status")?.Value ?? "N/A";
+                string dateStr = order.Element("order_date")?.Value ?? "";
+                
+                string statusIcon = status == "Paid" ? "✅" : status == "Pending" ? "⏳" : "❌";
+                string statusText = status == "Paid" ? "Đã thanh toán" : 
+                                   status == "Pending" ? "Chờ thanh toán" : "Thất bại";
+
+                if (DateTime.TryParse(dateStr, out DateTime orderDate))
+                {
+                    decimal amt = decimal.Parse(amount);
+                    string displayText = $"{statusIcon}  ĐơN HÀNG #{orderId}";
+                    displayText += $"\n     💰 {FormatCurrency(amt)}";
+                    displayText += $"\n     {statusText}";
+                    
+                    activities.Add((orderDate, displayText));
+                }
+            }
+        }
+
+        // Sort by date and take top 10
+        var sortedActivities = activities
+            .OrderByDescending(a => a.dateTime)
+            .Take(10);
+
+        // Add to listbox with separators
+        bool isFirst = true;
+        foreach (var activity in sortedActivities)
+        {
+            if (!isFirst)
+            {
+                listBoxActivities.Items.Add("─────────────────────────");
+            }
+            listBoxActivities.Items.Add(activity.text);
+            isFirst = false;
+        }
+
+        if (listBoxActivities.Items.Count == 0)
+        {
+            listBoxActivities.Items.Add("📭 Chưa có hoạt động nào");
+        }
+    }
+    catch (Exception ex)
+    {
+        listBoxActivities.Items.Clear();
+        listBoxActivities.Items.Add("❌ Không thể tải dữ liệu");
+        listBoxActivities.Items.Add($"    Lỗi: {ex.Message}");
+    }
+}
 
         private void UpdateChart()
         {
@@ -375,14 +413,6 @@ namespace CNXML_HVA
             SetRoundedCorners(panelRevenueContainer, 12);
             SetRoundedCorners(panelActivitiesContainer, 12);
             SetRoundedCorners(panelLogo, 0);
-
-            // Icon panels rounded
-            SetRoundedCorners(panelTile1Icon, 8);
-            SetRoundedCorners(panelTile2Icon, 8);
-            SetRoundedCorners(panelTile3Icon, 8);
-            SetRoundedCorners(panelTile4Icon, 8);
-            SetRoundedCorners(panelTile5Icon, 8);
-            SetRoundedCorners(panelTile6Icon, 8);
 
             // Style cho menu buttons
             StyleMenuButton(btnChiNhanh);
@@ -674,6 +704,7 @@ namespace CNXML_HVA
             UpdateChart();
             LoadRevenueStats();
             LoadRecentActivities();
+            LoadCandlestickChart(); // Cập nhật biểu đồ nến
         }
 
         private void btnDangXuat_Click(object sender, EventArgs e)
@@ -764,6 +795,88 @@ namespace CNXML_HVA
         private void lblTitle_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // Class để chứa dữ liệu nến
+        public class CandlestickData
+        {
+            public DateTime Date { get; set; }
+            public decimal Open { get; set; }
+            public decimal High { get; set; }
+            public decimal Low { get; set; }
+            public decimal Close { get; set; }
+        }
+
+        private void LoadCandlestickChart()
+        {
+            try
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+                
+                // Tạo dữ liệu candlestick
+                var candlestickData = new List<CandlestickData>();
+
+                if (File.Exists(path))
+                {
+                    var doc = XDocument.Load(path);
+                    var orders = doc.Root.Elements("order");
+
+                    // Nhóm doanh thu theo ngày
+                    var dailyRevenue = orders
+                        .Where(o => o.Element("payment_status")?.Value == "Paid")
+                        .GroupBy(o => DateTime.Parse(o.Element("order_date")?.Value ?? DateTime.Now.ToString()))
+                        .Select(g => new
+                        {
+                            Date = g.Key,
+                            Orders = g.ToList()
+                        })
+                        .OrderBy(x => x.Date)
+                        .ToList();
+
+                    foreach (var day in dailyRevenue)
+                    {
+                        var amounts = day.Orders
+                            .Select(o => decimal.Parse(o.Element("total_amount")?.Value ?? "0"))
+                            .ToList();
+
+                        if (amounts.Any())
+                        {
+                            candlestickData.Add(new CandlestickData
+                            {
+                                Date = day.Date,
+                                Open = amounts.First(),
+                                High = amounts.Max(),
+                                Low = amounts.Min(),
+                                Close = amounts.Last()
+                            });
+                        }
+                    }
+                }
+
+                // Nếu không có đủ dữ liệu, tạo dữ liệu mẫu
+                if (candlestickData.Count == 0)
+                {
+                    var today = DateTime.Now.Date;
+                    for (int i = 6; i >= 0; i--)
+                    {
+                        var date = today.AddDays(-i);
+                        var baseAmount = 300000 + (i * 50000);
+                        candlestickData.Add(new CandlestickData
+                        {
+                            Date = date,
+                            Open = baseAmount,
+                            High = baseAmount + 150000,
+                            Low = baseAmount - 50000,
+                            Close = baseAmount + 100000
+                        });
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải biểu đồ doanh thu: " + ex.Message + "\n" + ex.StackTrace, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

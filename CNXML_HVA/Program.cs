@@ -33,7 +33,7 @@ namespace CNXML_HVA
                 );
             }
             
-            Application.Run(new QuenMatKhau());
+            Application.Run(new DashBoard());
 
         }
     }
