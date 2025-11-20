@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "D:\\cnxml\\CNXML_HVA\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|d:\\cnxml\\cnxml_hva\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|D:\\cnxml\\CNXML_HVA\\cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|d:\\cnxml\\cnxml_hva\\cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|d:\\cnxml\\cnxml_hva\\cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|d:\\cnxml\\cnxml_hva\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +38,32 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DashBoard.cs",
+              "DocumentMoniker": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs",
+              "ViewState": "AgIAALkCAAAAAAAAAAAAwMoCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T10:56:40.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DashBoard.cs [Design]",
+              "DocumentMoniker": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T10:56:26.628Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "LoaiSan.cs [Design]",
               "DocumentMoniker": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs",
               "RelativeDocumentMoniker": "CNXML_HVA\\LoaiSan.cs",
@@ -48,7 +81,7 @@
               "RelativeDocumentMoniker": "CNXML_HVA\\Program.cs",
               "ToolTip": "D:\\cnxml\\CNXML_HVA\\CNXML_HVA\\Program.cs",
               "RelativeToolTip": "CNXML_HVA\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABcAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-20T10:47:03.311Z",
               "EditorCaption": ""

@@ -21,6 +21,8 @@ namespace CNXML_HVA
         private int animationProgress;
         private Dictionary<Label, int> targetValues = new Dictionary<Label, int>();
         private Dictionary<Label, int> currentValues = new Dictionary<Label, int>();
+        private Dictionary<Label, decimal> targetDecimalValues = new Dictionary<Label, decimal>();
+        private Dictionary<Label, decimal> currentDecimalValues = new Dictionary<Label, decimal>();
 
         public DashBoard()
         {
@@ -35,7 +37,9 @@ namespace CNXML_HVA
             ApplyModernStyles();
             PrepareAnimations();
             LoadCounters();
+            LoadRevenueStats();
             UpdateChart();
+            LoadRecentActivities();
         }
 
         private void timerClock_Tick(object sender, EventArgs e)
@@ -54,18 +58,24 @@ namespace CNXML_HVA
             int fields = CountRootChildren("Fields.xml");
             int equipments = CountRootChildren("Equipments.xml");
             int bookings = CountRootChildren("Bookings.xml");
+            int branches = CountRootChildren("Branches.xml");
+            int orders = CountRootChildren("Orders.xml");
 
             // Thiết lập giá trị đích cho animation
             targetValues[lblCustomersCount] = customers;
             targetValues[lblFieldsCount] = fields;
             targetValues[lblEquipmentsCount] = equipments;
             targetValues[lblBookingsCount] = bookings;
+            targetValues[lblBranchesCount] = branches;
+            targetValues[lblOrdersCount] = orders;
 
             // Khởi tạo giá trị hiện tại
             currentValues[lblCustomersCount] = 0;
             currentValues[lblFieldsCount] = 0;
             currentValues[lblEquipmentsCount] = 0;
             currentValues[lblBookingsCount] = 0;
+            currentValues[lblBranchesCount] = 0;
+            currentValues[lblOrdersCount] = 0;
 
             // Bắt đầu animation đếm số
             StartCounterAnimation();
@@ -114,6 +124,161 @@ namespace CNXML_HVA
             counterAnimationTimer.Start();
         }
 
+        private void LoadRevenueStats()
+        {
+            try
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+                if (!File.Exists(path))
+                {
+                    lblTotalRevenue.Text = "0 VNĐ";
+                    lblPaidRevenue.Text = "0 VNĐ";
+                    lblPendingRevenue.Text = "0 VNĐ";
+                    return;
+                }
+
+                var doc = XDocument.Load(path);
+                var orders = doc.Root.Elements("order");
+
+                decimal totalRevenue = 0;
+                decimal paidRevenue = 0;
+                decimal pendingRevenue = 0;
+
+                foreach (var order in orders)
+                {
+                    decimal amount = decimal.Parse(order.Element("total_amount")?.Value ?? "0");
+                    string paymentStatus = order.Element("payment_status")?.Value ?? "";
+
+                    totalRevenue += amount;
+
+                    if (paymentStatus == "Paid")
+                        paidRevenue += amount;
+                    else if (paymentStatus == "Pending")
+                        pendingRevenue += amount;
+                }
+
+                // Thiết lập giá trị đích cho animation
+                targetDecimalValues[lblTotalRevenue] = totalRevenue;
+                targetDecimalValues[lblPaidRevenue] = paidRevenue;
+                targetDecimalValues[lblPendingRevenue] = pendingRevenue;
+
+                currentDecimalValues[lblTotalRevenue] = 0;
+                currentDecimalValues[lblPaidRevenue] = 0;
+                currentDecimalValues[lblPendingRevenue] = 0;
+
+                StartRevenueAnimation();
+            }
+            catch
+            {
+                lblTotalRevenue.Text = "0 VNĐ";
+                lblPaidRevenue.Text = "0 VNĐ";
+                lblPendingRevenue.Text = "0 VNĐ";
+            }
+        }
+
+        private void StartRevenueAnimation()
+        {
+            Timer revenueTimer = new Timer();
+            revenueTimer.Interval = 30;
+            int step = 0;
+
+            revenueTimer.Tick += (s, e) =>
+            {
+                step++;
+                bool allComplete = true;
+
+                foreach (var kvp in targetDecimalValues)
+                {
+                    Label label = kvp.Key;
+                    decimal target = kvp.Value;
+                    decimal current = currentDecimalValues[label];
+
+                    if (current < target)
+                    {
+                        decimal increment = Math.Max(10000, (target - current) / 10);
+                        current = Math.Min(current + increment, target);
+                        currentDecimalValues[label] = current;
+                        label.Text = FormatCurrency(current);
+                        allComplete = false;
+                    }
+                }
+
+                if (allComplete || step > 60)
+                {
+                    foreach (var kvp in targetDecimalValues)
+                    {
+                        kvp.Key.Text = FormatCurrency(kvp.Value);
+                    }
+                    revenueTimer.Stop();
+                    revenueTimer.Dispose();
+                }
+            };
+
+            revenueTimer.Start();
+        }
+
+        private string FormatCurrency(decimal amount)
+        {
+            return amount.ToString("#,##0") + " VNĐ";
+        }
+
+        private void LoadRecentActivities()
+        {
+            try
+            {
+                listBoxActivities.Items.Clear();
+
+                string bookingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bookings.xml");
+                if (File.Exists(bookingsPath))
+                {
+                    var bookingsDoc = XDocument.Load(bookingsPath);
+                    var bookings = bookingsDoc.Root.Elements("Booking")
+                        .OrderByDescending(b => b.Attribute("id")?.Value)
+                        .Take(5);
+
+                    foreach (var booking in bookings)
+                    {
+                        string customer = booking.Element("customer")?.Value ?? "N/A";
+                        string field = booking.Element("field")?.Value ?? "N/A";
+                        string date = booking.Element("date")?.Value ?? "N/A";
+                        string time = booking.Element("time")?.Value ?? "N/A";
+
+                        listBoxActivities.Items.Add($"🏟️  {customer} đặt {field} - {date} {time}h");
+                    }
+                }
+
+                string ordersPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+                if (File.Exists(ordersPath) && listBoxActivities.Items.Count < 10)
+                {
+                    var ordersDoc = XDocument.Load(ordersPath);
+                    var orders = ordersDoc.Root.Elements("order")
+                        .OrderByDescending(o => o.Element("order_date")?.Value)
+                        .Take(10 - listBoxActivities.Items.Count);
+
+                    foreach (var order in orders)
+                    {
+                        string orderId = order.Attribute("id")?.Value ?? "N/A";
+                        string amount = order.Element("total_amount")?.Value ?? "0";
+                        string status = order.Element("payment_status")?.Value ?? "N/A";
+                        string statusIcon = status == "Paid" ? "✅" : status == "Pending" ? "⏳" : "❌";
+
+                        decimal amt = decimal.Parse(amount);
+                        listBoxActivities.Items.Add($"{statusIcon}  Đơn {orderId} - {FormatCurrency(amt)} - {status}");
+                    }
+                }
+
+                if (listBoxActivities.Items.Count == 0)
+                {
+                    listBoxActivities.Items.Add("Chưa có hoạt động nào");
+                }
+            }
+            catch
+            {
+                listBoxActivities.Items.Clear();
+                listBoxActivities.Items.Add("Không thể tải dữ liệu");
+            }
+        }
+
         private void UpdateChart()
         {
             chartOverview.Series.Clear();
@@ -142,7 +307,7 @@ namespace CNXML_HVA
 
             chartOverview.ChartAreas.Add(area);
 
-            // Tạo Series với gradient colors
+            // Tạo Series với green theme colors
             var series = new Series("Thống kê")
             {
                 ChartType = SeriesChartType.Column,
@@ -151,28 +316,32 @@ namespace CNXML_HVA
                 BorderWidth = 0
             };
 
-            // Thêm dữ liệu với màu sắc gradient riêng
+            // Thêm dữ liệu với màu sắc green theme
             var colors = new Color[]
             {
-                Color.FromArgb(33, 150, 243),   // Blue
-                Color.FromArgb(56, 142, 60),    // Green
-                Color.FromArgb(255, 152, 0),    // Orange
-                Color.FromArgb(156, 39, 176)    // Purple
+                Color.FromArgb(46, 125, 50),    // Dark Green
+                Color.FromArgb(67, 160, 71),    // Medium Green
+                Color.FromArgb(102, 187, 106),  // Light Green
+                Color.FromArgb(129, 199, 132),  // Lighter Green
+                Color.FromArgb(165, 214, 167),  // Pale Green
+                Color.FromArgb(56, 142, 60)     // Forest Green
             };
 
             series.Points.AddXY("Khách hàng", SafeParse(lblCustomersCount.Text));
             series.Points.AddXY("Sân", SafeParse(lblFieldsCount.Text));
             series.Points.AddXY("Dụng cụ", SafeParse(lblEquipmentsCount.Text));
             series.Points.AddXY("Đặt lịch", SafeParse(lblBookingsCount.Text));
+            series.Points.AddXY("Chi nhánh", SafeParse(lblBranchesCount.Text));
+            series.Points.AddXY("Đơn hàng", SafeParse(lblOrdersCount.Text));
 
             for (int i = 0; i < series.Points.Count; i++)
             {
-                series.Points[i].Color = colors[i];
-                series.Points[i].LabelForeColor = colors[i];
+                series.Points[i].Color = colors[i % colors.Length];
+                series.Points[i].LabelForeColor = colors[i % colors.Length];
                 series.Points[i].BorderWidth = 0;
             }
 
-            series["PixelPointWidth"] = "60";
+            series["PixelPointWidth"] = "50";
             chartOverview.Series.Add(series);
 
             // Loại bỏ legend
@@ -187,22 +356,30 @@ namespace CNXML_HVA
 
         private void ApplyModernStyles()
         {
-            // Form background
-            this.BackColor = Color.FromArgb(245, 248, 250);
+            // Form background - Light green tint
+            this.BackColor = Color.FromArgb(245, 251, 246);
 
             // Panel shadows - sử dụng Paint event
             AddShadowEffect(panelTile1);
             AddShadowEffect(panelTile2);
             AddShadowEffect(panelTile3);
             AddShadowEffect(panelTile4);
+            AddShadowEffect(panelTile5);
+            AddShadowEffect(panelTile6);
             AddShadowEffect(panelChartContainer);
+            AddShadowEffect(panelRevenueContainer);
+            AddShadowEffect(panelActivitiesContainer);
 
             // Rounded corners cho tiles
             SetRoundedCorners(panelTile1, 12);
             SetRoundedCorners(panelTile2, 12);
             SetRoundedCorners(panelTile3, 12);
             SetRoundedCorners(panelTile4, 12);
+            SetRoundedCorners(panelTile5, 12);
+            SetRoundedCorners(panelTile6, 12);
             SetRoundedCorners(panelChartContainer, 12);
+            SetRoundedCorners(panelRevenueContainer, 12);
+            SetRoundedCorners(panelActivitiesContainer, 12);
             SetRoundedCorners(panelLogo, 0);
 
             // Icon panels rounded
@@ -210,6 +387,8 @@ namespace CNXML_HVA
             SetRoundedCorners(panelTile2Icon, 8);
             SetRoundedCorners(panelTile3Icon, 8);
             SetRoundedCorners(panelTile4Icon, 8);
+            SetRoundedCorners(panelTile5Icon, 8);
+            SetRoundedCorners(panelTile6Icon, 8);
 
             // Style cho menu buttons
             StyleMenuButton(btnChiNhanh);
@@ -220,26 +399,28 @@ namespace CNXML_HVA
             StyleMenuButton(btnDatLich);
 
             // Logout button hover effect
-            btnDangXuat.MouseEnter += (s, e) => btnDangXuat.BackColor = Color.FromArgb(198, 40, 40);
-            btnDangXuat.MouseLeave += (s, e) => btnDangXuat.BackColor = Color.FromArgb(211, 47, 47);
+            btnDangXuat.MouseEnter += (s, e) => btnDangXuat.BackColor = Color.FromArgb(211, 47, 47);
+            btnDangXuat.MouseLeave += (s, e) => btnDangXuat.BackColor = Color.FromArgb(229, 57, 53);
 
             // Tile hover effects
             AddTileHoverEffect(panelTile1);
             AddTileHoverEffect(panelTile2);
             AddTileHoverEffect(panelTile3);
             AddTileHoverEffect(panelTile4);
+            AddTileHoverEffect(panelTile5);
+            AddTileHoverEffect(panelTile6);
         }
 
         private void StyleMenuButton(Button btn)
         {
             btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(63, 81, 181);
+            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(46, 125, 50);
             btn.Cursor = Cursors.Hand;
 
             // Hiệu ứng hover mượt mà
             btn.MouseEnter += (s, e) =>
             {
-                btn.BackColor = Color.FromArgb(63, 81, 181);
+                btn.BackColor = Color.FromArgb(46, 125, 50);
                 btn.ForeColor = Color.White;
             };
 
@@ -355,14 +536,22 @@ namespace CNXML_HVA
             panelTile2.Top += offset;
             panelTile3.Top += offset;
             panelTile4.Top += offset;
+            panelTile5.Top += offset;
+            panelTile6.Top += offset;
             panelChartContainer.Top += offset;
+            panelRevenueContainer.Top += offset;
+            panelActivitiesContainer.Top += offset;
 
             // Thiết lập opacity ban đầu (giới hạn trong WinForms)
             panelTile1.Visible = false;
             panelTile2.Visible = false;
             panelTile3.Visible = false;
             panelTile4.Visible = false;
+            panelTile5.Visible = false;
+            panelTile6.Visible = false;
             panelChartContainer.Visible = false;
+            panelRevenueContainer.Visible = false;
+            panelActivitiesContainer.Visible = false;
 
             // Animation timer với easing
             animationTimer = new Timer();
@@ -375,14 +564,18 @@ namespace CNXML_HVA
                 animationProgress++;
 
                 // Hiện từng panel với delay
-                if (delayCounter == 5) panelTile1.Visible = true;
-                if (delayCounter == 10) panelTile2.Visible = true;
-                if (delayCounter == 15) panelTile3.Visible = true;
-                if (delayCounter == 20) panelTile4.Visible = true;
-                if (delayCounter == 25) panelChartContainer.Visible = true;
+                if (delayCounter == 3) panelTile1.Visible = true;
+                if (delayCounter == 6) panelTile2.Visible = true;
+                if (delayCounter == 9) panelTile3.Visible = true;
+                if (delayCounter == 12) panelTile4.Visible = true;
+                if (delayCounter == 15) panelTile5.Visible = true;
+                if (delayCounter == 18) panelTile6.Visible = true;
+                if (delayCounter == 21) panelRevenueContainer.Visible = true;
+                if (delayCounter == 24) panelChartContainer.Visible = true;
+                if (delayCounter == 27) panelActivitiesContainer.Visible = true;
 
                 // Ease-out animation
-                float easeProgress = 1 - (float)Math.Pow(1 - animationProgress / 25.0, 3);
+                float easeProgress = 1 - (float)Math.Pow(1 - animationProgress / 35.0, 3);
                 int dy = (int)(offset * (1 - easeProgress));
 
                 if (panelTile1.Visible && panelTile1.Top < 0)
@@ -393,17 +586,29 @@ namespace CNXML_HVA
                     panelTile3.Top = dy;
                 if (panelTile4.Visible && panelTile4.Top < 0)
                     panelTile4.Top = dy;
-                if (panelChartContainer.Visible && panelChartContainer.Top < 160)
-                    panelChartContainer.Top = 160 + dy;
+                if (panelTile5.Visible && panelTile5.Top < 0)
+                    panelTile5.Top = dy;
+                if (panelTile6.Visible && panelTile6.Top < 0)
+                    panelTile6.Top = dy;
+                if (panelRevenueContainer.Visible && panelRevenueContainer.Top < 150)
+                    panelRevenueContainer.Top = 150 + dy;
+                if (panelChartContainer.Visible && panelChartContainer.Top < 270)
+                    panelChartContainer.Top = 270 + dy;
+                if (panelActivitiesContainer.Visible && panelActivitiesContainer.Top < 270)
+                    panelActivitiesContainer.Top = 270 + dy;
 
-                if (animationProgress >= 30)
+                if (animationProgress >= 40)
                 {
                     // Snap to final positions
                     panelTile1.Top = 0;
                     panelTile2.Top = 0;
                     panelTile3.Top = 0;
                     panelTile4.Top = 0;
-                    panelChartContainer.Top = 160;
+                    panelTile5.Top = 0;
+                    panelTile6.Top = 0;
+                    panelRevenueContainer.Top = 150;
+                    panelChartContainer.Top = 270;
+                    panelActivitiesContainer.Top = 270;
                     animationTimer.Stop();
                     animationTimer.Dispose();
                 }
@@ -431,7 +636,6 @@ namespace CNXML_HVA
         {
             using (var f = new ChiNhanh())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
@@ -442,7 +646,6 @@ namespace CNXML_HVA
         {
             using (var f = new San())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
@@ -453,7 +656,6 @@ namespace CNXML_HVA
         {
             using (var f = new LoaiSan())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
@@ -464,7 +666,6 @@ namespace CNXML_HVA
         {
             using (var f = new DungCu())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
@@ -475,7 +676,6 @@ namespace CNXML_HVA
         {
             using (var f = new KhachHang())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
@@ -486,32 +686,12 @@ namespace CNXML_HVA
         {
             using (var f = new DatLich())
             {
-                AddBackButton(f);
                 f.ShowDialog();
             }
             LoadCounters();
             UpdateChart();
-        }
-
-        private void AddBackButton(Form form)
-        {
-            var back = new Button();
-            back.Text = "← Quay về Dashboard";
-            back.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            back.BackColor = Color.FromArgb(240, 242, 245);
-            back.ForeColor = Color.FromArgb(66, 66, 66);
-            back.Dock = DockStyle.Top;
-            back.Height = 45;
-            back.FlatStyle = FlatStyle.Flat;
-            back.FlatAppearance.BorderSize = 0;
-            back.Cursor = Cursors.Hand;
-            back.Click += (s, e) => form.Close();
-
-            back.MouseEnter += (s, e) => back.BackColor = Color.FromArgb(230, 232, 235);
-            back.MouseLeave += (s, e) => back.BackColor = Color.FromArgb(240, 242, 245);
-
-            form.Controls.Add(back);
-            form.Controls.SetChildIndex(back, 0);
+            LoadRevenueStats();
+            LoadRecentActivities();
         }
 
         private void btnDangXuat_Click(object sender, EventArgs e)
