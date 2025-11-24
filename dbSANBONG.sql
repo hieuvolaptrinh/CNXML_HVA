@@ -234,6 +234,15 @@ CREATE TABLE Orders (
 );
 
 -- DATA MẪU
+-- Insert Branches first (required for Fields foreign key)
+INSERT INTO Branches (id, name, code, city, district, street, house_number, phone, email, manager_name, weekday_hours, weekend_hours, total_fields, established_date, monthly_revenue, staff_count, description, status)
+VALUES
+('B01', N'Chi nhánh Hà Nội', 'HN001', N'Hà Nội', N'Cầu Giấy', N'Trần Thái Tông', N'123', '0241234567', 'hanoi@sanbong.vn', N'Nguyễn Văn Tùng', '6:00-22:00', '5:00-23:00', 5, '2023-01-15', 150000000, 12, N'Chi nhánh trung tâm Hà Nội', 'Active'),
+
+('B02', N'Chi nhánh TP.HCM', 'HCM001', N'TP Hồ Chí Minh', N'Bình Thạnh', N'Xô Viết Nghệ Tĩnh', N'789', '0281234567', 'hcm@sanbong.vn', N'Trần Minh Khoa', '6:00-22:00', '5:00-23:00', 8, '2023-03-20', 250000000, 18, N'Chi nhánh trung tâm TP.HCM', 'Active'),
+
+('B03', N'Chi nhánh Hải Phòng', 'HP001', N'Hải Phòng', N'Lê Chân', N'Điện Biên Phủ', N'567', '0251234567', 'haiphong@sanbong.vn', N'Phạm Đức Anh', '6:00-22:00', '5:00-23:00', 4, '2023-06-10', 80000000, 8, N'Chi nhánh Hải Phòng', 'Active');
+
 INSERT INTO Customers (id, name, phone, email, city, district, street, membership, notes)
 VALUES
 ('C001', N'Nguyễn Văn A', '0912345678', 'a@gmail.com', N'Đà Nẵng', N'Hải Châu', N'Bạch Đằng', 'VIP', N'Test từ SQL'),

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.IO;
 using CNXML_HVA.Models;
+using System.Data.SqlClient;
 
 namespace CNXML_HVA
 {
@@ -19,6 +20,7 @@ namespace CNXML_HVA
         private BindingSource bindingFieldTypes;
         private List<FieldType> allFieldTypes;
         private const string SEARCH_PLACEHOLDER = "Tìm loại sân...";
+        private const string CONNECTION_STRING = "Data Source=HIEUVO;Initial Catalog=dbSANBONG;User ID=sa;Password=sa;TrustServerCertificate=True";
 
         public LoaiSan()
         {
@@ -333,6 +335,217 @@ namespace CNXML_HVA
                     btnDeleteType_Click(sender, e);
                     e.Handled = true;
                 }
+            }
+        }
+
+        #endregion
+
+        #region SQL Server Import/Export
+
+        private void btnExportToSQL_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (allFieldTypes == null || allFieldTypes.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show("Xuất dữ liệu sang SQL Server sẽ XÓA toàn bộ dữ liệu loại sân hiện có trong database.\n\nBạn có chắc chắn muốn tiếp tục?",
+                    "Xác nhận xuất SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.Yes)
+                    return;
+
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+                    SqlTransaction transaction = conn.BeginTransaction();
+
+                    try
+                    {
+                        // Xóa toàn bộ dữ liệu bảng FieldTypes
+                        string deleteSql = "DELETE FROM FieldTypes";
+                        using (SqlCommand deleteCmd = new SqlCommand(deleteSql, conn, transaction))
+                        {
+                            deleteCmd.ExecuteNonQuery();
+                        }
+
+                        // Insert dữ liệu từ XML
+                        string insertSql = @"INSERT INTO FieldTypes 
+                            (id, name, code, length, width, dimension_unit, size_display, 
+                             players_per_team, total_capacity, goal_height, goal_width, goal_unit, 
+                             surface_type, base_price, peak_hour_multiplier, weekend_multiplier, 
+                             description, features, minimum_booking_hours, maximum_booking_hours, status)
+                            VALUES 
+                            (@id, @name, @code, @length, @width, @dimension_unit, @size_display, 
+                             @players_per_team, @total_capacity, @goal_height, @goal_width, @goal_unit, 
+                             @surface_type, @base_price, @peak_hour_multiplier, @weekend_multiplier, 
+                             @description, @features, @minimum_booking_hours, @maximum_booking_hours, @status)";
+
+                        foreach (var ft in allFieldTypes)
+                        {
+                            using (SqlCommand cmd = new SqlCommand(insertSql, conn, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("@id", ft.Id ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@name", ft.Name ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@code", ft.Code ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@length", ft.Length);
+                                cmd.Parameters.AddWithValue("@width", ft.Width);
+                                cmd.Parameters.AddWithValue("@dimension_unit", ft.DimensionUnit ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@size_display", ft.SizeDisplay ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@players_per_team", ft.PlayersPerTeam);
+                                cmd.Parameters.AddWithValue("@total_capacity", ft.TotalCapacity);
+                                cmd.Parameters.AddWithValue("@goal_height", ft.GoalHeight);
+                                cmd.Parameters.AddWithValue("@goal_width", ft.GoalWidth);
+                                cmd.Parameters.AddWithValue("@goal_unit", ft.GoalUnit ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@surface_type", ft.SurfaceType ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@base_price", ft.BasePrice);
+                                cmd.Parameters.AddWithValue("@peak_hour_multiplier", ft.PeakHourMultiplier);
+                                cmd.Parameters.AddWithValue("@weekend_multiplier", ft.WeekendMultiplier);
+                                cmd.Parameters.AddWithValue("@description", ft.Description ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@features", ft.Features ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@minimum_booking_hours", ft.MinimumBookingHours);
+                                cmd.Parameters.AddWithValue("@maximum_booking_hours", ft.MaximumBookingHours);
+                                cmd.Parameters.AddWithValue("@status", ft.Status ?? (object)DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+                        transaction.Commit();
+                        MessageBox.Show($"Đã xuất thành công {allFieldTypes.Count} loại sân sang SQL Server!",
+                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Lỗi khi xuất dữ liệu: " + ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi xuất SQL Server: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImportFromSQL_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Import dữ liệu từ SQL Server sẽ XÓA toàn bộ dữ liệu XML hiện tại.\n\nBạn có chắc chắn muốn tiếp tục?",
+                    "Xác nhận import SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.Yes)
+                    return;
+
+                List<FieldType> fieldTypesFromSql = new List<FieldType>();
+
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+                    string selectSql = "SELECT * FROM FieldTypes ORDER BY id";
+
+                    using (SqlCommand cmd = new SqlCommand(selectSql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            FieldType ft = new FieldType
+                            {
+                                Id = reader["id"].ToString(),
+                                Name = reader["name"].ToString(),
+                                Code = reader["code"].ToString(),
+                                Length = reader["length"] != DBNull.Value ? Convert.ToDecimal(reader["length"]) : 0,
+                                Width = reader["width"] != DBNull.Value ? Convert.ToDecimal(reader["width"]) : 0,
+                                DimensionUnit = reader["dimension_unit"].ToString(),
+                                SizeDisplay = reader["size_display"].ToString(),
+                                PlayersPerTeam = reader["players_per_team"] != DBNull.Value ? Convert.ToInt32(reader["players_per_team"]) : 0,
+                                TotalCapacity = reader["total_capacity"] != DBNull.Value ? Convert.ToInt32(reader["total_capacity"]) : 0,
+                                GoalHeight = reader["goal_height"] != DBNull.Value ? Convert.ToDecimal(reader["goal_height"]) : 0,
+                                GoalWidth = reader["goal_width"] != DBNull.Value ? Convert.ToDecimal(reader["goal_width"]) : 0,
+                                GoalUnit = reader["goal_unit"].ToString(),
+                                SurfaceType = reader["surface_type"].ToString(),
+                                BasePrice = reader["base_price"] != DBNull.Value ? Convert.ToInt64(reader["base_price"]) : 0,
+                                PeakHourMultiplier = reader["peak_hour_multiplier"] != DBNull.Value ? Convert.ToDecimal(reader["peak_hour_multiplier"]) : 1.0m,
+                                WeekendMultiplier = reader["weekend_multiplier"] != DBNull.Value ? Convert.ToDecimal(reader["weekend_multiplier"]) : 1.0m,
+                                Description = reader["description"].ToString(),
+                                Features = reader["features"].ToString(),
+                                MinimumBookingHours = reader["minimum_booking_hours"] != DBNull.Value ? Convert.ToInt32(reader["minimum_booking_hours"]) : 1,
+                                MaximumBookingHours = reader["maximum_booking_hours"] != DBNull.Value ? Convert.ToInt32(reader["maximum_booking_hours"]) : 8,
+                                Status = reader["status"].ToString()
+                            };
+                            fieldTypesFromSql.Add(ft);
+                        }
+                    }
+                }
+
+                if (fieldTypesFromSql.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong SQL Server để import!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Xóa file XML hiện tại
+                if (File.Exists(xmlFilePath))
+                {
+                    File.Delete(xmlFilePath);
+                }
+
+                // Tạo XML mới từ dữ liệu SQL
+                XDocument xDoc = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("field_types")
+                );
+
+                foreach (var ft in fieldTypesFromSql)
+                {
+                    XElement ftElement = new XElement("field_type",
+                        new XAttribute("id", ft.Id ?? ""),
+                        new XElement("name", ft.Name ?? ""),
+                        new XElement("code", ft.Code ?? ""),
+                        new XElement("dimensions",
+                            new XElement("length", ft.Length),
+                            new XElement("width", ft.Width),
+                            new XElement("unit", ft.DimensionUnit ?? "")
+                        ),
+                        new XElement("size_display", ft.SizeDisplay ?? ""),
+                        new XElement("players_per_team", ft.PlayersPerTeam),
+                        new XElement("total_capacity", ft.TotalCapacity),
+                        new XElement("goal_size",
+                            new XElement("height", ft.GoalHeight),
+                            new XElement("width", ft.GoalWidth),
+                            new XElement("unit", ft.GoalUnit ?? "")
+                        ),
+                        new XElement("surface_type", ft.SurfaceType ?? ""),
+                        new XElement("base_price", ft.BasePrice),
+                        new XElement("peak_hour_multiplier", ft.PeakHourMultiplier),
+                        new XElement("weekend_multiplier", ft.WeekendMultiplier),
+                        new XElement("description", ft.Description ?? ""),
+                        new XElement("features", ft.Features ?? ""),
+                        new XElement("minimum_booking_hours", ft.MinimumBookingHours),
+                        new XElement("maximum_booking_hours", ft.MaximumBookingHours),
+                        new XElement("status", ft.Status ?? "")
+                    );
+
+                    xDoc.Root.Add(ftElement);
+                }
+
+                xDoc.Save(xmlFilePath);
+
+                // Reload data
+                allFieldTypes = fieldTypesFromSql;
+                bindingFieldTypes.DataSource = allFieldTypes;
+                bindingFieldTypes.ResetBindings(false);
+
+                MessageBox.Show($"Đã import thành công {fieldTypesFromSql.Count} loại sân từ SQL Server!",
+                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi import từ SQL Server: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

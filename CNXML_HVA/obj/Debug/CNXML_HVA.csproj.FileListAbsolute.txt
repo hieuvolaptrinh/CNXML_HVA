@@ -23,16 +23,6 @@ F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\C
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.pdb
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.San.resources
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Branches.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Customers.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\EquipmentMatch.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Equipments.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldEquipment.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Fields.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldTypes.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Matches.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Orders.xml
-F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Users.xml
 D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.AssemblyReference.cache
 D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe.config
 D:\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.ChiNhanh.resources
@@ -262,3 +252,4 @@ C:\Users\PHUC AN\OneDrive - University of Technology and Education\Desktop\DUANL
 C:\Users\PHUC AN\OneDrive - University of Technology and Education\Desktop\DUANLONXML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.Up2Date
 C:\Users\PHUC AN\OneDrive - University of Technology and Education\Desktop\DUANLONXML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe
 C:\Users\PHUC AN\OneDrive - University of Technology and Education\Desktop\DUANLONXML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.pdb
+F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.QuenMatKhau.resources

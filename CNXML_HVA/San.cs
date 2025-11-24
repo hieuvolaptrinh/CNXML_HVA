@@ -11,6 +11,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.IO;
 using CNXML_HVA.Models;
+using System.Data.SqlClient;
 
 namespace CNXML_HVA
 {
@@ -23,6 +24,7 @@ namespace CNXML_HVA
         private List<FieldType> allFieldTypes;
         private string currentStatusFilter = "All";
         private const string SEARCH_PLACEHOLDER = "Tìm theo tên, mã sân...";
+        private const string CONNECTION_STRING = "Data Source=HIEUVO;Initial Catalog=dbSANBONG;User ID=sa;Password=sa;TrustServerCertificate=True";
 
         public San()
         {
@@ -125,7 +127,7 @@ namespace CNXML_HVA
                 XDocument doc = XDocument.Load(xmlFieldsPath);
                 allFields = doc.Descendants("field").Select(f => new Field
                 {
-                    Id = f.Element("id")?.Value,
+                    Id = f.Attribute("id")?.Value,  // Đọc từ attribute, không phải element
                     Name = f.Element("name")?.Value,
                     FieldTypeId = f.Element("field_type_id")?.Value,
                     BranchId = f.Element("branch_id")?.Value,
@@ -174,7 +176,7 @@ namespace CNXML_HVA
                     new XDeclaration("1.0", "UTF-8", null),
                     new XElement("fields",
                         allFields.Select(f => new XElement("field",
-                            new XElement("id", f.Id),
+                            new XAttribute("id", f.Id ?? ""),  // Lưu id dưới dạng attribute
                             new XElement("name", f.Name),
                             new XElement("field_type_id", f.FieldTypeId),
                             new XElement("branch_id", f.BranchId),
@@ -349,9 +351,9 @@ namespace CNXML_HVA
             lblPrice.Text = field.PricePerHour.ToString("N0") + " VNĐ";
             txtDescription.Text = field.Description ?? "Không có mô tả";
 
-            // Mock image - in production, load from file or database
-            pictureBoxPhoto.Image = null;
-            pictureBoxPhoto.BackColor = Color.LightGray;
+            // TODO: Add PictureBox in Designer if needed
+            // pictureBoxPhoto.Image = null;
+            // pictureBoxPhoto.BackColor = Color.LightGray;
 
             pnlFieldDetails.Visible = true;
             pnlFieldDetails.Tag = field; // Store reference
@@ -513,6 +515,251 @@ namespace CNXML_HVA
                 txtSearch.Focus();
                 txtSearch.SelectAll();
                 e.Handled = true;
+            }
+        }
+
+        #endregion
+
+        #region SQL Server Import/Export
+
+        private void btnExportToSQL_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (allFields == null || allFields.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var result = MessageBox.Show("Xuất dữ liệu sang SQL Server sẽ XÓA toàn bộ dữ liệu sân hiện có trong database.\n\nBạn có chắc chắn muốn tiếp tục?",
+                    "Xác nhận xuất SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.Yes)
+                    return;
+
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+                    SqlTransaction transaction = conn.BeginTransaction();
+
+                    try
+                    {
+                        // Xóa toàn bộ dữ liệu bảng Fields
+                        string deleteSql = "DELETE FROM Fields";
+                        using (SqlCommand deleteCmd = new SqlCommand(deleteSql, conn, transaction))
+                        {
+                            deleteCmd.ExecuteNonQuery();
+                        }
+
+                        // Insert dữ liệu từ XML
+                        string insertSql = @"INSERT INTO Fields 
+                            (id, name, field_type_id, branch_id, city, district, street, house_number, 
+                             price_per_hour, capacity, description, facilities, status, created_date, last_maintenance)
+                            VALUES 
+                            (@id, @name, @field_type_id, @branch_id, @city, @district, @street, @house_number, 
+                             @price_per_hour, @capacity, @description, @facilities, @status, @created_date, @last_maintenance)";
+
+                        int successCount = 0;
+                        StringBuilder errorLog = new StringBuilder();
+                        
+                        foreach (var field in allFields)
+                        {
+                            try
+                            {
+                                // Kiểm tra các trường bắt buộc
+                                if (string.IsNullOrEmpty(field.Id))
+                                {
+                                    errorLog.AppendLine($"Bỏ qua: Thiếu ID");
+                                    continue;
+                                }
+                                if (string.IsNullOrEmpty(field.Name))
+                                {
+                                    errorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu tên");
+                                    continue;
+                                }
+                                if (string.IsNullOrEmpty(field.FieldTypeId))
+                                {
+                                    errorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu field_type_id");
+                                    continue;
+                                }
+                                if (string.IsNullOrEmpty(field.BranchId))
+                                {
+                                    errorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu branch_id");
+                                    continue;
+                                }
+
+                                using (SqlCommand cmd = new SqlCommand(insertSql, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@id", field.Id);
+                                    cmd.Parameters.AddWithValue("@name", field.Name);
+                                    cmd.Parameters.AddWithValue("@field_type_id", field.FieldTypeId);
+                                    cmd.Parameters.AddWithValue("@branch_id", field.BranchId);
+                                    cmd.Parameters.AddWithValue("@city", field.Address?.City ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@district", field.Address?.District ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@street", field.Address?.Street ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@house_number", field.Address?.HouseNumber ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@price_per_hour", field.PricePerHour);
+                                    cmd.Parameters.AddWithValue("@capacity", field.Capacity);
+                                    cmd.Parameters.AddWithValue("@description", field.Description ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@facilities", field.Facilities ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@status", field.Status ?? (object)DBNull.Value);
+                                    cmd.Parameters.AddWithValue("@created_date", field.CreatedDate);
+                                    cmd.Parameters.AddWithValue("@last_maintenance", field.LastMaintenance);
+
+                                    cmd.ExecuteNonQuery();
+                                    successCount++;
+                                }
+                            }
+                            catch (SqlException sqlEx)
+                            {
+                                // Kiểm tra lỗi Foreign Key constraint
+                                if (sqlEx.Message.Contains("FK_Fields_Branches"))
+                                {
+                                    errorLog.AppendLine($"Lỗi {field?.Id ?? "Unknown"}: Chi nhánh '{field?.BranchId}' không tồn tại trong database. Vui lòng kiểm tra dữ liệu Branches!");
+                                }
+                                else if (sqlEx.Message.Contains("FK_Fields_FieldTypes"))
+                                {
+                                    errorLog.AppendLine($"Lỗi {field?.Id ?? "Unknown"}: Loại sân '{field?.FieldTypeId}' không tồn tại. Vui lòng EXPORT dữ liệu Loại Sân trước!");
+                                }
+                                else
+                                {
+                                    errorLog.AppendLine($"Lỗi insert {field?.Id ?? "Unknown"}: {sqlEx.Message}");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                errorLog.AppendLine($"Lỗi insert {field?.Id ?? "Unknown"}: {ex.Message}");
+                            }
+                        }
+
+                        if (successCount == 0)
+                        {
+                            string errorDetails = errorLog.Length > 0 ? "\n\nChi tiết:\n" + errorLog.ToString() : "";
+                            throw new Exception($"Không có dữ liệu hợp lệ để xuất!\nTổng số sân: {allFields.Count}{errorDetails}");
+                        }
+
+                        transaction.Commit();
+                        MessageBox.Show($"Đã xuất thành công {successCount} sân sang SQL Server!",
+                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Lỗi khi xuất dữ liệu: " + ex.Message);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi xuất SQL Server: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnImportFromSQL_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Import dữ liệu từ SQL Server sẽ XÓA toàn bộ dữ liệu XML hiện tại.\n\nBạn có chắc chắn muốn tiếp tục?",
+                    "Xác nhận import SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.Yes)
+                    return;
+
+                List<Field> fieldsFromSql = new List<Field>();
+
+                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                {
+                    conn.Open();
+                    string selectSql = "SELECT * FROM Fields ORDER BY id";
+
+                    using (SqlCommand cmd = new SqlCommand(selectSql, conn))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Field field = new Field
+                            {
+                                Id = reader["id"].ToString(),
+                                Name = reader["name"].ToString(),
+                                FieldTypeId = reader["field_type_id"].ToString(),
+                                BranchId = reader["branch_id"].ToString(),
+                                Address = new Address
+                                {
+                                    City = reader["city"].ToString(),
+                                    District = reader["district"].ToString(),
+                                    Street = reader["street"].ToString(),
+                                    HouseNumber = reader["house_number"].ToString()
+                                },
+                                PricePerHour = reader["price_per_hour"] != DBNull.Value ? Convert.ToDecimal(reader["price_per_hour"]) : 0,
+                                Capacity = reader["capacity"] != DBNull.Value ? Convert.ToInt32(reader["capacity"]) : 0,
+                                Description = reader["description"].ToString(),
+                                Facilities = reader["facilities"].ToString(),
+                                Status = reader["status"].ToString(),
+                                CreatedDate = reader["created_date"] != DBNull.Value ? Convert.ToDateTime(reader["created_date"]) : DateTime.Now,
+                                LastMaintenance = reader["last_maintenance"] != DBNull.Value ? Convert.ToDateTime(reader["last_maintenance"]) : DateTime.Now
+                            };
+                            fieldsFromSql.Add(field);
+                        }
+                    }
+                }
+
+                if (fieldsFromSql.Count == 0)
+                {
+                    MessageBox.Show("Không có dữ liệu trong SQL Server để import!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Xóa file XML hiện tại
+                if (File.Exists(xmlFieldsPath))
+                {
+                    File.Delete(xmlFieldsPath);
+                }
+
+                // Tạo XML mới từ dữ liệu SQL
+                XDocument xDoc = new XDocument(
+                    new XDeclaration("1.0", "UTF-8", null),
+                    new XElement("fields")
+                );
+
+                foreach (var field in fieldsFromSql)
+                {
+                    XElement fieldElement = new XElement("field",
+                        new XAttribute("id", field.Id ?? ""),
+                        new XElement("name", field.Name ?? ""),
+                        new XElement("field_type_id", field.FieldTypeId ?? ""),
+                        new XElement("branch_id", field.BranchId ?? ""),
+                        new XElement("address",
+                            new XElement("city", field.Address?.City ?? ""),
+                            new XElement("district", field.Address?.District ?? ""),
+                            new XElement("street", field.Address?.Street ?? ""),
+                            new XElement("house_number", field.Address?.HouseNumber ?? "")
+                        ),
+                        new XElement("price_per_hour", field.PricePerHour),
+                        new XElement("capacity", field.Capacity),
+                        new XElement("description", field.Description ?? ""),
+                        new XElement("facilities", field.Facilities ?? ""),
+                        new XElement("status", field.Status ?? ""),
+                        new XElement("created_date", field.CreatedDate.ToString("yyyy-MM-dd")),
+                        new XElement("last_maintenance", field.LastMaintenance.ToString("yyyy-MM-dd"))
+                    );
+
+                    xDoc.Root.Add(fieldElement);
+                }
+
+                xDoc.Save(xmlFieldsPath);
+
+                // Reload data
+                allFields = fieldsFromSql;
+                bindingFields.DataSource = allFields;
+                bindingFields.ResetBindings(false);
+
+                MessageBox.Show($"Đã import thành công {fieldsFromSql.Count} sân từ SQL Server!",
+                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi import từ SQL Server: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

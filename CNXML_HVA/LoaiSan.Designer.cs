@@ -52,6 +52,8 @@
             this.lblSearch = new System.Windows.Forms.Label();
             this.txtTypeSearch = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnExportToSQL = new System.Windows.Forms.Button();
+            this.btnImportFromSQL = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFieldTypes.SuspendLayout();
@@ -245,6 +247,8 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.btnExportToSQL);
+            this.panelToolbar.Controls.Add(this.btnImportFromSQL);
             this.panelToolbar.Controls.Add(this.btnAddType);
             this.panelToolbar.Controls.Add(this.btnEditType);
             this.panelToolbar.Controls.Add(this.btnDeleteType);
@@ -267,7 +271,7 @@
             this.btnAddType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnAddType.ForeColor = System.Drawing.Color.White;
-            this.btnAddType.Location = new System.Drawing.Point(842, 28);
+            this.btnAddType.Location = new System.Drawing.Point(814, 27);
             this.btnAddType.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddType.Name = "btnAddType";
             this.btnAddType.Size = new System.Drawing.Size(133, 43);
@@ -336,6 +340,40 @@
             this.txtTypeSearch.Enter += new System.EventHandler(this.txtTypeSearch_Enter);
             this.txtTypeSearch.Leave += new System.EventHandler(this.txtTypeSearch_Leave);
             // 
+            // btnImportFromSQL
+            // 
+            this.btnImportFromSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImportFromSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnImportFromSQL.FlatAppearance.BorderSize = 0;
+            this.btnImportFromSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImportFromSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnImportFromSQL.ForeColor = System.Drawing.Color.White;
+            this.btnImportFromSQL.Location = new System.Drawing.Point(625, 26);
+            this.btnImportFromSQL.Margin = new System.Windows.Forms.Padding(4);
+            this.btnImportFromSQL.Name = "btnImportFromSQL";
+            this.btnImportFromSQL.Size = new System.Drawing.Size(133, 43);
+            this.btnImportFromSQL.TabIndex = 2;
+            this.btnImportFromSQL.Text = "📥 Import SQL";
+            this.btnImportFromSQL.UseVisualStyleBackColor = false;
+            this.btnImportFromSQL.Click += new System.EventHandler(this.btnImportFromSQL_Click);
+            // 
+            // btnExportToSQL
+            // 
+            this.btnExportToSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExportToSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.btnExportToSQL.FlatAppearance.BorderSize = 0;
+            this.btnExportToSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportToSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExportToSQL.ForeColor = System.Drawing.Color.White;
+            this.btnExportToSQL.Location = new System.Drawing.Point(456, 26);
+            this.btnExportToSQL.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExportToSQL.Name = "btnExportToSQL";
+            this.btnExportToSQL.Size = new System.Drawing.Size(161, 43);
+            this.btnExportToSQL.TabIndex = 2;
+            this.btnExportToSQL.Text = "📤 Export SQL";
+            this.btnExportToSQL.UseVisualStyleBackColor = false;
+            this.btnExportToSQL.Click += new System.EventHandler(this.btnExportToSQL_Click);
+            // 
             // LoaiSan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -387,5 +425,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colDefaultPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSurfaceType;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStatus;
+        private System.Windows.Forms.Button btnExportToSQL;
+        private System.Windows.Forms.Button btnImportFromSQL;
     }
 }
