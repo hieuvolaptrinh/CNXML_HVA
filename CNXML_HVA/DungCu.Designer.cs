@@ -31,6 +31,9 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
+            this.buttonSaveToDatabase = new System.Windows.Forms.Button();
+            this.buttonClearData = new System.Windows.Forms.Button();
+            this.buttonImportFromDatabase = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -137,6 +140,9 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.buttonSaveToDatabase);
+            this.panelToolbar.Controls.Add(this.buttonClearData);
+            this.panelToolbar.Controls.Add(this.buttonImportFromDatabase);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -147,21 +153,68 @@
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelToolbar.Size = new System.Drawing.Size(1315, 74);
+            this.panelToolbar.Size = new System.Drawing.Size(1315, 115);
             this.panelToolbar.TabIndex = 1;
+            // 
+            // buttonSaveToDatabase
+            // 
+            this.buttonSaveToDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonSaveToDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonSaveToDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSaveToDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonSaveToDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonSaveToDatabase.Location = new System.Drawing.Point(365, 64);
+            this.buttonSaveToDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveToDatabase.Name = "buttonSaveToDatabase";
+            this.buttonSaveToDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonSaveToDatabase.TabIndex = 7;
+            this.buttonSaveToDatabase.Text = "💾 Lưu vào DB";
+            this.buttonSaveToDatabase.UseVisualStyleBackColor = false;
+            this.buttonSaveToDatabase.Click += new System.EventHandler(this.buttonSaveToDatabase_Click);
+            // 
+            // buttonClearData
+            // 
+            this.buttonClearData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(67)))), ((int)(((byte)(54)))));
+            this.buttonClearData.FlatAppearance.BorderSize = 0;
+            this.buttonClearData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearData.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonClearData.ForeColor = System.Drawing.Color.White;
+            this.buttonClearData.Location = new System.Drawing.Point(711, 64);
+            this.buttonClearData.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonClearData.Name = "buttonClearData";
+            this.buttonClearData.Size = new System.Drawing.Size(165, 38);
+            this.buttonClearData.TabIndex = 6;
+            this.buttonClearData.Text = "🗑️ Xóa XML";
+            this.buttonClearData.UseVisualStyleBackColor = false;
+            this.buttonClearData.Click += new System.EventHandler(this.buttonClearData_Click);
+            // 
+            // buttonImportFromDatabase
+            // 
+            this.buttonImportFromDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
+            this.buttonImportFromDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonImportFromDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonImportFromDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonImportFromDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonImportFromDatabase.Location = new System.Drawing.Point(538, 64);
+            this.buttonImportFromDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonImportFromDatabase.Name = "buttonImportFromDatabase";
+            this.buttonImportFromDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonImportFromDatabase.TabIndex = 5;
+            this.buttonImportFromDatabase.Text = "📥 Nạp từ DB";
+            this.buttonImportFromDatabase.UseVisualStyleBackColor = false;
+            this.buttonImportFromDatabase.Click += new System.EventHandler(this.buttonImportFromDatabase_Click);
             // 
             // buttonImportXml
             // 
-            this.buttonImportXml.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImportXml.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(58)))), ((int)(((byte)(183)))));
             this.buttonImportXml.FlatAppearance.BorderSize = 0;
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImportXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonImportXml.ForeColor = System.Drawing.Color.White;
-            this.buttonImportXml.Location = new System.Drawing.Point(1155, 17);
+            this.buttonImportXml.Location = new System.Drawing.Point(20, 64);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
-            this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
+            this.buttonImportXml.Size = new System.Drawing.Size(155, 38);
             this.buttonImportXml.TabIndex = 4;
             this.buttonImportXml.Text = "📥 Import XML";
             this.buttonImportXml.UseVisualStyleBackColor = false;
@@ -169,16 +222,15 @@
             // 
             // buttonExportExcel
             // 
-            this.buttonExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonExportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(136)))));
             this.buttonExportExcel.FlatAppearance.BorderSize = 0;
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportExcel.Location = new System.Drawing.Point(995, 17);
+            this.buttonExportExcel.Location = new System.Drawing.Point(183, 64);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
-            this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
+            this.buttonExportExcel.Size = new System.Drawing.Size(155, 38);
             this.buttonExportExcel.TabIndex = 3;
             this.buttonExportExcel.Text = "📊 Xuất Excel";
             this.buttonExportExcel.UseVisualStyleBackColor = false;
@@ -194,7 +246,7 @@
             this.buttonRefresh.Location = new System.Drawing.Point(620, 17);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(133, 39);
+            this.buttonRefresh.Size = new System.Drawing.Size(140, 38);
             this.buttonRefresh.TabIndex = 2;
             this.buttonRefresh.Text = "🔄 Làm mới";
             this.buttonRefresh.UseVisualStyleBackColor = false;
@@ -227,11 +279,11 @@
             this.panelMain.Controls.Add(this.panelLeft);
             this.panelMain.Controls.Add(this.panelRight);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 143);
+            this.panelMain.Location = new System.Drawing.Point(0, 184);
             this.panelMain.Margin = new System.Windows.Forms.Padding(4);
             this.panelMain.Name = "panelMain";
             this.panelMain.Padding = new System.Windows.Forms.Padding(20, 12, 20, 18);
-            this.panelMain.Size = new System.Drawing.Size(1315, 557);
+            this.panelMain.Size = new System.Drawing.Size(1315, 516);
             this.panelMain.TabIndex = 2;
             // 
             // panelLeft
@@ -243,7 +295,7 @@
             this.panelLeft.Margin = new System.Windows.Forms.Padding(4);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Padding = new System.Windows.Forms.Padding(0, 0, 13, 0);
-            this.panelLeft.Size = new System.Drawing.Size(608, 527);
+            this.panelLeft.Size = new System.Drawing.Size(608, 486);
             this.panelLeft.TabIndex = 0;
             // 
             // dataGridViewEquipment
@@ -268,7 +320,7 @@
             this.dataGridViewEquipment.RowHeadersWidth = 51;
             this.dataGridViewEquipment.RowTemplate.Height = 35;
             this.dataGridViewEquipment.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewEquipment.Size = new System.Drawing.Size(595, 453);
+            this.dataGridViewEquipment.Size = new System.Drawing.Size(595, 412);
             this.dataGridViewEquipment.TabIndex = 0;
             this.dataGridViewEquipment.SelectionChanged += new System.EventHandler(this.dataGridViewEquipment_SelectionChanged);
             // 
@@ -279,7 +331,7 @@
             this.panelGridActions.Controls.Add(this.buttonEdit);
             this.panelGridActions.Controls.Add(this.buttonAdd);
             this.panelGridActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelGridActions.Location = new System.Drawing.Point(0, 453);
+            this.panelGridActions.Location = new System.Drawing.Point(0, 412);
             this.panelGridActions.Margin = new System.Windows.Forms.Padding(4);
             this.panelGridActions.Name = "panelGridActions";
             this.panelGridActions.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
@@ -343,7 +395,7 @@
             this.panelRight.Location = new System.Drawing.Point(628, 12);
             this.panelRight.Margin = new System.Windows.Forms.Padding(4);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(667, 527);
+            this.panelRight.Size = new System.Drawing.Size(667, 486);
             this.panelRight.TabIndex = 1;
             // 
             // tabControlEquipmentInfo
@@ -361,7 +413,7 @@
             this.tabControlEquipmentInfo.Name = "tabControlEquipmentInfo";
             this.tabControlEquipmentInfo.Padding = new System.Drawing.Point(10, 5);
             this.tabControlEquipmentInfo.SelectedIndex = 0;
-            this.tabControlEquipmentInfo.Size = new System.Drawing.Size(667, 453);
+            this.tabControlEquipmentInfo.Size = new System.Drawing.Size(667, 412);
             this.tabControlEquipmentInfo.TabIndex = 0;
             // 
             // tabPageBasicInfo
@@ -372,7 +424,7 @@
             this.tabPageBasicInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(659, 410);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(659, 369);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Cơ bản";
             // 
@@ -544,7 +596,7 @@
             this.tabPageDetails.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDetails.Name = "tabPageDetails";
             this.tabPageDetails.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDetails.Size = new System.Drawing.Size(659, 678);
+            this.tabPageDetails.Size = new System.Drawing.Size(659, 410);
             this.tabPageDetails.TabIndex = 1;
             this.tabPageDetails.Text = "Chi tiết";
             // 
@@ -675,7 +727,7 @@
             this.tabPagePricing.Margin = new System.Windows.Forms.Padding(4);
             this.tabPagePricing.Name = "tabPagePricing";
             this.tabPagePricing.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPagePricing.Size = new System.Drawing.Size(659, 678);
+            this.tabPagePricing.Size = new System.Drawing.Size(659, 410);
             this.tabPagePricing.TabIndex = 2;
             this.tabPagePricing.Text = "Giá cả";
             // 
@@ -767,7 +819,7 @@
             this.tabPageInventory.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageInventory.Name = "tabPageInventory";
             this.tabPageInventory.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageInventory.Size = new System.Drawing.Size(659, 678);
+            this.tabPageInventory.Size = new System.Drawing.Size(659, 410);
             this.tabPageInventory.TabIndex = 3;
             this.tabPageInventory.Text = "Tồn kho";
             // 
@@ -883,7 +935,7 @@
             this.tabPageDescription.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDescription.Name = "tabPageDescription";
             this.tabPageDescription.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDescription.Size = new System.Drawing.Size(659, 678);
+            this.tabPageDescription.Size = new System.Drawing.Size(659, 410);
             this.tabPageDescription.TabIndex = 4;
             this.tabPageDescription.Text = "Mô tả";
             // 
@@ -896,7 +948,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(619, 608);
+            this.textBoxDescription.Size = new System.Drawing.Size(619, 340);
             this.textBoxDescription.TabIndex = 1;
             // 
             // labelDescription
@@ -919,7 +971,7 @@
             this.panelFormActions.Controls.Add(this.buttonCancel);
             this.panelFormActions.Controls.Add(this.buttonSave);
             this.panelFormActions.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelFormActions.Location = new System.Drawing.Point(0, 453);
+            this.panelFormActions.Location = new System.Drawing.Point(0, 412);
             this.panelFormActions.Margin = new System.Windows.Forms.Padding(4);
             this.panelFormActions.Name = "panelFormActions";
             this.panelFormActions.Padding = new System.Windows.Forms.Padding(20, 12, 20, 12);
@@ -1013,6 +1065,9 @@
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Button buttonSaveToDatabase;
+        private System.Windows.Forms.Button buttonClearData;
+        private System.Windows.Forms.Button buttonImportFromDatabase;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;

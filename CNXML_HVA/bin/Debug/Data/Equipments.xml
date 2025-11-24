@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <equipments>
   <equipment id="EQ001">
     <name>Quả bóng đá FIFA</name>
@@ -17,7 +17,6 @@
     <warranty_period>12</warranty_period>
     <status>Active</status>
   </equipment>
-
   <equipment id="EQ002">
     <name>Áo phân biệt đội</name>
     <category>Trang phục</category>
@@ -35,7 +34,6 @@
     <warranty_period>6</warranty_period>
     <status>Active</status>
   </equipment>
-
   <equipment id="EQ003">
     <name>Khung thành mini</name>
     <category>Thiết bị sân</category>
@@ -53,7 +51,6 @@
     <warranty_period>24</warranty_period>
     <status>Active</status>
   </equipment>
-
   <equipment id="EQ004">
     <name>Còi trọng tài</name>
     <category>Phụ kiện</category>
@@ -71,11 +68,10 @@
     <warranty_period>12</warranty_period>
     <status>Active</status>
   </equipment>
-
   <equipment id="EQ005">
     <name>Cọc tập luyện</name>
     <category>Thiết bị tập luyện</category>
-    <brand>Training Pro</brand>
+    <brand>Training Pro Max</brand>
     <model>Cone Set</model>
     <quantity_total>100</quantity_total>
     <quantity_available>85</quantity_available>
@@ -84,7 +80,8 @@
     <condition>Tốt</condition>
     <description>Bộ cọc tập luyện đa màu</description>
     <branch_id>B03</branch_id>
-    <supplier>Training Equipment Ltd</supplier>
+    <supplier>
+    </supplier>
     <purchase_date>2024-02-15</purchase_date>
     <warranty_period>6</warranty_period>
     <status>Active</status>

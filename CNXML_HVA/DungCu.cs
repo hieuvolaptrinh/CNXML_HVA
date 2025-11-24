@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CNXML_HVA
         private bool isEditing = false;
         private bool isAdding = false;
         private DataTable equipmentTable;
+        private const string ConnectionString = "Data Source=localhost;Initial Catalog=dbSANBONG;Integrated Security=True";
 
         public DungCu()
         {
@@ -361,6 +363,9 @@ namespace CNXML_HVA
                         equipmentTable.Rows.Remove(rowToDelete);
                     }
 
+                    // Tự động xóa khỏi database
+                    DeleteEquipmentFromDatabase(equipmentId);
+
                     ClearForm();
                     MessageBox.Show("Xóa dụng cụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -488,6 +493,9 @@ namespace CNXML_HVA
             DataRow newRow = equipmentTable.NewRow();
             PopulateDataRow(newRow);
             equipmentTable.Rows.Add(newRow);
+
+            // Tự động sync vào database
+            SyncEquipmentToDatabase(textBoxId.Text, false);
         }
 
         private void UpdateEquipment()
@@ -536,6 +544,9 @@ namespace CNXML_HVA
             {
                 PopulateDataRow(rowToUpdate);
             }
+
+            // Tự động sync vào database
+            SyncEquipmentToDatabase(equipmentId, false);
         }
 
         private void PopulateDataRow(DataRow row)
@@ -799,6 +810,387 @@ namespace CNXML_HVA
             {
                 throw new Exception($"Lỗi khi import XML: {ex.Message}");
             }
+        }
+
+        // Tự động đồng bộ database sau CRUD
+        private void SyncEquipmentToDatabase(string equipmentId, bool showMessage = true)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+
+                    // Lấy thông tin equipment từ XML
+                    XmlNode equipmentNode = xmlDoc.SelectSingleNode($"//equipment[@id='{equipmentId}']");
+                    if (equipmentNode == null) return;
+
+                    // Kiểm tra equipment đã tồn tại chưa
+                    string checkQuery = "SELECT COUNT(*) FROM Equipments WHERE id = @id";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@id", equipmentId);
+                        int exists = (int)checkCmd.ExecuteScalar();
+
+                        string query;
+                        if (exists > 0)
+                        {
+                            query = @"UPDATE Equipments SET 
+                                name = @name, category = @category, brand = @brand, model = @model,
+                                quantity_total = @quantity_total, quantity_available = @quantity_available,
+                                rental_price = @rental_price, purchase_price = @purchase_price,
+                                condition = @condition, description = @description, branch_id = @branch_id,
+                                supplier = @supplier, purchase_date = @purchase_date, 
+                                warranty_period = @warranty_period, status = @status
+                                WHERE id = @id";
+                        }
+                        else
+                        {
+                            query = @"INSERT INTO Equipments 
+                                (id, name, category, brand, model, quantity_total, quantity_available,
+                                 rental_price, purchase_price, condition, description, branch_id, supplier,
+                                 purchase_date, warranty_period, status)
+                                VALUES 
+                                (@id, @name, @category, @brand, @model, @quantity_total, @quantity_available,
+                                 @rental_price, @purchase_price, @condition, @description, @branch_id, @supplier,
+                                 @purchase_date, @warranty_period, @status)";
+                        }
+
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id", equipmentId);
+                            cmd.Parameters.AddWithValue("@name", GetNodeValue(equipmentNode, "name"));
+                            cmd.Parameters.AddWithValue("@category", GetNodeValue(equipmentNode, "category") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@brand", GetNodeValue(equipmentNode, "brand") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@model", GetNodeValue(equipmentNode, "model") ?? (object)DBNull.Value);
+                            
+                            string quantityTotal = GetNodeValue(equipmentNode, "quantity_total");
+                            cmd.Parameters.AddWithValue("@quantity_total", string.IsNullOrEmpty(quantityTotal) ? (object)DBNull.Value : int.Parse(quantityTotal));
+                            
+                            string quantityAvailable = GetNodeValue(equipmentNode, "quantity_available");
+                            cmd.Parameters.AddWithValue("@quantity_available", string.IsNullOrEmpty(quantityAvailable) ? (object)DBNull.Value : int.Parse(quantityAvailable));
+                            
+                            string rentalPrice = GetNodeValue(equipmentNode, "rental_price");
+                            cmd.Parameters.AddWithValue("@rental_price", string.IsNullOrEmpty(rentalPrice) ? (object)DBNull.Value : long.Parse(rentalPrice));
+                            
+                            string purchasePrice = GetNodeValue(equipmentNode, "purchase_price");
+                            cmd.Parameters.AddWithValue("@purchase_price", string.IsNullOrEmpty(purchasePrice) ? (object)DBNull.Value : long.Parse(purchasePrice));
+                            
+                            cmd.Parameters.AddWithValue("@condition", GetNodeValue(equipmentNode, "condition") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@description", GetNodeValue(equipmentNode, "description") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@branch_id", GetNodeValue(equipmentNode, "branch_id") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@supplier", GetNodeValue(equipmentNode, "supplier") ?? (object)DBNull.Value);
+                            
+                            string purchaseDate = GetNodeValue(equipmentNode, "purchase_date");
+                            cmd.Parameters.AddWithValue("@purchase_date", string.IsNullOrEmpty(purchaseDate) ? (object)DBNull.Value : DateTime.Parse(purchaseDate));
+                            
+                            string warrantyPeriod = GetNodeValue(equipmentNode, "warranty_period");
+                            cmd.Parameters.AddWithValue("@warranty_period", string.IsNullOrEmpty(warrantyPeriod) ? (object)DBNull.Value : int.Parse(warrantyPeriod));
+                            
+                            cmd.Parameters.AddWithValue("@status", GetNodeValue(equipmentNode, "status") ?? (object)DBNull.Value);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (showMessage)
+                    MessageBox.Show("Lỗi khi đồng bộ database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeleteEquipmentFromDatabase(string equipmentId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM Equipments WHERE id = @id";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", equipmentId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Silent fail - không hiển thị lỗi vì có thể equipment chưa tồn tại trong DB
+                Console.WriteLine($"Error deleting from database: {ex.Message}");
+            }
+        }
+
+        // Database operations
+        private void buttonSaveToDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn lưu tất cả dữ liệu từ XML vào Database?\nDữ liệu trong database có thể bị ghi đè!",
+                    "Xác nhận lưu vào Database",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveXmlToDatabase();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu vào database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonClearData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "CẢNH BÁO: Bạn có chắc chắn muốn xóa TẤT CẢ dữ liệu trong file XML?\nHành động này không thể hoàn tác!",
+                    "Xác nhận xóa dữ liệu",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    ClearXmlData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonImportFromDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn nhập dữ liệu từ Database vào XML?\nDữ liệu XML hiện tại sẽ được thay thế!",
+                    "Xác nhận import từ Database",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    ImportDatabaseToXml();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi import từ database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveXmlToDatabase()
+        {
+            int insertCount = 0;
+            int updateCount = 0;
+            int errorCount = 0;
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                XmlNodeList equipmentNodes = xmlDoc.SelectNodes("//equipment");
+                foreach (XmlNode equipmentNode in equipmentNodes)
+                {
+                    try
+                    {
+                        string equipmentId = GetNodeValue(equipmentNode, "@id");
+
+                        // Kiểm tra xem equipment đã tồn tại chưa
+                        string checkQuery = "SELECT COUNT(*) FROM Equipments WHERE id = @id";
+                        using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                        {
+                            checkCmd.Parameters.AddWithValue("@id", equipmentId);
+                            int exists = (int)checkCmd.ExecuteScalar();
+
+                            string query;
+                            if (exists > 0)
+                            {
+                                // Update existing record
+                                query = @"UPDATE Equipments SET 
+                                    name = @name, category = @category, brand = @brand, model = @model,
+                                    quantity_total = @quantity_total, quantity_available = @quantity_available,
+                                    rental_price = @rental_price, purchase_price = @purchase_price,
+                                    condition = @condition, description = @description, branch_id = @branch_id,
+                                    supplier = @supplier, purchase_date = @purchase_date, 
+                                    warranty_period = @warranty_period, status = @status
+                                    WHERE id = @id";
+                            }
+                            else
+                            {
+                                // Insert new record
+                                query = @"INSERT INTO Equipments 
+                                    (id, name, category, brand, model, quantity_total, quantity_available,
+                                     rental_price, purchase_price, condition, description, branch_id, supplier,
+                                     purchase_date, warranty_period, status)
+                                    VALUES 
+                                    (@id, @name, @category, @brand, @model, @quantity_total, @quantity_available,
+                                     @rental_price, @purchase_price, @condition, @description, @branch_id, @supplier,
+                                     @purchase_date, @warranty_period, @status)";
+                            }
+
+                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id", equipmentId);
+                                cmd.Parameters.AddWithValue("@name", GetNodeValue(equipmentNode, "name"));
+                                cmd.Parameters.AddWithValue("@category", GetNodeValue(equipmentNode, "category") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@brand", GetNodeValue(equipmentNode, "brand") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@model", GetNodeValue(equipmentNode, "model") ?? (object)DBNull.Value);
+                                
+                                string quantityTotal = GetNodeValue(equipmentNode, "quantity_total");
+                                cmd.Parameters.AddWithValue("@quantity_total", string.IsNullOrEmpty(quantityTotal) ? (object)DBNull.Value : int.Parse(quantityTotal));
+                                
+                                string quantityAvailable = GetNodeValue(equipmentNode, "quantity_available");
+                                cmd.Parameters.AddWithValue("@quantity_available", string.IsNullOrEmpty(quantityAvailable) ? (object)DBNull.Value : int.Parse(quantityAvailable));
+                                
+                                string rentalPrice = GetNodeValue(equipmentNode, "rental_price");
+                                cmd.Parameters.AddWithValue("@rental_price", string.IsNullOrEmpty(rentalPrice) ? (object)DBNull.Value : long.Parse(rentalPrice));
+                                
+                                string purchasePrice = GetNodeValue(equipmentNode, "purchase_price");
+                                cmd.Parameters.AddWithValue("@purchase_price", string.IsNullOrEmpty(purchasePrice) ? (object)DBNull.Value : long.Parse(purchasePrice));
+                                
+                                cmd.Parameters.AddWithValue("@condition", GetNodeValue(equipmentNode, "condition") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@description", GetNodeValue(equipmentNode, "description") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@branch_id", GetNodeValue(equipmentNode, "branch_id") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@supplier", GetNodeValue(equipmentNode, "supplier") ?? (object)DBNull.Value);
+                                
+                                string purchaseDate = GetNodeValue(equipmentNode, "purchase_date");
+                                cmd.Parameters.AddWithValue("@purchase_date", string.IsNullOrEmpty(purchaseDate) ? (object)DBNull.Value : DateTime.Parse(purchaseDate));
+                                
+                                string warrantyPeriod = GetNodeValue(equipmentNode, "warranty_period");
+                                cmd.Parameters.AddWithValue("@warranty_period", string.IsNullOrEmpty(warrantyPeriod) ? (object)DBNull.Value : int.Parse(warrantyPeriod));
+                                
+                                cmd.Parameters.AddWithValue("@status", GetNodeValue(equipmentNode, "status") ?? (object)DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                                
+                                if (exists > 0)
+                                    updateCount++;
+                                else
+                                    insertCount++;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorCount++;
+                        Console.WriteLine($"Error processing equipment: {ex.Message}");
+                    }
+                }
+            }
+
+            MessageBox.Show($"Lưu vào database hoàn tất!\n\nThêm mới: {insertCount}\nCập nhật: {updateCount}\nLỗi: {errorCount}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearXmlData()
+        {
+            // Backup file trước khi xóa
+            string backupPath = xmlFilePath.Replace(".xml", $"_backup_{DateTime.Now:yyyyMMdd_HHmmss}.xml");
+            if (File.Exists(xmlFilePath))
+            {
+                File.Copy(xmlFilePath, backupPath, true);
+            }
+
+            // Tạo file XML rỗng
+            xmlDoc = new XmlDocument();
+            XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDoc.AppendChild(xmlDeclaration);
+            
+            XmlElement rootElement = xmlDoc.CreateElement("equipments");
+            xmlDoc.AppendChild(rootElement);
+            
+            xmlDoc.Save(xmlFilePath);
+
+            // Clear DataTable và form
+            equipmentTable.Clear();
+            ClearForm();
+
+            MessageBox.Show($"Đã xóa tất cả dữ liệu!\nFile backup: {backupPath}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ImportDatabaseToXml()
+        {
+            int importCount = 0;
+
+            // Backup file XML hiện tại
+            string backupPath = xmlFilePath.Replace(".xml", $"_backup_{DateTime.Now:yyyyMMdd_HHmmss}.xml");
+            if (File.Exists(xmlFilePath))
+            {
+                File.Copy(xmlFilePath, backupPath, true);
+            }
+
+            // Tạo XML document mới
+            xmlDoc = new XmlDocument();
+            XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDoc.AppendChild(xmlDeclaration);
+            
+            XmlElement rootElement = xmlDoc.CreateElement("equipments");
+            xmlDoc.AppendChild(rootElement);
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Equipments ORDER BY id";
+                
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        XmlElement equipmentElement = xmlDoc.CreateElement("equipment");
+                        equipmentElement.SetAttribute("id", reader["id"].ToString());
+
+                        AddXmlElement(equipmentElement, "name", reader["name"].ToString());
+                        AddXmlElement(equipmentElement, "category", reader["category"].ToString());
+                        AddXmlElement(equipmentElement, "brand", reader["brand"].ToString());
+                        AddXmlElement(equipmentElement, "model", reader["model"].ToString());
+                        AddXmlElement(equipmentElement, "quantity_total", reader["quantity_total"].ToString());
+                        AddXmlElement(equipmentElement, "quantity_available", reader["quantity_available"].ToString());
+                        AddXmlElement(equipmentElement, "rental_price", reader["rental_price"].ToString());
+                        AddXmlElement(equipmentElement, "purchase_price", reader["purchase_price"].ToString());
+                        AddXmlElement(equipmentElement, "condition", reader["condition"].ToString());
+                        AddXmlElement(equipmentElement, "description", reader["description"].ToString());
+                        AddXmlElement(equipmentElement, "branch_id", reader["branch_id"].ToString());
+                        AddXmlElement(equipmentElement, "supplier", reader["supplier"].ToString());
+                        
+                        if (reader["purchase_date"] != DBNull.Value)
+                        {
+                            DateTime date = Convert.ToDateTime(reader["purchase_date"]);
+                            AddXmlElement(equipmentElement, "purchase_date", date.ToString("yyyy-MM-dd"));
+                        }
+                        else
+                        {
+                            AddXmlElement(equipmentElement, "purchase_date", "");
+                        }
+
+                        AddXmlElement(equipmentElement, "warranty_period", reader["warranty_period"].ToString());
+                        AddXmlElement(equipmentElement, "status", reader["status"].ToString());
+
+                        rootElement.AppendChild(equipmentElement);
+                        importCount++;
+                    }
+                }
+            }
+
+            // Lưu XML file
+            xmlDoc.Save(xmlFilePath);
+
+            // Reload dữ liệu vào form
+            LoadEquipmentsFromXML();
+            ClearForm();
+
+            MessageBox.Show($"Import thành công {importCount} dụng cụ từ database!\nFile backup: {backupPath}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

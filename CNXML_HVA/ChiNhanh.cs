@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CNXML_HVA
         private bool isEditing = false;
         private bool isAdding = false;
         private DataTable branchTable;
+        private const string ConnectionString = "Data Source=localhost;Initial Catalog=dbSANBONG;Integrated Security=True";
 
         public ChiNhanh()
         {
@@ -306,6 +308,9 @@ namespace CNXML_HVA
                         branchTable.Rows.Remove(rowToDelete);
                     }
 
+                    // Tự động xóa khỏi database
+                    DeleteBranchFromDatabase(branchId);
+
                     ClearForm();
                     MessageBox.Show("Xóa chi nhánh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -444,6 +449,9 @@ namespace CNXML_HVA
             DataRow newRow = branchTable.NewRow();
             PopulateDataRow(newRow);
             branchTable.Rows.Add(newRow);
+
+            // Tự động sync vào database
+            SyncBranchToDatabase(textBoxId.Text, false);
         }
 
         private void UpdateBranch()
@@ -485,6 +493,9 @@ namespace CNXML_HVA
             {
                 PopulateDataRow(rowToUpdate);
             }
+
+            // Tự động sync vào database
+            SyncBranchToDatabase(branchId, false);
         }
 
         private void PopulateDataRow(DataRow row)
@@ -812,6 +823,410 @@ namespace CNXML_HVA
             backgroundBrush.Dispose();
             textBrush.Dispose();
             stringFormat.Dispose();
+        }
+
+        // Tự động đồng bộ database sau CRUD
+        private void SyncBranchToDatabase(string branchId, bool showMessage = true)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+
+                    // Lấy thông tin branch từ XML
+                    XmlNode branchNode = xmlDoc.SelectSingleNode($"//branch[@id='{branchId}']");
+                    if (branchNode == null) return;
+
+                    // Kiểm tra branch đã tồn tại chưa
+                    string checkQuery = "SELECT COUNT(*) FROM Branches WHERE id = @id";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@id", branchId);
+                        int exists = (int)checkCmd.ExecuteScalar();
+
+                        string query;
+                        if (exists > 0)
+                        {
+                            query = @"UPDATE Branches SET 
+                                name = @name, code = @code, city = @city, district = @district,
+                                street = @street, house_number = @house_number, postal_code = @postal_code,
+                                phone = @phone, email = @email, fax = @fax,
+                                manager_id = @manager_id, manager_name = @manager_name,
+                                weekday_hours = @weekday_hours, weekend_hours = @weekend_hours,
+                                total_fields = @total_fields, established_date = @established_date,
+                                monthly_revenue = @monthly_revenue, staff_count = @staff_count,
+                                description = @description, status = @status
+                                WHERE id = @id";
+                        }
+                        else
+                        {
+                            query = @"INSERT INTO Branches 
+                                (id, name, code, city, district, street, house_number, postal_code,
+                                 phone, email, fax, manager_id, manager_name, weekday_hours, weekend_hours,
+                                 total_fields, established_date, monthly_revenue, staff_count, description, status)
+                                VALUES 
+                                (@id, @name, @code, @city, @district, @street, @house_number, @postal_code,
+                                 @phone, @email, @fax, @manager_id, @manager_name, @weekday_hours, @weekend_hours,
+                                 @total_fields, @established_date, @monthly_revenue, @staff_count, @description, @status)";
+                        }
+
+                        using (SqlCommand cmd = new SqlCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@id", branchId);
+                            cmd.Parameters.AddWithValue("@name", GetNodeValue(branchNode, "name"));
+                            cmd.Parameters.AddWithValue("@code", GetNodeValue(branchNode, "code") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@city", GetNodeValue(branchNode, "address/city") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@district", GetNodeValue(branchNode, "address/district") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@street", GetNodeValue(branchNode, "address/street") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@house_number", GetNodeValue(branchNode, "address/house_number") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@postal_code", GetNodeValue(branchNode, "address/postal_code") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@phone", GetNodeValue(branchNode, "contact/phone") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@email", GetNodeValue(branchNode, "contact/email") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@fax", GetNodeValue(branchNode, "contact/fax") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@manager_id", GetNodeValue(branchNode, "manager_id") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@manager_name", GetNodeValue(branchNode, "manager_name") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@weekday_hours", GetNodeValue(branchNode, "opening_hours/weekday") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@weekend_hours", GetNodeValue(branchNode, "opening_hours/weekend") ?? (object)DBNull.Value);
+                            
+                            string totalFields = GetNodeValue(branchNode, "total_fields");
+                            cmd.Parameters.AddWithValue("@total_fields", string.IsNullOrEmpty(totalFields) ? (object)DBNull.Value : int.Parse(totalFields));
+                            
+                            string establishedDate = GetNodeValue(branchNode, "established_date");
+                            cmd.Parameters.AddWithValue("@established_date", string.IsNullOrEmpty(establishedDate) ? (object)DBNull.Value : DateTime.Parse(establishedDate));
+                            
+                            string monthlyRevenue = GetNodeValue(branchNode, "monthly_revenue");
+                            cmd.Parameters.AddWithValue("@monthly_revenue", string.IsNullOrEmpty(monthlyRevenue) ? (object)DBNull.Value : long.Parse(monthlyRevenue));
+                            
+                            string staffCount = GetNodeValue(branchNode, "staff_count");
+                            cmd.Parameters.AddWithValue("@staff_count", string.IsNullOrEmpty(staffCount) ? (object)DBNull.Value : int.Parse(staffCount));
+                            
+                            cmd.Parameters.AddWithValue("@description", GetNodeValue(branchNode, "description") ?? (object)DBNull.Value);
+                            cmd.Parameters.AddWithValue("@status", GetNodeValue(branchNode, "status") ?? (object)DBNull.Value);
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (showMessage)
+                    MessageBox.Show("Lỗi khi đồng bộ database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DeleteBranchFromDatabase(string branchId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM Branches WHERE id = @id";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@id", branchId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Silent fail - không hiển thị lỗi vì có thể branch chưa tồn tại trong DB
+                Console.WriteLine($"Error deleting from database: {ex.Message}");
+            }
+        }
+
+        // Database operations
+        private void buttonSaveToDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn lưu tất cả dữ liệu từ XML vào Database?\nDữ liệu trong database có thể bị ghi đè!",
+                    "Xác nhận lưu vào Database",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveXmlToDatabase();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu vào database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonClearData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "CẢNH BÁO: Bạn có chắc chắn muốn xóa TẤT CẢ dữ liệu trong file XML?\nHành động này không thể hoàn tác!",
+                    "Xác nhận xóa dữ liệu",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    ClearXmlData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonImportFromDatabase_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult result = MessageBox.Show(
+                    "Bạn có chắc chắn muốn nhập dữ liệu từ Database vào XML?\nDữ liệu XML hiện tại sẽ được thay thế!",
+                    "Xác nhận import từ Database",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    ImportDatabaseToXml();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi import từ database: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveXmlToDatabase()
+        {
+            int insertCount = 0;
+            int updateCount = 0;
+            int errorCount = 0;
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+
+                XmlNodeList branchNodes = xmlDoc.SelectNodes("//branch");
+                foreach (XmlNode branchNode in branchNodes)
+                {
+                    try
+                    {
+                        string branchId = GetNodeValue(branchNode, "@id");
+
+                        // Kiểm tra xem branch đã tồn tại chưa
+                        string checkQuery = "SELECT COUNT(*) FROM Branches WHERE id = @id";
+                        using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                        {
+                            checkCmd.Parameters.AddWithValue("@id", branchId);
+                            int exists = (int)checkCmd.ExecuteScalar();
+
+                            string query;
+                            if (exists > 0)
+                            {
+                                // Update existing record
+                                query = @"UPDATE Branches SET 
+                                    name = @name, code = @code, city = @city, district = @district,
+                                    street = @street, house_number = @house_number, postal_code = @postal_code,
+                                    phone = @phone, email = @email, fax = @fax,
+                                    manager_id = @manager_id, manager_name = @manager_name,
+                                    weekday_hours = @weekday_hours, weekend_hours = @weekend_hours,
+                                    total_fields = @total_fields, established_date = @established_date,
+                                    monthly_revenue = @monthly_revenue, staff_count = @staff_count,
+                                    description = @description, status = @status
+                                    WHERE id = @id";
+                            }
+                            else
+                            {
+                                // Insert new record
+                                query = @"INSERT INTO Branches 
+                                    (id, name, code, city, district, street, house_number, postal_code,
+                                     phone, email, fax, manager_id, manager_name, weekday_hours, weekend_hours,
+                                     total_fields, established_date, monthly_revenue, staff_count, description, status)
+                                    VALUES 
+                                    (@id, @name, @code, @city, @district, @street, @house_number, @postal_code,
+                                     @phone, @email, @fax, @manager_id, @manager_name, @weekday_hours, @weekend_hours,
+                                     @total_fields, @established_date, @monthly_revenue, @staff_count, @description, @status)";
+                            }
+
+                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                            {
+                                cmd.Parameters.AddWithValue("@id", branchId);
+                                cmd.Parameters.AddWithValue("@name", GetNodeValue(branchNode, "name"));
+                                cmd.Parameters.AddWithValue("@code", GetNodeValue(branchNode, "code") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@city", GetNodeValue(branchNode, "address/city") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@district", GetNodeValue(branchNode, "address/district") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@street", GetNodeValue(branchNode, "address/street") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@house_number", GetNodeValue(branchNode, "address/house_number") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@postal_code", GetNodeValue(branchNode, "address/postal_code") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@phone", GetNodeValue(branchNode, "contact/phone") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@email", GetNodeValue(branchNode, "contact/email") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@fax", GetNodeValue(branchNode, "contact/fax") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@manager_id", GetNodeValue(branchNode, "manager_id") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@manager_name", GetNodeValue(branchNode, "manager_name") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@weekday_hours", GetNodeValue(branchNode, "opening_hours/weekday") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@weekend_hours", GetNodeValue(branchNode, "opening_hours/weekend") ?? (object)DBNull.Value);
+                                
+                                string totalFields = GetNodeValue(branchNode, "total_fields");
+                                cmd.Parameters.AddWithValue("@total_fields", string.IsNullOrEmpty(totalFields) ? (object)DBNull.Value : int.Parse(totalFields));
+                                
+                                string establishedDate = GetNodeValue(branchNode, "established_date");
+                                cmd.Parameters.AddWithValue("@established_date", string.IsNullOrEmpty(establishedDate) ? (object)DBNull.Value : DateTime.Parse(establishedDate));
+                                
+                                string monthlyRevenue = GetNodeValue(branchNode, "monthly_revenue");
+                                cmd.Parameters.AddWithValue("@monthly_revenue", string.IsNullOrEmpty(monthlyRevenue) ? (object)DBNull.Value : long.Parse(monthlyRevenue));
+                                
+                                string staffCount = GetNodeValue(branchNode, "staff_count");
+                                cmd.Parameters.AddWithValue("@staff_count", string.IsNullOrEmpty(staffCount) ? (object)DBNull.Value : int.Parse(staffCount));
+                                
+                                cmd.Parameters.AddWithValue("@description", GetNodeValue(branchNode, "description") ?? (object)DBNull.Value);
+                                cmd.Parameters.AddWithValue("@status", GetNodeValue(branchNode, "status") ?? (object)DBNull.Value);
+
+                                cmd.ExecuteNonQuery();
+                                
+                                if (exists > 0)
+                                    updateCount++;
+                                else
+                                    insertCount++;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        errorCount++;
+                        Console.WriteLine($"Error processing branch: {ex.Message}");
+                    }
+                }
+            }
+
+            MessageBox.Show($"Lưu vào database hoàn tất!\n\nThêm mới: {insertCount}\nCập nhật: {updateCount}\nLỗi: {errorCount}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearXmlData()
+        {
+            // Backup file trước khi xóa
+            string backupPath = xmlFilePath.Replace(".xml", $"_backup_{DateTime.Now:yyyyMMdd_HHmmss}.xml");
+            if (File.Exists(xmlFilePath))
+            {
+                File.Copy(xmlFilePath, backupPath, true);
+            }
+
+            // Tạo file XML rỗng
+            xmlDoc = new XmlDocument();
+            XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDoc.AppendChild(xmlDeclaration);
+            
+            XmlElement rootElement = xmlDoc.CreateElement("branches");
+            xmlDoc.AppendChild(rootElement);
+            
+            xmlDoc.Save(xmlFilePath);
+
+            // Clear DataTable và form
+            branchTable.Clear();
+            ClearForm();
+
+            MessageBox.Show($"Đã xóa tất cả dữ liệu!\nFile backup: {backupPath}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ImportDatabaseToXml()
+        {
+            int importCount = 0;
+
+            // Backup file XML hiện tại
+            string backupPath = xmlFilePath.Replace(".xml", $"_backup_{DateTime.Now:yyyyMMdd_HHmmss}.xml");
+            if (File.Exists(xmlFilePath))
+            {
+                File.Copy(xmlFilePath, backupPath, true);
+            }
+
+            // Tạo XML document mới
+            xmlDoc = new XmlDocument();
+            XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+            xmlDoc.AppendChild(xmlDeclaration);
+            
+            XmlElement rootElement = xmlDoc.CreateElement("branches");
+            xmlDoc.AppendChild(rootElement);
+
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Branches ORDER BY id";
+                
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        XmlElement branchElement = xmlDoc.CreateElement("branch");
+                        branchElement.SetAttribute("id", reader["id"].ToString());
+
+                        AddXmlElement(branchElement, "name", reader["name"].ToString());
+                        AddXmlElement(branchElement, "code", reader["code"].ToString());
+
+                        // Address
+                        XmlElement addressElement = xmlDoc.CreateElement("address");
+                        AddXmlElement(addressElement, "city", reader["city"].ToString());
+                        AddXmlElement(addressElement, "district", reader["district"].ToString());
+                        AddXmlElement(addressElement, "street", reader["street"].ToString());
+                        AddXmlElement(addressElement, "house_number", reader["house_number"].ToString());
+                        AddXmlElement(addressElement, "postal_code", reader["postal_code"].ToString());
+                        branchElement.AppendChild(addressElement);
+
+                        // Contact
+                        XmlElement contactElement = xmlDoc.CreateElement("contact");
+                        AddXmlElement(contactElement, "phone", reader["phone"].ToString());
+                        AddXmlElement(contactElement, "email", reader["email"].ToString());
+                        AddXmlElement(contactElement, "fax", reader["fax"].ToString());
+                        branchElement.AppendChild(contactElement);
+
+                        AddXmlElement(branchElement, "manager_id", reader["manager_id"].ToString());
+                        AddXmlElement(branchElement, "manager_name", reader["manager_name"].ToString());
+
+                        // Opening hours
+                        XmlElement openingHoursElement = xmlDoc.CreateElement("opening_hours");
+                        AddXmlElement(openingHoursElement, "weekday", reader["weekday_hours"].ToString());
+                        AddXmlElement(openingHoursElement, "weekend", reader["weekend_hours"].ToString());
+                        branchElement.AppendChild(openingHoursElement);
+
+                        AddXmlElement(branchElement, "total_fields", reader["total_fields"].ToString());
+                        
+                        if (reader["established_date"] != DBNull.Value)
+                        {
+                            DateTime date = Convert.ToDateTime(reader["established_date"]);
+                            AddXmlElement(branchElement, "established_date", date.ToString("yyyy-MM-dd"));
+                        }
+                        else
+                        {
+                            AddXmlElement(branchElement, "established_date", "");
+                        }
+
+                        AddXmlElement(branchElement, "monthly_revenue", reader["monthly_revenue"].ToString());
+                        AddXmlElement(branchElement, "staff_count", reader["staff_count"].ToString());
+                        AddXmlElement(branchElement, "description", reader["description"].ToString());
+                        AddXmlElement(branchElement, "status", reader["status"].ToString());
+
+                        rootElement.AppendChild(branchElement);
+                        importCount++;
+                    }
+                }
+            }
+
+            // Lưu XML file
+            xmlDoc.Save(xmlFilePath);
+
+            // Reload dữ liệu vào form
+            LoadBranchesFromXML();
+            ClearForm();
+
+            MessageBox.Show($"Import thành công {importCount} chi nhánh từ database!\nFile backup: {backupPath}",
+                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

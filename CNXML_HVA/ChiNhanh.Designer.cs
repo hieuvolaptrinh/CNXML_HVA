@@ -31,6 +31,9 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
+            this.buttonSaveToDatabase = new System.Windows.Forms.Button();
+            this.buttonClearData = new System.Windows.Forms.Button();
+            this.buttonImportFromDatabase = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -140,6 +143,9 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.buttonSaveToDatabase);
+            this.panelToolbar.Controls.Add(this.buttonClearData);
+            this.panelToolbar.Controls.Add(this.buttonImportFromDatabase);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -150,21 +156,68 @@
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelToolbar.Size = new System.Drawing.Size(1300, 74);
+            this.panelToolbar.Size = new System.Drawing.Size(1300, 115);
             this.panelToolbar.TabIndex = 1;
+            // 
+            // buttonSaveToDatabase
+            // 
+            this.buttonSaveToDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonSaveToDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonSaveToDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSaveToDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonSaveToDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonSaveToDatabase.Location = new System.Drawing.Point(365, 64);
+            this.buttonSaveToDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveToDatabase.Name = "buttonSaveToDatabase";
+            this.buttonSaveToDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonSaveToDatabase.TabIndex = 7;
+            this.buttonSaveToDatabase.Text = "💾 Lưu vào DB";
+            this.buttonSaveToDatabase.UseVisualStyleBackColor = false;
+            this.buttonSaveToDatabase.Click += new System.EventHandler(this.buttonSaveToDatabase_Click);
+            // 
+            // buttonClearData
+            // 
+            this.buttonClearData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(67)))), ((int)(((byte)(54)))));
+            this.buttonClearData.FlatAppearance.BorderSize = 0;
+            this.buttonClearData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearData.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonClearData.ForeColor = System.Drawing.Color.White;
+            this.buttonClearData.Location = new System.Drawing.Point(711, 64);
+            this.buttonClearData.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonClearData.Name = "buttonClearData";
+            this.buttonClearData.Size = new System.Drawing.Size(165, 38);
+            this.buttonClearData.TabIndex = 6;
+            this.buttonClearData.Text = "🗑️ Xóa XML";
+            this.buttonClearData.UseVisualStyleBackColor = false;
+            this.buttonClearData.Click += new System.EventHandler(this.buttonClearData_Click);
+            // 
+            // buttonImportFromDatabase
+            // 
+            this.buttonImportFromDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
+            this.buttonImportFromDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonImportFromDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonImportFromDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonImportFromDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonImportFromDatabase.Location = new System.Drawing.Point(538, 64);
+            this.buttonImportFromDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonImportFromDatabase.Name = "buttonImportFromDatabase";
+            this.buttonImportFromDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonImportFromDatabase.TabIndex = 5;
+            this.buttonImportFromDatabase.Text = "📥 Nạp từ DB";
+            this.buttonImportFromDatabase.UseVisualStyleBackColor = false;
+            this.buttonImportFromDatabase.Click += new System.EventHandler(this.buttonImportFromDatabase_Click);
             // 
             // buttonImportXml
             // 
-            this.buttonImportXml.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImportXml.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(58)))), ((int)(((byte)(183)))));
             this.buttonImportXml.FlatAppearance.BorderSize = 0;
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImportXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonImportXml.ForeColor = System.Drawing.Color.White;
-            this.buttonImportXml.Location = new System.Drawing.Point(1099, 17);
+            this.buttonImportXml.Location = new System.Drawing.Point(20, 64);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
-            this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
+            this.buttonImportXml.Size = new System.Drawing.Size(155, 38);
             this.buttonImportXml.TabIndex = 4;
             this.buttonImportXml.Text = "📥 Import XML";
             this.buttonImportXml.UseVisualStyleBackColor = false;
@@ -172,16 +225,15 @@
             // 
             // buttonExportExcel
             // 
-            this.buttonExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonExportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(136)))));
             this.buttonExportExcel.FlatAppearance.BorderSize = 0;
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportExcel.Location = new System.Drawing.Point(909, 16);
+            this.buttonExportExcel.Location = new System.Drawing.Point(183, 64);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
-            this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
+            this.buttonExportExcel.Size = new System.Drawing.Size(155, 38);
             this.buttonExportExcel.TabIndex = 3;
             this.buttonExportExcel.Text = "📊 Xuất Excel";
             this.buttonExportExcel.UseVisualStyleBackColor = false;
@@ -194,10 +246,10 @@
             this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonRefresh.ForeColor = System.Drawing.Color.White;
-            this.buttonRefresh.Location = new System.Drawing.Point(720, 16);
+            this.buttonRefresh.Location = new System.Drawing.Point(640, 17);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(133, 39);
+            this.buttonRefresh.Size = new System.Drawing.Size(140, 38);
             this.buttonRefresh.TabIndex = 2;
             this.buttonRefresh.Text = "🔄 Làm mới";
             this.buttonRefresh.UseVisualStyleBackColor = false;
@@ -235,11 +287,11 @@
             this.panelMain.Controls.Add(this.buttonSave);
             this.panelMain.Controls.Add(this.buttonCancel);
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMain.Location = new System.Drawing.Point(0, 160);
+            this.panelMain.Location = new System.Drawing.Point(0, 201);
             this.panelMain.Margin = new System.Windows.Forms.Padding(4);
             this.panelMain.Name = "panelMain";
             this.panelMain.Padding = new System.Windows.Forms.Padding(10);
-            this.panelMain.Size = new System.Drawing.Size(1300, 540);
+            this.panelMain.Size = new System.Drawing.Size(1300, 499);
             this.panelMain.TabIndex = 2;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
@@ -315,7 +367,7 @@
             this.dataGridViewBranches.RowHeadersWidth = 51;
             this.dataGridViewBranches.RowTemplate.Height = 35;
             this.dataGridViewBranches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBranches.Size = new System.Drawing.Size(739, 380);
+            this.dataGridViewBranches.Size = new System.Drawing.Size(739, 339);
             this.dataGridViewBranches.TabIndex = 0;
             this.dataGridViewBranches.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBranches_CellContentClick);
             this.dataGridViewBranches.SelectionChanged += new System.EventHandler(this.dataGridViewBranches_SelectionChanged);
@@ -337,7 +389,7 @@
             this.tabControlBranchInfo.Name = "tabControlBranchInfo";
             this.tabControlBranchInfo.Padding = new System.Drawing.Point(10, 5);
             this.tabControlBranchInfo.SelectedIndex = 0;
-            this.tabControlBranchInfo.Size = new System.Drawing.Size(537, 390);
+            this.tabControlBranchInfo.Size = new System.Drawing.Size(537, 349);
             this.tabControlBranchInfo.TabIndex = 0;
             this.tabControlBranchInfo.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.tabControlBranchInfo_DrawItem);
             // 
@@ -350,7 +402,7 @@
             this.tabPageBasicInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(529, 347);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(529, 306);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Cơ bản";
             this.tabPageBasicInfo.Click += new System.EventHandler(this.tabPageBasicInfo_Click);
@@ -513,7 +565,7 @@
             this.tabPageAddress.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageAddress.Name = "tabPageAddress";
             this.tabPageAddress.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageAddress.Size = new System.Drawing.Size(582, 347);
+            this.tabPageAddress.Size = new System.Drawing.Size(529, 347);
             this.tabPageAddress.TabIndex = 1;
             this.tabPageAddress.Text = "Địa chỉ";
             // 
@@ -542,7 +594,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // labelCity
@@ -565,7 +617,7 @@
             this.textBoxCity.Location = new System.Drawing.Point(177, 10);
             this.textBoxCity.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCity.Name = "textBoxCity";
-            this.textBoxCity.Size = new System.Drawing.Size(361, 29);
+            this.textBoxCity.Size = new System.Drawing.Size(308, 29);
             this.textBoxCity.TabIndex = 1;
             // 
             // labelDistrict
@@ -588,7 +640,7 @@
             this.textBoxDistrict.Location = new System.Drawing.Point(177, 59);
             this.textBoxDistrict.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDistrict.Name = "textBoxDistrict";
-            this.textBoxDistrict.Size = new System.Drawing.Size(361, 29);
+            this.textBoxDistrict.Size = new System.Drawing.Size(308, 29);
             this.textBoxDistrict.TabIndex = 3;
             // 
             // labelStreet
@@ -611,7 +663,7 @@
             this.textBoxStreet.Location = new System.Drawing.Point(177, 108);
             this.textBoxStreet.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxStreet.Name = "textBoxStreet";
-            this.textBoxStreet.Size = new System.Drawing.Size(361, 29);
+            this.textBoxStreet.Size = new System.Drawing.Size(308, 29);
             this.textBoxStreet.TabIndex = 5;
             // 
             // labelHouseNumber
@@ -669,7 +721,7 @@
             this.tabPageContact.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageContact.Name = "tabPageContact";
             this.tabPageContact.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageContact.Size = new System.Drawing.Size(582, 347);
+            this.tabPageContact.Size = new System.Drawing.Size(529, 347);
             this.tabPageContact.TabIndex = 2;
             this.tabPageContact.Text = "Liên hệ";
             // 
@@ -698,7 +750,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // labelPhone
@@ -721,7 +773,7 @@
             this.textBoxPhone.Location = new System.Drawing.Point(177, 10);
             this.textBoxPhone.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPhone.Name = "textBoxPhone";
-            this.textBoxPhone.Size = new System.Drawing.Size(361, 29);
+            this.textBoxPhone.Size = new System.Drawing.Size(308, 29);
             this.textBoxPhone.TabIndex = 1;
             // 
             // labelEmail
@@ -744,7 +796,7 @@
             this.textBoxEmail.Location = new System.Drawing.Point(177, 59);
             this.textBoxEmail.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(361, 29);
+            this.textBoxEmail.Size = new System.Drawing.Size(308, 29);
             this.textBoxEmail.TabIndex = 3;
             // 
             // labelFax
@@ -767,7 +819,7 @@
             this.textBoxFax.Location = new System.Drawing.Point(177, 108);
             this.textBoxFax.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxFax.Name = "textBoxFax";
-            this.textBoxFax.Size = new System.Drawing.Size(361, 29);
+            this.textBoxFax.Size = new System.Drawing.Size(308, 29);
             this.textBoxFax.TabIndex = 5;
             // 
             // labelManagerId
@@ -813,7 +865,7 @@
             this.textBoxManagerName.Location = new System.Drawing.Point(177, 206);
             this.textBoxManagerName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxManagerName.Name = "textBoxManagerName";
-            this.textBoxManagerName.Size = new System.Drawing.Size(361, 29);
+            this.textBoxManagerName.Size = new System.Drawing.Size(308, 29);
             this.textBoxManagerName.TabIndex = 9;
             // 
             // tabPageOperations
@@ -825,7 +877,7 @@
             this.tabPageOperations.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageOperations.Size = new System.Drawing.Size(582, 347);
+            this.tabPageOperations.Size = new System.Drawing.Size(529, 347);
             this.tabPageOperations.TabIndex = 3;
             this.tabPageOperations.Text = "Hoạt động";
             // 
@@ -854,7 +906,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // labelWeekdayHours
@@ -992,7 +1044,7 @@
             this.tabPageDescription.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDescription.Name = "tabPageDescription";
             this.tabPageDescription.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDescription.Size = new System.Drawing.Size(582, 347);
+            this.tabPageDescription.Size = new System.Drawing.Size(529, 306);
             this.tabPageDescription.TabIndex = 4;
             this.tabPageDescription.Text = "Mô tả";
             // 
@@ -1007,7 +1059,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(408, 361);
+            this.textBoxDescription.Size = new System.Drawing.Size(481, 241);
             this.textBoxDescription.TabIndex = 1;
             // 
             // labelDescription
@@ -1031,7 +1083,7 @@
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
-            this.buttonSave.Location = new System.Drawing.Point(700, 400);
+            this.buttonSave.Location = new System.Drawing.Point(753, 357);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(120, 45);
@@ -1049,7 +1101,7 @@
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
-            this.buttonCancel.Location = new System.Drawing.Point(880, 400);
+            this.buttonCancel.Location = new System.Drawing.Point(881, 357);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(120, 45);
@@ -1107,6 +1159,9 @@
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Button buttonSaveToDatabase;
+        private System.Windows.Forms.Button buttonClearData;
+        private System.Windows.Forms.Button buttonImportFromDatabase;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;
