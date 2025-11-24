@@ -1,47 +1,74 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <customers>
-  <customer id="KH001">
-    <name>Nguyen Van A</name>
-    <phone>0901234567</phone>
-    <email>nguyenvana@email.com</email>
-    <address>123 Nguyen Trai, Ha Noi</address>
-    <registration_date>2024-01-15</registration_date>
-    <status>Active</status>
-  </customer>
-  
-  <customer id="KH002">
-    <name>Tran Thi B</name>
+  <customer id="C001">
+    <name>Nguyễn Văn A</name>
     <phone>0912345678</phone>
-    <email>tranthib@email.com</email>
-    <address>456 Le Loi, Da Nang</address>
-    <registration_date>2024-02-20</registration_date>
-    <status>Active</status>
+    <email>a@gmail.com</email>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Hải Châu</district>
+      <street>Bạch Đằng</street>
+    </address>
+    <membership>VIP</membership>
+    <notes>Test từ SQL</notes>
   </customer>
-  
-  <customer id="KH003">
-    <name>Le Van C</name>
-    <phone>0923456789</phone>
-    <email>levanc@email.com</email>
-    <address>789 Hai Ba Trung, Ho Chi Minh</address>
-    <registration_date>2024-03-10</registration_date>
-    <status>Active</status>
+  <customer id="C002">
+    <name>Trần Thị Thu Hà</name>
+    <phone>0988777666</phone>
+    <email>thuha@gmail.com</email>
+    <address>
+      <city>Hà Nội</city>
+      <district>Cầu Giấy</district>
+      <street>Xuân Thủy</street>
+    </address>
+    <membership>Gold</membership>
+    <notes>Khách hàng thân thiết</notes>
   </customer>
-  
-  <customer id="KH004">
-    <name>Pham Thi D</name>
-    <phone>0934567890</phone>
-    <email>phamthid@email.com</email>
-    <address>321 Tran Phu, Hue</address>
-    <registration_date>2024-04-05</registration_date>
-    <status>Inactive</status>
+  <customer id="C003">
+    <name>Lê Quang Huy</name>
+    <phone>0909555444</phone>
+    <email>huy.le@outlook.com</email>
+    <address>
+      <city>TP. Hồ Chí Minh</city>
+      <district>Quận 1</district>
+      <street>Nguyễn Huệ</street>
+    </address>
+    <membership>Silver</membership>
+    <notes>Thường đặt sân cuối tuần</notes>
   </customer>
-  
-  <customer id="KH005">
-    <name>Hoang Van E</name>
-    <phone>0945678901</phone>
-    <email>hoangvane@email.com</email>
-    <address>654 Nguyen Hue, Can Tho</address>
-    <registration_date>2024-05-12</registration_date>
-    <status>Active</status>
+  <customer id="C004">
+    <name>Phạm Minh Tuấn</name>
+    <phone>0913222111</phone>
+    <email>tuanpm@yahoo.com</email>
+    <address>
+      <city>Cần Thơ</city>
+      <district>Ninh Kiều</district>
+      <street>Hai Bà Trưng</street>
+    </address>
+    <membership>VIP</membership>
+    <notes>Đội trưởng đội bóng công ty</notes>
+  </customer>
+  <customer id="C005">
+    <name>Hoàng Thùy Linh</name>
+    <phone>0868999888</phone>
+    <email>linh.hoang@company.vn</email>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Sơn Trà</district>
+      <street>Phạm Văn Đồng</street>
+    </address>
+    <membership>None</membership>
+    <notes>Mới đăng ký hôm qua</notes>
+  </customer>
+  <customer id="C006">
+    <name>Đặng Văn Lâm</name>
+    <phone>0977123123</phone>
+    <email>lam.dang@gmail.com</email>
+    <address>
+      <city>Hải Phòng</city>
+      <district>Ngô Quyền</district>
+      <street>Lạch Tray</street>
+    </address>
+    <membership>Gold</membership>
+    <notes>Yêu cầu xuất hóa đơn đỏ</notes>
   </customer>
 </customers>
