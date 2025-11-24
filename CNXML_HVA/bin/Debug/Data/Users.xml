@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <users>
   <user id="U001">
     <username>admin</username>
@@ -10,9 +10,8 @@
     <branch_id>B01</branch_id>
     <status>Active</status>
     <created_date>2024-01-01</created_date>
-    <last_login>2024-09-30 08:30:00</last_login>
+    <last_login>2025-11-24 21:04:55</last_login>
   </user>
-  
   <user id="U002">
     <username>manager_dn</username>
     <password>manager123</password>
@@ -25,7 +24,6 @@
     <created_date>2024-01-15</created_date>
     <last_login>2024-09-29 14:20:00</last_login>
   </user>
-  
   <user id="U003">
     <username>staff_hcm</username>
     <password>staff123</password>
@@ -38,7 +36,6 @@
     <created_date>2024-02-01</created_date>
     <last_login>2024-09-28 16:45:00</last_login>
   </user>
-  
   <user id="U004">
     <username>receptionist</username>
     <password>recep123</password>
@@ -50,5 +47,17 @@
     <status>Active</status>
     <created_date>2024-03-01</created_date>
     <last_login>2024-09-30 07:15:00</last_login>
+  </user>
+  <user id="U005">
+    <username>dangviet</username>
+    <password>dangviet123</password>
+    <full_name>Nguyen Dang Viet</full_name>
+    <email>dangviet@gmail.com</email>
+    <phone>0905507622</phone>
+    <role>Administrator</role>
+    <branch_id>B01</branch_id>
+    <status>Active</status>
+    <created_date>2025-11-24</created_date>
+    <last_login>2025-11-24 21:08:57</last_login>
   </user>
 </users>

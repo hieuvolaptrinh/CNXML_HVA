@@ -34,14 +34,15 @@ namespace CNXML_HVA
         private void DashBoard_Load(object sender, EventArgs e)
         {
             timerClock.Start();
-            UpdateChart();
             ApplyModernStyles();
+            ShowDashboardContent(true); // Hiển thị nội dung dashboard trước
+            
+            // Load data sau khi UI đã được hiển thị
             PrepareAnimations();
-            LoadCounters();
+            LoadCounters(); // Sẽ tự động gọi UpdateChart() sau khi animation xong
             LoadRevenueStats();
             LoadRecentActivities();
             LoadCandlestickChart(); // Load biểu đồ nến doanh thu
-            ShowDashboardContent(true); // Hiển thị nội dung dashboard mặc định
         }
 
 
@@ -112,6 +113,9 @@ namespace CNXML_HVA
                     }
                     counterAnimationTimer.Stop();
                     counterAnimationTimer.Dispose();
+                    
+                    // Cập nhật biểu đồ sau khi animation hoàn thành
+                    UpdateChart();
                 }
             };
 
@@ -698,6 +702,13 @@ namespace CNXML_HVA
 
             // Hiển thị lại nội dung dashboard
             ShowDashboardContent(true);
+            
+            // Refresh data
+            LoadCounters();
+            LoadRevenueStats();
+            LoadRecentActivities();
+            UpdateChart();
+            LoadCandlestickChart();
             
             // Cập nhật dữ liệu
             LoadCounters();

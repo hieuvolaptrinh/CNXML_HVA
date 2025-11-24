@@ -154,7 +154,7 @@
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(46, 20);
             this.lblEmail.TabIndex = 1;
-            this.lblEmail.Text = "Email";
+            this.lblEmail.Text = "Tên đăng nhập";
             // 
             // pnlPassword
             // 
