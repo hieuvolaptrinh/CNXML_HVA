@@ -56,6 +56,8 @@ namespace CNXML_HVA
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
+            this.buttonSqlToXml = new System.Windows.Forms.Button();
+            this.buttonXmlToSql = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.groupBoxCustomerInfo.SuspendLayout();
@@ -72,7 +74,7 @@ namespace CNXML_HVA
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1000, 70);
+            this.panelHeader.Size = new System.Drawing.Size(1180, 70);
             this.panelHeader.TabIndex = 0;
             // 
             // pictureBoxIcon
@@ -122,10 +124,11 @@ namespace CNXML_HVA
             this.groupBoxCustomerInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
             this.groupBoxCustomerInfo.Location = new System.Drawing.Point(20, 90);
             this.groupBoxCustomerInfo.Name = "groupBoxCustomerInfo";
-            this.groupBoxCustomerInfo.Size = new System.Drawing.Size(960, 260);
+            this.groupBoxCustomerInfo.Size = new System.Drawing.Size(1140, 260);
             this.groupBoxCustomerInfo.TabIndex = 1;
             this.groupBoxCustomerInfo.TabStop = false;
             this.groupBoxCustomerInfo.Text = "   Thông tin khách hàng   ";
+            this.groupBoxCustomerInfo.Enter += new System.EventHandler(this.groupBoxCustomerInfo_Enter);
             // 
             // labelID
             // 
@@ -322,7 +325,7 @@ namespace CNXML_HVA
             this.panelSearch.Controls.Add(this.labelRecordCount);
             this.panelSearch.Location = new System.Drawing.Point(20, 360);
             this.panelSearch.Name = "panelSearch";
-            this.panelSearch.Size = new System.Drawing.Size(960, 45);
+            this.panelSearch.Size = new System.Drawing.Size(1140, 45);
             this.panelSearch.TabIndex = 2;
             // 
             // labelSearch
@@ -351,7 +354,7 @@ namespace CNXML_HVA
             this.labelRecordCount.AutoSize = true;
             this.labelRecordCount.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic);
             this.labelRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.labelRecordCount.Location = new System.Drawing.Point(750, 12);
+            this.labelRecordCount.Location = new System.Drawing.Point(900, 12);
             this.labelRecordCount.Name = "labelRecordCount";
             this.labelRecordCount.Size = new System.Drawing.Size(125, 15);
             this.labelRecordCount.TabIndex = 2;
@@ -372,7 +375,7 @@ namespace CNXML_HVA
             this.dataGridViewCustomers.RowHeadersVisible = false;
             this.dataGridViewCustomers.RowTemplate.Height = 35;
             this.dataGridViewCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewCustomers.Size = new System.Drawing.Size(960, 220);
+            this.dataGridViewCustomers.Size = new System.Drawing.Size(1140, 220);
             this.dataGridViewCustomers.TabIndex = 3;
             this.dataGridViewCustomers.SelectionChanged += new System.EventHandler(this.dataGridViewCustomers_SelectionChanged);
             // 
@@ -387,9 +390,11 @@ namespace CNXML_HVA
             this.panelButtons.Controls.Add(this.buttonCancel);
             this.panelButtons.Controls.Add(this.buttonRefresh);
             this.panelButtons.Controls.Add(this.buttonExportExcel);
+            this.panelButtons.Controls.Add(this.buttonSqlToXml);
+            this.panelButtons.Controls.Add(this.buttonXmlToSql);
             this.panelButtons.Location = new System.Drawing.Point(20, 645);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(960, 60);
+            this.panelButtons.Size = new System.Drawing.Size(1140, 60);
             this.panelButtons.TabIndex = 4;
             // 
             // buttonAdd
@@ -504,10 +509,42 @@ namespace CNXML_HVA
             this.buttonExportExcel.UseVisualStyleBackColor = false;
             this.buttonExportExcel.Click += new System.EventHandler(this.buttonExportExcel_Click);
             // 
+            // buttonSqlToXml
+            // 
+            this.buttonSqlToXml.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(58)))), ((int)(((byte)(183)))));
+            this.buttonSqlToXml.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonSqlToXml.FlatAppearance.BorderSize = 0;
+            this.buttonSqlToXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSqlToXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonSqlToXml.ForeColor = System.Drawing.Color.White;
+            this.buttonSqlToXml.Location = new System.Drawing.Point(850, 10);
+            this.buttonSqlToXml.Name = "buttonSqlToXml";
+            this.buttonSqlToXml.Size = new System.Drawing.Size(130, 40);
+            this.buttonSqlToXml.TabIndex = 7;
+            this.buttonSqlToXml.Text = "⬇️ SQL -> XML";
+            this.buttonSqlToXml.UseVisualStyleBackColor = false;
+            this.buttonSqlToXml.Click += new System.EventHandler(this.buttonSqlToXml_Click);
+            // 
+            // buttonXmlToSql
+            // 
+            this.buttonXmlToSql.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(156)))), ((int)(((byte)(39)))), ((int)(((byte)(176)))));
+            this.buttonXmlToSql.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonXmlToSql.FlatAppearance.BorderSize = 0;
+            this.buttonXmlToSql.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonXmlToSql.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonXmlToSql.ForeColor = System.Drawing.Color.White;
+            this.buttonXmlToSql.Location = new System.Drawing.Point(990, 10);
+            this.buttonXmlToSql.Name = "buttonXmlToSql";
+            this.buttonXmlToSql.Size = new System.Drawing.Size(130, 40);
+            this.buttonXmlToSql.TabIndex = 8;
+            this.buttonXmlToSql.Text = "⬆️ XML -> SQL";
+            this.buttonXmlToSql.UseVisualStyleBackColor = false;
+            this.buttonXmlToSql.Click += new System.EventHandler(this.buttonXmlToSql_Click);
+            // 
             // KhachHang
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(1000, 720);
+            this.ClientSize = new System.Drawing.Size(1180, 720);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.groupBoxCustomerInfo);
             this.Controls.Add(this.panelSearch);
@@ -517,7 +554,7 @@ namespace CNXML_HVA
             this.MaximizeBox = false;
             this.Name = "KhachHang";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Quản lý khách hàng";
+            this.Text = "Quản lý khách hàng - XML & SQL Integration";
             this.Load += new System.EventHandler(this.KhachHang_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
@@ -533,11 +570,10 @@ namespace CNXML_HVA
         }
 
         #endregion
-
+        // Khai báo biến giữ nguyên và thêm 2 button mới
         private Panel panelHeader;
         private Label labelTitle;
         private PictureBox pictureBoxIcon;
-
         private GroupBox groupBoxCustomerInfo;
         private Label labelID;
         private TextBox textBoxId;
@@ -557,13 +593,11 @@ namespace CNXML_HVA
         private ComboBox comboBoxMembership;
         private Label labelNote;
         private TextBox textBoxNote;
-
         private Panel panelSearch;
         private DataGridView dataGridViewCustomers;
         private Label labelSearch;
         private TextBox textBoxSearch;
         private Label labelRecordCount;
-
         private Panel panelButtons;
         private Button buttonAdd;
         private Button buttonEdit;
@@ -572,5 +606,9 @@ namespace CNXML_HVA
         private Button buttonCancel;
         private Button buttonRefresh;
         private Button buttonExportExcel;
+
+        // Mới
+        private Button buttonSqlToXml;
+        private Button buttonXmlToSql;
     }
 }

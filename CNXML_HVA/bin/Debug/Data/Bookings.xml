@@ -10,4 +10,14 @@
     <note>
     </note>
   </Booking>
+  <Booking id="B002">
+    <customer>Nguyen Van A</customer>
+    <field>Sân B2 - Standard 7</field>
+    <type>7 người</type>
+    <date>2025-11-24</date>
+    <time>8</time>
+    <duration>1</duration>
+    <note>
+    </note>
+  </Booking>
 </Bookings>
