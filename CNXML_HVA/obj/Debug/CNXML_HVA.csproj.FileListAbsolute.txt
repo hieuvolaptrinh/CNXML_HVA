@@ -177,16 +177,6 @@ D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.GenerateResou
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.CoreCompileInputs.cache
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.pdb
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Branches.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Customers.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\EquipmentMatch.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Equipments.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldEquipment.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Fields.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\FieldTypes.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Matches.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Orders.xml
-D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\Templates\Users.xml
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe.config
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.exe
 D:\8. Project\cnxml\CNXML_HVA\CNXML_HVA\bin\Debug\CNXML_HVA.pdb

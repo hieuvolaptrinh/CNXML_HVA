@@ -20,7 +20,8 @@ namespace CNXML_HVA
         public DatLich()
         {
             InitializeComponent();
-            xmlFilePath = Path.Combine(Application.StartupPath, "Bookings.xml");
+            xmlFilePath = DataPaths.GetXmlFilePath("Bookings.xml");
+            DataPaths.EnsureXmlFileExists("Bookings.xml");
             xmlDoc = new XmlDocument();
             InitializeDataTable();
         }
@@ -76,7 +77,7 @@ namespace CNXML_HVA
         private void LoadComboBoxes()
         {
             // Load customers from Customers.xml if exists
-            string customersPath = Path.Combine(Application.StartupPath, "Customers.xml");
+            string customersPath = DataPaths.GetXmlFilePath("Customers.xml");
             if (File.Exists(customersPath))
             {
                 try
@@ -102,7 +103,7 @@ namespace CNXML_HVA
             }
 
             // Load fields from fields.xml if exists
-            string fieldsPath = Path.Combine(Application.StartupPath, "fields.xml");
+            string fieldsPath = DataPaths.GetXmlFilePath("Fields.xml");
             if (File.Exists(fieldsPath))
             {
                 try

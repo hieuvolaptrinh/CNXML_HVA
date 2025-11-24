@@ -20,7 +20,8 @@ namespace CNXML_HVA
         public KhachHang()
         {
             InitializeComponent();
-            xmlFilePath = Path.Combine(Application.StartupPath, "Customers.xml");
+            xmlFilePath = DataPaths.GetXmlFilePath("Customers.xml");
+            DataPaths.EnsureXmlFileExists("Customers.xml");
             xmlDoc = new XmlDocument();
             InitializeDataTable();
         }

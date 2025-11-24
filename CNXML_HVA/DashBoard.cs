@@ -122,7 +122,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+                string path = DataPaths.GetXmlFilePath("Orders.xml");
                 if (!File.Exists(path))
                 {
                     lblTotalRevenue.Text = "0 VNĐ";
@@ -224,7 +224,7 @@ namespace CNXML_HVA
         var activities = new List<(DateTime dateTime, string text)>();
 
         // Load bookings
-        string bookingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Bookings.xml");
+        string bookingsPath = DataPaths.GetXmlFilePath("Bookings.xml");
         if (File.Exists(bookingsPath))
         {
             var bookingsDoc = XDocument.Load(bookingsPath);
@@ -251,7 +251,7 @@ namespace CNXML_HVA
         }
 
         // Load orders
-        string ordersPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+        string ordersPath = DataPaths.GetXmlFilePath("Orders.xml");
         if (File.Exists(ordersPath))
         {
             var ordersDoc = XDocument.Load(ordersPath);
@@ -645,7 +645,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                string path = DataPaths.GetXmlFilePath(fileName);
                 if (!File.Exists(path)) return 0;
                 var doc = XDocument.Load(path);
                 return doc.Root == null ? 0 : doc.Root.Elements().Count();
@@ -811,7 +811,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Orders.xml");
+                string path = DataPaths.GetXmlFilePath("Orders.xml");
                 
                 // Tạo dữ liệu candlestick
                 var candlestickData = new List<CandlestickData>();

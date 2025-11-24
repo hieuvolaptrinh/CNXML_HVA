@@ -24,7 +24,8 @@ namespace CNXML_HVA
         public ChiNhanh()
         {
             InitializeComponent();
-            xmlFilePath = Path.Combine(Application.StartupPath, "Branches.xml");
+            xmlFilePath = DataPaths.GetXmlFilePath("Branches.xml");
+            DataPaths.EnsureXmlFileExists("Branches.xml");
             xmlDoc = new XmlDocument();
             InitializeDataTable();
         }

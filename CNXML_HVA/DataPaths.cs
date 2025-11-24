@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace CNXML_HVA
 {
@@ -8,12 +9,13 @@ namespace CNXML_HVA
     public static class DataPaths
     {
          
-        public static string AppFolderName => "CNXML_HVA\\Data";
+        public static string DataFolderName => "Data";
  
-        public static string GetAppDataFolder()
+        public static string GetDataFolder()
         {
-            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var folder = Path.Combine(appData, AppFolderName);
+            // Lưu dữ liệu trong thư mục Data bên cạnh file exe
+            string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var folder = Path.Combine(exeFolder, DataFolderName);
             
             // Tạo thư mục nếu chưa tồn tại
             if (!Directory.Exists(folder))
@@ -26,49 +28,25 @@ namespace CNXML_HVA
  
         public static string GetXmlFilePath(string filename)
         {
-            return Path.Combine(GetAppDataFolder(), filename);
+            return Path.Combine(GetDataFolder(), filename);
         }
 
         
-        public static void InitializeXmlFile(string filename)
+        public static void EnsureXmlFileExists(string filename)
         {
-            string targetPath = GetXmlFilePath(filename);
+            string filePath = GetXmlFilePath(filename);
             
-             
-            if (File.Exists(targetPath))
+            // Nếu file đã tồn tại thì không làm gì
+            if (File.Exists(filePath))
             {
                 return;
             }
 
-            // 1. Thử lấy từ thư mục Templates (trong thư mục exe)
-            string exeFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string templatePath = Path.Combine(exeFolder, "Templates", filename);
-
-            if (File.Exists(templatePath))
-            {
-                File.Copy(templatePath, targetPath);
-                return;
-            }
-
-            // 2. Thử lấy từ thư mục gốc (compatibility với phát triển)
-            string devPath = Path.Combine(exeFolder, filename);
-            if (File.Exists(devPath))
-            {
-                File.Copy(devPath, targetPath);
-                return;
-            }
-
-            // 3. Nếu không có file nào, tạo file XML rỗng mới
-            CreateEmptyXmlFile(filename, targetPath);
-        }
-
-        
-        private static void CreateEmptyXmlFile(string filename, string targetPath)
-        {
+            // Tạo file XML rỗng mới
             string rootElement = GetRootElementName(filename);
             string xmlContent = $"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<{rootElement}>\n</{rootElement}>";
             
-            File.WriteAllText(targetPath, xmlContent, System.Text.Encoding.UTF8);
+            File.WriteAllText(filePath, xmlContent, System.Text.Encoding.UTF8);
         }
 
         
@@ -76,7 +54,6 @@ namespace CNXML_HVA
         {
             string name = Path.GetFileNameWithoutExtension(filename);
             
-             
             switch (name)
             {
                 case "Fields": return "fields";
@@ -89,29 +66,8 @@ namespace CNXML_HVA
                 case "Matches": return "matches";
                 case "Orders": return "orders";
                 case "Users": return "users";
+                case "Bookings": return "bookings";
                 default: return "data";
-            }
-        }
- 
-        public static void InitializeAllXmlFiles()
-        {
-            string[] xmlFiles = new[]
-            {
-                "Fields.xml",
-                "FieldTypes.xml",
-                "Branches.xml",
-                "Customers.xml",
-                "Equipments.xml",
-                "EquipmentMatch.xml",
-                "FieldEquipment.xml",
-                "Matches.xml",
-                "Orders.xml",
-                "Users.xml"
-            };
-
-            foreach (var file in xmlFiles)
-            {
-                InitializeXmlFile(file);
             }
         }
     }

@@ -24,7 +24,8 @@ namespace CNXML_HVA
         public DungCu()
         {
             InitializeComponent();
-            xmlFilePath = Path.Combine(Application.StartupPath, "Equipments.xml");
+            xmlFilePath = DataPaths.GetXmlFilePath("Equipments.xml");
+            DataPaths.EnsureXmlFileExists("Equipments.xml");
             xmlDoc = new XmlDocument();
             InitializeDataTable();
         }
