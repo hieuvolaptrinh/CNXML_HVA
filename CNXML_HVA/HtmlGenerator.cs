@@ -2,273 +2,325 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Text;
+using System.Linq;
 
 namespace CNXML_HVA
 {
     public static class HtmlGenerator
     {
+        // ==========================================
+        // PHẦN 1: CÁC HÀM XỬ LÝ LOGIC (GENERATE)
+        // ==========================================
+
         public static void GenerateBranchesHtml()
         {
-            string xmlPath = DataPaths.GetXmlFilePath("Branches.xml");
-            string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "branches.html");
-            
-            if (!File.Exists(xmlPath))
+            try
             {
-                throw new Exception("Không tìm thấy file Branches.xml");
-            }
-            
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlPath);
-            
-            // Đọc tất cả branches và tạo HTML
-            StringBuilder branchesHtml = new StringBuilder();
-            XmlNodeList branches = xmlDoc.SelectNodes("//branch");
-            
-            int totalFields = 0;
-            int totalStaff = 0;
-            long totalRevenue = 0;
-            int activeBranches = 0;
-            
-            foreach (XmlNode branch in branches)
-            {
-                string id = GetAttributeValue(branch, "id");
-                string name = GetNodeValue(branch, "name");
-                string code = GetNodeValue(branch, "code");
-                string city = GetNodeValue(branch, "address/city");
-                string district = GetNodeValue(branch, "address/district");
-                string street = GetNodeValue(branch, "address/street");
-                string phone = GetNodeValue(branch, "contact/phone");
-                string email = GetNodeValue(branch, "contact/email");
-                string managerName = GetNodeValue(branch, "manager_name");
-                string branchFields = GetNodeValue(branch, "total_fields");
-                string staffCount = GetNodeValue(branch, "staff_count");
-                string monthlyRevenue = GetNodeValue(branch, "monthly_revenue");
-                string description = GetNodeValue(branch, "description");
-                string status = GetNodeValue(branch, "status");
-                string imageUrl = GetNodeValue(branch, "image_url");
-                
-                if (string.IsNullOrEmpty(imageUrl))
+                string xmlPath = DataPaths.GetXmlFilePath("Branches.xml");
+                string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "branches.html");
+
+                if (!File.Exists(xmlPath)) return;
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlPath);
+
+                StringBuilder branchesHtml = new StringBuilder();
+                XmlNodeList branches = xmlDoc.SelectNodes("//branch");
+
+                int totalFields = 0;
+                int totalStaff = 0;
+                long totalRevenue = 0;
+                int activeBranches = 0;
+
+                foreach (XmlNode branch in branches)
                 {
-                    imageUrl = "https://via.placeholder.com/400x220?text=No+Image";
+                    string id = GetAttributeValue(branch, "id");
+                    string name = GetNodeValue(branch, "name");
+                    string code = GetNodeValue(branch, "code");
+                    string city = GetNodeValue(branch, "address/city");
+                    string district = GetNodeValue(branch, "address/district");
+                    string street = GetNodeValue(branch, "address/street");
+                    string phone = GetNodeValue(branch, "contact/phone");
+                    string email = GetNodeValue(branch, "contact/email");
+                    string managerName = GetNodeValue(branch, "manager_name");
+                    string branchFields = GetNodeValue(branch, "total_fields");
+                    string staffCount = GetNodeValue(branch, "staff_count");
+                    string monthlyRevenue = GetNodeValue(branch, "monthly_revenue");
+                    string description = GetNodeValue(branch, "description");
+                    string status = GetNodeValue(branch, "status");
+                    string imageUrl = GetNodeValue(branch, "image_url");
+
+                    if (string.IsNullOrEmpty(imageUrl)) imageUrl = "https://via.placeholder.com/400x220?text=No+Image";
+
+                    string address = $"{street}, {district}, {city}";
+                    string statusClass = status == "Active" ? "status-active" : "status-inactive";
+                    string statusText = status == "Active" ? "Hoạt động" : "Tạm đóng";
+
+                    int fields = int.TryParse(branchFields, out int f) ? f : 0;
+                    int staff = int.TryParse(staffCount, out int s) ? s : 0;
+                    long revenue = long.TryParse(monthlyRevenue, out long r) ? r : 0;
+
+                    totalFields += fields;
+                    totalStaff += staff;
+                    totalRevenue += revenue;
+                    if (status == "Active") activeBranches++;
+
+                    string revenueFormatted = revenue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
+
+                    branchesHtml.AppendLine($@"
+                        <div class=""branch-card"">
+                            <span class=""status-badge {statusClass}"">{statusText}</span>
+                            <img src=""{imageUrl}"" alt=""{name}"" class=""branch-image"" onerror=""this.src='https://via.placeholder.com/400x220?text=No+Image'"">
+                            <div class=""branch-content"">
+                                <div class=""branch-header"">
+                                    <div>
+                                        <div class=""branch-name"">{name}</div>
+                                        <span class=""branch-code"">{code}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class=""branch-info"">
+                                    <div class=""info-row""><span class=""info-icon"">📍</span><span>{address}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">📞</span><span>{phone}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">✉️</span><span>{email}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">👤</span><span>Quản lý: {managerName}</span></div>
+                                </div>
+                                
+                                {(string.IsNullOrEmpty(description) ? "" : $@"<div class=""branch-description"">{description}</div>")}
+                                
+                                <div class=""branch-stats"">
+                                    <div class=""stat-item""><div class=""stat-value"">{fields}</div><div class=""stat-label"">Sân</div></div>
+                                    <div class=""stat-item""><div class=""stat-value"">{staff}</div><div class=""stat-label"">Nhân viên</div></div>
+                                    <div class=""stat-item""><div class=""stat-value"">{revenueFormatted}</div><div class=""stat-label"">Doanh thu</div></div>
+                                </div>
+                            </div>
+                        </div>");
                 }
-                
-                string address = $"{street}, {district}, {city}";
-                string statusClass = status == "Active" ? "status-active" : "status-inactive";
-                string statusText = status == "Active" ? "Hoạt động" : "Tạm đóng";
-                
-                int fields = int.Parse(branchFields);
-                int staff = int.Parse(staffCount);
-                long revenue = long.Parse(monthlyRevenue);
-                
-                totalFields += fields;
-                totalStaff += staff;
-                totalRevenue += revenue;
-                if (status == "Active") activeBranches++;
-                
-                string revenueFormatted = revenue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
-                
-                branchesHtml.AppendLine($@"
-                    <div class=""branch-card"">
-                        <span class=""status-badge {statusClass}"">{statusText}</span>
-                        <img src=""{imageUrl}"" alt=""{name}"" class=""branch-image"" onerror=""this.src='https://via.placeholder.com/400x220?text=No+Image'"">
-                        <div class=""branch-content"">
-                            <div class=""branch-header"">
-                                <div>
-                                    <div class=""branch-name"">{name}</div>
-                                    <span class=""branch-code"">{code}</span>
-                                </div>
-                            </div>
-                            
-                            <div class=""branch-info"">
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">📍</span>
-                                    <span>{address}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">📞</span>
-                                    <span>{phone}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">✉️</span>
-                                    <span>{email}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">👤</span>
-                                    <span>Quản lý: {managerName}</span>
-                                </div>
-                            </div>
-                            
-                            {(string.IsNullOrEmpty(description) ? "" : $@"<div class=""branch-description"">{description}</div>")}
-                            
-                            <div class=""branch-stats"">
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{branchFields}</div>
-                                    <div class=""stat-label"">Sân</div>
-                                </div>
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{staffCount}</div>
-                                    <div class=""stat-label"">Nhân viên</div>
-                                </div>
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{revenueFormatted}</div>
-                                    <div class=""stat-label"">Doanh thu/tháng</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>");
+
+                string totalRevenueFormatted = totalRevenue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
+                string html = GetBranchesHtmlTemplate(branches.Count, activeBranches, totalStaff, totalRevenueFormatted, branchesHtml.ToString());
+
+                Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
+                File.WriteAllText(htmlPath, html, Encoding.UTF8);
             }
-            
-            string totalRevenueFormatted = totalRevenue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
-            
-            // Tạo HTML hoàn chỉnh
-            string html = GetBranchesHtmlTemplate(
-                branches.Count, 
-                activeBranches, 
-                totalStaff, 
-                totalRevenueFormatted, 
-                branchesHtml.ToString()
-            );
-            
-            Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
-            File.WriteAllText(htmlPath, html, Encoding.UTF8);
+            catch (Exception ex) { /* Log error */ }
         }
-        
+
         public static void GenerateEquipmentsHtml()
         {
-            string xmlPath = DataPaths.GetXmlFilePath("Equipments.xml");
-            string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "equipments.html");
-            
-            if (!File.Exists(xmlPath))
+            try
             {
-                throw new Exception("Không tìm thấy file Equipments.xml");
-            }
-            
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlPath);
-            
-            // Đọc tất cả equipments và tạo HTML
-            StringBuilder equipmentsHtml = new StringBuilder();
-            XmlNodeList equipments = xmlDoc.SelectNodes("//equipment");
-            
-            int totalQuantity = 0;
-            int totalAvailable = 0;
-            long totalValue = 0;
-            
-            foreach (XmlNode equipment in equipments)
-            {
-                string id = GetAttributeValue(equipment, "id");
-                string name = GetNodeValue(equipment, "name");
-                string category = GetNodeValue(equipment, "category");
-                string brand = GetNodeValue(equipment, "brand");
-                string model = GetNodeValue(equipment, "model");
-                string quantityTotal = GetNodeValue(equipment, "quantity_total");
-                string quantityAvailable = GetNodeValue(equipment, "quantity_available");
-                string rentalPrice = GetNodeValue(equipment, "rental_price");
-                string purchasePrice = GetNodeValue(equipment, "purchase_price");
-                string condition = GetNodeValue(equipment, "condition");
-                string branchId = GetNodeValue(equipment, "branch_id");
-                string description = GetNodeValue(equipment, "description");
-                string status = GetNodeValue(equipment, "status");
-                string imageUrl = GetNodeValue(equipment, "image_url");
-                
-                if (string.IsNullOrEmpty(imageUrl))
+                string xmlPath = DataPaths.GetXmlFilePath("Equipments.xml");
+                string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "equipments.html");
+
+                if (!File.Exists(xmlPath)) return;
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlPath);
+
+                StringBuilder equipmentsHtml = new StringBuilder();
+                XmlNodeList equipments = xmlDoc.SelectNodes("//equipment");
+
+                int totalQuantity = 0;
+                int totalAvailable = 0;
+                long totalValue = 0;
+
+                foreach (XmlNode equipment in equipments)
                 {
-                    imageUrl = "https://via.placeholder.com/400x220?text=No+Image";
+                    string id = GetAttributeValue(equipment, "id");
+                    string name = GetNodeValue(equipment, "name");
+                    string category = GetNodeValue(equipment, "category");
+                    string brand = GetNodeValue(equipment, "brand");
+                    string model = GetNodeValue(equipment, "model");
+                    string quantityTotal = GetNodeValue(equipment, "quantity_total");
+                    string quantityAvailable = GetNodeValue(equipment, "quantity_available");
+                    string rentalPrice = GetNodeValue(equipment, "rental_price");
+                    string purchasePrice = GetNodeValue(equipment, "purchase_price");
+                    string description = GetNodeValue(equipment, "description");
+                    string status = GetNodeValue(equipment, "status");
+                    string imageUrl = GetNodeValue(equipment, "image_url");
+                    string branchId = GetNodeValue(equipment, "branch_id");
+
+                    if (string.IsNullOrEmpty(imageUrl)) imageUrl = "https://via.placeholder.com/400x220?text=No+Image";
+
+                    int qtyTotal = int.TryParse(quantityTotal, out int qt) ? qt : 0;
+                    int qtyAvailable = int.TryParse(quantityAvailable, out int qa) ? qa : 0;
+                    long price = long.TryParse(purchasePrice, out long p) ? p : 0;
+                    long rent = long.TryParse(rentalPrice, out long r) ? r : 0;
+
+                    totalQuantity += qtyTotal;
+                    totalAvailable += qtyAvailable;
+                    totalValue += price * qtyTotal;
+
+                    string rentalPriceFormatted = rent.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
+                    string purchasePriceFormatted = price.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
+
+                    string statusClass = status == "Active" ? "status-active" : "status-inactive";
+                    string statusText = status == "Active" ? "Có sẵn" : "Hết hàng";
+
+                    equipmentsHtml.AppendLine($@"
+                        <div class=""equipment-card"">
+                            <span class=""status-badge {statusClass}"">{statusText}</span>
+                            <img src=""{imageUrl}"" alt=""{name}"" class=""equipment-image"" onerror=""this.src='https://via.placeholder.com/400x220?text=No+Image'"">
+                            <div class=""equipment-content"">
+                                <div class=""equipment-header"">
+                                    <div class=""equipment-name"">{name}</div>
+                                    <span class=""equipment-code"">{id}</span>
+                                </div>
+                                
+                                <div class=""equipment-info"">
+                                    <div class=""info-row""><span class=""info-icon"">📦</span><span>DM: {category}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">🏷️</span><span>Hãng: {brand} - {model}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">🏢</span><span>CN: {branchId}</span></div>
+                                </div>
+                                
+                                {(string.IsNullOrEmpty(description) ? "" : $@"<div class=""equipment-description"">{description}</div>")}
+                                
+                                <div class=""equipment-stats"">
+                                    <div class=""stat-item""><div class=""stat-value"">{qtyTotal}</div><div class=""stat-label"">Tổng SL</div></div>
+                                    <div class=""stat-item""><div class=""stat-value"">{qtyAvailable}</div><div class=""stat-label"">Có sẵn</div></div>
+                                    <div class=""stat-item""><div class=""stat-value"">{rentalPriceFormatted}</div><div class=""stat-label"">Giá thuê</div></div>
+                                    <div class=""stat-item""><div class=""stat-value"">{purchasePriceFormatted}</div><div class=""stat-label"">Giá mua</div></div>
+                                </div>
+                            </div>
+                        </div>");
                 }
-                
-                int qtyTotal = int.Parse(quantityTotal);
-                int qtyAvailable = int.Parse(quantityAvailable);
-                long price = long.Parse(purchasePrice);
-                
-                totalQuantity += qtyTotal;
-                totalAvailable += qtyAvailable;
-                totalValue += price * qtyTotal;
-                
-                string rentalPriceFormatted = long.Parse(rentalPrice).ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
-                string purchasePriceFormatted = price.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
-                
-                string statusClass = status == "Active" ? "status-active" : "status-inactive";
-                string statusText = status == "Active" ? "Có sẵn" : "Không có sẵn";
-                
-                equipmentsHtml.AppendLine($@"
-                    <div class=""equipment-card"">
-                        <span class=""status-badge {statusClass}"">{statusText}</span>
-                        <img src=""{imageUrl}"" alt=""{name}"" class=""equipment-image"" onerror=""this.src='https://via.placeholder.com/400x220?text=No+Image'"">
-                        <div class=""equipment-content"">
-                            <div class=""equipment-header"">
-                                <div class=""equipment-name"">{name}</div>
-                                <span class=""equipment-code"">{id}</span>
-                            </div>
-                            
-                            <div class=""equipment-info"">
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">📦</span>
-                                    <span>Danh mục: {category}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">🏷️</span>
-                                    <span>Thương hiệu: {brand}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">🔧</span>
-                                    <span>Model: {model}</span>
-                                </div>
-                                <div class=""info-row"">
-                                    <span class=""info-icon"">🏢</span>
-                                    <span>Chi nhánh: {branchId}</span>
-                                </div>
-                            </div>
-                            
-                            {(string.IsNullOrEmpty(description) ? "" : $@"<div class=""equipment-description"">{description}</div>")}
-                            
-                            <div class=""equipment-stats"">
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{quantityTotal}</div>
-                                    <div class=""stat-label"">Tổng SL</div>
-                                </div>
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{quantityAvailable}</div>
-                                    <div class=""stat-label"">Có sẵn</div>
-                                </div>
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{rentalPriceFormatted}</div>
-                                    <div class=""stat-label"">Giá thuê</div>
-                                </div>
-                                <div class=""stat-item"">
-                                    <div class=""stat-value"">{purchasePriceFormatted}</div>
-                                    <div class=""stat-label"">Giá mua</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>");
+
+                string totalValueFormatted = totalValue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
+                string html = GetEquipmentsHtmlTemplate(equipments.Count, totalQuantity, totalAvailable, totalValueFormatted, equipmentsHtml.ToString());
+
+                Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
+                File.WriteAllText(htmlPath, html, Encoding.UTF8);
             }
-            
-            string totalValueFormatted = totalValue.ToString("N0", new System.Globalization.CultureInfo("vi-VN"));
-            
-            // Tạo HTML hoàn chỉnh
-            string html = GetEquipmentsHtmlTemplate(
-                equipments.Count,
-                totalQuantity,
-                totalAvailable,
-                totalValueFormatted,
-                equipmentsHtml.ToString()
-            );
-            
-            Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
-            File.WriteAllText(htmlPath, html, Encoding.UTF8);
+            catch (Exception ex) { /* Log error */ }
         }
-        
+
+        public static void GenerateBookingsHtml()
+        {
+            try
+            {
+                string xmlPath = DataPaths.GetXmlFilePath("Bookings.xml");
+                string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "bookings.html");
+
+                if (!File.Exists(xmlPath)) return;
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlPath);
+
+                StringBuilder bookingsHtml = new StringBuilder();
+                XmlNodeList bookings = xmlDoc.SelectNodes("//Booking");
+
+                foreach (XmlNode booking in bookings)
+                {
+                    string id = GetAttributeValue(booking, "id");
+                    string customer = GetNodeValue(booking, "customer");
+                    string field = GetNodeValue(booking, "field");
+                    string type = GetNodeValue(booking, "type");
+                    string date = GetNodeValue(booking, "date");
+                    string time = GetNodeValue(booking, "time");
+                    string duration = GetNodeValue(booking, "duration");
+                    string note = GetNodeValue(booking, "note");
+
+                    bookingsHtml.AppendLine($@"
+                        <div class=""booking-card"">
+                            <div class=""booking-content"">
+                                <div class=""booking-header"">
+                                    <div class=""booking-id"">{id}</div>
+                                    <span class=""booking-type"">{type}</span>
+                                </div>
+                                <div class=""booking-info"">
+                                    <div class=""info-row""><span class=""info-icon"">👤</span><span>Khách: {customer}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">⚽</span><span>Sân: {field}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">📅</span><span>Ngày: {date}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">🕐</span><span>Giờ: {time} ({duration}p)</span></div>
+                                </div>
+                                {(string.IsNullOrEmpty(note) ? "" : $@"<div class=""booking-note"">📝 {note}</div>")}
+                            </div>
+                        </div>");
+                }
+
+                string html = GetBookingsHtmlTemplate(bookings.Count, bookingsHtml.ToString());
+                Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
+                File.WriteAllText(htmlPath, html, Encoding.UTF8);
+            }
+            catch (Exception ex) { /* Log error */ }
+        }
+
+        public static void GenerateCustomersHtml()
+        {
+            try
+            {
+                string xmlPath = DataPaths.GetXmlFilePath("Customers.xml");
+                string htmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "customers.html");
+
+                if (!File.Exists(xmlPath)) return;
+
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlPath);
+
+                StringBuilder customersHtml = new StringBuilder();
+                XmlNodeList customers = xmlDoc.SelectNodes("//customer");
+
+                foreach (XmlNode customer in customers)
+                {
+                    string id = GetAttributeValue(customer, "id");
+                    string name = GetNodeValue(customer, "name");
+                    string phone = GetNodeValue(customer, "phone");
+                    string email = GetNodeValue(customer, "email");
+                    string city = GetNodeValue(customer, "address/city");
+                    string district = GetNodeValue(customer, "address/district");
+                    string street = GetNodeValue(customer, "address/street");
+                    string membership = GetNodeValue(customer, "membership");
+                    string notes = GetNodeValue(customer, "notes");
+
+                    string address = $"{street}, {district}, {city}";
+                    string membershipClass = membership == "VIP" ? "membership-vip" :
+                                           membership == "Gold" ? "membership-gold" : "membership-regular";
+
+                    customersHtml.AppendLine($@"
+                        <div class=""customer-card"">
+                            <div class=""customer-content"">
+                                <div class=""customer-header"">
+                                    <div class=""customer-name"">{name}</div>
+                                    <span class=""membership-badge {membershipClass}"">{membership}</span>
+                                </div>
+                                <div class=""customer-id"">Mã KH: {id}</div>
+                                <div class=""customer-info"">
+                                    <div class=""info-row""><span class=""info-icon"">📞</span><span>{phone}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">✉️</span><span>{email}</span></div>
+                                    <div class=""info-row""><span class=""info-icon"">📍</span><span>{address}</span></div>
+                                </div>
+                                {(string.IsNullOrEmpty(notes) ? "" : $@"<div class=""customer-note"">📝 {notes}</div>")}
+                            </div>
+                        </div>");
+                }
+
+                string html = GetCustomersHtmlTemplate(customers.Count, customersHtml.ToString());
+                Directory.CreateDirectory(Path.GetDirectoryName(htmlPath));
+                File.WriteAllText(htmlPath, html, Encoding.UTF8);
+            }
+            catch (Exception ex) { /* Log error */ }
+        }
+
+        // ==========================================
+        // PHẦN 2: CÁC HÀM HELPER
+        // ==========================================
+
         private static string GetNodeValue(XmlNode parentNode, string xpath)
         {
             XmlNode node = parentNode.SelectSingleNode(xpath);
             return node?.InnerText ?? "";
         }
-        
+
         private static string GetAttributeValue(XmlNode node, string attributeName)
         {
             return node?.Attributes?[attributeName]?.Value ?? "";
         }
-        
+
+        // ==========================================
+        // PHẦN 3: CÁC HÀM TEMPLATE (GIAO DIỆN WEB)
+        // ==========================================
+
         private static string GetBranchesHtmlTemplate(int totalBranches, int activeBranches, int totalStaff, string totalRevenue, string branchesContent)
         {
             return $@"<!DOCTYPE html>
@@ -279,215 +331,110 @@ namespace CNXML_HVA
     <title>Danh Sách Chi Nhánh - Hệ Thống Sân Bóng</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }}
-        .header {{ background: url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1600&q=80') center/cover; color: white; padding: 80px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: relative; overflow: hidden; }}
-        .header-content {{ max-width: 1400px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }}
-        .header h1 {{ font-size: 3em; margin-bottom: 15px; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); letter-spacing: 1px; }}
-        .header p {{ font-size: 1.3em; opacity: 0.95; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); font-weight: 300; }}
+        body {{ font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }}
+        .header {{ background: url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1600&q=80') center/cover; color: white; padding: 60px 20px; text-align: center; }}
+        .header h1 {{ font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }}
         .container {{ max-width: 1400px; margin: 0 auto; padding: 30px 20px; }}
-        .stats-bar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }}
+        .stats-bar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
         .stat-item {{ text-align: center; }}
-        .stat-value {{ font-size: 2em; font-weight: bold; color: #4CAF50; }}
-        .stat-label {{ color: #666; font-size: 0.9em; margin-top: 5px; }}
-        .toolbar {{ background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 25px; }}
-        .search-box {{ position: relative; margin-bottom: 20px; }}
-        .search-icon {{ position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2em; }}
-        #searchInput {{ width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease; }}
-        #searchInput:focus {{ outline: none; border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1); }}
-        .filters {{ display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }}
-        .filter-select {{ flex: 1; min-width: 180px; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95em; background: white; cursor: pointer; transition: all 0.3s ease; }}
-        .filter-select:hover {{ border-color: #4CAF50; }}
-        .filter-select:focus {{ outline: none; border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1); }}
-        .reset-btn {{ padding: 12px 25px; background: #f44336; color: white; border: none; border-radius: 10px; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }}
-        .reset-btn:hover {{ background: #d32f2f; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); }}
-        .result-info {{ background: #e8f5e9; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; color: #2e7d32; font-size: 0.95em; border-left: 4px solid #4CAF50; display: none; }}
-        .no-results {{ text-align: center; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
-        .no-results-icon {{ font-size: 4em; margin-bottom: 20px; }}
-        .no-results-text {{ font-size: 1.3em; color: #666; margin-bottom: 10px; }}
-        .no-results-hint {{ color: #999; font-size: 0.95em; }}
+        .stat-value {{ font-size: 1.8em; font-weight: bold; color: #4CAF50; }}
+        .stat-label {{ color: #666; font-size: 0.9em; }}
+        
+        .toolbar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; gap: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-wrap: wrap; }}
+        #searchInput {{ flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px; }}
+        #cityFilter, #statusFilter {{ flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 150px; }}
+
         .branches-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }}
-        .branch-card {{ background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; position: relative; border: 1px solid #e0e0e0; }}
-        .branch-card:hover {{ transform: translateY(-8px); box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2); border-color: #4CAF50; }}
-        .branch-image {{ width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }}
-        .branch-content {{ padding: 25px; }}
-        .branch-name {{ font-size: 1.5em; font-weight: bold; color: #333; margin-bottom: 5px; }}
-        .branch-code {{ display: inline-block; background: #4CAF50; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }}
-        .status-badge {{ position: absolute; top: 15px; right: 15px; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }}
-        .status-active {{ background: #4CAF50; color: white; }}
-        .status-inactive {{ background: #f44336; color: white; }}
-        .branch-info {{ margin: 15px 0; }}
-        .info-row {{ display: flex; align-items: center; margin: 10px 0; color: #555; font-size: 0.95em; }}
-        .info-icon {{ width: 20px; margin-right: 10px; color: #4CAF50; }}
-        .branch-description {{ color: #666; font-size: 0.9em; line-height: 1.6; margin: 15px 0; padding: 15px; background: #f1f8f4; border-radius: 8px; border-left: 4px solid #4CAF50; }}
-        .branch-stats {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; }}
-        .branch-stats .stat-item {{ text-align: center; }}
-        .branch-stats .stat-value {{ font-size: 1.5em; font-weight: bold; color: #4CAF50; }}
-        .branch-stats .stat-label {{ font-size: 0.8em; color: #888; margin-top: 5px; }}
-        @media (max-width: 768px) {{ .branches-grid {{ grid-template-columns: 1fr; }} .header h1 {{ font-size: 2em; }} }}
+        .branch-card {{ background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; position: relative; }}
+        .branch-card:hover {{ transform: translateY(-5px); }}
+        .branch-image {{ width: 100%; height: 200px; object-fit: cover; }}
+        .branch-content {{ padding: 20px; }}
+        .branch-name {{ font-size: 1.4em; font-weight: bold; color: #333; margin-bottom: 5px; }}
+        .branch-code {{ background: #4CAF50; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8em; }}
+        .status-badge {{ position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 20px; font-size: 0.8em; color: white; font-weight: bold; }}
+        .status-active {{ background: #4CAF50; }} .status-inactive {{ background: #f44336; }}
+        .info-row {{ display: flex; align-items: center; margin: 8px 0; color: #555; font-size: 0.95em; }}
+        .info-icon {{ width: 20px; margin-right: 10px; }}
+        .branch-description {{ background: #f1f8f4; padding: 10px; border-radius: 8px; font-size: 0.9em; color: #555; margin: 15px 0; }}
+        .branch-stats {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }}
     </style>
 </head>
 <body>
     <div class=""header"">
-        <div class=""header-content"">
-            <h1>Hệ Thống Chi Nhánh</h1>
-            <p>Quản lý sân bóng chuyên nghiệp</p>
-        </div>
+        <h1>Hệ Thống Chi Nhánh</h1>
+        <p>Quản lý sân bóng chuyên nghiệp</p>
     </div>
     <div class=""container"">
         <div class=""stats-bar"">
-            <div class=""stat-item""><div class=""stat-value"" id=""totalBranches"">{totalBranches}</div><div class=""stat-label"">Tổng chi nhánh</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""activeBranches"">{activeBranches}</div><div class=""stat-label"">Đang hoạt động</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""totalStaff"">{totalStaff}</div><div class=""stat-label"">Tổng nhân viên</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""totalRevenue"">{totalRevenue}</div><div class=""stat-label"">Doanh thu/tháng (VNĐ)</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalBranches}</div><div class=""stat-label"">Chi nhánh</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{activeBranches}</div><div class=""stat-label"">Hoạt động</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalStaff}</div><div class=""stat-label"">Nhân viên</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalRevenue}</div><div class=""stat-label"">Doanh thu</div></div>
         </div>
         
         <div class=""toolbar"">
-            <div class=""search-box"">
-                <span class=""search-icon"">🔍</span>
-                <input type=""text"" id=""searchInput"" placeholder=""Tìm kiếm theo tên, thành phố, quản lý..."" />
-            </div>
-            <div class=""filters"">
-                <select id=""cityFilter"" class=""filter-select"">
-                    <option value="""">Tất cả thành phố</option>
-                </select>
-                <select id=""statusFilter"" class=""filter-select"">
-                    <option value="""">Tất cả trạng thái</option>
-                    <option value=""Active"">Đang hoạt động</option>
-                    <option value=""Inactive"">Tạm đóng</option>
-                </select>
-                <select id=""sortBy"" class=""filter-select"">
-                    <option value=""name-asc"">Tên A-Z</option>
-                    <option value=""name-desc"">Tên Z-A</option>
-                    <option value=""revenue-desc"">Doanh thu cao → thấp</option>
-                    <option value=""revenue-asc"">Doanh thu thấp → cao</option>
-                    <option value=""staff-desc"">Nhân viên nhiều nhất</option>
-                </select>
-                <button id=""resetBtn"" class=""reset-btn"">🔄 Đặt lại</button>
-            </div>
+            <input type=""text"" id=""searchInput"" placeholder=""Tìm tên, mã chi nhánh, quản lý..."">
+            <select id=""cityFilter"">
+                <option value="""">Tất cả thành phố</option>
+            </select>
+            <select id=""statusFilter"">
+                <option value="""">Tất cả trạng thái</option>
+                <option value=""Active"">Hoạt động</option>
+                <option value=""Inactive"">Tạm đóng</option>
+            </select>
         </div>
-        
-        <div id=""resultInfo"" class=""result-info"">
-            Hiển thị <strong id=""resultCount"">0</strong> kết quả
-        </div>
-        
-        <div id=""branchesContainer"" class=""branches-grid"">
-{branchesContent}
+
+        <div class=""branches-grid"">
+            {branchesContent}
         </div>
     </div>
-    
+
     <script>
-        // Lưu tất cả branches để filter
-        const allBranches = [];
-        document.querySelectorAll('.branch-card').forEach(card => {{
-            const name = card.querySelector('.branch-name').textContent;
-            const city = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.split(',').pop().trim();
-            const manager = card.querySelector('.info-row:nth-child(4) span:last-child').textContent.replace('Quản lý: ', '');
-            const status = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
-            const revenue = parseInt(card.querySelector('.branch-stats .stat-item:nth-child(3) .stat-value').textContent.replace(/\./g, ''));
-            const staff = parseInt(card.querySelector('.branch-stats .stat-item:nth-child(2) .stat-value').textContent);
-            
-            allBranches.push({{
-                element: card,
-                name: name.toLowerCase(),
-                city: city,
-                manager: manager.toLowerCase(),
-                status: status,
-                revenue: revenue,
-                staff: staff
-            }});
-        }});
-        
-        // Populate city filter
-        const cities = [...new Set(allBranches.map(b => b.city))];
+        const searchInput = document.getElementById('searchInput');
         const cityFilter = document.getElementById('cityFilter');
-        cities.forEach(city => {{
-            const option = document.createElement('option');
-            option.value = city;
-            option.textContent = city;
-            cityFilter.appendChild(option);
+        const statusFilter = document.getElementById('statusFilter');
+        const cards = document.querySelectorAll('.branch-card');
+
+        // Populate Cities
+        const cities = new Set();
+        cards.forEach(card => {{
+            const city = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.split(',').pop().trim();
+            cities.add(city);
         }});
-        
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', filterBranches);
-        document.getElementById('cityFilter').addEventListener('change', filterBranches);
-        document.getElementById('statusFilter').addEventListener('change', filterBranches);
-        document.getElementById('sortBy').addEventListener('change', filterBranches);
-        document.getElementById('resetBtn').addEventListener('click', resetFilters);
-        
-        function resetFilters() {{
-            document.getElementById('searchInput').value = '';
-            document.getElementById('cityFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            document.getElementById('sortBy').value = 'name-asc';
-            filterBranches();
-        }}
-        
+        cities.forEach(city => {{
+            const opt = document.createElement('option');
+            opt.value = city;
+            opt.textContent = city;
+            cityFilter.appendChild(opt);
+        }});
+
         function filterBranches() {{
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const cityValue = document.getElementById('cityFilter').value;
-            const statusValue = document.getElementById('statusFilter').value;
-            const sortValue = document.getElementById('sortBy').value;
-            
-            let filtered = allBranches.filter(branch => {{
-                const matchSearch = !searchText || branch.name.includes(searchText) || 
-                                   branch.city.toLowerCase().includes(searchText) || 
-                                   branch.manager.includes(searchText);
-                const matchCity = !cityValue || branch.city === cityValue;
-                const matchStatus = !statusValue || branch.status === statusValue;
-                
-                return matchSearch && matchCity && matchStatus;
-            }});
-            
-            // Sort
-            filtered.sort((a, b) => {{
-                switch(sortValue) {{
-                    case 'name-asc': return a.name.localeCompare(b.name);
-                    case 'name-desc': return b.name.localeCompare(a.name);
-                    case 'revenue-asc': return a.revenue - b.revenue;
-                    case 'revenue-desc': return b.revenue - a.revenue;
-                    case 'staff-desc': return b.staff - a.staff;
-                    default: return 0;
-                }}
-            }});
-            
-            displayBranches(filtered);
-        }}
-        
-        function displayBranches(branches) {{
-            const container = document.getElementById('branchesContainer');
-            const resultInfo = document.getElementById('resultInfo');
-            const resultCount = document.getElementById('resultCount');
-            
-            // Hide all cards first
-            allBranches.forEach(b => b.element.style.display = 'none');
-            
-            if (branches.length === 0) {{
-                container.innerHTML = `
-                    <div class=""no-results"">
-                        <div class=""no-results-icon"">🔍</div>
-                        <div class=""no-results-text"">Không tìm thấy kết quả</div>
-                        <div class=""no-results-hint"">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</div>
-                    </div>
-                `;
-                resultInfo.style.display = 'none';
-                return;
-            }}
-            
-            resultInfo.style.display = 'block';
-            resultCount.textContent = branches.length;
-            
-            // Clear container and re-add filtered cards
-            container.innerHTML = '';
-            branches.forEach(branch => {{
-                container.appendChild(branch.element);
-                branch.element.style.display = 'block';
+            const term = searchInput.value.toLowerCase();
+            const city = cityFilter.value;
+            const status = statusFilter.value;
+
+            cards.forEach(card => {{
+                const name = card.querySelector('.branch-name').textContent.toLowerCase();
+                const code = card.querySelector('.branch-code').textContent.toLowerCase();
+                const cardCity = card.querySelector('.info-row:nth-child(1) span:last-child').textContent;
+                const cardStatus = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
+
+                const matchSearch = name.includes(term) || code.includes(term);
+                const matchCity = city === '' || cardCity.includes(city);
+                const matchStatus = status === '' || cardStatus === status;
+
+                card.style.display = (matchSearch && matchCity && matchStatus) ? 'block' : 'none';
             }});
         }}
+
+        searchInput.addEventListener('input', filterBranches);
+        cityFilter.addEventListener('change', filterBranches);
+        statusFilter.addEventListener('change', filterBranches);
     </script>
 </body>
 </html>";
         }
-        
+
         private static string GetEquipmentsHtmlTemplate(int totalEquipments, int totalQuantity, int totalAvailable, string totalValue, string equipmentsContent)
         {
             return $@"<!DOCTYPE html>
@@ -495,230 +442,251 @@ namespace CNXML_HVA
 <head>
     <meta charset=""UTF-8"">
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
-    <title>Danh Sách Dụng Cụ - Hệ Thống Sân Bóng</title>
+    <title>Danh Sách Dụng Cụ</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-        body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }}
-        .header {{ background: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80') center/cover; color: white; padding: 80px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: relative; overflow: hidden; }}
-        .header-content {{ max-width: 1400px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }}
-        .header h1 {{ font-size: 3em; margin-bottom: 15px; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); letter-spacing: 1px; }}
-        .header p {{ font-size: 1.3em; opacity: 0.95; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); font-weight: 300; }}
+        body {{ font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }}
+        .header {{ background: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1600&q=80') center/cover; color: white; padding: 60px 20px; text-align: center; }}
+        .header h1 {{ font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }}
         .container {{ max-width: 1400px; margin: 0 auto; padding: 30px 20px; }}
-        .stats-bar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }}
+        .stats-bar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
         .stat-item {{ text-align: center; }}
-        .stat-value {{ font-size: 2em; font-weight: bold; color: #2196F3; }}
-        .stat-label {{ color: #666; font-size: 0.9em; margin-top: 5px; }}
-        .toolbar {{ background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 25px; }}
-        .search-box {{ position: relative; margin-bottom: 20px; }}
-        .search-icon {{ position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2em; }}
-        #searchInput {{ width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease; }}
-        #searchInput:focus {{ outline: none; border-color: #2196F3; box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1); }}
-        .filters {{ display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }}
-        .filter-select {{ flex: 1; min-width: 180px; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95em; background: white; cursor: pointer; transition: all 0.3s ease; }}
-        .filter-select:hover {{ border-color: #2196F3; }}
-        .filter-select:focus {{ outline: none; border-color: #2196F3; box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1); }}
-        .reset-btn {{ padding: 12px 25px; background: #f44336; color: white; border: none; border-radius: 10px; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }}
-        .reset-btn:hover {{ background: #d32f2f; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); }}
-        .result-info {{ background: #e3f2fd; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; color: #1565c0; font-size: 0.95em; border-left: 4px solid #2196F3; display: none; }}
-        .no-results {{ text-align: center; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
-        .no-results-icon {{ font-size: 4em; margin-bottom: 20px; }}
-        .no-results-text {{ font-size: 1.3em; color: #666; margin-bottom: 10px; }}
-        .no-results-hint {{ color: #999; font-size: 0.95em; }}
+        .stat-value {{ font-size: 1.8em; font-weight: bold; color: #2196F3; }}
+        .stat-label {{ color: #666; font-size: 0.9em; }}
+        
+        .toolbar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; gap: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-wrap: wrap; }}
+        #searchInput {{ flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }}
+        #categoryFilter, #statusFilter {{ flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }}
+
         .branches-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }}
-        .equipment-card {{ background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; position: relative; border: 1px solid #e0e0e0; }}
-        .equipment-card:hover {{ transform: translateY(-8px); box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2); border-color: #2196F3; }}
-        .equipment-image {{ width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); }}
-        .equipment-content {{ padding: 25px; }}
-        .equipment-name {{ font-size: 1.5em; font-weight: bold; color: #333; margin-bottom: 5px; }}
-        .equipment-code {{ display: inline-block; background: #2196F3; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }}
-        .status-badge {{ position: absolute; top: 15px; right: 15px; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }}
-        .status-active {{ background: #4CAF50; color: white; }}
-        .status-inactive {{ background: #f44336; color: white; }}
-        .equipment-info {{ margin: 15px 0; }}
-        .info-row {{ display: flex; align-items: center; margin: 10px 0; color: #555; font-size: 0.95em; }}
-        .info-icon {{ width: 20px; margin-right: 10px; color: #2196F3; }}
-        .equipment-description {{ color: #666; font-size: 0.9em; line-height: 1.6; margin: 15px 0; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196F3; }}
-        .equipment-stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; }}
-        .equipment-stats .stat-item {{ text-align: center; }}
-        .equipment-stats .stat-value {{ font-size: 1.3em; font-weight: bold; color: #2196F3; }}
-        .equipment-stats .stat-label {{ font-size: 0.75em; color: #888; margin-top: 5px; }}
-        @media (max-width: 768px) {{ .branches-grid {{ grid-template-columns: 1fr; }} .header h1 {{ font-size: 2em; }} }}
+        .equipment-card {{ background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; position: relative; }}
+        .equipment-card:hover {{ transform: translateY(-5px); }}
+        .equipment-image {{ width: 100%; height: 200px; object-fit: cover; }}
+        .equipment-content {{ padding: 20px; }}
+        .equipment-name {{ font-size: 1.4em; font-weight: bold; color: #333; margin-bottom: 5px; }}
+        .equipment-code {{ background: #2196F3; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8em; }}
+        .status-badge {{ position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 20px; font-size: 0.8em; color: white; font-weight: bold; }}
+        .status-active {{ background: #4CAF50; }} .status-inactive {{ background: #f44336; }}
+        .info-row {{ display: flex; align-items: center; margin: 8px 0; color: #555; font-size: 0.95em; }}
+        .info-icon {{ width: 20px; margin-right: 10px; }}
+        .equipment-description {{ background: #e3f2fd; padding: 10px; border-radius: 8px; font-size: 0.9em; color: #555; margin: 15px 0; }}
+        .equipment-stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }}
+        .equipment-stats .stat-value {{ font-size: 1.2em; }}
+    </style>
+</head>
+<body>
+    <div class=""header"">
+        <h1>Kho Dụng Cụ</h1>
+        <p>Quản lý tài sản & thiết bị</p>
+    </div>
+    <div class=""container"">
+        <div class=""stats-bar"">
+            <div class=""stat-item""><div class=""stat-value"">{totalEquipments}</div><div class=""stat-label"">Loại</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalQuantity}</div><div class=""stat-label"">Tổng SL</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalAvailable}</div><div class=""stat-label"">Có sẵn</div></div>
+            <div class=""stat-item""><div class=""stat-value"">{totalValue}</div><div class=""stat-label"">Giá trị (VNĐ)</div></div>
+        </div>
+
+        <div class=""toolbar"">
+            <input type=""text"" id=""searchInput"" placeholder=""Tìm tên dụng cụ, mã..."">
+            <select id=""categoryFilter"">
+                <option value="""">Tất cả danh mục</option>
+            </select>
+            <select id=""statusFilter"">
+                <option value="""">Tất cả trạng thái</option>
+                <option value=""Active"">Có sẵn</option>
+                <option value=""Inactive"">Hết hàng</option>
+            </select>
+        </div>
+
+        <div class=""branches-grid"">
+            {equipmentsContent}
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const cards = document.querySelectorAll('.equipment-card');
+
+        // Populate Categories
+        const categories = new Set();
+        cards.forEach(card => {{
+            const cat = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.replace('DM: ', '').trim();
+            categories.add(cat);
+        }});
+        categories.forEach(c => {{
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            categoryFilter.appendChild(opt);
+        }});
+
+        function filterEquipments() {{
+            const term = searchInput.value.toLowerCase();
+            const cat = categoryFilter.value;
+            const status = statusFilter.value;
+
+            cards.forEach(card => {{
+                const name = card.querySelector('.equipment-name').textContent.toLowerCase();
+                const code = card.querySelector('.equipment-code').textContent.toLowerCase();
+                const cardCat = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.replace('DM: ', '');
+                const cardStatus = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
+
+                const matchSearch = name.includes(term) || code.includes(term);
+                const matchCat = cat === '' || cardCat === cat;
+                const matchStatus = status === '' || cardStatus === status;
+
+                card.style.display = (matchSearch && matchCat && matchStatus) ? 'block' : 'none';
+            }});
+        }}
+
+        searchInput.addEventListener('input', filterEquipments);
+        categoryFilter.addEventListener('change', filterEquipments);
+        statusFilter.addEventListener('change', filterEquipments);
+    </script>
+</body>
+</html>";
+        }
+
+        private static string GetCustomersHtmlTemplate(int totalCustomers, string customersContent)
+        {
+            return $@"<!DOCTYPE html>
+<html lang=""vi"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Danh Sách Khách Hàng</title>
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{ font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }}
+        .header {{ background: url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1600&q=80') center/cover; color: white; padding: 60px 20px; text-align: center; position: relative; }}
+        .header::before {{ content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }}
+        .header-content {{ position: relative; z-index: 2; }}
+        .header h1 {{ font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }}
+        .container {{ max-width: 1400px; margin: 0 auto; padding: 30px 20px; }}
+        .stats-bar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: center; gap: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }}
+        .stat-item {{ text-align: center; }}
+        .stat-value {{ font-size: 2em; font-weight: bold; color: #FF9800; }}
+        .stat-label {{ color: #666; }}
+        .toolbar {{ background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; gap: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-wrap: wrap; }}
+        #searchInput {{ flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }}
+        #membershipFilter {{ flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }}
+        .customer-card {{ background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; border-top: 4px solid #FF9800; }}
+        .customer-card:hover {{ transform: translateY(-5px); }}
+        .customer-content {{ padding: 20px; }}
+        .customer-header {{ display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; }}
+        .customer-name {{ font-size: 1.3em; font-weight: bold; color: #333; }}
+        .customer-id {{ color: #999; font-size: 0.85em; margin-bottom: 15px; font-family: monospace; }}
+        .membership-badge {{ padding: 4px 12px; border-radius: 15px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }}
+        .membership-vip {{ background: #FFD700; color: #8a6d0b; }}
+        .membership-gold {{ background: #C0C0C0; color: #555; }}
+        .membership-regular {{ background: #E0E0E0; color: #666; }}
+        .info-row {{ display: flex; align-items: center; margin: 8px 0; color: #555; }}
+        .info-icon {{ width: 25px; margin-right: 5px; color: #FF9800; }}
+        .customer-note {{ background: #fff8e1; padding: 10px; border-radius: 6px; font-size: 0.9em; color: #795548; margin-top: 15px; }}
     </style>
 </head>
 <body>
     <div class=""header"">
         <div class=""header-content"">
-            <h1>Hệ Thống Dụng Cụ</h1>
-            <p>Quản lý thiết bị sân bóng</p>
+            <h1>Danh Sách Khách Hàng</h1>
+            <p>Quản lý thông tin thành viên</p>
         </div>
     </div>
     <div class=""container"">
         <div class=""stats-bar"">
-            <div class=""stat-item""><div class=""stat-value"" id=""totalEquipments"">{totalEquipments}</div><div class=""stat-label"">Tổng loại dụng cụ</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""totalQuantity"">{totalQuantity}</div><div class=""stat-label"">Tổng số lượng</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""totalAvailable"">{totalAvailable}</div><div class=""stat-label"">Có sẵn</div></div>
-            <div class=""stat-item""><div class=""stat-value"" id=""totalValue"">{totalValue}</div><div class=""stat-label"">Tổng giá trị (VNĐ)</div></div>
+            <div class=""stat-item"">
+                <div class=""stat-value"">{totalCustomers}</div>
+                <div class=""stat-label"">Tổng khách hàng</div>
+            </div>
         </div>
-        
         <div class=""toolbar"">
-            <div class=""search-box"">
-                <span class=""search-icon"">🔍</span>
-                <input type=""text"" id=""searchInput"" placeholder=""Tìm kiếm theo tên, danh mục, thương hiệu..."" />
-            </div>
-            <div class=""filters"">
-                <select id=""categoryFilter"" class=""filter-select"">
-                    <option value="""">Tất cả danh mục</option>
-                </select>
-                <select id=""brandFilter"" class=""filter-select"">
-                    <option value="""">Tất cả thương hiệu</option>
-                </select>
-                <select id=""statusFilter"" class=""filter-select"">
-                    <option value="""">Tất cả trạng thái</option>
-                    <option value=""Active"">Có sẵn</option>
-                    <option value=""Inactive"">Không có sẵn</option>
-                </select>
-                <select id=""sortBy"" class=""filter-select"">
-                    <option value=""name-asc"">Tên A-Z</option>
-                    <option value=""name-desc"">Tên Z-A</option>
-                    <option value=""quantity-desc"">Số lượng nhiều nhất</option>
-                    <option value=""price-desc"">Giá cao → thấp</option>
-                    <option value=""price-asc"">Giá thấp → cao</option>
-                </select>
-                <button id=""resetBtn"" class=""reset-btn"">🔄 Đặt lại</button>
-            </div>
+            <input type=""text"" id=""searchInput"" placeholder=""Tìm tên, số điện thoại..."">
+            <select id=""membershipFilter"">
+                <option value="""">Tất cả hạng</option>
+                <option value=""VIP"">VIP</option>
+                <option value=""Gold"">Gold</option>
+                <option value=""Regular"">Thường</option>
+            </select>
         </div>
-        
-        <div id=""resultInfo"" class=""result-info"">
-            Hiển thị <strong id=""resultCount"">0</strong> kết quả
-        </div>
-        
-        <div id=""equipmentsContainer"" class=""branches-grid"">
-{equipmentsContent}
+        <div id=""customersContainer"" class=""grid"">
+            {customersContent}
         </div>
     </div>
-    
     <script>
-        // Lưu tất cả equipments để filter
-        const allEquipments = [];
-        document.querySelectorAll('.equipment-card').forEach(card => {{
-            const name = card.querySelector('.equipment-name').textContent;
-            const category = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.replace('Danh mục: ', '');
-            const brand = card.querySelector('.info-row:nth-child(2) span:last-child').textContent.replace('Thương hiệu: ', '');
-            const status = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
-            const quantity = parseInt(card.querySelector('.equipment-stats .stat-item:nth-child(1) .stat-value').textContent);
-            const price = parseInt(card.querySelector('.equipment-stats .stat-item:nth-child(4) .stat-value').textContent.replace(/\./g, ''));
-            
-            allEquipments.push({{
-                element: card,
-                name: name.toLowerCase(),
-                category: category,
-                brand: brand,
-                status: status,
-                quantity: quantity,
-                price: price
-            }});
-        }});
-        
-        // Populate filters
-        const categories = [...new Set(allEquipments.map(e => e.category))];
-        const brands = [...new Set(allEquipments.map(e => e.brand))];
-        
-        const categoryFilter = document.getElementById('categoryFilter');
-        categories.forEach(cat => {{
-            const option = document.createElement('option');
-            option.value = cat;
-            option.textContent = cat;
-            categoryFilter.appendChild(option);
-        }});
-        
-        const brandFilter = document.getElementById('brandFilter');
-        brands.forEach(brand => {{
-            const option = document.createElement('option');
-            option.value = brand;
-            option.textContent = brand;
-            brandFilter.appendChild(option);
-        }});
-        
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', filterEquipments);
-        document.getElementById('categoryFilter').addEventListener('change', filterEquipments);
-        document.getElementById('brandFilter').addEventListener('change', filterEquipments);
-        document.getElementById('statusFilter').addEventListener('change', filterEquipments);
-        document.getElementById('sortBy').addEventListener('change', filterEquipments);
-        document.getElementById('resetBtn').addEventListener('click', resetFilters);
-        
-        function resetFilters() {{
-            document.getElementById('searchInput').value = '';
-            document.getElementById('categoryFilter').value = '';
-            document.getElementById('brandFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            document.getElementById('sortBy').value = 'name-asc';
-            filterEquipments();
-        }}
-        
-        function filterEquipments() {{
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const categoryValue = document.getElementById('categoryFilter').value;
-            const brandValue = document.getElementById('brandFilter').value;
-            const statusValue = document.getElementById('statusFilter').value;
-            const sortValue = document.getElementById('sortBy').value;
-            
-            let filtered = allEquipments.filter(equipment => {{
-                const matchSearch = !searchText || equipment.name.includes(searchText) || 
-                                   equipment.category.toLowerCase().includes(searchText) || 
-                                   equipment.brand.toLowerCase().includes(searchText);
-                const matchCategory = !categoryValue || equipment.category === categoryValue;
-                const matchBrand = !brandValue || equipment.brand === brandValue;
-                const matchStatus = !statusValue || equipment.status === statusValue;
-                
-                return matchSearch && matchCategory && matchBrand && matchStatus;
-            }});
-            
-            // Sort
-            filtered.sort((a, b) => {{
-                switch(sortValue) {{
-                    case 'name-asc': return a.name.localeCompare(b.name);
-                    case 'name-desc': return b.name.localeCompare(a.name);
-                    case 'quantity-desc': return b.quantity - a.quantity;
-                    case 'price-asc': return a.price - b.price;
-                    case 'price-desc': return b.price - a.price;
-                    default: return 0;
-                }}
-            }});
-            
-            displayEquipments(filtered);
-        }}
-        
-        function displayEquipments(equipments) {{
-            const container = document.getElementById('equipmentsContainer');
-            const resultInfo = document.getElementById('resultInfo');
-            const resultCount = document.getElementById('resultCount');
-            
-            // Hide all cards first
-            allEquipments.forEach(e => e.element.style.display = 'none');
-            
-            if (equipments.length === 0) {{
-                container.innerHTML = `
-                    <div class=""no-results"">
-                        <div class=""no-results-icon"">🔍</div>
-                        <div class=""no-results-text"">Không tìm thấy kết quả</div>
-                        <div class=""no-results-hint"">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</div>
-                    </div>
-                `;
-                resultInfo.style.display = 'none';
-                return;
-            }}
-            
-            resultInfo.style.display = 'block';
-            resultCount.textContent = equipments.length;
-            
-            // Clear container and re-add filtered cards
-            container.innerHTML = '';
-            equipments.forEach(equipment => {{
-                container.appendChild(equipment.element);
-                equipment.element.style.display = 'block';
+        const searchInput = document.getElementById('searchInput');
+        const membershipFilter = document.getElementById('membershipFilter');
+        const cards = document.querySelectorAll('.customer-card');
+
+        function filterCustomers() {{
+            const term = searchInput.value.toLowerCase();
+            const mem = membershipFilter.value;
+            cards.forEach(card => {{
+                const name = card.querySelector('.customer-name').textContent.toLowerCase();
+                const phone = card.querySelector('.info-row:nth-child(1)').textContent.toLowerCase();
+                const badge = card.querySelector('.membership-badge').textContent;
+                const matchSearch = name.includes(term) || phone.includes(term);
+                const matchMem = mem === '' || badge === mem;
+                card.style.display = (matchSearch && matchMem) ? 'block' : 'none';
             }});
         }}
+        searchInput.addEventListener('input', filterCustomers);
+        membershipFilter.addEventListener('change', filterCustomers);
+    </script>
+</body>
+</html>";
+        }
+
+        private static string GetBookingsHtmlTemplate(int totalBookings, string bookingsContent)
+        {
+            return $@"<!DOCTYPE html>
+<html lang=""vi"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Danh Sách Đặt Sân</title>
+    <style>
+        body {{ font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; }}
+        .header {{ text-align: center; margin-bottom: 30px; color: #1a237e; }}
+        .stats {{ background: white; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 20px; font-weight: bold; color: #283593; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }}
+        .booking-card {{ background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #3949ab; }}
+        .booking-header {{ display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }}
+        .booking-id {{ font-weight: bold; color: #555; }}
+        .booking-type {{ background: #e8eaf6; color: #3949ab; padding: 3px 10px; border-radius: 12px; font-size: 0.85em; }}
+        .info-row {{ margin: 8px 0; color: #444; display: flex; align-items: center; }}
+        .info-icon {{ width: 25px; margin-right: 8px; }}
+        .booking-note {{ margin-top: 15px; font-style: italic; color: #666; background: #fffde7; padding: 10px; border-radius: 5px; }}
+        .toolbar {{ margin-bottom: 20px; background: white; padding: 15px; border-radius: 8px; display: flex; gap: 15px; }}
+        #searchInput {{ flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }}
+    </style>
+</head>
+<body>
+    <div class=""header""><h1>📅 Lịch Đặt Sân</h1></div>
+    <div class=""stats"">Tổng số lượt đặt: {totalBookings}</div>
+    
+    <div class=""toolbar"">
+        <input type=""text"" id=""searchInput"" placeholder=""Tìm mã đặt, tên khách, ngày..."">
+    </div>
+
+    <div class=""grid"">
+        {bookingsContent}
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.booking-card');
+
+        searchInput.addEventListener('input', function() {{
+            const term = this.value.toLowerCase();
+            cards.forEach(card => {{
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(term) ? 'block' : 'none';
+            }});
+        }});
     </script>
 </body>
 </html>";

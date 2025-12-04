@@ -255,6 +255,7 @@ namespace CNXML_HVA
             buttonDelete.Enabled = !editMode && dataGridViewCustomers.CurrentRow != null;
             buttonRefresh.Enabled = !editMode;
             buttonExportExcel.Enabled = !editMode;
+            buttonViewWeb.Enabled = !editMode;
 
             // Khóa nút SQL khi đang nhập liệu để tránh lỗi
             buttonSqlToXml.Enabled = !editMode;
@@ -417,5 +418,30 @@ namespace CNXML_HVA
         }
         private void dataGridViewCustomers_SelectionChanged(object sender, EventArgs e) { if (!isAdding && !isEditing) LoadSelectedCustomerToForm(); }
         private void groupBoxCustomerInfo_Enter(object sender, EventArgs e) { }
+
+        private void buttonViewWeb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1. Tạo file HTML
+                HtmlGenerator.GenerateCustomersHtml();
+                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "customers.html");
+
+                // 2. Kiểm tra file tồn tại
+                if (!File.Exists(webPath))
+                {
+                    MessageBox.Show("Không tìm thấy file web!", "Lỗi");
+                    return;
+                }
+
+                // 3. CÁCH FIX MẠNH NHẤT: Gọi trực tiếp explorer.exe để mở
+                // Cách này Windows sẽ tự xử lý việc chọn app tốt hơn là gọi file trực tiếp
+                System.Diagnostics.Process.Start("msedge.exe", $"\"{webPath}\"");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
+        }
     }
 }

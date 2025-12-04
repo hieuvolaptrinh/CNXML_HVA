@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Khách Hàng</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        .header { background: url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1600&q=80') center/cover; color: white; padding: 60px 20px; text-align: center; position: relative; }
+        .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); }
+        .header-content { position: relative; z-index: 2; }
+        .header h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+        .stats-bar { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: center; gap: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 2em; font-weight: bold; color: #FF9800; }
+        .stat-label { color: #666; }
+        .toolbar { background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; gap: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-wrap: wrap; }
+        #searchInput { flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        #membershipFilter { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
+        .customer-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s; border-top: 4px solid #FF9800; }
+        .customer-card:hover { transform: translateY(-5px); }
+        .customer-content { padding: 20px; }
+        .customer-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; }
+        .customer-name { font-size: 1.3em; font-weight: bold; color: #333; }
+        .customer-id { color: #999; font-size: 0.85em; margin-bottom: 15px; font-family: monospace; }
+        .membership-badge { padding: 4px 12px; border-radius: 15px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
+        .membership-vip { background: #FFD700; color: #8a6d0b; }
+        .membership-gold { background: #C0C0C0; color: #555; }
+        .membership-regular { background: #E0E0E0; color: #666; }
+        .info-row { display: flex; align-items: center; margin: 8px 0; color: #555; }
+        .info-icon { width: 25px; margin-right: 5px; color: #FF9800; }
+        .customer-note { background: #fff8e1; padding: 10px; border-radius: 6px; font-size: 0.9em; color: #795548; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Danh Sách Khách Hàng</h1>
+            <p>Quản lý thông tin thành viên</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">6</div>
+                <div class="stat-label">Tổng khách hàng</div>
+            </div>
+        </div>
+        <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Tìm tên, số điện thoại...">
+            <select id="membershipFilter">
+                <option value="">Tất cả hạng</option>
+                <option value="VIP">VIP</option>
+                <option value="Gold">Gold</option>
+                <option value="Regular">Thường</option>
+            </select>
+        </div>
+        <div id="customersContainer" class="grid">
+            
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Nguyễn Văn A</div>
+                                    <span class="membership-badge membership-vip">VIP</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C001</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0912345678</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>a@gmail.com</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Bạch Đằng, Hải Châu, Đà Nẵng</span></div>
+                                </div>
+                                <div class="customer-note">📝 Test từ SQL</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Trần Thị Thu Hà</div>
+                                    <span class="membership-badge membership-gold">Gold</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C002</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0988777666</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>thuha@gmail.com</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Xuân Thủy, Cầu Giấy, Hà Nội</span></div>
+                                </div>
+                                <div class="customer-note">📝 Khách hàng thân thiết</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Lê Quang Huy</div>
+                                    <span class="membership-badge membership-regular">Silver</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C003</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0909555444</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>huy.le@outlook.com</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</span></div>
+                                </div>
+                                <div class="customer-note">📝 Thường đặt sân cuối tuần</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Phạm Minh Tuấn</div>
+                                    <span class="membership-badge membership-vip">VIP</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C004</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0913222111</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>tuanpm@yahoo.com</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Hai Bà Trưng, Ninh Kiều, Cần Thơ</span></div>
+                                </div>
+                                <div class="customer-note">📝 Đội trưởng đội bóng công ty</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Hoàng Thùy Linh</div>
+                                    <span class="membership-badge membership-regular">None</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C005</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0868999888</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>linh.hoang@company.vn</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Phạm Văn Đồng, Sơn Trà, Đà Nẵng</span></div>
+                                </div>
+                                <div class="customer-note">📝 Mới đăng ký hôm qua</div>
+                            </div>
+                        </div>
+
+                        <div class="customer-card">
+                            <div class="customer-content">
+                                <div class="customer-header">
+                                    <div class="customer-name">Đặng Văn An Nè</div>
+                                    <span class="membership-badge membership-gold">Gold</span>
+                                </div>
+                                <div class="customer-id">Mã KH: C006</div>
+                                <div class="customer-info">
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0977123123</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>lam.dang@gmail.com</span></div>
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Lạch Tray, Ngô Quyền, Hải Phòng</span></div>
+                                </div>
+                                <div class="customer-note">📝 Yêu cầu xuất hóa đơn đỏ</div>
+                            </div>
+                        </div>
+
+        </div>
+    </div>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const membershipFilter = document.getElementById('membershipFilter');
+        const cards = document.querySelectorAll('.customer-card');
+
+        function filterCustomers() {
+            const term = searchInput.value.toLowerCase();
+            const mem = membershipFilter.value;
+            cards.forEach(card => {
+                const name = card.querySelector('.customer-name').textContent.toLowerCase();
+                const phone = card.querySelector('.info-row:nth-child(1)').textContent.toLowerCase();
+                const badge = card.querySelector('.membership-badge').textContent;
+                const matchSearch = name.includes(term) || phone.includes(term);
+                const matchMem = mem === '' || badge === mem;
+                card.style.display = (matchSearch && matchMem) ? 'block' : 'none';
+            });
+        }
+        searchInput.addEventListener('input', filterCustomers);
+        membershipFilter.addEventListener('change', filterCustomers);
+    </script>
+</body>
+</html>
