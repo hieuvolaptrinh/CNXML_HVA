@@ -54,6 +54,7 @@ namespace CNXML_HVA
             branchTable.Columns.Add("Số nhân viên", typeof(int));
             branchTable.Columns.Add("Mô tả", typeof(string));
             branchTable.Columns.Add("Trạng thái", typeof(string));
+            branchTable.Columns.Add("URL hình ảnh", typeof(string));
 
             dataGridViewBranches.DataSource = branchTable;
             HideUnwantedColumns();
@@ -64,6 +65,39 @@ namespace CNXML_HVA
             LoadBranchesFromXML();
             SetupDataGridView();
             SetEditMode(false);
+            AddImageUrlControl();
+        }
+        
+        private void AddImageUrlControl()
+        {
+            // Add image URL textbox to Description tab if it doesn't exist
+            if (this.Controls.Find("textBoxUrl1", true).Length == 0)
+            {
+                // Find the Description tab
+                TabPage descTab = tabPageDescription;
+                if (descTab != null)
+                {
+                    // Create label for image URL
+                    Label lblImageUrl = new Label();
+                    lblImageUrl.Name = "labelUrl1";
+                    lblImageUrl.Text = "URL hình ảnh:";
+                    lblImageUrl.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+                    lblImageUrl.ForeColor = Color.FromArgb(27, 94, 32);
+                    lblImageUrl.AutoSize = true;
+                    lblImageUrl.Location = new Point(20, 270);
+                    
+                    // Create textbox for image URL
+                    TextBox txtImageUrl = new TextBox();
+                    txtImageUrl.Name = "textBoxUrl1";
+                    txtImageUrl.Font = new Font("Segoe UI", 9.5F);
+                    txtImageUrl.Location = new Point(24, 295);
+                    txtImageUrl.Size = new Size(481, 29);
+                    txtImageUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    
+                    descTab.Controls.Add(lblImageUrl);
+                    descTab.Controls.Add(txtImageUrl);
+                }
+            }
         }
 
         private void LoadBranchesFromXML()
@@ -100,6 +134,7 @@ namespace CNXML_HVA
                         row["Số nhân viên"] = Convert.ToInt32(GetNodeValue(branchNode, "staff_count"));
                         row["Mô tả"] = GetNodeValue(branchNode, "description");
                         row["Trạng thái"] = GetNodeValue(branchNode, "status");
+                        row["URL hình ảnh"] = GetNodeValue(branchNode, "image_url");
 
                         branchTable.Rows.Add(row);
                     }
@@ -186,6 +221,13 @@ namespace CNXML_HVA
                 numericUpDownStaffCount.Value = Convert.ToDecimal(row.Cells["Số nhân viên"].Value ?? 0);
                 textBoxDescription.Text = row.Cells["Mô tả"].Value?.ToString();
                 comboBoxStatus.Text = row.Cells["Trạng thái"].Value?.ToString();
+                
+                // Load image_url if textbox exists (will be added to Designer)
+                if (this.Controls.Find("textBoxUrl1", true).Length > 0)
+                {
+                    TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl1", true)[0];
+                    txtImageUrl.Text = row.Cells["URL hình ảnh"].Value?.ToString();
+                }
             }
         }
 
@@ -212,6 +254,13 @@ namespace CNXML_HVA
             numericUpDownStaffCount.Value = 0;
             textBoxDescription.Clear();
             comboBoxStatus.SelectedIndex = -1;
+            
+            // Clear image URL if textbox exists
+            if (this.Controls.Find("textBoxUrl1", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl1", true)[0];
+                txtImageUrl.Clear();
+            }
         }
 
         private void SetEditMode(bool editMode)
@@ -436,6 +485,17 @@ namespace CNXML_HVA
             AddXmlElement(newBranch, "staff_count", numericUpDownStaffCount.Value.ToString());
             AddXmlElement(newBranch, "description", textBoxDescription.Text);
             AddXmlElement(newBranch, "status", comboBoxStatus.Text);
+            
+            // Add image_url if textbox exists
+            if (this.Controls.Find("textBoxUrl1", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl1", true)[0];
+                AddXmlElement(newBranch, "image_url", txtImageUrl.Text);
+            }
+            else
+            {
+                AddXmlElement(newBranch, "image_url", "");
+            }
 
             branchesNode.AppendChild(newBranch);
             xmlDoc.Save(xmlFilePath);
@@ -474,6 +534,13 @@ namespace CNXML_HVA
                 UpdateXmlElement(branchNode, "staff_count", numericUpDownStaffCount.Value.ToString());
                 UpdateXmlElement(branchNode, "description", textBoxDescription.Text);
                 UpdateXmlElement(branchNode, "status", comboBoxStatus.Text);
+                
+                // Update image_url if textbox exists
+                if (this.Controls.Find("textBoxUrl1", true).Length > 0)
+                {
+                    TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl1", true)[0];
+                    UpdateXmlElement(branchNode, "image_url", txtImageUrl.Text);
+                }
 
                 xmlDoc.Save(xmlFilePath);
             }
@@ -510,6 +577,17 @@ namespace CNXML_HVA
             row["Số nhân viên"] = (int)numericUpDownStaffCount.Value;
             row["Mô tả"] = textBoxDescription.Text;
             row["Trạng thái"] = comboBoxStatus.Text;
+            
+            // Save image_url if textbox exists
+            if (this.Controls.Find("textBoxUrl1", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl1", true)[0];
+                row["URL hình ảnh"] = txtImageUrl.Text;
+            }
+            else
+            {
+                row["URL hình ảnh"] = "";
+            }
         }
 
         private void AddXmlElement(XmlElement parent, string elementName, string value)
@@ -812,6 +890,31 @@ namespace CNXML_HVA
             backgroundBrush.Dispose();
             textBrush.Dispose();
             stringFormat.Dispose();
+        }
+
+        private void buttonViewWeb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Generate HTML từ XML mới nhất
+                HtmlGenerator.GenerateBranchesHtml();
+                
+                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "branches.html");
+                if (File.Exists(webPath))
+                {
+                    System.Diagnostics.Process.Start(webPath);
+                }
+                else
+                {
+                    MessageBox.Show($"Không tìm thấy file web!\nĐường dẫn: {webPath}", 
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tạo trang web: " + ex.Message, 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

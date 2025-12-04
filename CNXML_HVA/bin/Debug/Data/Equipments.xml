@@ -16,6 +16,7 @@
     <purchase_date>2024-01-15</purchase_date>
     <warranty_period>12</warranty_period>
     <status>Active</status>
+    <image_url>https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=400</image_url>
   </equipment>
 
   <equipment id="EQ002">
@@ -34,6 +35,7 @@
     <purchase_date>2024-02-01</purchase_date>
     <warranty_period>6</warranty_period>
     <status>Active</status>
+    <image_url>https://bizweb.dktcdn.net/100/365/443/products/ao-pitch-ao-luoi-phan-biet-doi-mon-bong-da-size-l-sodex-sport-ma-san-pham-s28355-trangnguyen-vn.jpg?v=1680026372457</image_url>
   </equipment>
 
   <equipment id="EQ003">
@@ -52,6 +54,7 @@
     <purchase_date>2024-01-20</purchase_date>
     <warranty_period>24</warranty_period>
     <status>Active</status>
+    <image_url>https://thethaonamviet.vn/wp-content/uploads/2024/05/khung-thanh-bong-da-mini-nguoi-avatar.jpg</image_url>
   </equipment>
 
   <equipment id="EQ004">
@@ -70,6 +73,7 @@
     <purchase_date>2024-03-01</purchase_date>
     <warranty_period>12</warranty_period>
     <status>Active</status>
+    <image_url>https://meta.vn/Data/image/2020/09/01/coi-trong-tai-bong-ro-dolfin-b-co-day-g.jpg</image_url>
   </equipment>
 
   <equipment id="EQ005">
@@ -88,5 +92,6 @@
     <purchase_date>2024-02-15</purchase_date>
     <warranty_period>6</warranty_period>
     <status>Active</status>
+    <image_url>https://vn-live-01.slatic.net/p/d51df4ccb5a41969abc649bee53f1e48.jpg</image_url>
   </equipment>
 </equipments>

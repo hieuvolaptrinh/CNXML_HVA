@@ -31,6 +31,7 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
+            this.buttonViewWeb = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -48,15 +49,10 @@
             this.tabPageBasicInfo = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelId = new System.Windows.Forms.Label();
-            this.textBoxId = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
-            this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelCode = new System.Windows.Forms.Label();
-            this.textBoxBranch = new System.Windows.Forms.TextBox();
             this.labelCategory = new System.Windows.Forms.Label();
-            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.labelStatus = new System.Windows.Forms.Label();
-            this.comboBox = new System.Windows.Forms.ComboBox();
             this.tabPageDetails = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labelManufacturer = new System.Windows.Forms.Label();
@@ -87,6 +83,13 @@
             this.panelFormActions = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.comboBox = new System.Windows.Forms.ComboBox();
+            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
+            this.textBoxBranch = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxId = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxUrl2 = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -137,6 +140,7 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.buttonViewWeb);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -149,6 +153,23 @@
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelToolbar.Size = new System.Drawing.Size(1315, 74);
             this.panelToolbar.TabIndex = 1;
+            // 
+            // buttonViewWeb
+            // 
+            this.buttonViewWeb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
+            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
+            this.buttonViewWeb.Location = new System.Drawing.Point(780, 17);
+            this.buttonViewWeb.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonViewWeb.Name = "buttonViewWeb";
+            this.buttonViewWeb.Size = new System.Drawing.Size(200, 39);
+            this.buttonViewWeb.TabIndex = 5;
+            this.buttonViewWeb.Text = "🌐 Xem trên Web";
+            this.buttonViewWeb.UseVisualStyleBackColor = false;
+            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
             // 
             // buttonImportXml
             // 
@@ -354,7 +375,7 @@
             this.tabControlEquipmentInfo.Controls.Add(this.tabPageInventory);
             this.tabControlEquipmentInfo.Controls.Add(this.tabPageDescription);
             this.tabControlEquipmentInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControlEquipmentInfo.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.tabControlEquipmentInfo.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControlEquipmentInfo.ItemSize = new System.Drawing.Size(100, 35);
             this.tabControlEquipmentInfo.Location = new System.Drawing.Point(0, 0);
             this.tabControlEquipmentInfo.Margin = new System.Windows.Forms.Padding(4);
@@ -381,6 +402,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.textBoxUrl2, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.labelId, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBoxId, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelName, 0, 1);
@@ -395,13 +418,14 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 18);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(619, 246);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(619, 294);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelId
@@ -417,17 +441,6 @@
             this.labelId.TabIndex = 0;
             this.labelId.Text = "Mã DC:";
             // 
-            // textBoxId
-            // 
-            this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxId.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxId.Location = new System.Drawing.Point(177, 10);
-            this.textBoxId.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxId.Name = "textBoxId";
-            this.textBoxId.ReadOnly = true;
-            this.textBoxId.Size = new System.Drawing.Size(438, 29);
-            this.textBoxId.TabIndex = 1;
-            // 
             // labelName
             // 
             this.labelName.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -440,16 +453,6 @@
             this.labelName.Size = new System.Drawing.Size(96, 21);
             this.labelName.TabIndex = 2;
             this.labelName.Text = "Tên dụng cụ:";
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxName.Location = new System.Drawing.Point(177, 59);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(438, 29);
-            this.textBoxName.TabIndex = 3;
             // 
             // labelCode
             // 
@@ -464,16 +467,6 @@
             this.labelCode.TabIndex = 4;
             this.labelCode.Text = "Thương hiệu:";
             // 
-            // textBoxBranch
-            // 
-            this.textBoxBranch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxBranch.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxBranch.Location = new System.Drawing.Point(177, 108);
-            this.textBoxBranch.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxBranch.Name = "textBoxBranch";
-            this.textBoxBranch.Size = new System.Drawing.Size(438, 29);
-            this.textBoxBranch.TabIndex = 5;
-            // 
             // labelCategory
             // 
             this.labelCategory.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -486,25 +479,6 @@
             this.labelCategory.Size = new System.Drawing.Size(84, 21);
             this.labelCategory.TabIndex = 8;
             this.labelCategory.Text = "Danh mục:";
-            // 
-            // comboBoxCondition
-            // 
-            this.comboBoxCondition.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCondition.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.comboBoxCondition.FormattingEnabled = true;
-            this.comboBoxCondition.Items.AddRange(new object[] {
-            "Bóng",
-            "Trang phục",
-            "Thiết bị sân",
-            "Phụ kiện",
-            "Thiết bị tập luyện",
-            "Khác"});
-            this.comboBoxCondition.Location = new System.Drawing.Point(177, 157);
-            this.comboBoxCondition.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxCondition.Name = "comboBoxCondition";
-            this.comboBoxCondition.Size = new System.Drawing.Size(265, 29);
-            this.comboBoxCondition.TabIndex = 7;
             // 
             // labelStatus
             // 
@@ -519,23 +493,6 @@
             this.labelStatus.TabIndex = 6;
             this.labelStatus.Text = "Model:";
             // 
-            // comboBox
-            // 
-            this.comboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.comboBox.FormattingEnabled = true;
-            this.comboBox.Items.AddRange(new object[] {
-            "Premier League 2023",
-            "Home Kit 2023/24",
-            "Pro Net 3x2m",
-            "Predator Pro 2023",
-            "Training Cone Set"});
-            this.comboBox.Location = new System.Drawing.Point(177, 206);
-            this.comboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(265, 29);
-            this.comboBox.TabIndex = 9;
-            // 
             // tabPageDetails
             // 
             this.tabPageDetails.BackColor = System.Drawing.Color.White;
@@ -544,7 +501,7 @@
             this.tabPageDetails.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDetails.Name = "tabPageDetails";
             this.tabPageDetails.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDetails.Size = new System.Drawing.Size(659, 678);
+            this.tabPageDetails.Size = new System.Drawing.Size(659, 410);
             this.tabPageDetails.TabIndex = 1;
             this.tabPageDetails.Text = "Chi tiết";
             // 
@@ -675,7 +632,7 @@
             this.tabPagePricing.Margin = new System.Windows.Forms.Padding(4);
             this.tabPagePricing.Name = "tabPagePricing";
             this.tabPagePricing.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPagePricing.Size = new System.Drawing.Size(659, 678);
+            this.tabPagePricing.Size = new System.Drawing.Size(659, 410);
             this.tabPagePricing.TabIndex = 2;
             this.tabPagePricing.Text = "Giá cả";
             // 
@@ -767,7 +724,7 @@
             this.tabPageInventory.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageInventory.Name = "tabPageInventory";
             this.tabPageInventory.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageInventory.Size = new System.Drawing.Size(659, 678);
+            this.tabPageInventory.Size = new System.Drawing.Size(659, 410);
             this.tabPageInventory.TabIndex = 3;
             this.tabPageInventory.Text = "Tồn kho";
             // 
@@ -883,7 +840,7 @@
             this.tabPageDescription.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDescription.Name = "tabPageDescription";
             this.tabPageDescription.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDescription.Size = new System.Drawing.Size(659, 678);
+            this.tabPageDescription.Size = new System.Drawing.Size(659, 410);
             this.tabPageDescription.TabIndex = 4;
             this.tabPageDescription.Text = "Mô tả";
             // 
@@ -896,7 +853,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(619, 608);
+            this.textBoxDescription.Size = new System.Drawing.Size(619, 340);
             this.textBoxDescription.TabIndex = 1;
             // 
             // labelDescription
@@ -960,6 +917,96 @@
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // comboBox
+            // 
+            this.comboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Items.AddRange(new object[] {
+            "Premier League 2023",
+            "Home Kit 2023/24",
+            "Pro Net 3x2m",
+            "Predator Pro 2023",
+            "Training Cone Set"});
+            this.comboBox.Location = new System.Drawing.Point(177, 206);
+            this.comboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(265, 29);
+            this.comboBox.TabIndex = 9;
+            // 
+            // comboBoxCondition
+            // 
+            this.comboBoxCondition.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCondition.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.comboBoxCondition.FormattingEnabled = true;
+            this.comboBoxCondition.Items.AddRange(new object[] {
+            "Bóng",
+            "Trang phục",
+            "Thiết bị sân",
+            "Phụ kiện",
+            "Thiết bị tập luyện",
+            "Khác"});
+            this.comboBoxCondition.Location = new System.Drawing.Point(177, 157);
+            this.comboBoxCondition.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxCondition.Name = "comboBoxCondition";
+            this.comboBoxCondition.Size = new System.Drawing.Size(265, 29);
+            this.comboBoxCondition.TabIndex = 7;
+            // 
+            // textBoxBranch
+            // 
+            this.textBoxBranch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxBranch.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxBranch.Location = new System.Drawing.Point(177, 108);
+            this.textBoxBranch.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxBranch.Name = "textBoxBranch";
+            this.textBoxBranch.Size = new System.Drawing.Size(438, 29);
+            this.textBoxBranch.TabIndex = 5;
+            // 
+            // textBoxName
+            // 
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxName.Location = new System.Drawing.Point(177, 59);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(438, 29);
+            this.textBoxName.TabIndex = 3;
+            // 
+            // textBoxId
+            // 
+            this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxId.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxId.Location = new System.Drawing.Point(177, 10);
+            this.textBoxId.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(438, 29);
+            this.textBoxId.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.label1.Location = new System.Drawing.Point(4, 259);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 21);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Url ảnh:";
+            // 
+            // textBoxUrl2
+            // 
+            this.textBoxUrl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxUrl2.Location = new System.Drawing.Point(177, 255);
+            this.textBoxUrl2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxUrl2.Name = "textBoxUrl2";
+            this.textBoxUrl2.Size = new System.Drawing.Size(438, 29);
+            this.textBoxUrl2.TabIndex = 11;
+            // 
             // DungCu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1013,6 +1060,7 @@
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Button buttonViewWeb;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;
@@ -1030,15 +1078,10 @@
         private System.Windows.Forms.TabPage tabPageBasicInfo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label labelId;
-        private System.Windows.Forms.TextBox textBoxId;
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label labelCode;
-        private System.Windows.Forms.TextBox textBoxBranch;
         private System.Windows.Forms.Label labelCategory;
-        private System.Windows.Forms.ComboBox comboBoxCondition;
         private System.Windows.Forms.Label labelStatus;
-        private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.TabPage tabPageDetails;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label labelManufacturer;
@@ -1069,5 +1112,12 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label labelSerialNumber;
         private System.Windows.Forms.TextBox textBoxSerialNumber;
+        private System.Windows.Forms.TextBox textBoxUrl2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxId;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxBranch;
+        private System.Windows.Forms.ComboBox comboBoxCondition;
+        private System.Windows.Forms.ComboBox comboBox;
     }
 }

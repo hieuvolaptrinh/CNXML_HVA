@@ -31,6 +31,7 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
+            this.buttonViewWeb = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -95,6 +96,8 @@
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxUrl1 = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -140,6 +143,7 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.buttonViewWeb);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -153,6 +157,23 @@
             this.panelToolbar.Size = new System.Drawing.Size(1300, 74);
             this.panelToolbar.TabIndex = 1;
             // 
+            // buttonViewWeb
+            // 
+            this.buttonViewWeb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
+            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
+            this.buttonViewWeb.Location = new System.Drawing.Point(777, 17);
+            this.buttonViewWeb.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonViewWeb.Name = "buttonViewWeb";
+            this.buttonViewWeb.Size = new System.Drawing.Size(200, 39);
+            this.buttonViewWeb.TabIndex = 5;
+            this.buttonViewWeb.Text = "🌐 Xem trên Web";
+            this.buttonViewWeb.UseVisualStyleBackColor = false;
+            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
+            // 
             // buttonImportXml
             // 
             this.buttonImportXml.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -161,7 +182,7 @@
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImportXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonImportXml.ForeColor = System.Drawing.Color.White;
-            this.buttonImportXml.Location = new System.Drawing.Point(1099, 17);
+            this.buttonImportXml.Location = new System.Drawing.Point(1140, 17);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
             this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
@@ -178,7 +199,7 @@
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportExcel.Location = new System.Drawing.Point(909, 16);
+            this.buttonExportExcel.Location = new System.Drawing.Point(985, 16);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
             this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
@@ -194,7 +215,7 @@
             this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonRefresh.ForeColor = System.Drawing.Color.White;
-            this.buttonRefresh.Location = new System.Drawing.Point(720, 16);
+            this.buttonRefresh.Location = new System.Drawing.Point(630, 16);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(133, 39);
@@ -360,6 +381,8 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.textBoxUrl1, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.labelId, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBoxId, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.labelName, 0, 1);
@@ -374,13 +397,14 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 18);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(489, 246);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(489, 295);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelId
@@ -513,7 +537,7 @@
             this.tabPageAddress.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageAddress.Name = "tabPageAddress";
             this.tabPageAddress.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageAddress.Size = new System.Drawing.Size(582, 347);
+            this.tabPageAddress.Size = new System.Drawing.Size(529, 347);
             this.tabPageAddress.TabIndex = 1;
             this.tabPageAddress.Text = "Địa chỉ";
             // 
@@ -542,7 +566,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // labelCity
@@ -565,7 +589,7 @@
             this.textBoxCity.Location = new System.Drawing.Point(177, 10);
             this.textBoxCity.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCity.Name = "textBoxCity";
-            this.textBoxCity.Size = new System.Drawing.Size(361, 29);
+            this.textBoxCity.Size = new System.Drawing.Size(308, 29);
             this.textBoxCity.TabIndex = 1;
             // 
             // labelDistrict
@@ -588,7 +612,7 @@
             this.textBoxDistrict.Location = new System.Drawing.Point(177, 59);
             this.textBoxDistrict.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDistrict.Name = "textBoxDistrict";
-            this.textBoxDistrict.Size = new System.Drawing.Size(361, 29);
+            this.textBoxDistrict.Size = new System.Drawing.Size(308, 29);
             this.textBoxDistrict.TabIndex = 3;
             // 
             // labelStreet
@@ -611,7 +635,7 @@
             this.textBoxStreet.Location = new System.Drawing.Point(177, 108);
             this.textBoxStreet.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxStreet.Name = "textBoxStreet";
-            this.textBoxStreet.Size = new System.Drawing.Size(361, 29);
+            this.textBoxStreet.Size = new System.Drawing.Size(308, 29);
             this.textBoxStreet.TabIndex = 5;
             // 
             // labelHouseNumber
@@ -669,7 +693,7 @@
             this.tabPageContact.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageContact.Name = "tabPageContact";
             this.tabPageContact.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageContact.Size = new System.Drawing.Size(582, 347);
+            this.tabPageContact.Size = new System.Drawing.Size(529, 347);
             this.tabPageContact.TabIndex = 2;
             this.tabPageContact.Text = "Liên hệ";
             // 
@@ -698,7 +722,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // labelPhone
@@ -721,7 +745,7 @@
             this.textBoxPhone.Location = new System.Drawing.Point(177, 10);
             this.textBoxPhone.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPhone.Name = "textBoxPhone";
-            this.textBoxPhone.Size = new System.Drawing.Size(361, 29);
+            this.textBoxPhone.Size = new System.Drawing.Size(308, 29);
             this.textBoxPhone.TabIndex = 1;
             // 
             // labelEmail
@@ -744,7 +768,7 @@
             this.textBoxEmail.Location = new System.Drawing.Point(177, 59);
             this.textBoxEmail.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(361, 29);
+            this.textBoxEmail.Size = new System.Drawing.Size(308, 29);
             this.textBoxEmail.TabIndex = 3;
             // 
             // labelFax
@@ -767,7 +791,7 @@
             this.textBoxFax.Location = new System.Drawing.Point(177, 108);
             this.textBoxFax.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxFax.Name = "textBoxFax";
-            this.textBoxFax.Size = new System.Drawing.Size(361, 29);
+            this.textBoxFax.Size = new System.Drawing.Size(308, 29);
             this.textBoxFax.TabIndex = 5;
             // 
             // labelManagerId
@@ -813,7 +837,7 @@
             this.textBoxManagerName.Location = new System.Drawing.Point(177, 206);
             this.textBoxManagerName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxManagerName.Name = "textBoxManagerName";
-            this.textBoxManagerName.Size = new System.Drawing.Size(361, 29);
+            this.textBoxManagerName.Size = new System.Drawing.Size(308, 29);
             this.textBoxManagerName.TabIndex = 9;
             // 
             // tabPageOperations
@@ -825,7 +849,7 @@
             this.tabPageOperations.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageOperations.Size = new System.Drawing.Size(582, 347);
+            this.tabPageOperations.Size = new System.Drawing.Size(529, 347);
             this.tabPageOperations.TabIndex = 3;
             this.tabPageOperations.Text = "Hoạt động";
             // 
@@ -854,7 +878,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(542, 246);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(489, 246);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // labelWeekdayHours
@@ -992,7 +1016,7 @@
             this.tabPageDescription.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageDescription.Name = "tabPageDescription";
             this.tabPageDescription.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.tabPageDescription.Size = new System.Drawing.Size(582, 347);
+            this.tabPageDescription.Size = new System.Drawing.Size(529, 347);
             this.tabPageDescription.TabIndex = 4;
             this.tabPageDescription.Text = "Mô tả";
             // 
@@ -1002,12 +1026,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxDescription.Location = new System.Drawing.Point(24, 43);
+            this.textBoxDescription.Location = new System.Drawing.Point(24, 55);
             this.textBoxDescription.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(408, 361);
+            this.textBoxDescription.Size = new System.Drawing.Size(491, 270);
             this.textBoxDescription.TabIndex = 1;
             // 
             // labelDescription
@@ -1058,6 +1082,29 @@
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.label1.Location = new System.Drawing.Point(4, 259);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 21);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Url ảnh:";
+            // 
+            // textBoxUrl1
+            // 
+            this.textBoxUrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxUrl1.Location = new System.Drawing.Point(177, 255);
+            this.textBoxUrl1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxUrl1.Name = "textBoxUrl1";
+            this.textBoxUrl1.Size = new System.Drawing.Size(308, 29);
+            this.textBoxUrl1.TabIndex = 11;
+            // 
             // ChiNhanh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1107,6 +1154,7 @@
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Button buttonViewWeb;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;
@@ -1171,5 +1219,7 @@
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.TextBox textBoxUrl1;
+        private System.Windows.Forms.Label label1;
     }
 }

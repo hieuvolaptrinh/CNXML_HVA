@@ -49,6 +49,7 @@ namespace CNXML_HVA
             equipmentTable.Columns.Add("BH (tháng)", typeof(int));
             equipmentTable.Columns.Add("Trạng thái", typeof(string));
             equipmentTable.Columns.Add("Mô tả", typeof(string));
+            equipmentTable.Columns.Add("URL hình ảnh", typeof(string));
 
             dataGridViewEquipment.DataSource = equipmentTable;
         }
@@ -58,6 +59,39 @@ namespace CNXML_HVA
             LoadEquipmentsFromXML();
             SetupDataGridView();
             SetEditMode(false);
+            AddImageUrlControl();
+        }
+        
+        private void AddImageUrlControl()
+        {
+            // Add image URL textbox to Description tab if it doesn't exist
+            if (this.Controls.Find("textBoxUrl2", true).Length == 0)
+            {
+                // Find the Description tab
+                TabPage descTab = tabPageDescription;
+                if (descTab != null)
+                {
+                    // Create label for image URL
+                    Label lblImageUrl = new Label();
+                    lblImageUrl.Name = "labelUrl2";
+                    lblImageUrl.Text = "URL hình ảnh:";
+                    lblImageUrl.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+                    lblImageUrl.ForeColor = Color.FromArgb(27, 94, 32);
+                    lblImageUrl.AutoSize = true;
+                    lblImageUrl.Location = new Point(20, 270);
+                    
+                    // Create textbox for image URL
+                    TextBox txtImageUrl = new TextBox();
+                    txtImageUrl.Name = "textBoxUrl2";
+                    txtImageUrl.Font = new Font("Segoe UI", 9.5F);
+                    txtImageUrl.Location = new Point(24, 295);
+                    txtImageUrl.Size = new Size(481, 29);
+                    txtImageUrl.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                    
+                    descTab.Controls.Add(lblImageUrl);
+                    descTab.Controls.Add(txtImageUrl);
+                }
+            }
         }
 
         private void LoadEquipmentsFromXML()
@@ -92,6 +126,7 @@ namespace CNXML_HVA
                         row["BH (tháng)"] = ParseInt(GetNodeValue(equipmentNode, "warranty_period"));
                         row["Trạng thái"] = GetNodeValue(equipmentNode, "status");
                         row["Mô tả"] = GetNodeValue(equipmentNode, "description");
+                        row["URL hình ảnh"] = GetNodeValue(equipmentNode, "image_url");
 
                         equipmentTable.Rows.Add(row);
                     }
@@ -207,6 +242,13 @@ namespace CNXML_HVA
 
                 // Tab 5 - Mô tả (description)
                 textBoxDescription.Text = row.Cells["Mô tả"].Value?.ToString();
+                
+                // Load image_url if textbox exists (will be added to Designer)
+                if (this.Controls.Find("textBoxUrl2", true).Length > 0)
+                {
+                    TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl2", true)[0];
+                    txtImageUrl.Text = row.Cells["URL hình ảnh"].Value?.ToString();
+                }
             }
         }
 
@@ -236,6 +278,13 @@ namespace CNXML_HVA
 
             // Tab 5 - Mô tả
             textBoxDescription.Clear();
+            
+            // Clear image URL if textbox exists
+            if (this.Controls.Find("textBoxUrl2", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl2", true)[0];
+                txtImageUrl.Clear();
+            }
         }
 
         private void SetEditMode(bool editMode)
@@ -480,6 +529,17 @@ namespace CNXML_HVA
             }
             
             AddXmlElement(newEquipment, "status", "Active");
+            
+            // Add image_url if textbox exists
+            if (this.Controls.Find("textBoxUrl2", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl2", true)[0];
+                AddXmlElement(newEquipment, "image_url", txtImageUrl.Text);
+            }
+            else
+            {
+                AddXmlElement(newEquipment, "image_url", "");
+            }
 
             equipmentsNode.AppendChild(newEquipment);
             xmlDoc.Save(xmlFilePath);
@@ -525,6 +585,13 @@ namespace CNXML_HVA
                 }
                 
                 UpdateXmlElement(equipmentNode, "status", "Active");
+                
+                // Update image_url if textbox exists
+                if (this.Controls.Find("textBoxUrl2", true).Length > 0)
+                {
+                    TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl2", true)[0];
+                    UpdateXmlElement(equipmentNode, "image_url", txtImageUrl.Text);
+                }
 
                 xmlDoc.Save(xmlFilePath);
             }
@@ -562,6 +629,17 @@ namespace CNXML_HVA
             }
             row["Trạng thái"] = "Active"; // status
             row["Mô tả"] = textBoxDescription.Text; // description
+            
+            // Save image_url if textbox exists
+            if (this.Controls.Find("textBoxUrl2", true).Length > 0)
+            {
+                TextBox txtImageUrl = (TextBox)this.Controls.Find("textBoxUrl2", true)[0];
+                row["URL hình ảnh"] = txtImageUrl.Text;
+            }
+            else
+            {
+                row["URL hình ảnh"] = "";
+            }
         }
 
         private void AddXmlElement(XmlElement parent, string elementName, string value)
@@ -798,6 +876,31 @@ namespace CNXML_HVA
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi import XML: {ex.Message}");
+            }
+        }
+
+        private void buttonViewWeb_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Generate HTML từ XML mới nhất
+                HtmlGenerator.GenerateEquipmentsHtml();
+                
+                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "equipments.html");
+                if (File.Exists(webPath))
+                {
+                    System.Diagnostics.Process.Start(webPath);
+                }
+                else
+                {
+                    MessageBox.Show($"Không tìm thấy file web!\nĐường dẫn: {webPath}", 
+                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tạo trang web: " + ex.Message, 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

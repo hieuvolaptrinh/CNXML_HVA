@@ -39,7 +39,8 @@ CREATE TABLE Branches (
     monthly_revenue BIGINT,
     staff_count INT,
     description NVARCHAR(255),
-    status VARCHAR(20)
+    status VARCHAR(20),
+    image_url NVARCHAR(500)
 );
 
 -- 2. Bảng Khách Hàng (ĐÃ CHUẨN HÓA TIẾNG ANH)
@@ -118,6 +119,7 @@ CREATE TABLE Equipments (
     purchase_date DATE,
     warranty_period INT, 
     status VARCHAR(20),
+    image_url NVARCHAR(500),
     CONSTRAINT FK_Equipments_Branches FOREIGN KEY (branch_id) REFERENCES Branches(id)
 );
 
@@ -235,13 +237,13 @@ CREATE TABLE Orders (
 
 -- DATA MẪU
 -- Insert Branches first (required for Fields foreign key)
-INSERT INTO Branches (id, name, code, city, district, street, house_number, phone, email, manager_name, weekday_hours, weekend_hours, total_fields, established_date, monthly_revenue, staff_count, description, status)
+INSERT INTO Branches (id, name, code, city, district, street, house_number, phone, email, manager_name, weekday_hours, weekend_hours, total_fields, established_date, monthly_revenue, staff_count, description, status, image_url)
 VALUES
-('B01', N'Chi nhánh Hà Nội', 'HN001', N'Hà Nội', N'Cầu Giấy', N'Trần Thái Tông', N'123', '0241234567', 'hanoi@sanbong.vn', N'Nguyễn Văn Tùng', '6:00-22:00', '5:00-23:00', 5, '2023-01-15', 150000000, 12, N'Chi nhánh trung tâm Hà Nội', 'Active'),
+('B01', N'Chi nhánh Hà Nội', 'HN001', N'Hà Nội', N'Cầu Giấy', N'Trần Thái Tông', N'123', '0241234567', 'hanoi@sanbong.vn', N'Nguyễn Văn Tùng', '6:00-22:00', '5:00-23:00', 5, '2023-01-15', 150000000, 12, N'Chi nhánh trung tâm Hà Nội', 'Active', 'https://images.unsplash.com/photo-1624880357913-a8539238245b?w=800'),
 
-('B02', N'Chi nhánh TP.HCM', 'HCM001', N'TP Hồ Chí Minh', N'Bình Thạnh', N'Xô Viết Nghệ Tĩnh', N'789', '0281234567', 'hcm@sanbong.vn', N'Trần Minh Khoa', '6:00-22:00', '5:00-23:00', 8, '2023-03-20', 250000000, 18, N'Chi nhánh trung tâm TP.HCM', 'Active'),
+('B02', N'Chi nhánh TP.HCM', 'HCM001', N'TP Hồ Chí Minh', N'Bình Thạnh', N'Xô Viết Nghệ Tĩnh', N'789', '0281234567', 'hcm@sanbong.vn', N'Trần Minh Khoa', '6:00-22:00', '5:00-23:00', 8, '2023-03-20', 250000000, 18, N'Chi nhánh trung tâm TP.HCM', 'Active', 'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=800'),
 
-('B03', N'Chi nhánh Hải Phòng', 'HP001', N'Hải Phòng', N'Lê Chân', N'Điện Biên Phủ', N'567', '0251234567', 'haiphong@sanbong.vn', N'Phạm Đức Anh', '6:00-22:00', '5:00-23:00', 4, '2023-06-10', 80000000, 8, N'Chi nhánh Hải Phòng', 'Active');
+('B03', N'Chi nhánh Hải Phòng', 'HP001', N'Hải Phòng', N'Lê Chân', N'Điện Biên Phủ', N'567', '0251234567', 'haiphong@sanbong.vn', N'Phạm Đức Anh', '6:00-22:00', '5:00-23:00', 4, '2023-06-10', 80000000, 8, N'Chi nhánh Hải Phòng', 'Active', 'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800');
 
 INSERT INTO Customers (id, name, phone, email, city, district, street, membership, notes)
 VALUES
@@ -258,3 +260,20 @@ VALUES
 ('C006', N'Đặng Văn Lâm', '0977123123', 'lam.dang@gmail.com', N'Hải Phòng', N'Ngô Quyền', N'Lạch Tray', 'Gold', N'Yêu cầu xuất hóa đơn đỏ');
 
 SELECT * FROM Customers;
+
+-- Insert sample data for Equipments
+INSERT INTO Equipments (id, name, category, brand, model, quantity_total, quantity_available, rental_price, purchase_price, condition, description, branch_id, supplier, purchase_date, warranty_period, status, image_url)
+VALUES
+('EQ001', N'Bóng đá FIFA Quality Pro', N'Bóng', 'Adidas', 'Tango España', 50, 45, 50000, 800000, N'Tốt', N'Bóng đá chất lượng cao FIFA Quality Pro', 'B01', N'Adidas Vietnam', '2023-01-10', 12, 'Active', 'https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=800'),
+
+('EQ002', N'Áo đấu Manchester United', N'Trang phục', 'Nike', 'Home Kit 2023', 100, 85, 100000, 1200000, N'Tốt', N'Áo đấu chính thức Manchester United mùa giải 2023', 'B01', N'Nike Store', '2023-02-15', 6, 'Active', 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800'),
+
+('EQ003', N'Giày đá bóng Predator', N'Giày', 'Adidas', 'Predator Edge', 30, 28, 150000, 2500000, N'Tốt', N'Giày đá bóng cao cấp Adidas Predator Edge', 'B02', N'Adidas Vietnam', '2023-03-20', 12, 'Active', 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=800'),
+
+('EQ004', N'Bóng đá Training', N'Bóng', 'Nike', 'Strike Team', 80, 70, 30000, 500000, N'Tốt', N'Bóng đá tập luyện Nike Strike Team', 'B02', N'Nike Store', '2023-04-05', 12, 'Active', 'https://images.unsplash.com/photo-1575361204480-aadea25e6e68?w=800'),
+
+('EQ005', N'Găng tay thủ môn', N'Phụ kiện', 'Puma', 'Ultra Grip', 20, 18, 80000, 1000000, N'Tốt', N'Găng tay thủ môn chuyên nghiệp Puma Ultra Grip', 'B03', N'Puma Vietnam', '2023-05-10', 6, 'Active', 'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800'),
+
+('EQ006', N'Bình nước thể thao', N'Phụ kiện', 'Decathlon', 'Isotonic 750ml', 150, 140, 10000, 50000, N'Tốt', N'Bình nước thể thao 750ml', 'B01', N'Decathlon Vietnam', '2023-06-01', 3, 'Active', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800');
+
+SELECT * FROM Branches;
