@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test XML Loading</title>
+    <script src="js/app.js"></script>
+    <script src="js/crud.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .result {
+        background: #f5f5f5;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+      }
+      .success {
+        background: #d4edda;
+        color: #155724;
+      }
+      .error {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      pre {
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test XML Loading</h1>
+    <button onclick="testAll()">Test All XML Files</button>
+    <div id="results"></div>
+
+    <script>
+      const crudManager = new CRUDManager();
+
+      async function testXML(filename, tag) {
+        const resultDiv = document.createElement("div");
+        resultDiv.className = "result";
+
+        try {
+          const data = await crudManager.getMergedData(filename, tag);
+          resultDiv.classList.add("success");
+          resultDiv.innerHTML = `
+                    <h3>✅ ${filename} - SUCCESS</h3>
+                    <p>Loaded ${data.length} items</p>
+                    <details>
+                        <summary>View Data</summary>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                `;
+        } catch (error) {
+          resultDiv.classList.add("error");
+          resultDiv.innerHTML = `
+                    <h3>❌ ${filename} - ERROR</h3>
+                    <p>${error.message}</p>
+                    <pre>${error.stack}</pre>
+                `;
+        }
+
+        document.getElementById("results").appendChild(resultDiv);
+      }
+
+      async function testAll() {
+        document.getElementById("results").innerHTML = "";
+
+        await testXML("Branches.xml", "branch");
+        await testXML("Fields.xml", "field");
+        await testXML("FieldTypes.xml", "field_type");
+        await testXML("Bookings.xml", "Booking");
+        await testXML("Equipments.xml", "equipment");
+        await testXML("Customers.xml", "customer");
+      }
+    </script>
+  </body>
+</html>

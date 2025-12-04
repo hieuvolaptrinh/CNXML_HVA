@@ -3,88 +3,364 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý Loại sân</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Loại sân - Hệ Thống Sân Bóng</title>
+    <link rel="stylesheet" href="css/styles.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="js/app.js"></script>
+    <script src="js/crud.js"></script>
     <script src="js/components.js"></script>
   </head>
-  <body class="bg-gray-100">
+  <body>
     <div id="sidebar"></div>
 
-    <div class="ml-64 p-8">
-      <div class="mb-8">
-        <h2 class="text-3xl font-bold text-gray-800 mb-2">Quản lý Loại sân</h2>
-        <p class="text-gray-600">Các loại sân bóng khác nhau</p>
+    <div style="margin-left: 280px; padding: 30px">
+      <div
+        class="grass-pattern grass-overlay"
+        style="padding: 40px 30px; border-radius: 16px; margin-bottom: 30px"
+      >
+        <div style="position: relative; z-index: 1">
+          <h1
+            style="
+              color: white;
+              font-size: 2.5em;
+              margin-bottom: 10px;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            "
+          >
+            <i class="fas fa-list"></i> Quản Lý Loại Sân
+          </h1>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1em">
+            Phân loại và quản lý các loại sân bóng
+          </p>
+        </div>
       </div>
 
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <table class="w-full">
-          <thead class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-            <tr>
-              <th class="px-6 py-4 text-left">Mã</th>
-              <th class="px-6 py-4 text-left">Tên loại sân</th>
-              <th class="px-6 py-4 text-left">Kích thước</th>
-              <th class="px-6 py-4 text-left">Số người/đội</th>
-              <th class="px-6 py-4 text-left">Giá cơ bản</th>
-              <th class="px-6 py-4 text-left">Bề mặt</th>
-              <th class="px-6 py-4 text-left">Trạng thái</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          margin-bottom: 30px;
+        "
+      >
+        <div class="stat-card">
+          <div
+            class="stat-icon"
+            style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            "
+          >
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <div class="stat-details">
+            <div class="stat-value" id="totalTypes">0</div>
+            <div class="stat-label">Tổng loại sân</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div
+            class="stat-icon"
+            style="
+              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            "
+          >
+            <i class="fas fa-futbol"></i>
+          </div>
+          <div class="stat-details">
+            <div class="stat-value" id="mostPopular">N/A</div>
+            <div class="stat-label">Phổ biến nhất</div>
+          </div>
+        </div>
       </div>
+
+      <div
+        class="toolbar-container"
+        style="
+          background: white;
+          padding: 20px;
+          border-radius: 12px;
+          margin-bottom: 25px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        "
+      >
+        <div
+          style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center"
+        >
+          <button class="btn btn-primary" onclick="showAddFieldTypeForm()">
+            <i class="fas fa-plus"></i> Thêm Loại Sân
+          </button>
+          <div style="flex: 1; min-width: 250px">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="🔍 Tìm kiếm loại sân..."
+              style="
+                width: 100%;
+                padding: 10px 15px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+              "
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="fieldTypesGrid"
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 25px;
+        "
+      ></div>
     </div>
 
     <script>
-      document.getElementById("sidebar").innerHTML =
-        createSidebar("field-types");
-      if (!requireAuth()) throw new Error("Not authenticated");
+      let allFieldTypes = [];
+      let filteredFieldTypes = [];
 
-      async function loadData() {
+      document.addEventListener("DOMContentLoaded", async () => {
+        document.getElementById("sidebar").innerHTML =
+          createSidebar("field-types");
+        requireAuth();
+        await loadFieldTypes();
+        setupEventListeners();
+      });
+
+      async function loadFieldTypes() {
         try {
-          const xmlDoc = await xmlManager.loadXML("FieldTypes.xml");
-          const items = xmlManager.xmlToArray(xmlDoc, "field_type");
-          const tbody = document.getElementById("tbody");
-          tbody.innerHTML = "";
-
-          items.forEach((item) => {
-            const id =
-              item.getAttribute("id") || xmlManager.getElementText(item, "id");
-            const name = xmlManager.getElementText(item, "name");
-            const sizeDisplay = xmlManager.getElementText(item, "size_display");
-            const playersPerTeam = xmlManager.getElementText(
-              item,
-              "players_per_team"
-            );
-            const basePrice = parseInt(
-              xmlManager.getElementText(item, "base_price", "0")
-            );
-            const surfaceType = xmlManager.getElementText(item, "surface_type");
-            const status = xmlManager.getElementText(item, "status");
-
-            const row = document.createElement("tr");
-            row.className = "hover:bg-gray-50";
-            row.innerHTML = `
-                        <td class="px-6 py-4 font-medium">${id}</td>
-                        <td class="px-6 py-4 font-semibold">${name}</td>
-                        <td class="px-6 py-4">${sizeDisplay}</td>
-                        <td class="px-6 py-4 text-center">${playersPerTeam}</td>
-                        <td class="px-6 py-4">${formatCurrency(basePrice)}</td>
-                        <td class="px-6 py-4">${surfaceType}</td>
-                        <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">${status}</span></td>
-                    `;
-            tbody.appendChild(row);
-          });
+          LoadingOverlay.show();
+          allFieldTypes = await crudManager.getMergedData(
+            "FieldTypes.xml",
+            "field_type"
+          );
+          filteredFieldTypes = [...allFieldTypes];
+          renderFieldTypes();
+          updateStats();
+          LoadingOverlay.hide();
         } catch (error) {
-          showNotification("Lỗi tải dữ liệu", "error");
+          console.error("Error loading field types:", error);
+          LoadingOverlay.hide();
+          Toast.error("Không thể tải dữ liệu loại sân");
         }
       }
 
-      window.addEventListener("load", loadData);
+      function renderFieldTypes() {
+        const grid = document.getElementById("fieldTypesGrid");
+
+        if (filteredFieldTypes.length === 0) {
+          grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-list" style="font-size: 4em; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3 style="color: #999; font-size: 1.2em;">Không tìm thấy loại sân nào</h3>
+                    </div>
+                `;
+          return;
+        }
+
+        grid.innerHTML = filteredFieldTypes
+          .map(
+            (type) => `
+                <div class="field-type-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; color: white;">
+                        <i class="fas fa-futbol" style="font-size: 3em; margin-bottom: 15px;"></i>
+                        <h3 style="font-size: 1.5em; margin-bottom: 5px;">${
+                          type.tenloaisan || "N/A"
+                        }</h3>
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.9em;">
+                            ${type.maloaisan || "N/A"}
+                        </span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="margin: 15px 0; color: #555;">
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <i class="fas fa-users" style="width: 25px; color: #667eea;"></i>
+                                <span style="font-size: 0.95em;">Số người: <strong>${
+                                  type.songuoi || "N/A"
+                                }</strong></span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 10px 0;">
+                                <i class="fas fa-ruler-combined" style="width: 25px; color: #667eea;"></i>
+                                <span style="font-size: 0.95em;">Kích thước: <strong>${
+                                  type.kichthuoc || "N/A"
+                                }</strong></span>
+                            </div>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
+                            <p style="font-size: 0.9em; color: #555; margin: 0;">${
+                              type.mota || "Không có mô tả"
+                            }</p>
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button class="btn btn-sm btn-primary" onclick="editFieldType('${
+                              type.id || type.maloaisan
+                            }')" style="flex: 1;">
+                                <i class="fas fa-edit"></i> Sửa
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteFieldType('${
+                              type.id || type.maloaisan
+                            }')" style="flex: 1;">
+                                <i class="fas fa-trash"></i> Xóa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function updateStats() {
+        document.getElementById("totalTypes").textContent =
+          allFieldTypes.length;
+
+        if (allFieldTypes.length > 0) {
+          const mostPopular = allFieldTypes[0];
+          document.getElementById("mostPopular").textContent =
+            mostPopular.tenloaisan || "N/A";
+        }
+      }
+
+      function setupEventListeners() {
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", debounce(filterFieldTypes, 300));
+      }
+
+      function filterFieldTypes() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+
+        filteredFieldTypes = allFieldTypes.filter((type) => {
+          return (
+            !searchTerm ||
+            (type.tenloaisan || "").toLowerCase().includes(searchTerm) ||
+            (type.maloaisan || "").toLowerCase().includes(searchTerm) ||
+            (type.songuoi || "").toLowerCase().includes(searchTerm)
+          );
+        });
+
+        renderFieldTypes();
+      }
+
+      function showAddFieldTypeForm() {
+        const formHTML = `
+                <form id="fieldTypeForm" style="display: grid; gap: 15px;">
+                    <div class="form-group">
+                        <label>Mã loại sân <span style="color: red;">*</span></label>
+                        <input type="text" name="maloaisan" required class="form-control" placeholder="LS-5">
+                    </div>
+                    <div class="form-group">
+                        <label>Tên loại sân <span style="color: red;">*</span></label>
+                        <input type="text" name="tenloaisan" required class="form-control" placeholder="Sân 5 người">
+                    </div>
+                    <div class="form-group">
+                        <label>Số người <span style="color: red;">*</span></label>
+                        <input type="text" name="songuoi" required class="form-control" placeholder="5 người">
+                    </div>
+                    <div class="form-group">
+                        <label>Kích thước</label>
+                        <input type="text" name="kichthuoc" class="form-control" placeholder="20m x 40m">
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea name="mota" class="form-control" rows="3" placeholder="Mô tả loại sân..."></textarea>
+                    </div>
+                </form>
+            `;
+
+        formModal.show("Thêm Loại Sân Mới", formHTML, async (data) => {
+          try {
+            data.id = generateId("FT");
+            await crudManager.saveToXML("LoaiSan.xml", data, "create");
+            formModal.close();
+            Toast.success("Thêm loại sân thành công!");
+            await loadFieldTypes();
+          } catch (error) {
+            Toast.error("Lỗi khi thêm loại sân!");
+          }
+        });
+      }
+
+      async function editFieldType(id) {
+        const type = allFieldTypes.find((t) => (t.id || t.maloaisan) === id);
+        if (!type) return;
+
+        const formHTML = `
+                <form id="fieldTypeForm" style="display: grid; gap: 15px;">
+                    <div class="form-group">
+                        <label>Mã loại sân <span style="color: red;">*</span></label>
+                        <input type="text" name="maloaisan" required class="form-control" value="${
+                          type.maloaisan || ""
+                        }" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên loại sân <span style="color: red;">*</span></label>
+                        <input type="text" name="tenloaisan" required class="form-control" value="${
+                          type.tenloaisan || ""
+                        }">
+                    </div>
+                    <div class="form-group">
+                        <label>Số người <span style="color: red;">*</span></label>
+                        <input type="text" name="songuoi" required class="form-control" value="${
+                          type.songuoi || ""
+                        }">
+                    </div>
+                    <div class="form-group">
+                        <label>Kích thước</label>
+                        <input type="text" name="kichthuoc" class="form-control" value="${
+                          type.kichthuoc || ""
+                        }">
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea name="mota" class="form-control" rows="3">${
+                          type.mota || ""
+                        }</textarea>
+                    </div>
+                </form>
+            `;
+
+        formModal.show("Chỉnh Sửa Loại Sân", formHTML, async (data) => {
+          try {
+            data.id = type.id || type.maloaisan;
+            await crudManager.saveToXML("LoaiSan.xml", data, "update");
+            formModal.close();
+            Toast.success("Cập nhật loại sân thành công!");
+            await loadFieldTypes();
+          } catch (error) {
+            Toast.error("Lỗi khi cập nhật loại sân!");
+          }
+        });
+      }
+
+      function deleteFieldType(id) {
+        const type = allFieldTypes.find((t) => (t.id || t.maloaisan) === id);
+        if (!type) return;
+
+        ConfirmDialog.show(
+          `Bạn có chắc chắn muốn xóa loại sân "${type.tenloaisan}"?`,
+          async () => {
+            try {
+              await crudManager.saveToXML(
+                "LoaiSan.xml",
+                { id: type.id || type.maloaisan },
+                "delete"
+              );
+              Toast.success("Xóa loại sân thành công!");
+              await loadFieldTypes();
+            } catch (error) {
+              Toast.error("Lỗi khi xóa loại sân!");
+            }
+          },
+          "Xác Nhận Xóa"
+        );
+      }
     </script>
   </body>
 </html>

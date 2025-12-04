@@ -28,25 +28,63 @@ class CRUDManager {
     return { success: true, message: "Operation completed successfully" };
   }
 
+  // Parse XML element recursively
+  parseXMLElement(element) {
+    const obj = {};
+
+    // Get attributes
+    if (element.attributes) {
+      for (let attr of element.attributes) {
+        obj[attr.name] = attr.value;
+      }
+    }
+
+    // Parse children
+    for (let child of element.children) {
+      const tagName = child.tagName.toLowerCase().replace(/_/g, "");
+
+      // Check if child has children (nested object)
+      if (child.children.length > 0) {
+        obj[tagName] = this.parseXMLElement(child);
+      } else {
+        // Simple text content
+        obj[tagName] = child.textContent.trim();
+      }
+    }
+
+    return obj;
+  }
+
   // Get merged data (XML + localStorage)
   async getMergedData(filename, rootTag) {
     try {
       const xmlDoc = await this.xmlManager.loadXML(filename);
-      const xmlData = this.xmlManager.xmlToArray(xmlDoc, rootTag);
+
+      // Handle different root tag formats
+      let xmlElements;
+      if (rootTag === "branch") {
+        xmlElements = xmlDoc.getElementsByTagName("branch");
+      } else if (rootTag === "field") {
+        xmlElements = xmlDoc.getElementsByTagName("field");
+      } else if (rootTag === "field_type") {
+        xmlElements = xmlDoc.getElementsByTagName("field_type");
+      } else if (rootTag === "Booking") {
+        xmlElements = xmlDoc.getElementsByTagName("Booking");
+      } else if (rootTag === "equipment") {
+        xmlElements = xmlDoc.getElementsByTagName("equipment");
+      } else if (rootTag === "customer") {
+        xmlElements = xmlDoc.getElementsByTagName("customer");
+      } else {
+        xmlElements = xmlDoc.getElementsByTagName(rootTag);
+      }
 
       const storageKey = `xml_${filename}`;
       const localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
-      // Convert XML elements to objects
-      const xmlObjects = xmlData.map((element) => {
-        const obj = { _source: "xml" };
-        for (let child of element.children) {
-          obj[child.tagName.toLowerCase()] = child.textContent;
-        }
-        // Get id from attribute if exists
-        if (element.getAttribute("id")) {
-          obj.id = element.getAttribute("id");
-        }
+      // Convert XML elements to objects with proper parsing
+      const xmlObjects = Array.from(xmlElements).map((element) => {
+        const obj = this.parseXMLElement(element);
+        obj._source = "xml";
         return obj;
       });
 
@@ -55,6 +93,8 @@ class CRUDManager {
         ...xmlObjects,
         ...localData.map((item) => ({ ...item, _source: "local" })),
       ];
+
+      console.log(`Loaded ${merged.length} items from ${filename}:`, merged);
       return merged;
     } catch (error) {
       console.error("Error loading data:", error);
@@ -448,3 +488,16 @@ function animateValue(element, start, end, duration = 1000) {
     element.textContent = Math.floor(current).toLocaleString("vi-VN");
   }, 16);
 }
+
+// Export all utilities
+window.CRUDManager = CRUDManager;
+window.crudManager = crudManager;
+window.imageModal = imageModal;
+window.detailModal = detailModal;
+window.formModal = formModal;
+window.Toast = Toast;
+window.ConfirmDialog = ConfirmDialog;
+window.LoadingOverlay = LoadingOverlay;
+window.generateId = generateId;
+window.debounce = debounce;
+window.animateValue = animateValue;

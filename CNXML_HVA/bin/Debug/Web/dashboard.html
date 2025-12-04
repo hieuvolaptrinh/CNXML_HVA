@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Football Field Management</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/crud.js"></script>
+    <script src="js/components.js"></script>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div id="sidebar"></div>
+
+    <!-- Main Content -->
+    <div style="margin-left: 280px; padding: 30px">
+      <!-- Header with Grass Pattern -->
+      <div
+        class="grass-pattern grass-overlay"
+        style="
+          padding: 60px 30px;
+          border-radius: 16px;
+          margin-bottom: 30px;
+          position: relative;
+          overflow: hidden;
+        "
+      >
+        <div style="position: relative; z-index: 1">
+          <h1
+            style="
+              color: white;
+              font-size: 2.5em;
+              margin-bottom: 10px;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            "
+          >
+            <i class="fas fa-chart-line"></i> Dashboard Overview
+          </h1>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1em">
+            Real-time statistics and analytics for football field management
+          </p>
+        </div>
+
+        <!-- Animated Football Icon -->
+        <div
+          class="animate-bounce"
+          style="
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 5em;
+            color: rgba(255, 255, 255, 0.2);
+          "
+        >
+          <i class="fas fa-futbol"></i>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-4 gap-3 mb-4" id="statsCards">
+        <!-- Will be populated by JavaScript -->
+      </div>
+
+      <!-- Revenue Trend Chart -->
+      <div class="card mb-4 animate-fade-in" style="animation-delay: 0.1s">
+        <div class="card-header">
+          <h3>
+            <i class="fas fa-chart-area"></i> Revenue Trend (Last 6 Months)
+          </h3>
+        </div>
+        <div class="card-body">
+          <canvas id="revenueTrendChart" height="80"></canvas>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <!-- Booking Status Pie Chart -->
+        <div class="card animate-slide-left">
+          <div class="card-header">
+            <h3><i class="fas fa-chart-pie"></i> Booking Status</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="bookingStatusChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Field Utilization Doughnut Chart -->
+        <div class="card animate-slide-right">
+          <div class="card-header">
+            <h3><i class="fas fa-chart-donut"></i> Field Utilization</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="fieldUtilizationChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- More Charts -->
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <!-- Customer Distribution -->
+        <div class="card animate-scale-in" style="animation-delay: 0.2s">
+          <div class="card-header">
+            <h3><i class="fas fa-users"></i> Customers</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="customerChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Equipment Status -->
+        <div class="card animate-scale-in" style="animation-delay: 0.3s">
+          <div class="card-header">
+            <h3><i class="fas fa-tools"></i> Equipment</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="equipmentChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Branch Performance -->
+        <div class="card animate-scale-in" style="animation-delay: 0.4s">
+          <div class="card-header">
+            <h3><i class="fas fa-building"></i> Branches</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="branchChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activities -->
+      <div class="grid grid-cols-2 gap-3">
+        <!-- Recent Bookings -->
+        <div class="card animate-fade-in" style="animation-delay: 0.5s">
+          <div class="card-header">
+            <h3><i class="fas fa-calendar-check"></i> Recent Bookings</h3>
+          </div>
+          <div class="card-body">
+            <div id="recentBookings"></div>
+          </div>
+        </div>
+
+        <!-- Top Customers -->
+        <div class="card animate-fade-in" style="animation-delay: 0.6s">
+          <div class="card-header">
+            <h3><i class="fas fa-star"></i> Top Customers</h3>
+          </div>
+          <div class="card-body">
+            <div id="topCustomers"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        requireAuth();
+        document.getElementById("sidebar").innerHTML =
+          createSidebar("dashboard");
+
+        await Promise.all([
+          loadStatsCards(),
+          loadRevenueTrend(),
+          loadBookingStatus(),
+          loadFieldUtilization(),
+          loadCustomerChart(),
+          loadEquipmentChart(),
+          loadBranchChart(),
+          loadRecentBookings(),
+          loadTopCustomers(),
+        ]);
+      });
+
+      async function loadStatsCards() {
+        try {
+          const [branches, fields, bookings, customers] = await Promise.all([
+            crudManager.getMergedData("Branches.xml", "branch"),
+            crudManager.getMergedData("Fields.xml", "field"),
+            crudManager.getMergedData("Bookings.xml", "booking"),
+            crudManager.getMergedData("Customers.xml", "customer"),
+          ]);
+
+          const stats = [
+            {
+              icon: "building",
+              label: "Chi nhánh",
+              value: branches.length,
+              color: "#4caf50",
+              bgGradient: "linear-gradient(135deg, #4caf50, #66bb6a)",
+            },
+            {
+              icon: "map-marked-alt",
+              label: "Sân bóng",
+              value: fields.length,
+              color: "#2196f3",
+              bgGradient: "linear-gradient(135deg, #2196f3, #42a5f5)",
+            },
+            {
+              icon: "calendar-check",
+              label: "Đặt lịch",
+              value: bookings.length,
+              color: "#ff9800",
+              bgGradient: "linear-gradient(135deg, #ff9800, #ffa726)",
+            },
+            {
+              icon: "users",
+              label: "Khách hàng",
+              value: customers.length,
+              color: "#9c27b0",
+              bgGradient: "linear-gradient(135deg, #9c27b0, #ab47bc)",
+            },
+          ];
+
+          const statsHTML = stats
+            .map(
+              (stat, index) => `
+                    <div class="card animate-scale-in" style="animation-delay: ${
+                      index * 0.1
+                    }s; border: none; background: ${
+                stat.bgGradient
+              }; color: white;">
+                        <div class="card-body">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p style="opacity: 0.9; font-size: 14px; margin-bottom: 8px;">${
+                                      stat.label
+                                    }</p>
+                                    <h2 class="stat-value" data-value="${
+                                      stat.value
+                                    }" style="font-size: 2.5em; font-weight: bold;">0</h2>
+                                </div>
+                                <div style="font-size: 3em; opacity: 0.3;">
+                                    <i class="fas fa-${stat.icon}"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            )
+            .join("");
+
+          document.getElementById("statsCards").innerHTML = statsHTML;
+          document.querySelectorAll(".stat-value").forEach((el) => {
+            const value = parseInt(el.dataset.value);
+            animateValue(el, 0, value, 1500);
+          });
+        } catch (error) {
+          console.error("Error loading stats:", error);
+        }
+      }
+
+      async function loadRevenueTrend() {
+        const ctx = document
+          .getElementById("revenueTrendChart")
+          .getContext("2d");
+        const months = [
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
+        ];
+        const revenue = [
+          50000000, 65000000, 55000000, 75000000, 85000000, 95000000,
+        ];
+        const bookings = [45, 58, 52, 68, 75, 82];
+
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: months,
+            datasets: [
+              {
+                label: "Doanh thu (VNĐ)",
+                data: revenue,
+                borderColor: "#4caf50",
+                backgroundColor: "rgba(76, 175, 80, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                yAxisID: "y",
+              },
+              {
+                label: "Số lượng booking",
+                data: bookings,
+                borderColor: "#2196f3",
+                backgroundColor: "rgba(33, 150, 243, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                yAxisID: "y1",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: { display: true, position: "top" },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    let label = context.dataset.label || "";
+                    if (context.parsed.y !== null) {
+                      if (context.datasetIndex === 0) {
+                        label += ": " + formatCurrency(context.parsed.y);
+                      } else {
+                        label += ": " + context.parsed.y + " bookings";
+                      }
+                    }
+                    return label;
+                  },
+                },
+              },
+            },
+            scales: {
+              y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                ticks: { callback: (value) => value / 1000000 + "M" },
+              },
+              y1: {
+                type: "linear",
+                display: true,
+                position: "right",
+                grid: { drawOnChartArea: false },
+              },
+            },
+          },
+        });
+      }
+
+      async function loadBookingStatus() {
+        try {
+          const bookings = await crudManager.getMergedData(
+            "Bookings.xml",
+            "booking"
+          );
+          const statusCounts = {
+            Confirmed: 0,
+            Pending: 0,
+            Cancelled: 0,
+            Completed: 0,
+          };
+          bookings.forEach((booking) => {
+            const status = booking.status || "Pending";
+            if (statusCounts[status] !== undefined) statusCounts[status]++;
+          });
+
+          const ctx = document
+            .getElementById("bookingStatusChart")
+            .getContext("2d");
+          new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels: Object.keys(statusCounts),
+              datasets: [
+                {
+                  data: Object.values(statusCounts),
+                  backgroundColor: ["#4caf50", "#ff9800", "#f44336", "#2196f3"],
+                  borderWidth: 2,
+                  borderColor: "#fff",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadFieldUtilization() {
+        try {
+          const fields = await crudManager.getMergedData("Fields.xml", "field");
+          const statusCounts = { Available: 0, Booked: 0, Maintenance: 0 };
+          fields.forEach((field) => {
+            const status = field.status || "Available";
+            if (statusCounts[status] !== undefined) statusCounts[status]++;
+          });
+
+          const ctx = document
+            .getElementById("fieldUtilizationChart")
+            .getContext("2d");
+          new Chart(ctx, {
+            type: "doughnut",
+            data: {
+              labels: Object.keys(statusCounts),
+              datasets: [
+                {
+                  data: Object.values(statusCounts),
+                  backgroundColor: ["#4caf50", "#ff9800", "#9e9e9e"],
+                  borderWidth: 2,
+                  borderColor: "#fff",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadCustomerChart() {
+        try {
+          const customers = await crudManager.getMergedData(
+            "Customers.xml",
+            "customer"
+          );
+          const membershipCounts = { VIP: 0, Gold: 0, Silver: 0, None: 0 };
+          customers.forEach((c) => {
+            const m = c.membership_type || "None";
+            if (membershipCounts[m] !== undefined) membershipCounts[m]++;
+          });
+
+          const ctx = document.getElementById("customerChart").getContext("2d");
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: Object.keys(membershipCounts),
+              datasets: [
+                {
+                  label: "Customers",
+                  data: Object.values(membershipCounts),
+                  backgroundColor: ["#ffd700", "#c0c0c0", "#cd7f32", "#9e9e9e"],
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } },
+              scales: { y: { beginAtZero: true } },
+            },
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadEquipmentChart() {
+        try {
+          const equipments = await crudManager.getMergedData(
+            "Equipments.xml",
+            "equipment"
+          );
+          const totalAvailable = equipments.reduce(
+            (sum, eq) => sum + parseInt(eq.quantity_available || 0),
+            0
+          );
+          const totalRented = equipments.reduce((sum, eq) => {
+            const total = parseInt(eq.quantity_total || 0);
+            const available = parseInt(eq.quantity_available || 0);
+            return sum + (total - available);
+          }, 0);
+
+          const ctx = document
+            .getElementById("equipmentChart")
+            .getContext("2d");
+          new Chart(ctx, {
+            type: "doughnut",
+            data: {
+              labels: ["Available", "Rented"],
+              datasets: [
+                {
+                  data: [totalAvailable, totalRented],
+                  backgroundColor: ["#4caf50", "#ff9800"],
+                  borderWidth: 2,
+                  borderColor: "#fff",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { position: "bottom" } },
+            },
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadBranchChart() {
+        try {
+          const branches = await crudManager.getMergedData(
+            "Branches.xml",
+            "branch"
+          );
+          const names = branches.map((b) => b.name || b.code);
+          const revenues = branches.map((b) =>
+            parseInt(b.monthly_revenue || 0)
+          );
+
+          const ctx = document.getElementById("branchChart").getContext("2d");
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: names,
+              datasets: [
+                {
+                  label: "Revenue",
+                  data: revenues,
+                  backgroundColor: "#4caf50",
+                  borderWidth: 0,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { callback: (value) => value / 1000000 + "M" },
+                },
+              },
+            },
+          });
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadRecentBookings() {
+        try {
+          const bookings = await crudManager.getMergedData(
+            "Bookings.xml",
+            "booking"
+          );
+          const recent = bookings.slice(-5).reverse();
+          const html = recent
+            .map(
+              (booking) => `
+                    <div style="padding: 12px; border-bottom: 1px solid var(--light-gray); display: flex; justify-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">${
+                              booking.customer_id || "N/A"
+                            }</div>
+                            <div style="font-size: 12px; color: var(--gray);">${
+                              booking.booking_date || "N/A"
+                            } - ${booking.booking_time || "N/A"}</div>
+                        </div>
+                        <span class="badge badge-${
+                          booking.status === "Confirmed" ? "success" : "warning"
+                        }">
+                            ${booking.status || "Pending"}
+                        </span>
+                    </div>
+                `
+            )
+            .join("");
+          document.getElementById("recentBookings").innerHTML =
+            html ||
+            '<p style="text-align: center; color: var(--gray); padding: 20px;">No recent bookings</p>';
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function loadTopCustomers() {
+        try {
+          const customers = await crudManager.getMergedData(
+            "Customers.xml",
+            "customer"
+          );
+          const top = customers.slice(0, 5);
+          const html = top
+            .map(
+              (customer) => `
+                    <div style="padding: 12px; border-bottom: 1px solid var(--light-gray); display: flex; justify-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600;">${
+                              customer.full_name || "N/A"
+                            }</div>
+                            <div style="font-size: 12px; color: var(--gray);">${
+                              customer.phone || "N/A"
+                            }</div>
+                        </div>
+                        <span class="badge badge-${
+                          customer.membership_type === "VIP"
+                            ? "warning"
+                            : "info"
+                        }">
+                            ${customer.membership_type || "Standard"}
+                        </span>
+                    </div>
+                `
+            )
+            .join("");
+          document.getElementById("topCustomers").innerHTML =
+            html ||
+            '<p style="text-align: center; color: var(--gray); padding: 20px;">No customers</p>';
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
