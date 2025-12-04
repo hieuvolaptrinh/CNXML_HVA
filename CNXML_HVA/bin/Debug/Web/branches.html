@@ -6,406 +6,217 @@
     <title>Danh Sách Chi Nhánh - Hệ Thống Sân Bóng</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
-        .header { background: url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1600&q=80') center/cover; color: white; padding: 80px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
-        .header-content { max-width: 1400px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
-        .header h1 { font-size: 3em; margin-bottom: 15px; font-weight: 700; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); letter-spacing: 1px; }
-        .header p { font-size: 1.3em; opacity: 0.95; text-shadow: 1px 1px 4px rgba(0,0,0,0.2); font-weight: 300; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; }
+        .header { background: url('https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=1600&q=80') center/cover; color: white; padding: 60px 20px; text-align: center; }
+        .header h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
-        .stats-bar { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .stats-bar { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
         .stat-item { text-align: center; }
-        .stat-value { font-size: 2em; font-weight: bold; color: #4CAF50; }
-        .stat-label { color: #666; font-size: 0.9em; margin-top: 5px; }
-        .toolbar { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 25px; }
-        .search-box { position: relative; margin-bottom: 20px; }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 1.2em; }
-        #searchInput { width: 100%; padding: 15px 15px 15px 50px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1em; transition: all 0.3s ease; }
-        #searchInput:focus { outline: none; border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1); }
-        .filters { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
-        .filter-select { flex: 1; min-width: 180px; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95em; background: white; cursor: pointer; transition: all 0.3s ease; }
-        .filter-select:hover { border-color: #4CAF50; }
-        .filter-select:focus { outline: none; border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1); }
-        .reset-btn { padding: 12px 25px; background: #f44336; color: white; border: none; border-radius: 10px; font-size: 0.95em; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; }
-        .reset-btn:hover { background: #d32f2f; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); }
-        .result-info { background: #e8f5e9; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; color: #2e7d32; font-size: 0.95em; border-left: 4px solid #4CAF50; display: none; }
-        .no-results { text-align: center; padding: 60px 20px; background: white; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .no-results-icon { font-size: 4em; margin-bottom: 20px; }
-        .no-results-text { font-size: 1.3em; color: #666; margin-bottom: 10px; }
-        .no-results-hint { color: #999; font-size: 0.95em; }
+        .stat-value { font-size: 1.8em; font-weight: bold; color: #4CAF50; }
+        .stat-label { color: #666; font-size: 0.9em; }
+        
+        .toolbar { background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; display: flex; gap: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); flex-wrap: wrap; }
+        #searchInput { flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px; }
+        #cityFilter, #statusFilter { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; min-width: 150px; }
+
         .branches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
-        .branch-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: all 0.3s ease; position: relative; border: 1px solid #e0e0e0; }
-        .branch-card:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(76, 175, 80, 0.2); border-color: #4CAF50; }
-        .branch-image { width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); }
-        .branch-content { padding: 25px; }
-        .branch-name { font-size: 1.5em; font-weight: bold; color: #333; margin-bottom: 5px; }
-        .branch-code { display: inline-block; background: #4CAF50; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        .status-badge { position: absolute; top: 15px; right: 15px; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        .status-active { background: #4CAF50; color: white; }
-        .status-inactive { background: #f44336; color: white; }
-        .branch-info { margin: 15px 0; }
-        .info-row { display: flex; align-items: center; margin: 10px 0; color: #555; font-size: 0.95em; }
-        .info-icon { width: 20px; margin-right: 10px; color: #4CAF50; }
-        .branch-description { color: #666; font-size: 0.9em; line-height: 1.6; margin: 15px 0; padding: 15px; background: #f1f8f4; border-radius: 8px; border-left: 4px solid #4CAF50; }
-        .branch-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 2px solid #f0f0f0; }
-        .branch-stats .stat-item { text-align: center; }
-        .branch-stats .stat-value { font-size: 1.5em; font-weight: bold; color: #4CAF50; }
-        .branch-stats .stat-label { font-size: 0.8em; color: #888; margin-top: 5px; }
-        @media (max-width: 768px) { .branches-grid { grid-template-columns: 1fr; } .header h1 { font-size: 2em; } }
+        .branch-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; position: relative; }
+        .branch-card:hover { transform: translateY(-5px); }
+        .branch-image { width: 100%; height: 200px; object-fit: cover; }
+        .branch-content { padding: 20px; }
+        .branch-name { font-size: 1.4em; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .branch-code { background: #4CAF50; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8em; }
+        .status-badge { position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 20px; font-size: 0.8em; color: white; font-weight: bold; }
+        .status-active { background: #4CAF50; } .status-inactive { background: #f44336; }
+        .info-row { display: flex; align-items: center; margin: 8px 0; color: #555; font-size: 0.95em; }
+        .info-icon { width: 20px; margin-right: 10px; }
+        .branch-description { background: #f1f8f4; padding: 10px; border-radius: 8px; font-size: 0.9em; color: #555; margin: 15px 0; }
+        .branch-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="header-content">
-            <h1>Hệ Thống Chi Nhánh</h1>
-            <p>Quản lý sân bóng chuyên nghiệp</p>
-        </div>
+        <h1>Hệ Thống Chi Nhánh</h1>
+        <p>Quản lý sân bóng chuyên nghiệp</p>
     </div>
     <div class="container">
         <div class="stats-bar">
-            <div class="stat-item"><div class="stat-value" id="totalBranches">4</div><div class="stat-label">Tổng chi nhánh</div></div>
-            <div class="stat-item"><div class="stat-value" id="activeBranches">3</div><div class="stat-label">Đang hoạt động</div></div>
-            <div class="stat-item"><div class="stat-value" id="totalStaff">23</div><div class="stat-label">Tổng nhân viên</div></div>
-            <div class="stat-item"><div class="stat-value" id="totalRevenue">130.000.000</div><div class="stat-label">Doanh thu/tháng (VNĐ)</div></div>
+            <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Chi nhánh</div></div>
+            <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Hoạt động</div></div>
+            <div class="stat-item"><div class="stat-value">23</div><div class="stat-label">Nhân viên</div></div>
+            <div class="stat-item"><div class="stat-value">130.000.000</div><div class="stat-label">Doanh thu</div></div>
         </div>
         
         <div class="toolbar">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Tìm kiếm theo tên, thành phố, quản lý..." />
-            </div>
-            <div class="filters">
-                <select id="cityFilter" class="filter-select">
-                    <option value="">Tất cả thành phố</option>
-                </select>
-                <select id="statusFilter" class="filter-select">
-                    <option value="">Tất cả trạng thái</option>
-                    <option value="Active">Đang hoạt động</option>
-                    <option value="Inactive">Tạm đóng</option>
-                </select>
-                <select id="sortBy" class="filter-select">
-                    <option value="name-asc">Tên A-Z</option>
-                    <option value="name-desc">Tên Z-A</option>
-                    <option value="revenue-desc">Doanh thu cao → thấp</option>
-                    <option value="revenue-asc">Doanh thu thấp → cao</option>
-                    <option value="staff-desc">Nhân viên nhiều nhất</option>
-                </select>
-                <button id="resetBtn" class="reset-btn">🔄 Đặt lại</button>
-            </div>
+            <input type="text" id="searchInput" placeholder="Tìm tên, mã chi nhánh, quản lý...">
+            <select id="cityFilter">
+                <option value="">Tất cả thành phố</option>
+            </select>
+            <select id="statusFilter">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Active">Hoạt động</option>
+                <option value="Inactive">Tạm đóng</option>
+            </select>
         </div>
-        
-        <div id="resultInfo" class="result-info">
-            Hiển thị <strong id="resultCount">0</strong> kết quả
-        </div>
-        
-        <div id="branchesContainer" class="branches-grid">
 
-                    <div class="branch-card">
-                        <span class="status-badge status-active">Hoạt động</span>
-                        <img src="https://images.unsplash.com/photo-1655936072726-442211cb5e4b?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh Hà Nội" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
-                        <div class="branch-content">
-                            <div class="branch-header">
-                                <div>
-                                    <div class="branch-name">Chi nhánh Hà Nội</div>
-                                    <span class="branch-code">CN-HN</span>
+        <div class="branches-grid">
+            
+                        <div class="branch-card">
+                            <span class="status-badge status-active">Hoạt động</span>
+                            <img src="https://images.unsplash.com/photo-1655936072726-442211cb5e4b?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh Hà Nội" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+                            <div class="branch-content">
+                                <div class="branch-header">
+                                    <div>
+                                        <div class="branch-name">Chi nhánh Hà Nội</div>
+                                        <span class="branch-code">CN-HN</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="branch-info">
-                                <div class="info-row">
-                                    <span class="info-icon">📍</span>
-                                    <span>Duy Tân, Cầu Giấy, Hà Nội</span>
+                                
+                                <div class="branch-info">
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Duy Tân, Cầu Giấy, Hà Nội</span></div>
+                                    <div class="info-row"><span class="info-icon">📞</span><span>024-1234567</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>hanoi@footballfield.com</span></div>
+                                    <div class="info-row"><span class="info-icon">👤</span><span>Quản lý: Nguyễn Văn Admin</span></div>
                                 </div>
-                                <div class="info-row">
-                                    <span class="info-icon">📞</span>
-                                    <span>024-1234567</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">✉️</span>
-                                    <span>hanoi@footballfield.com</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">👤</span>
-                                    <span>Quản lý: Nguyễn Văn Admin</span>
-                                </div>
-                            </div>
-                            
-                            <div class="branch-description">Chi nhánh chính tại Hà Nội</div>
-                            
-                            <div class="branch-stats">
-                                <div class="stat-item">
-                                    <div class="stat-value">2</div>
-                                    <div class="stat-label">Sân</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">8</div>
-                                    <div class="stat-label">Nhân viên</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">50.000.000</div>
-                                    <div class="stat-label">Doanh thu/tháng</div>
+                                
+                                <div class="branch-description">Chi nhánh chính tại Hà Nội</div>
+                                
+                                <div class="branch-stats">
+                                    <div class="stat-item"><div class="stat-value">2</div><div class="stat-label">Sân</div></div>
+                                    <div class="stat-item"><div class="stat-value">8</div><div class="stat-label">Nhân viên</div></div>
+                                    <div class="stat-item"><div class="stat-value">50.000.000</div><div class="stat-label">Doanh thu</div></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="branch-card">
-                        <span class="status-badge status-active">Hoạt động</span>
-                        <img src="https://images.unsplash.com/photo-1725972006441-6fd5ec6d6ef3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh Đà Nẵng" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
-                        <div class="branch-content">
-                            <div class="branch-header">
-                                <div>
-                                    <div class="branch-name">Chi nhánh Đà Nẵng</div>
-                                    <span class="branch-code">CN-DN</span>
+                        <div class="branch-card">
+                            <span class="status-badge status-active">Hoạt động</span>
+                            <img src="https://images.unsplash.com/photo-1725972006441-6fd5ec6d6ef3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh Đà Nẵng" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+                            <div class="branch-content">
+                                <div class="branch-header">
+                                    <div>
+                                        <div class="branch-name">Chi nhánh Đà Nẵng</div>
+                                        <span class="branch-code">CN-DN</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="branch-info">
-                                <div class="info-row">
-                                    <span class="info-icon">📍</span>
-                                    <span>Lê Duẩn, Thanh Khê, Đà Nẵng</span>
+                                
+                                <div class="branch-info">
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Lê Duẩn, Thanh Khê, Đà Nẵng</span></div>
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0236-1234567</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>danang@footballfield.com</span></div>
+                                    <div class="info-row"><span class="info-icon">👤</span><span>Quản lý: Trần Thị Manager</span></div>
                                 </div>
-                                <div class="info-row">
-                                    <span class="info-icon">📞</span>
-                                    <span>0236-1234567</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">✉️</span>
-                                    <span>danang@footballfield.com</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">👤</span>
-                                    <span>Quản lý: Trần Thị Manager</span>
-                                </div>
-                            </div>
-                            
-                            <div class="branch-description">Chi nhánh miền Trung</div>
-                            
-                            <div class="branch-stats">
-                                <div class="stat-item">
-                                    <div class="stat-value">1</div>
-                                    <div class="stat-label">Sân</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">5</div>
-                                    <div class="stat-label">Nhân viên</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">35.000.000</div>
-                                    <div class="stat-label">Doanh thu/tháng</div>
+                                
+                                <div class="branch-description">Chi nhánh miền Trung</div>
+                                
+                                <div class="branch-stats">
+                                    <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Sân</div></div>
+                                    <div class="stat-item"><div class="stat-value">5</div><div class="stat-label">Nhân viên</div></div>
+                                    <div class="stat-item"><div class="stat-value">35.000.000</div><div class="stat-label">Doanh thu</div></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="branch-card">
-                        <span class="status-badge status-inactive">Tạm đóng</span>
-                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600" alt="Chi nhánh TP. Hồ Chí Minh" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
-                        <div class="branch-content">
-                            <div class="branch-header">
-                                <div>
-                                    <div class="branch-name">Chi nhánh TP. Hồ Chí Minh</div>
-                                    <span class="branch-code">CN-HCM</span>
+                        <div class="branch-card">
+                            <span class="status-badge status-inactive">Tạm đóng</span>
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600" alt="Chi nhánh TP. Hồ Chí Minh" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+                            <div class="branch-content">
+                                <div class="branch-header">
+                                    <div>
+                                        <div class="branch-name">Chi nhánh TP. Hồ Chí Minh</div>
+                                        <span class="branch-code">CN-HCM</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="branch-info">
-                                <div class="info-row">
-                                    <span class="info-icon">📍</span>
-                                    <span>Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</span>
+                                
+                                <div class="branch-info">
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</span></div>
+                                    <div class="info-row"><span class="info-icon">📞</span><span>028-1234567</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>hcmc@footballfield.com</span></div>
+                                    <div class="info-row"><span class="info-icon">👤</span><span>Quản lý: Lê Văn Staff</span></div>
                                 </div>
-                                <div class="info-row">
-                                    <span class="info-icon">📞</span>
-                                    <span>028-1234567</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">✉️</span>
-                                    <span>hcmc@footballfield.com</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">👤</span>
-                                    <span>Quản lý: Lê Văn Staff</span>
-                                </div>
-                            </div>
-                            
-                            <div class="branch-description">Chi nhánh miền Nam - tạm đóng cửa bảo trì</div>
-                            
-                            <div class="branch-stats">
-                                <div class="stat-item">
-                                    <div class="stat-value">1</div>
-                                    <div class="stat-label">Sân</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">6</div>
-                                    <div class="stat-label">Nhân viên</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">45.000.000</div>
-                                    <div class="stat-label">Doanh thu/tháng</div>
+                                
+                                <div class="branch-description">Chi nhánh miền Nam - tạm đóng cửa bảo trì</div>
+                                
+                                <div class="branch-stats">
+                                    <div class="stat-item"><div class="stat-value">1</div><div class="stat-label">Sân</div></div>
+                                    <div class="stat-item"><div class="stat-value">6</div><div class="stat-label">Nhân viên</div></div>
+                                    <div class="stat-item"><div class="stat-value">45.000.000</div><div class="stat-label">Doanh thu</div></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="branch-card">
-                        <span class="status-badge status-active">Hoạt động</span>
-                        <img src="https://images.unsplash.com/photo-1505305976870-c0be1cd39939?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh-123" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
-                        <div class="branch-content">
-                            <div class="branch-header">
-                                <div>
-                                    <div class="branch-name">Chi nhánh-123</div>
-                                    <span class="branch-code">CN-123</span>
+                        <div class="branch-card">
+                            <span class="status-badge status-active">Hoạt động</span>
+                            <img src="https://images.unsplash.com/photo-1505305976870-c0be1cd39939?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chi nhánh-123" class="branch-image" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image'">
+                            <div class="branch-content">
+                                <div class="branch-header">
+                                    <div>
+                                        <div class="branch-name">Chi nhánh-123</div>
+                                        <span class="branch-code">CN-123</span>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="branch-info">
-                                <div class="info-row">
-                                    <span class="info-icon">📍</span>
-                                    <span>Cao Thắng, Hải Châu, Đà Nẵng</span>
+                                
+                                <div class="branch-info">
+                                    <div class="info-row"><span class="info-icon">📍</span><span>Cao Thắng, Hải Châu, Đà Nẵng</span></div>
+                                    <div class="info-row"><span class="info-icon">📞</span><span>0905507622</span></div>
+                                    <div class="info-row"><span class="info-icon">✉️</span><span>vietnguyen@gmail.com</span></div>
+                                    <div class="info-row"><span class="info-icon">👤</span><span>Quản lý: Nguyễn Đăng Việt</span></div>
                                 </div>
-                                <div class="info-row">
-                                    <span class="info-icon">📞</span>
-                                    <span>0905507622</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">✉️</span>
-                                    <span>vietnguyen@gmail.com</span>
-                                </div>
-                                <div class="info-row">
-                                    <span class="info-icon">👤</span>
-                                    <span>Quản lý: Nguyễn Đăng Việt</span>
-                                </div>
-                            </div>
-                            
-                            
-                            
-                            <div class="branch-stats">
-                                <div class="stat-item">
-                                    <div class="stat-value">3</div>
-                                    <div class="stat-label">Sân</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">4</div>
-                                    <div class="stat-label">Nhân viên</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-value">0</div>
-                                    <div class="stat-label">Doanh thu/tháng</div>
+                                
+                                
+                                
+                                <div class="branch-stats">
+                                    <div class="stat-item"><div class="stat-value">3</div><div class="stat-label">Sân</div></div>
+                                    <div class="stat-item"><div class="stat-value">4</div><div class="stat-label">Nhân viên</div></div>
+                                    <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Doanh thu</div></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
         </div>
     </div>
-    
+
     <script>
-        // Lưu tất cả branches để filter
-        const allBranches = [];
-        document.querySelectorAll('.branch-card').forEach(card => {
-            const name = card.querySelector('.branch-name').textContent;
-            const city = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.split(',').pop().trim();
-            const manager = card.querySelector('.info-row:nth-child(4) span:last-child').textContent.replace('Quản lý: ', '');
-            const status = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
-            const revenue = parseInt(card.querySelector('.branch-stats .stat-item:nth-child(3) .stat-value').textContent.replace(/\./g, ''));
-            const staff = parseInt(card.querySelector('.branch-stats .stat-item:nth-child(2) .stat-value').textContent);
-            
-            allBranches.push({
-                element: card,
-                name: name.toLowerCase(),
-                city: city,
-                manager: manager.toLowerCase(),
-                status: status,
-                revenue: revenue,
-                staff: staff
-            });
-        });
-        
-        // Populate city filter
-        const cities = [...new Set(allBranches.map(b => b.city))];
+        const searchInput = document.getElementById('searchInput');
         const cityFilter = document.getElementById('cityFilter');
-        cities.forEach(city => {
-            const option = document.createElement('option');
-            option.value = city;
-            option.textContent = city;
-            cityFilter.appendChild(option);
+        const statusFilter = document.getElementById('statusFilter');
+        const cards = document.querySelectorAll('.branch-card');
+
+        // Populate Cities
+        const cities = new Set();
+        cards.forEach(card => {
+            const city = card.querySelector('.info-row:nth-child(1) span:last-child').textContent.split(',').pop().trim();
+            cities.add(city);
         });
-        
-        // Event listeners
-        document.getElementById('searchInput').addEventListener('input', filterBranches);
-        document.getElementById('cityFilter').addEventListener('change', filterBranches);
-        document.getElementById('statusFilter').addEventListener('change', filterBranches);
-        document.getElementById('sortBy').addEventListener('change', filterBranches);
-        document.getElementById('resetBtn').addEventListener('click', resetFilters);
-        
-        function resetFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('cityFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            document.getElementById('sortBy').value = 'name-asc';
-            filterBranches();
-        }
-        
+        cities.forEach(city => {
+            const opt = document.createElement('option');
+            opt.value = city;
+            opt.textContent = city;
+            cityFilter.appendChild(opt);
+        });
+
         function filterBranches() {
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const cityValue = document.getElementById('cityFilter').value;
-            const statusValue = document.getElementById('statusFilter').value;
-            const sortValue = document.getElementById('sortBy').value;
-            
-            let filtered = allBranches.filter(branch => {
-                const matchSearch = !searchText || branch.name.includes(searchText) || 
-                                   branch.city.toLowerCase().includes(searchText) || 
-                                   branch.manager.includes(searchText);
-                const matchCity = !cityValue || branch.city === cityValue;
-                const matchStatus = !statusValue || branch.status === statusValue;
-                
-                return matchSearch && matchCity && matchStatus;
-            });
-            
-            // Sort
-            filtered.sort((a, b) => {
-                switch(sortValue) {
-                    case 'name-asc': return a.name.localeCompare(b.name);
-                    case 'name-desc': return b.name.localeCompare(a.name);
-                    case 'revenue-asc': return a.revenue - b.revenue;
-                    case 'revenue-desc': return b.revenue - a.revenue;
-                    case 'staff-desc': return b.staff - a.staff;
-                    default: return 0;
-                }
-            });
-            
-            displayBranches(filtered);
-        }
-        
-        function displayBranches(branches) {
-            const container = document.getElementById('branchesContainer');
-            const resultInfo = document.getElementById('resultInfo');
-            const resultCount = document.getElementById('resultCount');
-            
-            // Hide all cards first
-            allBranches.forEach(b => b.element.style.display = 'none');
-            
-            if (branches.length === 0) {
-                container.innerHTML = `
-                    <div class="no-results">
-                        <div class="no-results-icon">🔍</div>
-                        <div class="no-results-text">Không tìm thấy kết quả</div>
-                        <div class="no-results-hint">Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</div>
-                    </div>
-                `;
-                resultInfo.style.display = 'none';
-                return;
-            }
-            
-            resultInfo.style.display = 'block';
-            resultCount.textContent = branches.length;
-            
-            // Clear container and re-add filtered cards
-            container.innerHTML = '';
-            branches.forEach(branch => {
-                container.appendChild(branch.element);
-                branch.element.style.display = 'block';
+            const term = searchInput.value.toLowerCase();
+            const city = cityFilter.value;
+            const status = statusFilter.value;
+
+            cards.forEach(card => {
+                const name = card.querySelector('.branch-name').textContent.toLowerCase();
+                const code = card.querySelector('.branch-code').textContent.toLowerCase();
+                const cardCity = card.querySelector('.info-row:nth-child(1) span:last-child').textContent;
+                const cardStatus = card.querySelector('.status-badge').classList.contains('status-active') ? 'Active' : 'Inactive';
+
+                const matchSearch = name.includes(term) || code.includes(term);
+                const matchCity = city === '' || cardCity.includes(city);
+                const matchStatus = status === '' || cardStatus === status;
+
+                card.style.display = (matchSearch && matchCity && matchStatus) ? 'block' : 'none';
             });
         }
+
+        searchInput.addEventListener('input', filterBranches);
+        cityFilter.addEventListener('change', filterBranches);
+        statusFilter.addEventListener('change', filterBranches);
     </script>
 </body>
 </html>

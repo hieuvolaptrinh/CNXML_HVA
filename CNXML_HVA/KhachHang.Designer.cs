@@ -56,6 +56,7 @@ namespace CNXML_HVA
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
+            this.buttonViewWeb = new System.Windows.Forms.Button();
             this.buttonSqlToXml = new System.Windows.Forms.Button();
             this.buttonXmlToSql = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
@@ -94,7 +95,7 @@ namespace CNXML_HVA
             this.labelTitle.ForeColor = System.Drawing.Color.White;
             this.labelTitle.Location = new System.Drawing.Point(70, 20);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(287, 32);
+            this.labelTitle.Size = new System.Drawing.Size(358, 41);
             this.labelTitle.TabIndex = 1;
             this.labelTitle.Text = "QUẢN LÝ KHÁCH HÀNG";
             // 
@@ -137,7 +138,7 @@ namespace CNXML_HVA
             this.labelID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelID.Location = new System.Drawing.Point(20, 35);
             this.labelID.Name = "labelID";
-            this.labelID.Size = new System.Drawing.Size(46, 15);
+            this.labelID.Size = new System.Drawing.Size(57, 20);
             this.labelID.TabIndex = 0;
             this.labelID.Text = "Mã KH:";
             // 
@@ -147,7 +148,7 @@ namespace CNXML_HVA
             this.textBoxId.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxId.Location = new System.Drawing.Point(140, 32);
             this.textBoxId.Name = "textBoxId";
-            this.textBoxId.Size = new System.Drawing.Size(200, 23);
+            this.textBoxId.Size = new System.Drawing.Size(200, 27);
             this.textBoxId.TabIndex = 1;
             // 
             // labelName
@@ -157,7 +158,7 @@ namespace CNXML_HVA
             this.labelName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelName.Location = new System.Drawing.Point(380, 35);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(61, 15);
+            this.labelName.Size = new System.Drawing.Size(76, 20);
             this.labelName.TabIndex = 2;
             this.labelName.Text = "Họ và tên:";
             // 
@@ -167,7 +168,7 @@ namespace CNXML_HVA
             this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxName.Location = new System.Drawing.Point(500, 32);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(420, 23);
+            this.textBoxName.Size = new System.Drawing.Size(420, 27);
             this.textBoxName.TabIndex = 3;
             // 
             // labelPhone
@@ -177,7 +178,7 @@ namespace CNXML_HVA
             this.labelPhone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelPhone.Location = new System.Drawing.Point(20, 75);
             this.labelPhone.Name = "labelPhone";
-            this.labelPhone.Size = new System.Drawing.Size(79, 15);
+            this.labelPhone.Size = new System.Drawing.Size(100, 20);
             this.labelPhone.TabIndex = 4;
             this.labelPhone.Text = "Số điện thoại:";
             // 
@@ -187,7 +188,7 @@ namespace CNXML_HVA
             this.textBoxPhone.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxPhone.Location = new System.Drawing.Point(140, 72);
             this.textBoxPhone.Name = "textBoxPhone";
-            this.textBoxPhone.Size = new System.Drawing.Size(200, 23);
+            this.textBoxPhone.Size = new System.Drawing.Size(200, 27);
             this.textBoxPhone.TabIndex = 5;
             // 
             // labelEmail
@@ -197,7 +198,7 @@ namespace CNXML_HVA
             this.labelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelEmail.Location = new System.Drawing.Point(380, 75);
             this.labelEmail.Name = "labelEmail";
-            this.labelEmail.Size = new System.Drawing.Size(39, 15);
+            this.labelEmail.Size = new System.Drawing.Size(49, 20);
             this.labelEmail.TabIndex = 6;
             this.labelEmail.Text = "Email:";
             // 
@@ -207,7 +208,7 @@ namespace CNXML_HVA
             this.textBoxEmail.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxEmail.Location = new System.Drawing.Point(500, 72);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(420, 23);
+            this.textBoxEmail.Size = new System.Drawing.Size(420, 27);
             this.textBoxEmail.TabIndex = 7;
             // 
             // labelCity
@@ -217,7 +218,7 @@ namespace CNXML_HVA
             this.labelCity.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelCity.Location = new System.Drawing.Point(20, 115);
             this.labelCity.Name = "labelCity";
-            this.labelCity.Size = new System.Drawing.Size(68, 15);
+            this.labelCity.Size = new System.Drawing.Size(82, 20);
             this.labelCity.TabIndex = 8;
             this.labelCity.Text = "Thành phố:";
             // 
@@ -227,7 +228,7 @@ namespace CNXML_HVA
             this.textBoxCity.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxCity.Location = new System.Drawing.Point(140, 112);
             this.textBoxCity.Name = "textBoxCity";
-            this.textBoxCity.Size = new System.Drawing.Size(200, 23);
+            this.textBoxCity.Size = new System.Drawing.Size(200, 27);
             this.textBoxCity.TabIndex = 9;
             // 
             // labelDistrict
@@ -237,7 +238,7 @@ namespace CNXML_HVA
             this.labelDistrict.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelDistrict.Location = new System.Drawing.Point(380, 115);
             this.labelDistrict.Name = "labelDistrict";
-            this.labelDistrict.Size = new System.Drawing.Size(79, 15);
+            this.labelDistrict.Size = new System.Drawing.Size(95, 20);
             this.labelDistrict.TabIndex = 10;
             this.labelDistrict.Text = "Quận/Huyện:";
             // 
@@ -247,7 +248,7 @@ namespace CNXML_HVA
             this.textBoxDistrict.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxDistrict.Location = new System.Drawing.Point(500, 112);
             this.textBoxDistrict.Name = "textBoxDistrict";
-            this.textBoxDistrict.Size = new System.Drawing.Size(200, 23);
+            this.textBoxDistrict.Size = new System.Drawing.Size(200, 27);
             this.textBoxDistrict.TabIndex = 11;
             // 
             // labelStreet
@@ -257,7 +258,7 @@ namespace CNXML_HVA
             this.labelStreet.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelStreet.Location = new System.Drawing.Point(20, 155);
             this.labelStreet.Name = "labelStreet";
-            this.labelStreet.Size = new System.Drawing.Size(46, 15);
+            this.labelStreet.Size = new System.Drawing.Size(58, 20);
             this.labelStreet.TabIndex = 12;
             this.labelStreet.Text = "Đường:";
             // 
@@ -267,7 +268,7 @@ namespace CNXML_HVA
             this.textBoxStreet.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxStreet.Location = new System.Drawing.Point(140, 152);
             this.textBoxStreet.Name = "textBoxStreet";
-            this.textBoxStreet.Size = new System.Drawing.Size(780, 23);
+            this.textBoxStreet.Size = new System.Drawing.Size(780, 27);
             this.textBoxStreet.TabIndex = 13;
             // 
             // labelMembership
@@ -277,7 +278,7 @@ namespace CNXML_HVA
             this.labelMembership.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelMembership.Location = new System.Drawing.Point(20, 195);
             this.labelMembership.Name = "labelMembership";
-            this.labelMembership.Size = new System.Drawing.Size(98, 15);
+            this.labelMembership.Size = new System.Drawing.Size(120, 20);
             this.labelMembership.TabIndex = 14;
             this.labelMembership.Text = "Hạng thành viên:";
             // 
@@ -293,7 +294,7 @@ namespace CNXML_HVA
             "VIP"});
             this.comboBoxMembership.Location = new System.Drawing.Point(140, 192);
             this.comboBoxMembership.Name = "comboBoxMembership";
-            this.comboBoxMembership.Size = new System.Drawing.Size(200, 23);
+            this.comboBoxMembership.Size = new System.Drawing.Size(200, 28);
             this.comboBoxMembership.TabIndex = 15;
             // 
             // labelNote
@@ -303,7 +304,7 @@ namespace CNXML_HVA
             this.labelNote.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelNote.Location = new System.Drawing.Point(380, 195);
             this.labelNote.Name = "labelNote";
-            this.labelNote.Size = new System.Drawing.Size(51, 15);
+            this.labelNote.Size = new System.Drawing.Size(61, 20);
             this.labelNote.TabIndex = 16;
             this.labelNote.Text = "Ghi chú:";
             // 
@@ -313,7 +314,7 @@ namespace CNXML_HVA
             this.textBoxNote.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxNote.Location = new System.Drawing.Point(500, 192);
             this.textBoxNote.Name = "textBoxNote";
-            this.textBoxNote.Size = new System.Drawing.Size(420, 23);
+            this.textBoxNote.Size = new System.Drawing.Size(420, 27);
             this.textBoxNote.TabIndex = 17;
             // 
             // panelSearch
@@ -335,7 +336,7 @@ namespace CNXML_HVA
             this.labelSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.labelSearch.Location = new System.Drawing.Point(10, 12);
             this.labelSearch.Name = "labelSearch";
-            this.labelSearch.Size = new System.Drawing.Size(78, 15);
+            this.labelSearch.Size = new System.Drawing.Size(104, 20);
             this.labelSearch.TabIndex = 0;
             this.labelSearch.Text = "🔍 Tìm kiếm:";
             // 
@@ -345,7 +346,7 @@ namespace CNXML_HVA
             this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.textBoxSearch.Location = new System.Drawing.Point(100, 9);
             this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(450, 23);
+            this.textBoxSearch.Size = new System.Drawing.Size(450, 27);
             this.textBoxSearch.TabIndex = 1;
             this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
@@ -356,7 +357,7 @@ namespace CNXML_HVA
             this.labelRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.labelRecordCount.Location = new System.Drawing.Point(900, 12);
             this.labelRecordCount.Name = "labelRecordCount";
-            this.labelRecordCount.Size = new System.Drawing.Size(125, 15);
+            this.labelRecordCount.Size = new System.Drawing.Size(152, 20);
             this.labelRecordCount.TabIndex = 2;
             this.labelRecordCount.Text = "Tổng số: 0 khách hàng";
             // 
@@ -373,6 +374,7 @@ namespace CNXML_HVA
             this.dataGridViewCustomers.Name = "dataGridViewCustomers";
             this.dataGridViewCustomers.ReadOnly = true;
             this.dataGridViewCustomers.RowHeadersVisible = false;
+            this.dataGridViewCustomers.RowHeadersWidth = 51;
             this.dataGridViewCustomers.RowTemplate.Height = 35;
             this.dataGridViewCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewCustomers.Size = new System.Drawing.Size(1140, 220);
@@ -390,6 +392,7 @@ namespace CNXML_HVA
             this.panelButtons.Controls.Add(this.buttonCancel);
             this.panelButtons.Controls.Add(this.buttonRefresh);
             this.panelButtons.Controls.Add(this.buttonExportExcel);
+            this.panelButtons.Controls.Add(this.buttonViewWeb);
             this.panelButtons.Controls.Add(this.buttonSqlToXml);
             this.panelButtons.Controls.Add(this.buttonXmlToSql);
             this.panelButtons.Location = new System.Drawing.Point(20, 645);
@@ -503,11 +506,27 @@ namespace CNXML_HVA
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
             this.buttonExportExcel.Location = new System.Drawing.Point(730, 10);
             this.buttonExportExcel.Name = "buttonExportExcel";
-            this.buttonExportExcel.Size = new System.Drawing.Size(110, 40);
+            this.buttonExportExcel.Size = new System.Drawing.Size(114, 40);
             this.buttonExportExcel.TabIndex = 6;
             this.buttonExportExcel.Text = "📊 Xuất Excel";
             this.buttonExportExcel.UseVisualStyleBackColor = false;
             this.buttonExportExcel.Click += new System.EventHandler(this.buttonExportExcel_Click);
+            // 
+            // buttonViewWeb
+            // 
+            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonViewWeb.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
+            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
+            this.buttonViewWeb.Location = new System.Drawing.Point(854, 10);
+            this.buttonViewWeb.Name = "buttonViewWeb";
+            this.buttonViewWeb.Size = new System.Drawing.Size(130, 40);
+            this.buttonViewWeb.TabIndex = 7;
+            this.buttonViewWeb.Text = "🌐 Xem trên Web";
+            this.buttonViewWeb.UseVisualStyleBackColor = false;
+            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
             // 
             // buttonSqlToXml
             // 
@@ -606,6 +625,7 @@ namespace CNXML_HVA
         private Button buttonCancel;
         private Button buttonRefresh;
         private Button buttonExportExcel;
+        private Button buttonViewWeb;
 
         // Mới
         private Button buttonSqlToXml;
