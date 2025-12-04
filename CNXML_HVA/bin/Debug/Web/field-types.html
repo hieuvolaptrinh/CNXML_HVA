@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Loại sân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="js/app.js"></script>
+    <script src="js/components.js"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div id="sidebar"></div>
+
+    <div class="ml-64 p-8">
+      <div class="mb-8">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2">Quản lý Loại sân</h2>
+        <p class="text-gray-600">Các loại sân bóng khác nhau</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <table class="w-full">
+          <thead class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <tr>
+              <th class="px-6 py-4 text-left">Mã</th>
+              <th class="px-6 py-4 text-left">Tên loại sân</th>
+              <th class="px-6 py-4 text-left">Kích thước</th>
+              <th class="px-6 py-4 text-left">Số người/đội</th>
+              <th class="px-6 py-4 text-left">Giá cơ bản</th>
+              <th class="px-6 py-4 text-left">Bề mặt</th>
+              <th class="px-6 py-4 text-left">Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("sidebar").innerHTML =
+        createSidebar("field-types");
+      if (!requireAuth()) throw new Error("Not authenticated");
+
+      async function loadData() {
+        try {
+          const xmlDoc = await xmlManager.loadXML("FieldTypes.xml");
+          const items = xmlManager.xmlToArray(xmlDoc, "field_type");
+          const tbody = document.getElementById("tbody");
+          tbody.innerHTML = "";
+
+          items.forEach((item) => {
+            const id =
+              item.getAttribute("id") || xmlManager.getElementText(item, "id");
+            const name = xmlManager.getElementText(item, "name");
+            const sizeDisplay = xmlManager.getElementText(item, "size_display");
+            const playersPerTeam = xmlManager.getElementText(
+              item,
+              "players_per_team"
+            );
+            const basePrice = parseInt(
+              xmlManager.getElementText(item, "base_price", "0")
+            );
+            const surfaceType = xmlManager.getElementText(item, "surface_type");
+            const status = xmlManager.getElementText(item, "status");
+
+            const row = document.createElement("tr");
+            row.className = "hover:bg-gray-50";
+            row.innerHTML = `
+                        <td class="px-6 py-4 font-medium">${id}</td>
+                        <td class="px-6 py-4 font-semibold">${name}</td>
+                        <td class="px-6 py-4">${sizeDisplay}</td>
+                        <td class="px-6 py-4 text-center">${playersPerTeam}</td>
+                        <td class="px-6 py-4">${formatCurrency(basePrice)}</td>
+                        <td class="px-6 py-4">${surfaceType}</td>
+                        <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">${status}</span></td>
+                    `;
+            tbody.appendChild(row);
+          });
+        } catch (error) {
+          showNotification("Lỗi tải dữ liệu", "error");
+        }
+      }
+
+      window.addEventListener("load", loadData);
+    </script>
+  </body>
+</html>

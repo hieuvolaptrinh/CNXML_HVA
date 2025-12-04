@@ -41,6 +41,7 @@
             this.btnChiNhanh = new System.Windows.Forms.Button();
             this.btnTrangChu = new System.Windows.Forms.Button();
             this.btnDangXuat = new System.Windows.Forms.Button();
+            this.btnMoWebsite = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.lblAppName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
@@ -102,6 +103,7 @@
             this.panelLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(35)))), ((int)(((byte)(126)))));
             this.panelLeft.Controls.Add(this.panelMenuItems);
             this.panelLeft.Controls.Add(this.btnDangXuat);
+            this.panelLeft.Controls.Add(this.btnMoWebsite);
             this.panelLeft.Controls.Add(this.panelLogo);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
@@ -285,6 +287,24 @@
             this.btnDangXuat.Text = "🚪  Đăng xuất";
             this.btnDangXuat.UseVisualStyleBackColor = false;
             this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click);
+            // 
+            // btnMoWebsite
+            // 
+            this.btnMoWebsite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(136)))));
+            this.btnMoWebsite.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnMoWebsite.FlatAppearance.BorderSize = 0;
+            this.btnMoWebsite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMoWebsite.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.btnMoWebsite.ForeColor = System.Drawing.Color.White;
+            this.btnMoWebsite.Location = new System.Drawing.Point(0, 775);
+            this.btnMoWebsite.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
+            this.btnMoWebsite.Name = "btnMoWebsite";
+            this.btnMoWebsite.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            this.btnMoWebsite.Size = new System.Drawing.Size(320, 79);
+            this.btnMoWebsite.TabIndex = 8;
+            this.btnMoWebsite.Text = "🌐  Mở Website";
+            this.btnMoWebsite.UseVisualStyleBackColor = false;
+            this.btnMoWebsite.Click += new System.EventHandler(this.btnMoWebsite_Click);
             // 
             // panelLogo
             // 
@@ -793,6 +813,7 @@
         private System.Windows.Forms.Panel panelLeft;
         private System.Windows.Forms.PictureBox picLogo;
         private System.Windows.Forms.Button btnDangXuat;
+        private System.Windows.Forms.Button btnMoWebsite;
         private System.Windows.Forms.Button btnDatLich;
         private System.Windows.Forms.Button btnKhachHang;
         private System.Windows.Forms.Button btnDungCu;

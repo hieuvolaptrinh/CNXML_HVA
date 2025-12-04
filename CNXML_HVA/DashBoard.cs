@@ -732,6 +732,35 @@ namespace CNXML_HVA
             this.Hide();
         }
 
+        private void btnMoWebsite_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "index.html");
+                
+                if (File.Exists(webPath))
+                {
+                    System.Diagnostics.Process.Start(webPath);
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Không tìm thấy file index.html!\nĐường dẫn: " + webPath,
+                        "Lỗi",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Lỗi khi mở website: " + ex.Message,
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
         // Phương thức để load form vào panel
         private void LoadFormIntoPanel(Form childForm)
         {
