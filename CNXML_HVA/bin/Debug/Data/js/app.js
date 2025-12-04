@@ -1,20 +1,49 @@
 // Authentication and XML utilities
 class XMLManager {
   constructor() {
-    this.dataPath = "../Data/";
+    // File XML giờ nằm cùng thư mục với HTML (không cần ../Data/)
+    this.dataPath = "";
   }
 
-  // Load XML file
+  // Load XML file - Sử dụng XMLHttpRequest để tương thích với file:// protocol
   async loadXML(filename) {
-    try {
-      const response = await fetch(this.dataPath + filename);
-      const xmlText = await response.text();
-      const parser = new DOMParser();
-      return parser.parseFromString(xmlText, "text/xml");
-    } catch (error) {
-      console.error("Error loading XML:", error);
-      throw error;
-    }
+    return new Promise((resolve, reject) => {
+      try {
+        const xhr = new XMLHttpRequest();
+        const fullPath = this.dataPath + filename;
+
+        xhr.onload = function () {
+          if (xhr.status === 200 || xhr.status === 0) {
+            // 0 cho file:// protocol
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xhr.responseText, "text/xml");
+
+            // Kiểm tra lỗi parse
+            const parseError = xmlDoc.getElementsByTagName("parsererror");
+            if (parseError.length > 0) {
+              console.error("XML Parse Error:", parseError[0].textContent);
+              reject(new Error("Lỗi parse XML: " + filename));
+            } else {
+              console.log("✓ Loaded XML:", filename);
+              resolve(xmlDoc);
+            }
+          } else {
+            reject(new Error(`HTTP Error ${xhr.status}: ${filename}`));
+          }
+        };
+
+        xhr.onerror = function () {
+          console.error("XHR Error loading:", fullPath);
+          reject(new Error("Không thể tải file: " + filename));
+        };
+
+        xhr.open("GET", fullPath, true);
+        xhr.send();
+      } catch (error) {
+        console.error("Error in loadXML:", error);
+        reject(error);
+      }
+    });
   }
 
   // Get element text content

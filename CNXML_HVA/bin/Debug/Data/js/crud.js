@@ -32,7 +32,7 @@ class CRUDManager {
   parseXMLElement(element) {
     const obj = {};
 
-    // Get attributes
+    // Get attributes (như id="B01")
     if (element.attributes) {
       for (let attr of element.attributes) {
         obj[attr.name] = attr.value;
@@ -41,11 +41,21 @@ class CRUDManager {
 
     // Parse children
     for (let child of element.children) {
-      const tagName = child.tagName.toLowerCase().replace(/_/g, "");
+      const tagName = child.tagName.toLowerCase();
 
-      // Check if child has children (nested object)
-      if (child.children.length > 0) {
+      // Check if child has children (nested object như address, contact)
+      if (child.children.length > 0 && child.textContent.trim().length === 0) {
+        // Nếu là nested object không có text content
         obj[tagName] = this.parseXMLElement(child);
+      } else if (child.children.length > 0) {
+        // Nếu có children nhưng cũng có text content
+        const nestedObj = this.parseXMLElement(child);
+        if (Object.keys(nestedObj).length === 0) {
+          // Nếu nested object rỗng, lấy text content
+          obj[tagName] = child.textContent.trim();
+        } else {
+          obj[tagName] = nestedObj;
+        }
       } else {
         // Simple text content
         obj[tagName] = child.textContent.trim();
@@ -58,25 +68,43 @@ class CRUDManager {
   // Get merged data (XML + localStorage)
   async getMergedData(filename, rootTag) {
     try {
+      console.log(`📂 Loading ${filename} with tag "${rootTag}"...`);
       const xmlDoc = await this.xmlManager.loadXML(filename);
 
-      // Handle different root tag formats
-      let xmlElements;
-      if (rootTag === "branch") {
-        xmlElements = xmlDoc.getElementsByTagName("branch");
-      } else if (rootTag === "field") {
-        xmlElements = xmlDoc.getElementsByTagName("field");
-      } else if (rootTag === "field_type") {
-        xmlElements = xmlDoc.getElementsByTagName("field_type");
-      } else if (rootTag === "Booking") {
-        xmlElements = xmlDoc.getElementsByTagName("Booking");
-      } else if (rootTag === "equipment") {
-        xmlElements = xmlDoc.getElementsByTagName("equipment");
-      } else if (rootTag === "customer") {
-        xmlElements = xmlDoc.getElementsByTagName("customer");
-      } else {
-        xmlElements = xmlDoc.getElementsByTagName(rootTag);
+      // Handle different root tag formats - thử cả chữ hoa và chữ thường
+      let xmlElements = xmlDoc.getElementsByTagName(rootTag);
+
+      // Nếu không tìm thấy, thử với chữ hoa đầu
+      if (xmlElements.length === 0) {
+        const capitalizedTag =
+          rootTag.charAt(0).toUpperCase() + rootTag.slice(1);
+        xmlElements = xmlDoc.getElementsByTagName(capitalizedTag);
+        console.log(
+          `  → Thử tag "${capitalizedTag}": ${xmlElements.length} items`
+        );
       }
+
+      // Nếu vẫn không tìm thấy, thử các biến thể khác
+      if (xmlElements.length === 0) {
+        const alternativeTags = {
+          booking: "Booking",
+          field: "field",
+          customer: "customer",
+          branch: "branch",
+          equipment: "equipment",
+          field_type: "field_type",
+        };
+
+        const altTag = alternativeTags[rootTag];
+        if (altTag) {
+          xmlElements = xmlDoc.getElementsByTagName(altTag);
+          console.log(
+            `  → Thử alternative tag "${altTag}": ${xmlElements.length} items`
+          );
+        }
+      }
+
+      console.log(`  ✓ Found ${xmlElements.length} ${rootTag} elements`);
 
       const storageKey = `xml_${filename}`;
       const localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
@@ -85,6 +113,70 @@ class CRUDManager {
       const xmlObjects = Array.from(xmlElements).map((element) => {
         const obj = this.parseXMLElement(element);
         obj._source = "xml";
+
+        // Chuẩn hóa field names cho Customer
+        if (rootTag === "customer") {
+          obj.tenkhachhang = obj.name || obj.tenkhachhang;
+          obj.makhachhang = obj.id || obj.makhachhang;
+          obj.sdt = obj.phone || obj.sdt;
+          obj.loaikhachhang = obj.membership || obj.loaikhachhang;
+          // Parse address nếu là object
+          if (obj.address && typeof obj.address === "object") {
+            obj.diachi = `${obj.address.street || ""}, ${
+              obj.address.district || ""
+            }, ${obj.address.city || ""}`.trim();
+          } else {
+            obj.diachi = obj.address || obj.diachi;
+          }
+        }
+
+        // Chuẩn hóa field names cho Booking
+        if (rootTag === "booking" || rootTag === "Booking") {
+          obj.madatlich = obj.id || obj.madatlich;
+          obj.makhachhang = obj.customer || obj.makhachhang;
+          obj.masan = obj.field || obj.masan;
+          obj.loaisan = obj.type || obj.loaisan;
+          obj.ngaydat = obj.date || obj.ngaydat;
+          obj.giobatdau = obj.time ? obj.time + ":00" : obj.giobatdau;
+          obj.gioketthuc = obj.time && obj.duration ? (parseInt(obj.time) + parseInt(obj.duration || 1)) + ":00" : obj.gioketthuc;
+          obj.thoigian = obj.duration || obj.thoigian;
+          obj.ghichu = obj.note || obj.ghichu;
+          obj.tongtien = obj.price || obj.tongtien || 0;
+          obj.trangthai = obj.status || obj.trangthai || "Confirmed";
+        }
+
+        // Chuẩn hóa field names cho Branch - giữ nguyên image_url từ XML
+        if (rootTag === "branch") {
+          // Không cần mapping vì XML đã dùng image_url
+        }
+
+        // Chuẩn hóa field names cho Equipment - giữ nguyên image_url từ XML
+        if (rootTag === "equipment") {
+          // Không cần mapping vì XML đã dùng image_url
+        }
+
+        // Chuẩn hóa field names cho FieldType
+        if (rootTag === "field_type") {
+          obj.maloaisan = obj.id || obj.code || obj.maloaisan;
+          obj.tenloaisan = obj.name || obj.tenloaisan;
+          obj.songuoi = obj.total_capacity || obj.players_per_team || obj.songuoi;
+          obj.kichthuoc = obj.size_display || obj.kichthuoc;
+          obj.mota = obj.description || obj.mota;
+          obj.trangthai = obj.status || obj.trangthai;
+        }
+
+        // Chuẩn hóa field names cho Field
+        if (rootTag === "field") {
+          obj.masan = obj.id || obj.masan;
+          obj.tensan = obj.name || obj.tensan;
+          obj.maloaisan = obj.field_type_id || obj.maloaisan;
+          obj.machinhanh = obj.branch_id || obj.machinhanh;
+          obj.gia = obj.price_per_hour || obj.gia;
+          obj.mota = obj.description || obj.mota;
+          obj.trangthai = obj.status || obj.trangthai;
+          obj.hinhanh = obj.image_url || obj.hinhanh;
+        }
+
         return obj;
       });
 
@@ -94,7 +186,10 @@ class CRUDManager {
         ...localData.map((item) => ({ ...item, _source: "local" })),
       ];
 
-      console.log(`Loaded ${merged.length} items from ${filename}:`, merged);
+      console.log(`✓ Loaded ${merged.length} items from ${filename}`);
+      if (merged.length > 0) {
+        console.log(`  Sample item:`, merged[0]);
+      }
       return merged;
     } catch (error) {
       console.error("Error loading data:", error);

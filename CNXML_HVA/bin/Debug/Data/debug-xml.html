@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debug XML Loading</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .test-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .success {
+        color: #4caf50;
+      }
+      .error {
+        color: #f44336;
+      }
+      .info {
+        color: #2196f3;
+      }
+      pre {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        max-height: 400px;
+      }
+      button {
+        background: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #45a049;
+      }
+      .loading {
+        display: none;
+        color: #666;
+      }
+      .loading.active {
+        display: inline-block;
+      }
+    </style>
+    <script src="js/app.js"></script>
+    <script src="js/crud.js"></script>
+  </head>
+  <body>
+    <h1>🔍 Debug XML Loading</h1>
+    <p>Công cụ kiểm tra việc đọc file XML</p>
+
+    <div class="test-card">
+      <h2>Test 1: Kiểm tra XMLManager</h2>
+      <button onclick="testXMLManager()">Chạy Test</button>
+      <span class="loading" id="loading1">⏳ Đang tải...</span>
+      <div id="result1"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>Test 2: Đọc Customers.xml</h2>
+      <button onclick="testCustomers()">Chạy Test</button>
+      <span class="loading" id="loading2">⏳ Đang tải...</span>
+      <div id="result2"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>Test 3: Đọc Branches.xml</h2>
+      <button onclick="testBranches()">Chạy Test</button>
+      <span class="loading" id="loading3">⏳ Đang tải...</span>
+      <div id="result3"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>Test 4: Đọc Bookings.xml</h2>
+      <button onclick="testBookings()">Chạy Test</button>
+      <span class="loading" id="loading4">⏳ Đang tải...</span>
+      <div id="result4"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>Test 5: Đọc Fields.xml</h2>
+      <button onclick="testFields()">Chạy Test</button>
+      <span class="loading" id="loading5">⏳ Đang tải...</span>
+      <div id="result5"></div>
+    </div>
+
+    <div class="test-card">
+      <h2>📊 Console Logs</h2>
+      <p class="info">Mở Developer Console (F12) để xem chi tiết logs</p>
+      <button onclick="window.location.reload()">🔄 Refresh Page</button>
+      <button onclick="clearTests()">🗑️ Clear Results</button>
+    </div>
+
+    <script>
+      console.log("🚀 Debug XML Page Loaded");
+      console.log("XMLManager:", xmlManager);
+      console.log(
+        "CRUDManager:",
+        typeof crudManager !== "undefined" ? crudManager : "NOT DEFINED"
+      );
+
+      function showLoading(id) {
+        document.getElementById(`loading${id}`).classList.add("active");
+      }
+
+      function hideLoading(id) {
+        document.getElementById(`loading${id}`).classList.remove("active");
+      }
+
+      function displayResult(id, html) {
+        document.getElementById(`result${id}`).innerHTML = html;
+      }
+
+      async function testXMLManager() {
+        showLoading(1);
+        console.log("\n=== TEST 1: XMLManager ===");
+
+        try {
+          const xmlDoc = await xmlManager.loadXML("Customers.xml");
+          console.log("✓ XML Document loaded:", xmlDoc);
+
+          const customers = xmlDoc.getElementsByTagName("customer");
+          console.log(`✓ Found ${customers.length} customer elements`);
+
+          if (customers.length > 0) {
+            const firstCustomer = customers[0];
+            console.log("First customer:", firstCustomer);
+
+            const name =
+              firstCustomer.getElementsByTagName("name")[0]?.textContent;
+            const phone =
+              firstCustomer.getElementsByTagName("phone")[0]?.textContent;
+
+            displayResult(
+              1,
+              `
+                        <p class="success">✓ XMLManager hoạt động tốt!</p>
+                        <p>Tìm thấy ${customers.length} khách hàng</p>
+                        <p><strong>Khách hàng đầu tiên:</strong></p>
+                        <ul>
+                            <li>Tên: ${name || "N/A"}</li>
+                            <li>SĐT: ${phone || "N/A"}</li>
+                        </ul>
+                        <p class="info">💡 Xem Console để thấy raw XML data</p>
+                    `
+            );
+          } else {
+            displayResult(
+              1,
+              `<p class="error">⚠️ Không tìm thấy customer nào trong XML</p>`
+            );
+          }
+        } catch (error) {
+          console.error("✗ Test failed:", error);
+          displayResult(
+            1,
+            `<p class="error">✗ Lỗi: ${error.message}</p><pre>${error.stack}</pre>`
+          );
+        }
+
+        hideLoading(1);
+      }
+
+      async function testCustomers() {
+        showLoading(2);
+        console.log("\n=== TEST 2: Customers ===");
+
+        try {
+          const customers = await crudManager.getMergedData(
+            "Customers.xml",
+            "customer"
+          );
+          console.log("✓ Loaded customers:", customers);
+
+          displayResult(
+            2,
+            `
+                    <p class="success">✓ Đọc thành công ${
+                      customers.length
+                    } khách hàng</p>
+                    <pre>${JSON.stringify(customers, null, 2)}</pre>
+                `
+          );
+        } catch (error) {
+          console.error("✗ Test failed:", error);
+          displayResult(2, `<p class="error">✗ Lỗi: ${error.message}</p>`);
+        }
+
+        hideLoading(2);
+      }
+
+      async function testBranches() {
+        showLoading(3);
+        console.log("\n=== TEST 3: Branches ===");
+
+        try {
+          const branches = await crudManager.getMergedData(
+            "Branches.xml",
+            "branch"
+          );
+          console.log("✓ Loaded branches:", branches);
+
+          displayResult(
+            3,
+            `
+                    <p class="success">✓ Đọc thành công ${
+                      branches.length
+                    } chi nhánh</p>
+                    <pre>${JSON.stringify(branches, null, 2)}</pre>
+                `
+          );
+        } catch (error) {
+          console.error("✗ Test failed:", error);
+          displayResult(3, `<p class="error">✗ Lỗi: ${error.message}</p>`);
+        }
+
+        hideLoading(3);
+      }
+
+      async function testBookings() {
+        showLoading(4);
+        console.log("\n=== TEST 4: Bookings ===");
+
+        try {
+          const bookings = await crudManager.getMergedData(
+            "Bookings.xml",
+            "booking"
+          );
+          console.log("✓ Loaded bookings:", bookings);
+
+          displayResult(
+            4,
+            `
+                    <p class="success">✓ Đọc thành công ${
+                      bookings.length
+                    } booking</p>
+                    <pre>${JSON.stringify(bookings, null, 2)}</pre>
+                `
+          );
+        } catch (error) {
+          console.error("✗ Test failed:", error);
+          displayResult(4, `<p class="error">✗ Lỗi: ${error.message}</p>`);
+        }
+
+        hideLoading(4);
+      }
+
+      async function testFields() {
+        showLoading(5);
+        console.log("\n=== TEST 5: Fields ===");
+
+        try {
+          const fields = await crudManager.getMergedData("Fields.xml", "field");
+          console.log("✓ Loaded fields:", fields);
+
+          displayResult(
+            5,
+            `
+                    <p class="success">✓ Đọc thành công ${fields.length} sân</p>
+                    <pre>${JSON.stringify(fields, null, 2)}</pre>
+                `
+          );
+        } catch (error) {
+          console.error("✗ Test failed:", error);
+          displayResult(5, `<p class="error">✗ Lỗi: ${error.message}</p>`);
+        }
+
+        hideLoading(5);
+      }
+
+      function clearTests() {
+        for (let i = 1; i <= 5; i++) {
+          displayResult(i, "");
+        }
+      }
+
+      // Auto run Test 1 on load
+      window.addEventListener("DOMContentLoaded", () => {
+        console.log("✓ Page ready, auto-running Test 1...");
+        setTimeout(() => testXMLManager(), 500);
+      });
+    </script>
+  </body>
+</html>

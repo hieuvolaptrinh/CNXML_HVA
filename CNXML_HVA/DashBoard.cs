@@ -736,25 +736,69 @@ namespace CNXML_HVA
         {
             try
             {
-                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "index.html");
+                string webFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web");
+                string serverScript = Path.Combine(webFolder, "server.js");
+                string startBatch = Path.Combine(webFolder, "start-server.bat");
                 
-                if (File.Exists(webPath))
-                {
-                    System.Diagnostics.Process.Start(webPath);
-                }
-                else
+                // Kiểm tra server.js có tồn tại không
+                if (!File.Exists(serverScript))
                 {
                     MessageBox.Show(
-                        "Không tìm thấy file index.html!\nĐường dẫn: " + webPath,
+                        "Không tìm thấy file server.js!\nĐường dẫn: " + serverScript,
                         "Lỗi",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
+                    return;
                 }
+
+                // Khởi động server nếu chưa chạy
+                var existingProcess = System.Diagnostics.Process.GetProcessesByName("node")
+                    .FirstOrDefault(p => {
+                        try {
+                            return p.MainModule.FileName.ToLower().Contains("node") && 
+                                   p.StartInfo.Arguments.Contains("server.js");
+                        } catch {
+                            return false;
+                        }
+                    });
+
+                if (existingProcess == null)
+                {
+                    // Start server
+                    var serverProcess = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "cmd.exe",
+                        Arguments = $"/c start \"Football Server\" node \"{serverScript}\"",
+                        WorkingDirectory = webFolder,
+                        UseShellExecute = true,
+                        CreateNoWindow = false
+                    };
+
+                    System.Diagnostics.Process.Start(serverProcess);
+                    
+                    // Đợi server khởi động
+                    System.Threading.Thread.Sleep(2000);
+                    
+                    MessageBox.Show(
+                        "✓ Server đã khởi động!\n\n" +
+                        "Địa chỉ: http://localhost:3000\n" +
+                        "Browser sẽ tự động mở...",
+                        "Thông báo",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+
+                // Mở browser với địa chỉ server
+                System.Diagnostics.Process.Start("http://localhost:3000/dashboard.html");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    "Lỗi khi mở website: " + ex.Message,
+                    "Lỗi khi khởi động server:\n" + ex.Message + "\n\n" +
+                    "Vui lòng:\n" +
+                    "1. Cài đặt Node.js từ https://nodejs.org\n" +
+                    "2. Hoặc chạy file 'start-server.bat' trong thư mục Web\n" +
+                    "3. Sau đó nhấn nút này lại",
                     "Lỗi",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

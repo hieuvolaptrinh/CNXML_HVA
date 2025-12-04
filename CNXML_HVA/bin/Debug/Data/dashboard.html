@@ -425,7 +425,7 @@
           );
           const membershipCounts = { VIP: 0, Gold: 0, Silver: 0, None: 0 };
           customers.forEach((c) => {
-            const m = c.membership_type || "None";
+            const m = c.membership || "None";
             if (membershipCounts[m] !== undefined) membershipCounts[m]++;
           });
 
@@ -550,16 +550,18 @@
                     <div style="padding: 12px; border-bottom: 1px solid var(--light-gray); display: flex; justify-between; align-items: center;">
                         <div>
                             <div style="font-weight: 600;">${
-                              booking.customer_id || "N/A"
+                              booking.customer_name || booking.customer || "N/A"
                             }</div>
                             <div style="font-size: 12px; color: var(--gray);">${
-                              booking.booking_date || "N/A"
-                            } - ${booking.booking_time || "N/A"}</div>
+                              booking.booking_date || booking.date || "N/A"
+                            } - ${
+                booking.booking_time || booking.time || "N/A"
+              }h</div>
                         </div>
                         <span class="badge badge-${
-                          booking.status === "Confirmed" ? "success" : "warning"
+                          booking.status === "Confirmed" ? "success" : "info"
                         }">
-                            ${booking.status || "Pending"}
+                            ${booking.status || "Active"}
                         </span>
                     </div>
                 `
@@ -567,7 +569,7 @@
             .join("");
           document.getElementById("recentBookings").innerHTML =
             html ||
-            '<p style="text-align: center; color: var(--gray); padding: 20px;">No recent bookings</p>';
+            '<p style="text-align: center; color: var(--gray); padding: 20px;">Chưa có đặt lịch nào</p>';
         } catch (error) {
           console.error("Error:", error);
         }
@@ -586,18 +588,16 @@
                     <div style="padding: 12px; border-bottom: 1px solid var(--light-gray); display: flex; justify-between; align-items: center;">
                         <div>
                             <div style="font-weight: 600;">${
-                              customer.full_name || "N/A"
+                              customer.name || "N/A"
                             }</div>
                             <div style="font-size: 12px; color: var(--gray);">${
                               customer.phone || "N/A"
                             }</div>
                         </div>
                         <span class="badge badge-${
-                          customer.membership_type === "VIP"
-                            ? "warning"
-                            : "info"
+                          customer.membership === "VIP" ? "warning" : "info"
                         }">
-                            ${customer.membership_type || "Standard"}
+                            ${customer.membership || "Standard"}
                         </span>
                     </div>
                 `
