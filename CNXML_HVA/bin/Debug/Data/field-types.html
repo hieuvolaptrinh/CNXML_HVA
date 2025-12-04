@@ -169,10 +169,10 @@
                     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; color: white;">
                         <i class="fas fa-futbol" style="font-size: 3em; margin-bottom: 15px;"></i>
                         <h3 style="font-size: 1.5em; margin-bottom: 5px;">${
-                          type.tenloaisan || "N/A"
+                          type.tenloaisan || type.name || "N/A"
                         }</h3>
                         <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 0.9em;">
-                            ${type.maloaisan || "N/A"}
+                            ${type.maloaisan || type.code || type.id || "N/A"}
                         </span>
                     </div>
                     <div style="padding: 20px;">
@@ -180,29 +180,29 @@
                             <div style="display: flex; align-items: center; margin: 10px 0;">
                                 <i class="fas fa-users" style="width: 25px; color: #667eea;"></i>
                                 <span style="font-size: 0.95em;">Số người: <strong>${
-                                  type.songuoi || "N/A"
+                                  type.songuoi || type.total_capacity || "N/A"
                                 }</strong></span>
                             </div>
                             <div style="display: flex; align-items: center; margin: 10px 0;">
                                 <i class="fas fa-ruler-combined" style="width: 25px; color: #667eea;"></i>
                                 <span style="font-size: 0.95em;">Kích thước: <strong>${
-                                  type.kichthuoc || "N/A"
+                                  type.kichthuoc || type.size_display || "N/A"
                                 }</strong></span>
                             </div>
                         </div>
                         <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 15px 0;">
                             <p style="font-size: 0.9em; color: #555; margin: 0;">${
-                              type.mota || "Không có mô tả"
+                              type.mota || type.description || "Không có mô tả"
                             }</p>
                         </div>
                         <div style="display: flex; gap: 10px; margin-top: 15px;">
                             <button class="btn btn-sm btn-primary" onclick="editFieldType('${
-                              type.id || type.maloaisan
+                              type.maloaisan || type.id
                             }')" style="flex: 1;">
                                 <i class="fas fa-edit"></i> Sửa
                             </button>
                             <button class="btn btn-sm btn-danger" onclick="deleteFieldType('${
-                              type.id || type.maloaisan
+                              type.maloaisan || type.id
                             }')" style="flex: 1;">
                                 <i class="fas fa-trash"></i> Xóa
                             </button>

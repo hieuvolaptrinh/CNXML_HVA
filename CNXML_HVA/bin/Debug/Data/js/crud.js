@@ -138,7 +138,10 @@ class CRUDManager {
           obj.loaisan = obj.type || obj.loaisan;
           obj.ngaydat = obj.date || obj.ngaydat;
           obj.giobatdau = obj.time ? obj.time + ":00" : obj.giobatdau;
-          obj.gioketthuc = obj.time && obj.duration ? (parseInt(obj.time) + parseInt(obj.duration || 1)) + ":00" : obj.gioketthuc;
+          obj.gioketthuc =
+            obj.time && obj.duration
+              ? parseInt(obj.time) + parseInt(obj.duration || 1) + ":00"
+              : obj.gioketthuc;
           obj.thoigian = obj.duration || obj.thoigian;
           obj.ghichu = obj.note || obj.ghichu;
           obj.tongtien = obj.price || obj.tongtien || 0;
@@ -159,7 +162,8 @@ class CRUDManager {
         if (rootTag === "field_type") {
           obj.maloaisan = obj.id || obj.code || obj.maloaisan;
           obj.tenloaisan = obj.name || obj.tenloaisan;
-          obj.songuoi = obj.total_capacity || obj.players_per_team || obj.songuoi;
+          obj.songuoi =
+            obj.total_capacity || obj.players_per_team || obj.songuoi;
           obj.kichthuoc = obj.size_display || obj.kichthuoc;
           obj.mota = obj.description || obj.mota;
           obj.trangthai = obj.status || obj.trangthai;
