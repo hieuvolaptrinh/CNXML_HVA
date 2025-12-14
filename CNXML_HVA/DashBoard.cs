@@ -736,7 +736,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string webFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web");
+                string webFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data");
                 string serverScript = Path.Combine(webFolder, "server.js");
                 string startBatch = Path.Combine(webFolder, "start-server.bat");
                 

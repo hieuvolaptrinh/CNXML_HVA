@@ -28,27 +28,26 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.btnSendCode = new System.Windows.Forms.Button();
             this.pnlVerificationCode = new System.Windows.Forms.Panel();
+            this.lblVerificationTitle = new System.Windows.Forms.Label();
+            this.pnlCodeInput = new System.Windows.Forms.Panel();
+            this.txtCode1 = new System.Windows.Forms.TextBox();
+            this.txtCode2 = new System.Windows.Forms.TextBox();
+            this.txtCode3 = new System.Windows.Forms.TextBox();
+            this.txtCode4 = new System.Windows.Forms.TextBox();
+            this.txtCode5 = new System.Windows.Forms.TextBox();
+            this.txtCode6 = new System.Windows.Forms.TextBox();
             this.lblBackToLogin = new System.Windows.Forms.Label();
             this.pnlLeft = new System.Windows.Forms.Panel();
-            this.picLock = new System.Windows.Forms.PictureBox();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblSubTitle = new System.Windows.Forms.Label();
-            this.lblVerificationTitle = new System.Windows.Forms.Label();
-            this.txtCode6 = new System.Windows.Forms.TextBox();
-            this.txtCode5 = new System.Windows.Forms.TextBox();
-            this.txtCode4 = new System.Windows.Forms.TextBox();
-            this.txtCode3 = new System.Windows.Forms.TextBox();
-            this.txtCode2 = new System.Windows.Forms.TextBox();
-            this.txtCode1 = new System.Windows.Forms.TextBox();
-            this.pnlCodeInput = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlRight.SuspendLayout();
             this.pnlForgotContainer.SuspendLayout();
             this.pnlEmail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEmail)).BeginInit();
             this.pnlVerificationCode.SuspendLayout();
-            this.pnlLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLock)).BeginInit();
             this.pnlCodeInput.SuspendLayout();
+            this.pnlLeft.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlRight
@@ -85,7 +84,7 @@
             this.lblTitle.Location = new System.Drawing.Point(8, 9);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(250, 41);
+            this.lblTitle.Size = new System.Drawing.Size(307, 50);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Quên Mật Khẩu?";
             // 
@@ -97,7 +96,7 @@
             this.lblSubtitleForgot.Location = new System.Drawing.Point(11, 68);
             this.lblSubtitleForgot.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtitleForgot.Name = "lblSubtitleForgot";
-            this.lblSubtitleForgot.Size = new System.Drawing.Size(196, 15);
+            this.lblSubtitleForgot.Size = new System.Drawing.Size(246, 20);
             this.lblSubtitleForgot.TabIndex = 1;
             this.lblSubtitleForgot.Text = "Đừng lo lắng, chúng tôi sẽ giúp bạn";
             // 
@@ -144,7 +143,7 @@
             this.txtEmail.Location = new System.Drawing.Point(60, 37);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(427, 20);
+            this.txtEmail.Size = new System.Drawing.Size(427, 25);
             this.txtEmail.TabIndex = 2;
             // 
             // lblEmail
@@ -155,7 +154,7 @@
             this.lblEmail.Location = new System.Drawing.Point(56, 7);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(75, 15);
+            this.lblEmail.Size = new System.Drawing.Size(96, 20);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Địa chỉ Email";
             // 
@@ -184,7 +183,102 @@
             this.pnlVerificationCode.Size = new System.Drawing.Size(507, 280);
             this.pnlVerificationCode.TabIndex = 5;
             this.pnlVerificationCode.Visible = false;
-            
+            // 
+            // lblVerificationTitle
+            // 
+            this.lblVerificationTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.lblVerificationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.lblVerificationTitle.Location = new System.Drawing.Point(11, 10);
+            this.lblVerificationTitle.Name = "lblVerificationTitle";
+            this.lblVerificationTitle.Size = new System.Drawing.Size(480, 50);
+            this.lblVerificationTitle.TabIndex = 0;
+            this.lblVerificationTitle.Text = "Nhập mã xác thực 6 chữ số đã được gửi đến email của bạn";
+            this.lblVerificationTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlCodeInput
+            // 
+            this.pnlCodeInput.Controls.Add(this.txtCode1);
+            this.pnlCodeInput.Controls.Add(this.txtCode2);
+            this.pnlCodeInput.Controls.Add(this.txtCode3);
+            this.pnlCodeInput.Controls.Add(this.txtCode4);
+            this.pnlCodeInput.Controls.Add(this.txtCode5);
+            this.pnlCodeInput.Controls.Add(this.txtCode6);
+            this.pnlCodeInput.Location = new System.Drawing.Point(15, 70);
+            this.pnlCodeInput.Name = "pnlCodeInput";
+            this.pnlCodeInput.Size = new System.Drawing.Size(477, 70);
+            this.pnlCodeInput.TabIndex = 1;
+            // 
+            // txtCode1
+            // 
+            this.txtCode1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode1.Location = new System.Drawing.Point(10, 10);
+            this.txtCode1.MaxLength = 1;
+            this.txtCode1.Name = "txtCode1";
+            this.txtCode1.Size = new System.Drawing.Size(60, 52);
+            this.txtCode1.TabIndex = 0;
+            this.txtCode1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtCode2
+            // 
+            this.txtCode2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode2.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode2.Location = new System.Drawing.Point(80, 10);
+            this.txtCode2.MaxLength = 1;
+            this.txtCode2.Name = "txtCode2";
+            this.txtCode2.Size = new System.Drawing.Size(60, 52);
+            this.txtCode2.TabIndex = 1;
+            this.txtCode2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtCode3
+            // 
+            this.txtCode3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode3.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode3.Location = new System.Drawing.Point(150, 10);
+            this.txtCode3.MaxLength = 1;
+            this.txtCode3.Name = "txtCode3";
+            this.txtCode3.Size = new System.Drawing.Size(60, 52);
+            this.txtCode3.TabIndex = 2;
+            this.txtCode3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtCode4
+            // 
+            this.txtCode4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode4.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode4.Location = new System.Drawing.Point(237, 10);
+            this.txtCode4.MaxLength = 1;
+            this.txtCode4.Name = "txtCode4";
+            this.txtCode4.Size = new System.Drawing.Size(60, 52);
+            this.txtCode4.TabIndex = 3;
+            this.txtCode4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtCode5
+            // 
+            this.txtCode5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode5.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode5.Location = new System.Drawing.Point(307, 10);
+            this.txtCode5.MaxLength = 1;
+            this.txtCode5.Name = "txtCode5";
+            this.txtCode5.Size = new System.Drawing.Size(60, 52);
+            this.txtCode5.TabIndex = 4;
+            this.txtCode5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txtCode6
+            // 
+            this.txtCode6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCode6.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.txtCode6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
+            this.txtCode6.Location = new System.Drawing.Point(377, 10);
+            this.txtCode6.MaxLength = 1;
+            this.txtCode6.Name = "txtCode6";
+            this.txtCode6.Size = new System.Drawing.Size(60, 52);
+            this.txtCode6.TabIndex = 5;
+            this.txtCode6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lblBackToLogin
             // 
@@ -198,12 +292,11 @@
             this.lblBackToLogin.TabIndex = 6;
             this.lblBackToLogin.Text = "← Quay lại đăng nhập";
             this.lblBackToLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            
             // 
             // pnlLeft
             // 
             this.pnlLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            this.pnlLeft.Controls.Add(this.picLock);
+            this.pnlLeft.Controls.Add(this.label1);
             this.pnlLeft.Controls.Add(this.lblWelcome);
             this.pnlLeft.Controls.Add(this.lblSubTitle);
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
@@ -213,25 +306,15 @@
             this.pnlLeft.Size = new System.Drawing.Size(467, 554);
             this.pnlLeft.TabIndex = 0;
             // 
-            // picLock
-            // 
-            this.picLock.BackColor = System.Drawing.Color.Transparent;
-            this.picLock.Location = new System.Drawing.Point(170, 100);
-            this.picLock.Name = "picLock";
-            this.picLock.Size = new System.Drawing.Size(127, 120);
-            this.picLock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picLock.TabIndex = 3;
-            this.picLock.TabStop = false;
-            // 
             // lblWelcome
             // 
             this.lblWelcome.BackColor = System.Drawing.Color.Transparent;
             this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblWelcome.ForeColor = System.Drawing.Color.White;
-            this.lblWelcome.Location = new System.Drawing.Point(60, 240);
+            this.lblWelcome.Location = new System.Drawing.Point(117, 234);
             this.lblWelcome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(347, 100);
+            this.lblWelcome.Size = new System.Drawing.Size(254, 120);
             this.lblWelcome.TabIndex = 1;
             this.lblWelcome.Text = "Khôi Phục Tài Khoản";
             this.lblWelcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -250,101 +333,18 @@
     "ảo mật";
             this.lblSubTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblVerificationTitle
+            // label1
             // 
-            this.lblVerificationTitle.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lblVerificationTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.lblVerificationTitle.Location = new System.Drawing.Point(11, 10);
-            this.lblVerificationTitle.Name = "lblVerificationTitle";
-            this.lblVerificationTitle.Size = new System.Drawing.Size(480, 50);
-            this.lblVerificationTitle.TabIndex = 0;
-            this.lblVerificationTitle.Text = "Nhập mã xác thực 6 chữ số đã được gửi đến email của bạn";
-            this.lblVerificationTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtCode6
-            // 
-            this.txtCode6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode6.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode6.Location = new System.Drawing.Point(377, 10);
-            this.txtCode6.MaxLength = 1;
-            this.txtCode6.Name = "txtCode6";
-            this.txtCode6.Size = new System.Drawing.Size(60, 43);
-            this.txtCode6.TabIndex = 5;
-            this.txtCode6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtCode5
-            // 
-            this.txtCode5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode5.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode5.Location = new System.Drawing.Point(307, 10);
-            this.txtCode5.MaxLength = 1;
-            this.txtCode5.Name = "txtCode5";
-            this.txtCode5.Size = new System.Drawing.Size(60, 43);
-            this.txtCode5.TabIndex = 4;
-            this.txtCode5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtCode4
-            // 
-            this.txtCode4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode4.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode4.Location = new System.Drawing.Point(237, 10);
-            this.txtCode4.MaxLength = 1;
-            this.txtCode4.Name = "txtCode4";
-            this.txtCode4.Size = new System.Drawing.Size(60, 43);
-            this.txtCode4.TabIndex = 3;
-            this.txtCode4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtCode3
-            // 
-            this.txtCode3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode3.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode3.Location = new System.Drawing.Point(150, 10);
-            this.txtCode3.MaxLength = 1;
-            this.txtCode3.Name = "txtCode3";
-            this.txtCode3.Size = new System.Drawing.Size(60, 43);
-            this.txtCode3.TabIndex = 2;
-            this.txtCode3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtCode2
-            // 
-            this.txtCode2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode2.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode2.Location = new System.Drawing.Point(80, 10);
-            this.txtCode2.MaxLength = 1;
-            this.txtCode2.Name = "txtCode2";
-            this.txtCode2.Size = new System.Drawing.Size(60, 43);
-            this.txtCode2.TabIndex = 1;
-            this.txtCode2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // txtCode1
-            // 
-            this.txtCode1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.txtCode1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
-            this.txtCode1.Location = new System.Drawing.Point(10, 10);
-            this.txtCode1.MaxLength = 1;
-            this.txtCode1.Name = "txtCode1";
-            this.txtCode1.Size = new System.Drawing.Size(60, 43);
-            this.txtCode1.TabIndex = 0;
-            this.txtCode1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // pnlCodeInput
-            // 
-            this.pnlCodeInput.Controls.Add(this.txtCode1);
-            this.pnlCodeInput.Controls.Add(this.txtCode2);
-            this.pnlCodeInput.Controls.Add(this.txtCode3);
-            this.pnlCodeInput.Controls.Add(this.txtCode4);
-            this.pnlCodeInput.Controls.Add(this.txtCode5);
-            this.pnlCodeInput.Controls.Add(this.txtCode6);
-            this.pnlCodeInput.Location = new System.Drawing.Point(15, 70);
-            this.pnlCodeInput.Name = "pnlCodeInput";
-            this.pnlCodeInput.Size = new System.Drawing.Size(477, 70);
-            this.pnlCodeInput.TabIndex = 1;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 56F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(162, 105);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(182, 125);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "⚽";
             // 
             // QuenMatKhau
             // 
@@ -364,10 +364,10 @@
             this.pnlEmail.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEmail)).EndInit();
             this.pnlVerificationCode.ResumeLayout(false);
-            this.pnlLeft.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picLock)).EndInit();
             this.pnlCodeInput.ResumeLayout(false);
             this.pnlCodeInput.PerformLayout();
+            this.pnlLeft.ResumeLayout(false);
+            this.pnlLeft.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -389,7 +389,6 @@
         private System.Windows.Forms.Button btnSendCode;
         private System.Windows.Forms.Panel pnlVerificationCode;
         private System.Windows.Forms.Label lblBackToLogin;
-        private System.Windows.Forms.PictureBox picLock;
         private System.Windows.Forms.Label lblVerificationTitle;
         private System.Windows.Forms.Panel pnlCodeInput;
         private System.Windows.Forms.TextBox txtCode1;
@@ -398,5 +397,6 @@
         private System.Windows.Forms.TextBox txtCode4;
         private System.Windows.Forms.TextBox txtCode5;
         private System.Windows.Forms.TextBox txtCode6;
+        private System.Windows.Forms.Label label1;
     }
 }

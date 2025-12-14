@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.panelLeft = new System.Windows.Forms.Panel();
             this.panelMenuItems = new System.Windows.Forms.Panel();
             this.btnDatLich = new System.Windows.Forms.Button();
@@ -80,6 +80,7 @@
             this.lblCustomersCount = new System.Windows.Forms.Label();
             this.labelTile1 = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
+            this.lblTitle = new System.Windows.Forms.Label();
             this.panelLeft.SuspendLayout();
             this.panelMenuItems.SuspendLayout();
             this.panelLogo.SuspendLayout();
@@ -114,7 +115,7 @@
             // 
             // panelMenuItems
             // 
-            this.panelMenuItems.BackColor = System.Drawing.Color.Green;
+            this.panelMenuItems.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.panelMenuItems.Controls.Add(this.btnDatLich);
             this.panelMenuItems.Controls.Add(this.btnKhachHang);
             this.panelMenuItems.Controls.Add(this.btnDungCu);
@@ -127,7 +128,7 @@
             this.panelMenuItems.Margin = new System.Windows.Forms.Padding(4);
             this.panelMenuItems.Name = "panelMenuItems";
             this.panelMenuItems.Padding = new System.Windows.Forms.Padding(20, 25, 20, 25);
-            this.panelMenuItems.Size = new System.Drawing.Size(320, 682);
+            this.panelMenuItems.Size = new System.Drawing.Size(320, 603);
             this.panelMenuItems.TabIndex = 9;
             // 
             // btnDatLich
@@ -252,7 +253,7 @@
             // 
             // btnTrangChu
             // 
-            this.btnTrangChu.BackColor = System.Drawing.Color.Green;
+            this.btnTrangChu.BackColor = System.Drawing.Color.Transparent;
             this.btnTrangChu.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnTrangChu.FlatAppearance.BorderSize = 0;
             this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -278,7 +279,7 @@
             this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
-            this.btnDangXuat.Location = new System.Drawing.Point(0, 854);
+            this.btnDangXuat.Location = new System.Drawing.Point(0, 775);
             this.btnDangXuat.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -296,7 +297,7 @@
             this.btnMoWebsite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMoWebsite.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnMoWebsite.ForeColor = System.Drawing.Color.White;
-            this.btnMoWebsite.Location = new System.Drawing.Point(0, 775);
+            this.btnMoWebsite.Location = new System.Drawing.Point(0, 854);
             this.btnMoWebsite.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.btnMoWebsite.Name = "btnMoWebsite";
             this.btnMoWebsite.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -309,6 +310,7 @@
             // panelLogo
             // 
             this.panelLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(101)))), ((int)(((byte)(192)))));
+            this.panelLogo.Controls.Add(this.lblTitle);
             this.panelLogo.Controls.Add(this.lblAppName);
             this.panelLogo.Controls.Add(this.picLogo);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -320,7 +322,7 @@
             // 
             // lblAppName
             // 
-            this.lblAppName.BackColor = System.Drawing.Color.SeaGreen;
+            this.lblAppName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.lblAppName.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold);
             this.lblAppName.ForeColor = System.Drawing.Color.White;
@@ -329,12 +331,12 @@
             this.lblAppName.Name = "lblAppName";
             this.lblAppName.Size = new System.Drawing.Size(320, 49);
             this.lblAppName.TabIndex = 1;
-            this.lblAppName.Text = "⚽ Quản Lý Sân Bóng";
+            this.lblAppName.Text = "Quản Lý Sân Bóng";
             this.lblAppName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picLogo
             // 
-            this.picLogo.BackColor = System.Drawing.Color.ForestGreen;
+            this.picLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.picLogo.Dock = System.Windows.Forms.DockStyle.Top;
             this.picLogo.Location = new System.Drawing.Point(0, 0);
             this.picLogo.Margin = new System.Windows.Forms.Padding(4);
@@ -411,11 +413,11 @@
             // 
             // chartOverview
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartOverview.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this.chartOverview.ChartAreas.Add(chartArea2);
             this.chartOverview.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this.chartOverview.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this.chartOverview.Legends.Add(legend2);
             this.chartOverview.Location = new System.Drawing.Point(27, 74);
             this.chartOverview.Margin = new System.Windows.Forms.Padding(4);
             this.chartOverview.Name = "chartOverview";
@@ -774,6 +776,19 @@
             this.labelTile1.Text = "👥 Khách hàng";
             this.labelTile1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(87, 25);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(130, 89);
+            this.lblTitle.TabIndex = 2;
+            this.lblTitle.Text = "⚽";
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -791,6 +806,7 @@
             this.panelLeft.ResumeLayout(false);
             this.panelMenuItems.ResumeLayout(false);
             this.panelLogo.ResumeLayout(false);
+            this.panelLogo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelContent.ResumeLayout(false);
             this.panelActivitiesContainer.ResumeLayout(false);
@@ -859,5 +875,6 @@
         private System.Windows.Forms.Label lblActivitiesTitle;
         private System.Windows.Forms.ListBox listBoxActivities;
         private System.Windows.Forms.Button btnTrangChu;
+        private System.Windows.Forms.Label lblTitle;
     }
 }

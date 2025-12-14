@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
+            this.lblUserAvatar = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
-            this.buttonViewWeb = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -45,6 +45,8 @@
             this.tabControlBranchInfo = new System.Windows.Forms.TabControl();
             this.tabPageBasicInfo = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBoxUrl1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.labelId = new System.Windows.Forms.Label();
             this.textBoxId = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
@@ -96,8 +98,6 @@
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxUrl1 = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -119,8 +119,9 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
-            this.panelHeader.Controls.Add(this.labelTitle);
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.panelHeader.Controls.Add(this.lblUserAvatar);
+            this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
@@ -128,22 +129,34 @@
             this.panelHeader.Size = new System.Drawing.Size(1300, 86);
             this.panelHeader.TabIndex = 0;
             // 
-            // labelTitle
+            // lblUserAvatar
             // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.labelTitle.ForeColor = System.Drawing.Color.White;
-            this.labelTitle.Location = new System.Drawing.Point(27, 22);
-            this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(373, 46);
-            this.labelTitle.TabIndex = 0;
-            this.labelTitle.Text = "QUẢN LÝ CHI NHÁNH";
+            this.lblUserAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserAvatar.AutoSize = true;
+            this.lblUserAvatar.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblUserAvatar.ForeColor = System.Drawing.Color.White;
+            this.lblUserAvatar.Location = new System.Drawing.Point(1129, 38);
+            this.lblUserAvatar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUserAvatar.Name = "lblUserAvatar";
+            this.lblUserAvatar.Size = new System.Drawing.Size(136, 25);
+            this.lblUserAvatar.TabIndex = 2;
+            this.lblUserAvatar.Text = "👤 Admin User";
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(3, 25);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(381, 41);
+            this.lblTitle.TabIndex = 1;
+            this.lblTitle.Text = "⚽ QUẢN LÝ CHI NHÁNH";
             // 
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
-            this.panelToolbar.Controls.Add(this.buttonViewWeb);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -156,23 +169,6 @@
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelToolbar.Size = new System.Drawing.Size(1300, 74);
             this.panelToolbar.TabIndex = 1;
-            // 
-            // buttonViewWeb
-            // 
-            this.buttonViewWeb.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
-            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
-            this.buttonViewWeb.Location = new System.Drawing.Point(777, 17);
-            this.buttonViewWeb.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonViewWeb.Name = "buttonViewWeb";
-            this.buttonViewWeb.Size = new System.Drawing.Size(200, 39);
-            this.buttonViewWeb.TabIndex = 5;
-            this.buttonViewWeb.Text = "🌐 Xem trên Web";
-            this.buttonViewWeb.UseVisualStyleBackColor = false;
-            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
             // 
             // buttonImportXml
             // 
@@ -210,15 +206,15 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.buttonRefresh.FlatAppearance.BorderSize = 0;
             this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonRefresh.ForeColor = System.Drawing.Color.White;
-            this.buttonRefresh.Location = new System.Drawing.Point(630, 16);
+            this.buttonRefresh.Location = new System.Drawing.Point(630, 19);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(133, 39);
+            this.buttonRefresh.Size = new System.Drawing.Size(133, 33);
             this.buttonRefresh.TabIndex = 2;
             this.buttonRefresh.Text = "🔄 Làm mới";
             this.buttonRefresh.UseVisualStyleBackColor = false;
@@ -266,12 +262,13 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonAdd.ForeColor = System.Drawing.Color.White;
-            this.buttonAdd.Location = new System.Drawing.Point(10, 400);
+            this.buttonAdd.Location = new System.Drawing.Point(790, 421);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(160, 49);
@@ -282,12 +279,13 @@
             // 
             // buttonEdit
             // 
+            this.buttonEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonEdit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
             this.buttonEdit.FlatAppearance.BorderSize = 0;
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonEdit.ForeColor = System.Drawing.Color.White;
-            this.buttonEdit.Location = new System.Drawing.Point(180, 400);
+            this.buttonEdit.Location = new System.Drawing.Point(960, 421);
             this.buttonEdit.Margin = new System.Windows.Forms.Padding(4);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(160, 49);
@@ -298,12 +296,13 @@
             // 
             // buttonDelete
             // 
+            this.buttonDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(67)))), ((int)(((byte)(54)))));
             this.buttonDelete.FlatAppearance.BorderSize = 0;
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
-            this.buttonDelete.Location = new System.Drawing.Point(350, 400);
+            this.buttonDelete.Location = new System.Drawing.Point(1130, 421);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(160, 49);
@@ -336,7 +335,7 @@
             this.dataGridViewBranches.RowHeadersWidth = 51;
             this.dataGridViewBranches.RowTemplate.Height = 35;
             this.dataGridViewBranches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBranches.Size = new System.Drawing.Size(739, 380);
+            this.dataGridViewBranches.Size = new System.Drawing.Size(735, 517);
             this.dataGridViewBranches.TabIndex = 0;
             this.dataGridViewBranches.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBranches_CellContentClick);
             this.dataGridViewBranches.SelectionChanged += new System.EventHandler(this.dataGridViewBranches_SelectionChanged);
@@ -406,6 +405,29 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(489, 295);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // textBoxUrl1
+            // 
+            this.textBoxUrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxUrl1.Location = new System.Drawing.Point(177, 255);
+            this.textBoxUrl1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxUrl1.Name = "textBoxUrl1";
+            this.textBoxUrl1.Size = new System.Drawing.Size(308, 29);
+            this.textBoxUrl1.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.label1.Location = new System.Drawing.Point(4, 259);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 21);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Url ảnh:";
             // 
             // labelId
             // 
@@ -1055,10 +1077,10 @@
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
-            this.buttonSave.Location = new System.Drawing.Point(700, 400);
+            this.buttonSave.Location = new System.Drawing.Point(1042, 478);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(120, 45);
+            this.buttonSave.Size = new System.Drawing.Size(120, 49);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "💾 Lưu";
             this.buttonSave.UseVisualStyleBackColor = false;
@@ -1073,37 +1095,14 @@
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
-            this.buttonCancel.Location = new System.Drawing.Point(880, 400);
+            this.buttonCancel.Location = new System.Drawing.Point(1170, 478);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(120, 45);
+            this.buttonCancel.Size = new System.Drawing.Size(120, 49);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "✖️ Hủy";
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.label1.Location = new System.Drawing.Point(4, 259);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 21);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Url ảnh:";
-            // 
-            // textBoxUrl1
-            // 
-            this.textBoxUrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUrl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxUrl1.Location = new System.Drawing.Point(177, 255);
-            this.textBoxUrl1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxUrl1.Name = "textBoxUrl1";
-            this.textBoxUrl1.Size = new System.Drawing.Size(308, 29);
-            this.textBoxUrl1.TabIndex = 11;
             // 
             // ChiNhanh
             // 
@@ -1152,9 +1151,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
-        private System.Windows.Forms.Button buttonViewWeb;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;
@@ -1221,5 +1218,7 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.TextBox textBoxUrl1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblUserAvatar;
     }
 }

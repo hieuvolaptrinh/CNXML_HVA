@@ -232,7 +232,6 @@ namespace CNXML_HVA
             btnRefresh.Enabled = !editMode;
             btnLoadXML.Enabled = !editMode;
             btnExportExcel.Enabled = !editMode;
-            buttonViewWeb.Enabled = !editMode;
 
             dgvBookings.Enabled = !editMode;
             textBoxSearch.Enabled = !editMode;
@@ -543,30 +542,6 @@ namespace CNXML_HVA
             }
         }
 
-        private void buttonViewWeb_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 1. Tạo file HTML
-                HtmlGenerator.GenerateCustomersHtml();
-                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "bookings.html");
-
-                // 2. Kiểm tra file tồn tại
-                if (!File.Exists(webPath))
-                {
-                    MessageBox.Show("Không tìm thấy file web!", "Lỗi");
-                    return;
-                }
-
-                // 3. CÁCH FIX MẠNH NHẤT: Gọi trực tiếp explorer.exe để mở
-                // Cách này Windows sẽ tự xử lý việc chọn app tốt hơn là gọi file trực tiếp
-                System.Diagnostics.Process.Start("msedge.exe", $"\"{webPath}\"");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi: " + ex.Message);
-            }
-        }
 
         private void ExportToExcel(string filePath)
         {
