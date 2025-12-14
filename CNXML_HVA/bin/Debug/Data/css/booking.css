@@ -35,10 +35,10 @@ body.booking-page {
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   --radius: 16px;
   --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --success: #4CAF50;
-  --warning: #FF9800;
+  --success: #4caf50;
+  --warning: #ff9800;
   --danger: #f44336;
-  --info: #2196F3;
+  --info: #2196f3;
 }
 
 /* Main Content */
@@ -271,7 +271,7 @@ body.booking-page tbody tr:hover {
 
 body.booking-page td {
   padding: 16px !important;
-  color: #e5e7eb !important;
+  color: #2c47ddff !important;
 }
 
 /* Status Badges */

@@ -48,6 +48,7 @@
             this.pnlLeft = new System.Windows.Forms.Panel();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblSubTitle = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlRight.SuspendLayout();
             this.pnlLoginContainer.SuspendLayout();
             this.pnlEmail.SuspendLayout();
@@ -88,7 +89,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.lblTitle.Location = new System.Drawing.Point(8, 9);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
@@ -152,7 +153,7 @@
             this.lblEmail.Location = new System.Drawing.Point(56, 7);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(46, 20);
+            this.lblEmail.Size = new System.Drawing.Size(107, 20);
             this.lblEmail.TabIndex = 1;
             this.lblEmail.Text = "Tên đăng nhập";
             // 
@@ -247,7 +248,7 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.btnLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLogin.FlatAppearance.BorderSize = 0;
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -276,7 +277,8 @@
             // 
             // pnlLeft
             // 
-            this.pnlLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
+            this.pnlLeft.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.pnlLeft.Controls.Add(this.label1);
             this.pnlLeft.Controls.Add(this.lblWelcome);
             this.pnlLeft.Controls.Add(this.lblSubTitle);
             this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
@@ -291,10 +293,10 @@
             this.lblWelcome.BackColor = System.Drawing.Color.Transparent;
             this.lblWelcome.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
             this.lblWelcome.ForeColor = System.Drawing.Color.White;
-            this.lblWelcome.Location = new System.Drawing.Point(73, 153);
+            this.lblWelcome.Location = new System.Drawing.Point(79, 193);
             this.lblWelcome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWelcome.Name = "lblWelcome";
-            this.lblWelcome.Size = new System.Drawing.Size(351, 185);
+            this.lblWelcome.Size = new System.Drawing.Size(306, 185);
             this.lblWelcome.TabIndex = 1;
             this.lblWelcome.Text = "Chào Mừng Đến Hệ Thống Quản Lý Sân Bóng!";
             this.lblWelcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -311,6 +313,19 @@
             this.lblSubTitle.TabIndex = 2;
             this.lblSubTitle.Text = "Hệ thống quản lý đặt sân bóng đá\r\nHiện đại - Tiện lợi - Nhanh chóng";
             this.lblSubTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 56F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(176, 45);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(141, 143);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "⚽";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Login
             // 
@@ -359,5 +374,6 @@
         private System.Windows.Forms.Label lblForgotPassword;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Label lblRegister;
+        private System.Windows.Forms.Label label1;
     }
 }

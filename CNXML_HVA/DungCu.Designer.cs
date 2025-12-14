@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
-            this.buttonViewWeb = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -48,11 +46,18 @@
             this.tabControlEquipmentInfo = new System.Windows.Forms.TabControl();
             this.tabPageBasicInfo = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBoxUrl2 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.labelId = new System.Windows.Forms.Label();
+            this.textBoxId = new System.Windows.Forms.TextBox();
             this.labelName = new System.Windows.Forms.Label();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.labelCode = new System.Windows.Forms.Label();
+            this.textBoxBranch = new System.Windows.Forms.TextBox();
             this.labelCategory = new System.Windows.Forms.Label();
+            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.comboBox = new System.Windows.Forms.ComboBox();
             this.tabPageDetails = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.labelManufacturer = new System.Windows.Forms.Label();
@@ -83,13 +88,8 @@
             this.panelFormActions = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.comboBox = new System.Windows.Forms.ComboBox();
-            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
-            this.textBoxBranch = new System.Windows.Forms.TextBox();
-            this.textBoxName = new System.Windows.Forms.TextBox();
-            this.textBoxId = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxUrl2 = new System.Windows.Forms.TextBox();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.lblUserInfo = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -116,7 +116,8 @@
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.panelHeader.Controls.Add(this.lblUserInfo);
             this.panelHeader.Controls.Add(this.labelTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
@@ -125,22 +126,9 @@
             this.panelHeader.Size = new System.Drawing.Size(1315, 69);
             this.panelHeader.TabIndex = 0;
             // 
-            // labelTitle
-            // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.labelTitle.ForeColor = System.Drawing.Color.White;
-            this.labelTitle.Location = new System.Drawing.Point(27, 22);
-            this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(332, 46);
-            this.labelTitle.TabIndex = 0;
-            this.labelTitle.Text = "QUẢN LÝ DỤNG CỤ";
-            // 
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
-            this.panelToolbar.Controls.Add(this.buttonViewWeb);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -153,23 +141,6 @@
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
             this.panelToolbar.Size = new System.Drawing.Size(1315, 74);
             this.panelToolbar.TabIndex = 1;
-            // 
-            // buttonViewWeb
-            // 
-            this.buttonViewWeb.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
-            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
-            this.buttonViewWeb.Location = new System.Drawing.Point(780, 17);
-            this.buttonViewWeb.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonViewWeb.Name = "buttonViewWeb";
-            this.buttonViewWeb.Size = new System.Drawing.Size(200, 39);
-            this.buttonViewWeb.TabIndex = 5;
-            this.buttonViewWeb.Text = "🌐 Xem trên Web";
-            this.buttonViewWeb.UseVisualStyleBackColor = false;
-            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
             // 
             // buttonImportXml
             // 
@@ -207,15 +178,15 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.buttonRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.buttonRefresh.FlatAppearance.BorderSize = 0;
             this.buttonRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonRefresh.ForeColor = System.Drawing.Color.White;
-            this.buttonRefresh.Location = new System.Drawing.Point(620, 17);
+            this.buttonRefresh.Location = new System.Drawing.Point(620, 20);
             this.buttonRefresh.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(133, 39);
+            this.buttonRefresh.Size = new System.Drawing.Size(133, 30);
             this.buttonRefresh.TabIndex = 2;
             this.buttonRefresh.Text = "🔄 Làm mới";
             this.buttonRefresh.UseVisualStyleBackColor = false;
@@ -341,7 +312,7 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.buttonAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
@@ -428,6 +399,29 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(619, 294);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // textBoxUrl2
+            // 
+            this.textBoxUrl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxUrl2.Location = new System.Drawing.Point(177, 255);
+            this.textBoxUrl2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxUrl2.Name = "textBoxUrl2";
+            this.textBoxUrl2.Size = new System.Drawing.Size(438, 29);
+            this.textBoxUrl2.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
+            this.label1.Location = new System.Drawing.Point(4, 259);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 21);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Url ảnh:";
+            // 
             // labelId
             // 
             this.labelId.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -440,6 +434,17 @@
             this.labelId.Size = new System.Drawing.Size(60, 21);
             this.labelId.TabIndex = 0;
             this.labelId.Text = "Mã DC:";
+            // 
+            // textBoxId
+            // 
+            this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxId.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxId.Location = new System.Drawing.Point(177, 10);
+            this.textBoxId.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxId.Name = "textBoxId";
+            this.textBoxId.ReadOnly = true;
+            this.textBoxId.Size = new System.Drawing.Size(438, 29);
+            this.textBoxId.TabIndex = 1;
             // 
             // labelName
             // 
@@ -454,6 +459,16 @@
             this.labelName.TabIndex = 2;
             this.labelName.Text = "Tên dụng cụ:";
             // 
+            // textBoxName
+            // 
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxName.Location = new System.Drawing.Point(177, 59);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(438, 29);
+            this.textBoxName.TabIndex = 3;
+            // 
             // labelCode
             // 
             this.labelCode.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -466,6 +481,16 @@
             this.labelCode.Size = new System.Drawing.Size(101, 21);
             this.labelCode.TabIndex = 4;
             this.labelCode.Text = "Thương hiệu:";
+            // 
+            // textBoxBranch
+            // 
+            this.textBoxBranch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxBranch.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.textBoxBranch.Location = new System.Drawing.Point(177, 108);
+            this.textBoxBranch.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxBranch.Name = "textBoxBranch";
+            this.textBoxBranch.Size = new System.Drawing.Size(438, 29);
+            this.textBoxBranch.TabIndex = 5;
             // 
             // labelCategory
             // 
@@ -480,6 +505,25 @@
             this.labelCategory.TabIndex = 8;
             this.labelCategory.Text = "Danh mục:";
             // 
+            // comboBoxCondition
+            // 
+            this.comboBoxCondition.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCondition.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.comboBoxCondition.FormattingEnabled = true;
+            this.comboBoxCondition.Items.AddRange(new object[] {
+            "Bóng",
+            "Trang phục",
+            "Thiết bị sân",
+            "Phụ kiện",
+            "Thiết bị tập luyện",
+            "Khác"});
+            this.comboBoxCondition.Location = new System.Drawing.Point(177, 157);
+            this.comboBoxCondition.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxCondition.Name = "comboBoxCondition";
+            this.comboBoxCondition.Size = new System.Drawing.Size(265, 29);
+            this.comboBoxCondition.TabIndex = 7;
+            // 
             // labelStatus
             // 
             this.labelStatus.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -492,6 +536,23 @@
             this.labelStatus.Size = new System.Drawing.Size(57, 21);
             this.labelStatus.TabIndex = 6;
             this.labelStatus.Text = "Model:";
+            // 
+            // comboBox
+            // 
+            this.comboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Items.AddRange(new object[] {
+            "Premier League 2023",
+            "Home Kit 2023/24",
+            "Pro Net 3x2m",
+            "Predator Pro 2023",
+            "Training Cone Set"});
+            this.comboBox.Location = new System.Drawing.Point(177, 206);
+            this.comboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(265, 29);
+            this.comboBox.TabIndex = 9;
             // 
             // tabPageDetails
             // 
@@ -917,95 +978,29 @@
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // comboBox
+            // labelTitle
             // 
-            this.comboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBox.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.comboBox.FormattingEnabled = true;
-            this.comboBox.Items.AddRange(new object[] {
-            "Premier League 2023",
-            "Home Kit 2023/24",
-            "Pro Net 3x2m",
-            "Predator Pro 2023",
-            "Training Cone Set"});
-            this.comboBox.Location = new System.Drawing.Point(177, 206);
-            this.comboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(265, 29);
-            this.comboBox.TabIndex = 9;
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.labelTitle.ForeColor = System.Drawing.Color.White;
+            this.labelTitle.Location = new System.Drawing.Point(5, 14);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(344, 41);
+            this.labelTitle.TabIndex = 2;
+            this.labelTitle.Text = "⚽ QUẢN LÝ DỤNG CỤ";
             // 
-            // comboBoxCondition
+            // lblUserInfo
             // 
-            this.comboBoxCondition.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCondition.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.comboBoxCondition.FormattingEnabled = true;
-            this.comboBoxCondition.Items.AddRange(new object[] {
-            "Bóng",
-            "Trang phục",
-            "Thiết bị sân",
-            "Phụ kiện",
-            "Thiết bị tập luyện",
-            "Khác"});
-            this.comboBoxCondition.Location = new System.Drawing.Point(177, 157);
-            this.comboBoxCondition.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBoxCondition.Name = "comboBoxCondition";
-            this.comboBoxCondition.Size = new System.Drawing.Size(265, 29);
-            this.comboBoxCondition.TabIndex = 7;
-            // 
-            // textBoxBranch
-            // 
-            this.textBoxBranch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxBranch.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxBranch.Location = new System.Drawing.Point(177, 108);
-            this.textBoxBranch.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxBranch.Name = "textBoxBranch";
-            this.textBoxBranch.Size = new System.Drawing.Size(438, 29);
-            this.textBoxBranch.TabIndex = 5;
-            // 
-            // textBoxName
-            // 
-            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxName.Location = new System.Drawing.Point(177, 59);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(438, 29);
-            this.textBoxName.TabIndex = 3;
-            // 
-            // textBoxId
-            // 
-            this.textBoxId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxId.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxId.Location = new System.Drawing.Point(177, 10);
-            this.textBoxId.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxId.Name = "textBoxId";
-            this.textBoxId.ReadOnly = true;
-            this.textBoxId.Size = new System.Drawing.Size(438, 29);
-            this.textBoxId.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(94)))), ((int)(((byte)(32)))));
-            this.label1.Location = new System.Drawing.Point(4, 259);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 21);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Url ảnh:";
-            // 
-            // textBoxUrl2
-            // 
-            this.textBoxUrl2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUrl2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.textBoxUrl2.Location = new System.Drawing.Point(177, 255);
-            this.textBoxUrl2.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxUrl2.Name = "textBoxUrl2";
-            this.textBoxUrl2.Size = new System.Drawing.Size(438, 29);
-            this.textBoxUrl2.TabIndex = 11;
+            this.lblUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserInfo.AutoSize = true;
+            this.lblUserInfo.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblUserInfo.ForeColor = System.Drawing.Color.White;
+            this.lblUserInfo.Location = new System.Drawing.Point(1166, 27);
+            this.lblUserInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUserInfo.Name = "lblUserInfo";
+            this.lblUserInfo.Size = new System.Drawing.Size(136, 25);
+            this.lblUserInfo.TabIndex = 3;
+            this.lblUserInfo.Text = "👤 Admin User";
             // 
             // DungCu
             // 
@@ -1058,9 +1053,7 @@
 
         #endregion
         private System.Windows.Forms.Panel panelHeader;
-        private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelToolbar;
-        private System.Windows.Forms.Button buttonViewWeb;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;
@@ -1119,5 +1112,7 @@
         private System.Windows.Forms.TextBox textBoxBranch;
         private System.Windows.Forms.ComboBox comboBoxCondition;
         private System.Windows.Forms.ComboBox comboBox;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Label lblUserInfo;
     }
 }

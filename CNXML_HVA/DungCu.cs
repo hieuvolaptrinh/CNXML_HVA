@@ -879,29 +879,5 @@ namespace CNXML_HVA
             }
         }
 
-        private void buttonViewWeb_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Generate HTML từ XML mới nhất
-                HtmlGenerator.GenerateEquipmentsHtml();
-                
-                string webPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Web", "equipments.html");
-                if (File.Exists(webPath))
-                {
-                    System.Diagnostics.Process.Start(webPath);
-                }
-                else
-                {
-                    MessageBox.Show($"Không tìm thấy file web!\nĐường dẫn: {webPath}", 
-                        "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tạo trang web: " + ex.Message, 
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }

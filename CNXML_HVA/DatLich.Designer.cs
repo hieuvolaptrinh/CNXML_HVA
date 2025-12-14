@@ -22,8 +22,6 @@ namespace CNXML_HVA
         private void InitializeComponent()
         {
             this.panelHeader = new System.Windows.Forms.Panel();
-            this.pictureBoxIcon = new System.Windows.Forms.PictureBox();
-            this.labelTitle = new System.Windows.Forms.Label();
             this.groupBoxInfo = new System.Windows.Forms.GroupBox();
             this.labelID = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
@@ -55,9 +53,9 @@ namespace CNXML_HVA
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnLoadXML = new System.Windows.Forms.Button();
             this.btnExportExcel = new System.Windows.Forms.Button();
-            this.buttonViewWeb = new System.Windows.Forms.Button();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblUserInfo = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).BeginInit();
             this.groupBoxInfo.SuspendLayout();
             this.panelSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBookings)).BeginInit();
@@ -66,36 +64,14 @@ namespace CNXML_HVA
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.Green;
-            this.panelHeader.Controls.Add(this.pictureBoxIcon);
-            this.panelHeader.Controls.Add(this.labelTitle);
-            this.panelHeader.Controls.Add(this.buttonViewWeb);
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.panelHeader.Controls.Add(this.lblUserInfo);
+            this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
             this.panelHeader.Size = new System.Drawing.Size(1000, 70);
             this.panelHeader.TabIndex = 0;
-            // 
-            // pictureBoxIcon
-            // 
-            this.pictureBoxIcon.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxIcon.Location = new System.Drawing.Point(20, 15);
-            this.pictureBoxIcon.Name = "pictureBoxIcon";
-            this.pictureBoxIcon.Size = new System.Drawing.Size(40, 40);
-            this.pictureBoxIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxIcon.TabIndex = 0;
-            this.pictureBoxIcon.TabStop = false;
-            // 
-            // labelTitle
-            // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.labelTitle.ForeColor = System.Drawing.Color.White;
-            this.labelTitle.Location = new System.Drawing.Point(70, 20);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(311, 41);
-            this.labelTitle.TabIndex = 1;
-            this.labelTitle.Text = "ĐẶT LỊCH THUÊ SÂN";
             // 
             // groupBoxInfo
             // 
@@ -117,7 +93,6 @@ namespace CNXML_HVA
             this.groupBoxInfo.Controls.Add(this.labelNote);
             this.groupBoxInfo.Controls.Add(this.txtNote);
             this.groupBoxInfo.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.groupBoxInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
             this.groupBoxInfo.Location = new System.Drawing.Point(20, 90);
             this.groupBoxInfo.Name = "groupBoxInfo";
             this.groupBoxInfo.Size = new System.Drawing.Size(960, 240);
@@ -316,7 +291,7 @@ namespace CNXML_HVA
             // 
             this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxSearch.Location = new System.Drawing.Point(100, 9);
+            this.textBoxSearch.Location = new System.Drawing.Point(125, 10);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(500, 27);
             this.textBoxSearch.TabIndex = 1;
@@ -372,7 +347,7 @@ namespace CNXML_HVA
             // 
             // btnAdd
             // 
-            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
+            this.btnAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
             this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdd.FlatAppearance.BorderSize = 0;
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -498,21 +473,30 @@ namespace CNXML_HVA
             this.btnExportExcel.UseVisualStyleBackColor = false;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
-            // buttonViewWeb
+            // lblTitle
             // 
-            this.buttonViewWeb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
-            this.buttonViewWeb.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.buttonViewWeb.FlatAppearance.BorderSize = 0;
-            this.buttonViewWeb.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonViewWeb.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonViewWeb.ForeColor = System.Drawing.Color.White;
-            this.buttonViewWeb.Location = new System.Drawing.Point(819, 27);
-            this.buttonViewWeb.Name = "buttonViewWeb";
-            this.buttonViewWeb.Size = new System.Drawing.Size(178, 40);
-            this.buttonViewWeb.TabIndex = 8;
-            this.buttonViewWeb.Text = "🌐 Xem trên Web";
-            this.buttonViewWeb.UseVisualStyleBackColor = false;
-            this.buttonViewWeb.Click += new System.EventHandler(this.buttonViewWeb_Click);
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(23, 13);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(342, 41);
+            this.lblTitle.TabIndex = 1;
+            this.lblTitle.Text = "⚽ QUẢN LÝ ĐẶT LỊCH";
+            // 
+            // lblUserInfo
+            // 
+            this.lblUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserInfo.AutoSize = true;
+            this.lblUserInfo.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.lblUserInfo.ForeColor = System.Drawing.Color.White;
+            this.lblUserInfo.Location = new System.Drawing.Point(844, 26);
+            this.lblUserInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUserInfo.Name = "lblUserInfo";
+            this.lblUserInfo.Size = new System.Drawing.Size(136, 25);
+            this.lblUserInfo.TabIndex = 2;
+            this.lblUserInfo.Text = "👤 Admin User";
             // 
             // DatLich
             // 
@@ -531,7 +515,6 @@ namespace CNXML_HVA
             this.Load += new System.EventHandler(this.DatLich_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIcon)).EndInit();
             this.groupBoxInfo.ResumeLayout(false);
             this.groupBoxInfo.PerformLayout();
             this.panelSearch.ResumeLayout(false);
@@ -545,8 +528,6 @@ namespace CNXML_HVA
         #endregion
 
         private Panel panelHeader;
-        private Label labelTitle;
-        private PictureBox pictureBoxIcon;
 
         private GroupBox groupBoxInfo;
         private Label labelID;
@@ -582,6 +563,7 @@ namespace CNXML_HVA
         private Button btnRefresh;
         private Button btnLoadXML;
         private Button btnExportExcel;
-        private Button buttonViewWeb;
+        private Label lblTitle;
+        private Label lblUserInfo;
     }
 }

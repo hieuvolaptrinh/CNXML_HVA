@@ -43,6 +43,7 @@
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnMoWebsite = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblAppName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panelContent = new System.Windows.Forms.Panel();
@@ -127,7 +128,7 @@
             this.panelMenuItems.Margin = new System.Windows.Forms.Padding(4);
             this.panelMenuItems.Name = "panelMenuItems";
             this.panelMenuItems.Padding = new System.Windows.Forms.Padding(20, 25, 20, 25);
-            this.panelMenuItems.Size = new System.Drawing.Size(320, 682);
+            this.panelMenuItems.Size = new System.Drawing.Size(320, 603);
             this.panelMenuItems.TabIndex = 9;
             // 
             // btnDatLich
@@ -278,7 +279,7 @@
             this.btnDangXuat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
-            this.btnDangXuat.Location = new System.Drawing.Point(0, 854);
+            this.btnDangXuat.Location = new System.Drawing.Point(0, 775);
             this.btnDangXuat.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -296,7 +297,7 @@
             this.btnMoWebsite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMoWebsite.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
             this.btnMoWebsite.ForeColor = System.Drawing.Color.White;
-            this.btnMoWebsite.Location = new System.Drawing.Point(0, 775);
+            this.btnMoWebsite.Location = new System.Drawing.Point(0, 854);
             this.btnMoWebsite.Margin = new System.Windows.Forms.Padding(20, 18, 20, 18);
             this.btnMoWebsite.Name = "btnMoWebsite";
             this.btnMoWebsite.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
@@ -309,6 +310,7 @@
             // panelLogo
             // 
             this.panelLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(101)))), ((int)(((byte)(192)))));
+            this.panelLogo.Controls.Add(this.label1);
             this.panelLogo.Controls.Add(this.lblAppName);
             this.panelLogo.Controls.Add(this.picLogo);
             this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
@@ -317,6 +319,19 @@
             this.panelLogo.Name = "panelLogo";
             this.panelLogo.Size = new System.Drawing.Size(320, 172);
             this.panelLogo.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(113, 25);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(98, 90);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "⚽";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAppName
             // 
@@ -329,7 +344,7 @@
             this.lblAppName.Name = "lblAppName";
             this.lblAppName.Size = new System.Drawing.Size(320, 49);
             this.lblAppName.TabIndex = 1;
-            this.lblAppName.Text = "⚽ Quản Lý Sân Bóng";
+            this.lblAppName.Text = "Quản Lý Sân Bóng";
             this.lblAppName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // picLogo
@@ -859,5 +874,6 @@
         private System.Windows.Forms.Label lblActivitiesTitle;
         private System.Windows.Forms.ListBox listBoxActivities;
         private System.Windows.Forms.Button btnTrangChu;
+        private System.Windows.Forms.Label label1;
     }
 }

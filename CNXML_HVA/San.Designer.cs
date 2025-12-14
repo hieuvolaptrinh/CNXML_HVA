@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblUserAvatar = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -50,11 +50,11 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.cmbTypeFilter = new System.Windows.Forms.ComboBox();
             this.btnStatusFilter = new System.Windows.Forms.Button();
+            this.btnExportToSQL = new System.Windows.Forms.Button();
+            this.btnImportFromSQL = new System.Windows.Forms.Button();
             this.btnAddField = new System.Windows.Forms.Button();
             this.btnImportXml = new System.Windows.Forms.Button();
             this.btnExportCsv = new System.Windows.Forms.Button();
-            this.btnExportToSQL = new System.Windows.Forms.Button();
-            this.btnImportFromSQL = new System.Windows.Forms.Button();
             this.pnlFieldDetails = new System.Windows.Forms.Panel();
             this.lblDetailTitle = new System.Windows.Forms.Label();
             this.lblIdLabel = new System.Windows.Forms.Label();
@@ -79,7 +79,6 @@
             this.menuItemAvailable = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemBooked = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemMaintenance = new System.Windows.Forms.ToolStripMenuItem();
-
             this.panelHeader.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabFieldManagement.SuspendLayout();
@@ -100,7 +99,7 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1300, 74);
+            this.panelHeader.Size = new System.Drawing.Size(1350, 74);
             this.panelHeader.TabIndex = 0;
             // 
             // lblUserAvatar
@@ -109,7 +108,7 @@
             this.lblUserAvatar.AutoSize = true;
             this.lblUserAvatar.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblUserAvatar.ForeColor = System.Drawing.Color.White;
-            this.lblUserAvatar.Location = new System.Drawing.Point(1273, 25);
+            this.lblUserAvatar.Location = new System.Drawing.Point(1201, 31);
             this.lblUserAvatar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserAvatar.Name = "lblUserAvatar";
             this.lblUserAvatar.Size = new System.Drawing.Size(136, 25);
@@ -137,7 +136,7 @@
             this.tabMain.Margin = new System.Windows.Forms.Padding(4);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1300, 626);
+            this.tabMain.Size = new System.Drawing.Size(1350, 626);
             this.tabMain.TabIndex = 1;
             // 
             // tabFieldManagement
@@ -150,7 +149,7 @@
             this.tabFieldManagement.Margin = new System.Windows.Forms.Padding(4);
             this.tabFieldManagement.Name = "tabFieldManagement";
             this.tabFieldManagement.Padding = new System.Windows.Forms.Padding(4);
-            this.tabFieldManagement.Size = new System.Drawing.Size(1292, 590);
+            this.tabFieldManagement.Size = new System.Drawing.Size(1342, 590);
             this.tabFieldManagement.TabIndex = 0;
             this.tabFieldManagement.Text = "🏟️ Quản lý Sân";
             // 
@@ -165,14 +164,14 @@
             this.dgvFields.BackgroundColor = System.Drawing.Color.White;
             this.dgvFields.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvFields.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvFields.ColumnHeadersHeight = 40;
             this.dgvFields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
@@ -183,14 +182,14 @@
             this.colEdit,
             this.colDelete,
             this.colSchedule});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(247)))), ((int)(((byte)(230)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvFields.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(223)))), ((int)(((byte)(247)))), ((int)(((byte)(230)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(43)))), ((int)(((byte)(43)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvFields.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvFields.EnableHeadersVisualStyles = false;
             this.dgvFields.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.dgvFields.Location = new System.Drawing.Point(10, 150);
@@ -202,7 +201,7 @@
             this.dgvFields.RowHeadersWidth = 51;
             this.dgvFields.RowTemplate.Height = 40;
             this.dgvFields.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvFields.Size = new System.Drawing.Size(900, 410);
+            this.dgvFields.Size = new System.Drawing.Size(950, 410);
             this.dgvFields.TabIndex = 1;
             this.dgvFields.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFields_CellContentClick);
             this.dgvFields.SelectionChanged += new System.EventHandler(this.dgvFields_SelectionChanged);
@@ -297,7 +296,7 @@
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.panelToolbar.Size = new System.Drawing.Size(900, 135);
+            this.panelToolbar.Size = new System.Drawing.Size(950, 135);
             this.panelToolbar.TabIndex = 0;
             // 
             // lblSearch
@@ -354,6 +353,38 @@
             this.btnStatusFilter.UseVisualStyleBackColor = false;
             this.btnStatusFilter.Click += new System.EventHandler(this.btnStatusFilter_Click);
             // 
+            // btnExportToSQL
+            // 
+            this.btnExportToSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.btnExportToSQL.FlatAppearance.BorderSize = 0;
+            this.btnExportToSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportToSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExportToSQL.ForeColor = System.Drawing.Color.White;
+            this.btnExportToSQL.Location = new System.Drawing.Point(463, 85);
+            this.btnExportToSQL.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExportToSQL.Name = "btnExportToSQL";
+            this.btnExportToSQL.Size = new System.Drawing.Size(140, 38);
+            this.btnExportToSQL.TabIndex = 7;
+            this.btnExportToSQL.Text = "📤 Export SQL";
+            this.btnExportToSQL.UseVisualStyleBackColor = false;
+            this.btnExportToSQL.Click += new System.EventHandler(this.btnExportToSQL_Click);
+            // 
+            // btnImportFromSQL
+            // 
+            this.btnImportFromSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.btnImportFromSQL.FlatAppearance.BorderSize = 0;
+            this.btnImportFromSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImportFromSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnImportFromSQL.ForeColor = System.Drawing.Color.White;
+            this.btnImportFromSQL.Location = new System.Drawing.Point(613, 85);
+            this.btnImportFromSQL.Margin = new System.Windows.Forms.Padding(4);
+            this.btnImportFromSQL.Name = "btnImportFromSQL";
+            this.btnImportFromSQL.Size = new System.Drawing.Size(140, 38);
+            this.btnImportFromSQL.TabIndex = 8;
+            this.btnImportFromSQL.Text = "📥 Import SQL";
+            this.btnImportFromSQL.UseVisualStyleBackColor = false;
+            this.btnImportFromSQL.Click += new System.EventHandler(this.btnImportFromSQL_Click);
+            // 
             // btnAddField
             // 
             this.btnAddField.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
@@ -402,38 +433,6 @@
             this.btnExportCsv.UseVisualStyleBackColor = false;
             this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
             // 
-            // btnExportToSQL
-            // 
-            this.btnExportToSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            this.btnExportToSQL.FlatAppearance.BorderSize = 0;
-            this.btnExportToSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExportToSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnExportToSQL.ForeColor = System.Drawing.Color.White;
-            this.btnExportToSQL.Location = new System.Drawing.Point(463, 85);
-            this.btnExportToSQL.Margin = new System.Windows.Forms.Padding(4);
-            this.btnExportToSQL.Name = "btnExportToSQL";
-            this.btnExportToSQL.Size = new System.Drawing.Size(140, 38);
-            this.btnExportToSQL.TabIndex = 7;
-            this.btnExportToSQL.Text = "📤 Export SQL";
-            this.btnExportToSQL.UseVisualStyleBackColor = false;
-            this.btnExportToSQL.Click += new System.EventHandler(this.btnExportToSQL_Click);
-            // 
-            // btnImportFromSQL
-            // 
-            this.btnImportFromSQL.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
-            this.btnImportFromSQL.FlatAppearance.BorderSize = 0;
-            this.btnImportFromSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImportFromSQL.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnImportFromSQL.ForeColor = System.Drawing.Color.White;
-            this.btnImportFromSQL.Location = new System.Drawing.Point(613, 85);
-            this.btnImportFromSQL.Margin = new System.Windows.Forms.Padding(4);
-            this.btnImportFromSQL.Name = "btnImportFromSQL";
-            this.btnImportFromSQL.Size = new System.Drawing.Size(140, 38);
-            this.btnImportFromSQL.TabIndex = 8;
-            this.btnImportFromSQL.Text = "📥 Import SQL";
-            this.btnImportFromSQL.UseVisualStyleBackColor = false;
-            this.btnImportFromSQL.Click += new System.EventHandler(this.btnImportFromSQL_Click);
-            // 
             // pnlFieldDetails
             // 
             this.pnlFieldDetails.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -454,7 +453,7 @@
             this.pnlFieldDetails.Controls.Add(this.txtDescription);
             this.pnlFieldDetails.Controls.Add(this.btnEditField);
             this.pnlFieldDetails.Controls.Add(this.btnCloseDetail);
-            this.pnlFieldDetails.Location = new System.Drawing.Point(920, 10);
+            this.pnlFieldDetails.Location = new System.Drawing.Point(970, 10);
             this.pnlFieldDetails.Margin = new System.Windows.Forms.Padding(4);
             this.pnlFieldDetails.Name = "pnlFieldDetails";
             this.pnlFieldDetails.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
@@ -712,7 +711,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(1300, 700);
+            this.ClientSize = new System.Drawing.Size(1350, 700);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.panelHeader);
             this.KeyPreview = true;
