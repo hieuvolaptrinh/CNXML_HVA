@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <equipments>
   <equipment id="EQ001">
     <name>Quả bóng đá FIFA</name>
@@ -18,7 +18,6 @@
     <status>Active</status>
     <image_url>https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=400</image_url>
   </equipment>
-
   <equipment id="EQ002">
     <name>Áo phân biệt đội</name>
     <category>Trang phục</category>
@@ -37,7 +36,6 @@
     <status>Active</status>
     <image_url>https://bizweb.dktcdn.net/100/365/443/products/ao-pitch-ao-luoi-phan-biet-doi-mon-bong-da-size-l-sodex-sport-ma-san-pham-s28355-trangnguyen-vn.jpg?v=1680026372457</image_url>
   </equipment>
-
   <equipment id="EQ003">
     <name>Khung thành mini</name>
     <category>Thiết bị sân</category>
@@ -56,7 +54,6 @@
     <status>Active</status>
     <image_url>https://thethaonamviet.vn/wp-content/uploads/2024/05/khung-thanh-bong-da-mini-nguoi-avatar.jpg</image_url>
   </equipment>
-
   <equipment id="EQ004">
     <name>Còi trọng tài</name>
     <category>Phụ kiện</category>
@@ -75,11 +72,10 @@
     <status>Active</status>
     <image_url>https://meta.vn/Data/image/2020/09/01/coi-trong-tai-bong-ro-dolfin-b-co-day-g.jpg</image_url>
   </equipment>
-
   <equipment id="EQ005">
     <name>Cọc tập luyện</name>
     <category>Thiết bị tập luyện</category>
-    <brand>Training Pro</brand>
+    <brand>Training Pro Max</brand>
     <model>Cone Set</model>
     <quantity_total>100</quantity_total>
     <quantity_available>85</quantity_available>
@@ -88,7 +84,8 @@
     <condition>Tốt</condition>
     <description>Bộ cọc tập luyện đa màu</description>
     <branch_id>B03</branch_id>
-    <supplier>Training Equipment Ltd</supplier>
+    <supplier>
+    </supplier>
     <purchase_date>2024-02-15</purchase_date>
     <warranty_period>6</warranty_period>
     <status>Active</status>

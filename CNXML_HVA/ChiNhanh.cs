@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CNXML_HVA
         private bool isEditing = false;
         private bool isAdding = false;
         private DataTable branchTable;
+        private const string ConnectionString = "Data Source=localhost;Initial Catalog=dbSANBONG;Integrated Security=True";
 
         public ChiNhanh()
         {
@@ -355,6 +357,9 @@ namespace CNXML_HVA
                         branchTable.Rows.Remove(rowToDelete);
                     }
 
+                    // Tự động xóa khỏi database
+                    DeleteBranchFromDatabase(branchId);
+
                     ClearForm();
                     MessageBox.Show("Xóa chi nhánh thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -504,6 +509,9 @@ namespace CNXML_HVA
             DataRow newRow = branchTable.NewRow();
             PopulateDataRow(newRow);
             branchTable.Rows.Add(newRow);
+
+            // Tự động sync vào database
+            SyncBranchToDatabase(textBoxId.Text, false);
         }
 
         private void UpdateBranch()
@@ -552,6 +560,9 @@ namespace CNXML_HVA
             {
                 PopulateDataRow(rowToUpdate);
             }
+
+            // Tự động sync vào database
+            SyncBranchToDatabase(branchId, false);
         }
 
         private void PopulateDataRow(DataRow row)

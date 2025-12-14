@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace CNXML_HVA
         private bool isEditing = false;
         private bool isAdding = false;
         private DataTable equipmentTable;
+        private const string ConnectionString = "Data Source=localhost;Initial Catalog=dbSANBONG;Integrated Security=True";
 
         public DungCu()
         {
@@ -410,6 +412,9 @@ namespace CNXML_HVA
                         equipmentTable.Rows.Remove(rowToDelete);
                     }
 
+                    // Tự động xóa khỏi database
+                    DeleteEquipmentFromDatabase(equipmentId);
+
                     ClearForm();
                     MessageBox.Show("Xóa dụng cụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -548,6 +553,9 @@ namespace CNXML_HVA
             DataRow newRow = equipmentTable.NewRow();
             PopulateDataRow(newRow);
             equipmentTable.Rows.Add(newRow);
+
+            // Tự động sync vào database
+            SyncEquipmentToDatabase(textBoxId.Text, false);
         }
 
         private void UpdateEquipment()
@@ -603,6 +611,9 @@ namespace CNXML_HVA
             {
                 PopulateDataRow(rowToUpdate);
             }
+
+            // Tự động sync vào database
+            SyncEquipmentToDatabase(equipmentId, false);
         }
 
         private void PopulateDataRow(DataRow row)

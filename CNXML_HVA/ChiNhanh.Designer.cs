@@ -32,6 +32,9 @@
             this.lblUserInfo = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
+            this.buttonSaveToDatabase = new System.Windows.Forms.Button();
+            this.buttonClearData = new System.Windows.Forms.Button();
+            this.buttonImportFromDatabase = new System.Windows.Forms.Button();
             this.buttonImportXml = new System.Windows.Forms.Button();
             this.buttonExportExcel = new System.Windows.Forms.Button();
             this.buttonRefresh = new System.Windows.Forms.Button();
@@ -157,6 +160,9 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.buttonSaveToDatabase);
+            this.panelToolbar.Controls.Add(this.buttonClearData);
+            this.panelToolbar.Controls.Add(this.buttonImportFromDatabase);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -167,12 +173,59 @@
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelToolbar.Size = new System.Drawing.Size(1300, 74);
+            this.panelToolbar.Size = new System.Drawing.Size(1300, 115);
             this.panelToolbar.TabIndex = 1;
+            // 
+            // buttonSaveToDatabase
+            // 
+            this.buttonSaveToDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(150)))), ((int)(((byte)(243)))));
+            this.buttonSaveToDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonSaveToDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSaveToDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonSaveToDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonSaveToDatabase.Location = new System.Drawing.Point(365, 64);
+            this.buttonSaveToDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveToDatabase.Name = "buttonSaveToDatabase";
+            this.buttonSaveToDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonSaveToDatabase.TabIndex = 7;
+            this.buttonSaveToDatabase.Text = "💾 Lưu vào DB";
+            this.buttonSaveToDatabase.UseVisualStyleBackColor = false;
+            this.buttonSaveToDatabase.Click += new System.EventHandler(this.buttonSaveToDatabase_Click);
+            // 
+            // buttonClearData
+            // 
+            this.buttonClearData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(67)))), ((int)(((byte)(54)))));
+            this.buttonClearData.FlatAppearance.BorderSize = 0;
+            this.buttonClearData.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearData.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonClearData.ForeColor = System.Drawing.Color.White;
+            this.buttonClearData.Location = new System.Drawing.Point(711, 64);
+            this.buttonClearData.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonClearData.Name = "buttonClearData";
+            this.buttonClearData.Size = new System.Drawing.Size(165, 38);
+            this.buttonClearData.TabIndex = 6;
+            this.buttonClearData.Text = "🗑️ Xóa XML";
+            this.buttonClearData.UseVisualStyleBackColor = false;
+            this.buttonClearData.Click += new System.EventHandler(this.buttonClearData_Click);
+            // 
+            // buttonImportFromDatabase
+            // 
+            this.buttonImportFromDatabase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
+            this.buttonImportFromDatabase.FlatAppearance.BorderSize = 0;
+            this.buttonImportFromDatabase.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonImportFromDatabase.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonImportFromDatabase.ForeColor = System.Drawing.Color.White;
+            this.buttonImportFromDatabase.Location = new System.Drawing.Point(538, 64);
+            this.buttonImportFromDatabase.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonImportFromDatabase.Name = "buttonImportFromDatabase";
+            this.buttonImportFromDatabase.Size = new System.Drawing.Size(165, 38);
+            this.buttonImportFromDatabase.TabIndex = 5;
+            this.buttonImportFromDatabase.Text = "📥 Nạp từ DB";
+            this.buttonImportFromDatabase.UseVisualStyleBackColor = false;
+            this.buttonImportFromDatabase.Click += new System.EventHandler(this.buttonImportFromDatabase_Click);
             // 
             // buttonImportXml
             // 
-            this.buttonImportXml.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonImportXml.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(58)))), ((int)(((byte)(183)))));
             this.buttonImportXml.FlatAppearance.BorderSize = 0;
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -181,7 +234,7 @@
             this.buttonImportXml.Location = new System.Drawing.Point(1140, 17);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
-            this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
+            this.buttonImportXml.Size = new System.Drawing.Size(155, 38);
             this.buttonImportXml.TabIndex = 4;
             this.buttonImportXml.Text = "📥 Import XML";
             this.buttonImportXml.UseVisualStyleBackColor = false;
@@ -189,7 +242,6 @@
             // 
             // buttonExportExcel
             // 
-            this.buttonExportExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonExportExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(136)))));
             this.buttonExportExcel.FlatAppearance.BorderSize = 0;
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -198,7 +250,7 @@
             this.buttonExportExcel.Location = new System.Drawing.Point(985, 16);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
-            this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
+            this.buttonExportExcel.Size = new System.Drawing.Size(155, 38);
             this.buttonExportExcel.TabIndex = 3;
             this.buttonExportExcel.Text = "📊 Xuất Excel";
             this.buttonExportExcel.UseVisualStyleBackColor = false;
@@ -1149,6 +1201,9 @@
 
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Button buttonSaveToDatabase;
+        private System.Windows.Forms.Button buttonClearData;
+        private System.Windows.Forms.Button buttonImportFromDatabase;
         private System.Windows.Forms.Button buttonImportXml;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.Button buttonRefresh;

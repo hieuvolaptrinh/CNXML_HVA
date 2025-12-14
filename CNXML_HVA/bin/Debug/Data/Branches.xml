@@ -117,4 +117,32 @@
     <status>Active</status>
     <image_url>https://images.unsplash.com/photo-1505305976870-c0be1cd39939?q=80&amp;w=1170&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D</image_url>
   </branch>
+  <branch id="B05">
+    <name>Chi nhánh DV</name>
+    <code>DN-02</code>
+    <address>
+      <city>Đà Nẵng</city>
+      <district>Hải Châu</district>
+      <street>Cao Thắng</street>
+      <house_number>48</house_number>
+      <postal_code>123</postal_code>
+    </address>
+    <contact>
+      <phone>0905507622</phone>
+      <email>nguyendangviet@gmail.com</email>
+      <fax>029203202</fax>
+    </contact>
+    <manager_id>U002</manager_id>
+    <manager_name>Nguyễn Đăng Việt</manager_name>
+    <opening_hours>
+      <weekday>7:00-22:00</weekday>
+      <weekend>8:00-21:00</weekend>
+    </opening_hours>
+    <total_fields>3</total_fields>
+    <established_date>2025-11-24</established_date>
+    <monthly_revenue>0</monthly_revenue>
+    <staff_count>15</staff_count>
+    <description>quá đẳng cấp</description>
+    <status>Active</status>
+  </branch>
 </branches>
