@@ -173,31 +173,48 @@
     <script>
       let allBookings = [];
       let filteredBookings = [];
+      let allCustomers = [];
+      let allFields = [];
 
       document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("sidebar").innerHTML =
           createSidebar("bookings");
         requireAuth();
-        await loadBookings();
+        await loadAllData();
         setupEventListeners();
       });
 
-      async function loadBookings() {
+      async function loadAllData() {
         try {
           LoadingOverlay.show();
-          allBookings = await crudManager.getMergedData(
-            "Bookings.xml",
-            "Booking"
-          );
+          // Load bookings, customers, and fields data in parallel
+          const [bookings, customers, fields] = await Promise.all([
+            crudManager.getMergedData("Bookings.xml", "Booking"),
+            crudManager.getMergedData("Customers.xml", "customer"),
+            crudManager.getMergedData("Fields.xml", "field"),
+          ]);
+
+          allBookings = bookings;
+          allCustomers = customers;
+          allFields = fields;
+
+          console.log("Loaded bookings:", allBookings);
+          console.log("Loaded customers:", allCustomers);
+          console.log("Loaded fields:", allFields);
+
           filteredBookings = [...allBookings];
           renderBookings();
           updateStats();
           LoadingOverlay.hide();
         } catch (error) {
-          console.error("Error loading bookings:", error);
+          console.error("Error loading data:", error);
           LoadingOverlay.hide();
-          Toast.error("Không thể tải dữ liệu đặt sân");
+          Toast.error("Không thể tải dữ liệu: " + error.message);
         }
+      }
+
+      async function loadBookings() {
+        await loadAllData();
       }
 
       function renderBookings() {
@@ -205,13 +222,13 @@
 
         if (filteredBookings.length === 0) {
           tbody.innerHTML = `
-                    <tr>
-                        <td colspan="8" style="text-align: center; padding: 60px 20px; color: #999;">
-                            <i class="fas fa-calendar-times" style="font-size: 3em; margin-bottom: 15px; display: block;"></i>
-                            Không tìm thấy đặt sân nào
-                        </td>
-                    </tr>
-                `;
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 60px 20px; color: #999;">
+                <i class="fas fa-calendar-times" style="font-size: 3em; margin-bottom: 15px; display: block;"></i>
+                Không tìm thấy đặt sân nào
+              </td>
+            </tr>
+          `;
           return;
         }
 
@@ -223,56 +240,59 @@
               Cancelled: { bg: "#f44336", text: "Đã hủy" },
               Completed: { bg: "#2196F3", text: "Hoàn thành" },
             };
-            const status = statusColors[booking.trangthai] || {
-              bg: "#999",
-              text: booking.trangthai,
-            };
+            const status =
+              statusColors[booking.status] || statusColors.Confirmed;
+
+            // Calculate price based on duration (150k per hour)
+            const duration = parseInt(booking.duration) || 1;
+            const price = duration * 150000;
+
+            // Format time display
+            const startTime = parseInt(booking.time) || 7;
+            const endTime = startTime + duration;
 
             return `
-                    <tr style="border-bottom: 1px solid #eee; ${
-                      index % 2 === 0 ? "background: #fafafa;" : ""
-                    }">
-                        <td style="padding: 15px;"><strong>${
-                          booking.madatlich || booking.id || "N/A"
-                        }</strong></td>
-                        <td style="padding: 15px;">${
-                          booking.makhachhang || "N/A"
-                        }</td>
-                        <td style="padding: 15px;">${
-                          booking.masan || "N/A"
-                        }</td>
-                        <td style="padding: 15px;">${formatDate(
-                          booking.ngaydat
-                        )}</td>
-                        <td style="padding: 15px;">${
-                          booking.giobatdau || "N/A"
-                        } - ${booking.gioketthuc || "N/A"}</td>
-                        <td style="padding: 15px; text-align: right; font-weight: bold; color: #4CAF50;">${formatCurrency(
-                          booking.tongtien || 0
-                        )}</td>
-                        <td style="padding: 15px; text-align: center;">
-                            <span style="background: ${
-                              status.bg
-                            }; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; white-space: nowrap;">
-                                ${status.text}
-                            </span>
-                        </td>
-                        <td style="padding: 15px; text-align: center;">
-                            <div style="display: flex; gap: 8px; justify-content: center;">
-                                <button class="btn btn-sm btn-primary" onclick="editBooking('${
-                                  booking.madatlich || booking.id
-                                }')" title="Sửa">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteBooking('${
-                                  booking.madatlich || booking.id
-                                }')" title="Xóa">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+            <tr style="border-bottom: 1px solid #eee; ${
+              index % 2 === 0 ? "background: #fafafa;" : ""
+            }">
+              <td style="padding: 15px;"><strong>${
+                booking.id || "N/A"
+              }</strong></td>
+              <td style="padding: 15px;">${booking.customer || "N/A"}</td>
+              <td style="padding: 15px;">${booking.field || "N/A"}</td>
+              <td style="padding: 15px;">${formatDate(booking.date)}</td>
+              <td style="padding: 15px;">${startTime}:00 - ${endTime}:00 (${duration}h)</td>
+              <td style="padding: 15px; text-align: right; font-weight: bold; color: #4CAF50;">${formatCurrency(
+                price
+              )}</td>
+              <td style="padding: 15px; text-align: center;">
+                <span style="background: ${
+                  status.bg
+                }; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; white-space: nowrap;">
+                  ${status.text}
+                </span>
+              </td>
+              <td style="padding: 15px; text-align: center;">
+                <div style="display: flex; gap: 8px; justify-content: center;">
+                  <button class="btn btn-sm btn-info" onclick="viewBooking('${
+                    booking.id
+                  }')" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="btn btn-sm btn-primary" onclick="editBooking('${
+                    booking.id
+                  }')" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" onclick="deleteBooking('${
+                    booking.id
+                  }')" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
           })
           .join("");
       }
@@ -281,10 +301,13 @@
         document.getElementById("totalBookings").textContent =
           allBookings.length;
         document.getElementById("confirmedBookings").textContent =
-          allBookings.filter((b) => b.trangthai === "Confirmed").length;
+          allBookings.filter(
+            (b) => b.status === "Confirmed" || !b.status
+          ).length;
 
+        // Calculate total revenue (150k per hour)
         const totalRevenue = allBookings.reduce(
-          (sum, b) => sum + (parseFloat(b.tongtien) || 0),
+          (sum, b) => sum + (parseInt(b.duration) || 1) * 150000,
           0
         );
         document.getElementById("totalRevenue").textContent =
@@ -309,12 +332,14 @@
         filteredBookings = allBookings.filter((booking) => {
           const matchesSearch =
             !searchTerm ||
-            (booking.madatlich || "").toLowerCase().includes(searchTerm) ||
-            (booking.makhachhang || "").toLowerCase().includes(searchTerm) ||
-            (booking.masan || "").toLowerCase().includes(searchTerm);
+            (booking.id || "").toLowerCase().includes(searchTerm) ||
+            (booking.customer || "").toLowerCase().includes(searchTerm) ||
+            (booking.field || "").toLowerCase().includes(searchTerm);
 
           const matchesStatus =
-            !statusFilter || booking.trangthai === statusFilter;
+            !statusFilter ||
+            booking.status === statusFilter ||
+            (!booking.status && statusFilter === "Confirmed");
 
           return matchesSearch && matchesStatus;
         });
@@ -322,188 +347,366 @@
         renderBookings();
       }
 
+      // Generate customer options
+      function getCustomerOptions(selectedCustomer = "") {
+        return allCustomers
+          .map((c) => {
+            const name = c.tenkhachhang || c.name || c.id;
+            const selected = name === selectedCustomer ? "selected" : "";
+            return `<option value="${name}" ${selected}>${name} (${
+              c.sdt || c.phone || "N/A"
+            })</option>`;
+          })
+          .join("");
+      }
+
+      // Generate field options
+      function getFieldOptions(selectedField = "") {
+        return allFields
+          .map((f) => {
+            const name = f.tensan || f.name || f.id;
+            const selected = name === selectedField ? "selected" : "";
+            return `<option value="${name}" ${selected}>${name} - ${formatCurrency(
+              f.gia || f.price_per_hour || 150000
+            )}/h</option>`;
+          })
+          .join("");
+      }
+
+      // Generate next booking ID
+      function getNextBookingId() {
+        const maxNum = allBookings.reduce((max, b) => {
+          const num = parseInt((b.id || "").replace(/\D/g, "") || "0");
+          return num > max ? num : max;
+        }, 0);
+        return `B${String(maxNum + 1).padStart(3, "0")}`;
+      }
+
       function showAddBookingForm() {
+        const today = new Date().toISOString().split("T")[0];
+        const nextId = getNextBookingId();
+
         const formHTML = `
-                <form id="bookingForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã đặt lịch <span style="color: red;">*</span></label>
-                        <input type="text" name="madatlich" required class="form-control" placeholder="DL-001">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Mã khách hàng <span style="color: red;">*</span></label>
-                            <input type="text" name="makhachhang" required class="form-control" placeholder="KH-001">
-                        </div>
-                        <div class="form-group">
-                            <label>Mã sân <span style="color: red;">*</span></label>
-                            <input type="text" name="masan" required class="form-control" placeholder="SAN-001">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Ngày đặt <span style="color: red;">*</span></label>
-                        <input type="date" name="ngaydat" required class="form-control">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Giờ bắt đầu <span style="color: red;">*</span></label>
-                            <input type="time" name="giobatdau" required class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Giờ kết thúc <span style="color: red;">*</span></label>
-                            <input type="time" name="gioketthuc" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tổng tiền <span style="color: red;">*</span></label>
-                        <input type="number" name="tongtien" required class="form-control" placeholder="500000" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea name="ghichu" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Trạng thái</label>
-                        <select name="trangthai" class="form-control">
-                            <option value="Pending">Chờ xác nhận</option>
-                            <option value="Confirmed">Đã xác nhận</option>
-                            <option value="Completed">Hoàn thành</option>
-                            <option value="Cancelled">Đã hủy</option>
-                        </select>
-                    </div>
-                </form>
-            `;
+          <form id="bookingForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã đặt lịch <span style="color: red;">*</span></label>
+              <input type="text" name="id" required class="form-control" value="${nextId}">
+            </div>
+            <div class="form-group">
+              <label>Khách hàng <span style="color: red;">*</span></label>
+              <select name="customer" required class="form-control">
+                <option value="">-- Chọn khách hàng --</option>
+                ${getCustomerOptions()}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Sân <span style="color: red;">*</span></label>
+              <select name="field" required class="form-control" onchange="updateFieldType(this)">
+                <option value="">-- Chọn sân --</option>
+                ${getFieldOptions()}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Loại sân <span style="color: red;">*</span></label>
+              <select name="type" required class="form-control">
+                <option value="">-- Chọn loại sân --</option>
+                <option value="5 người">5 người</option>
+                <option value="7 người">7 người</option>
+                <option value="11 người">11 người</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ngày đặt <span style="color: red;">*</span></label>
+              <input type="date" name="date" required class="form-control" value="${today}" min="${today}">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Giờ bắt đầu <span style="color: red;">*</span></label>
+                <select name="time" required class="form-control">
+                  <option value="">Chọn giờ</option>
+                  ${Array.from({ length: 14 }, (_, i) => i + 7)
+                    .map((h) => `<option value="${h}">${h}:00</option>`)
+                    .join("")}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Thời lượng <span style="color: red;">*</span></label>
+                <select name="duration" required class="form-control" onchange="calculatePrice()">
+                  <option value="1">1 giờ - 150,000đ</option>
+                  <option value="2">2 giờ - 300,000đ</option>
+                  <option value="3">3 giờ - 450,000đ</option>
+                  <option value="4">4 giờ - 600,000đ</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Trạng thái</label>
+              <select name="status" class="form-control">
+                <option value="Confirmed">Đã xác nhận</option>
+                <option value="Pending">Chờ xác nhận</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ghi chú</label>
+              <textarea name="note" class="form-control" rows="2" placeholder="Nhập ghi chú..."></textarea>
+            </div>
+            <div class="alert" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 15px; border-radius: 8px; margin-top: 10px;">
+              <i class="fas fa-info-circle" style="color: #1976d2;"></i> 
+              <strong style="color: #1565c0;">Thông tin giá:</strong> 150,000đ/giờ
+            </div>
+          </form>
+        `;
 
         formModal.show("Thêm Đặt Sân Mới", formHTML, async (data) => {
           try {
-            data.id = generateId("BK");
-            await crudManager.saveToXML("DatLich.xml", data, "create");
+            LoadingOverlay.show();
+
+            // Validate required fields
+            if (!data.customer || !data.field || !data.date || !data.time) {
+              Toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+              LoadingOverlay.hide();
+              return;
+            }
+
+            await crudManager.saveToXML("Bookings.xml", data, "create");
             formModal.close();
             Toast.success("Thêm đặt sân thành công!");
             await loadBookings();
           } catch (error) {
-            Toast.error("Lỗi khi thêm đặt sân!");
+            console.error("Error adding booking:", error);
+            Toast.error("Lỗi khi thêm đặt sân: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
+      function viewBooking(id) {
+        const booking = allBookings.find((b) => b.id === id);
+        if (!booking) {
+          Toast.error("Không tìm thấy đặt sân!");
+          return;
+        }
+
+        const duration = parseInt(booking.duration) || 1;
+        const price = duration * 150000;
+        const startTime = parseInt(booking.time) || 7;
+        const endTime = startTime + duration;
+
+        const content = `
+          <div style="padding: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                <h4 style="color: #667eea; margin-bottom: 15px;">
+                  <i class="fas fa-info-circle"></i> Thông tin đặt sân
+                </h4>
+                <table style="width: 100%;">
+                  <tr><td style="padding: 8px 0; color: #666;">Mã đặt:</td><td style="font-weight: bold;">${
+                    booking.id
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Khách hàng:</td><td style="font-weight: bold;">${
+                    booking.customer
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Sân:</td><td style="font-weight: bold;">${
+                    booking.field
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Loại sân:</td><td>${
+                    booking.type || "N/A"
+                  }</td></tr>
+                </table>
+              </div>
+              <div>
+                <h4 style="color: #667eea; margin-bottom: 15px;">
+                  <i class="fas fa-clock"></i> Thời gian & Giá
+                </h4>
+                <table style="width: 100%;">
+                  <tr><td style="padding: 8px 0; color: #666;">Ngày:</td><td style="font-weight: bold;">${formatDate(
+                    booking.date
+                  )}</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Giờ:</td><td style="font-weight: bold;">${startTime}:00 - ${endTime}:00</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Thời lượng:</td><td>${duration} giờ</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Tổng tiền:</td><td style="font-weight: bold; color: #4CAF50; font-size: 1.2em;">${formatCurrency(
+                    price
+                  )}</td></tr>
+                </table>
+              </div>
+            </div>
+            ${
+              booking.note
+                ? `
+              <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                <h4 style="color: #666; margin-bottom: 10px;"><i class="fas fa-sticky-note"></i> Ghi chú</h4>
+                <p style="margin: 0;">${booking.note}</p>
+              </div>
+            `
+                : ""
+            }
+          </div>
+        `;
+
+        detailModal.show(`Chi tiết đặt sân #${booking.id}`, content);
+      }
+
       async function editBooking(id) {
-        const booking = allBookings.find((b) => (b.id || b.madatlich) === id);
-        if (!booking) return;
+        const booking = allBookings.find((b) => b.id === id);
+        if (!booking) {
+          Toast.error("Không tìm thấy đặt sân!");
+          return;
+        }
 
         const formHTML = `
-                <form id="bookingForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã đặt lịch <span style="color: red;">*</span></label>
-                        <input type="text" name="madatlich" required class="form-control" value="${
-                          booking.madatlich || ""
-                        }" readonly>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Mã khách hàng <span style="color: red;">*</span></label>
-                            <input type="text" name="makhachhang" required class="form-control" value="${
-                              booking.makhachhang || ""
-                            }">
-                        </div>
-                        <div class="form-group">
-                            <label>Mã sân <span style="color: red;">*</span></label>
-                            <input type="text" name="masan" required class="form-control" value="${
-                              booking.masan || ""
-                            }">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Ngày đặt <span style="color: red;">*</span></label>
-                        <input type="date" name="ngaydat" required class="form-control" value="${
-                          booking.ngaydat || ""
-                        }">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Giờ bắt đầu <span style="color: red;">*</span></label>
-                            <input type="time" name="giobatdau" required class="form-control" value="${
-                              booking.giobatdau || ""
-                            }">
-                        </div>
-                        <div class="form-group">
-                            <label>Giờ kết thúc <span style="color: red;">*</span></label>
-                            <input type="time" name="gioketthuc" required class="form-control" value="${
-                              booking.gioketthuc || ""
-                            }">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tổng tiền <span style="color: red;">*</span></label>
-                        <input type="number" name="tongtien" required class="form-control" value="${
-                          booking.tongtien || 0
-                        }" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Ghi chú</label>
-                        <textarea name="ghichu" class="form-control" rows="2">${
-                          booking.ghichu || ""
-                        }</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Trạng thái</label>
-                        <select name="trangthai" class="form-control">
-                            <option value="Pending" ${
-                              booking.trangthai === "Pending" ? "selected" : ""
-                            }>Chờ xác nhận</option>
-                            <option value="Confirmed" ${
-                              booking.trangthai === "Confirmed"
-                                ? "selected"
-                                : ""
-                            }>Đã xác nhận</option>
-                            <option value="Completed" ${
-                              booking.trangthai === "Completed"
-                                ? "selected"
-                                : ""
-                            }>Hoàn thành</option>
-                            <option value="Cancelled" ${
-                              booking.trangthai === "Cancelled"
-                                ? "selected"
-                                : ""
-                            }>Đã hủy</option>
-                        </select>
-                    </div>
-                </form>
-            `;
+          <form id="bookingForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã đặt lịch</label>
+              <input type="text" name="id" class="form-control" value="${
+                booking.id
+              }" readonly style="background: #f5f5f5;">
+            </div>
+            <div class="form-group">
+              <label>Khách hàng <span style="color: red;">*</span></label>
+              <select name="customer" required class="form-control">
+                <option value="">-- Chọn khách hàng --</option>
+                ${getCustomerOptions(booking.customer)}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Sân <span style="color: red;">*</span></label>
+              <select name="field" required class="form-control">
+                <option value="">-- Chọn sân --</option>
+                ${getFieldOptions(booking.field)}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Loại sân <span style="color: red;">*</span></label>
+              <select name="type" required class="form-control">
+                <option value="5 người" ${
+                  booking.type === "5 người" ? "selected" : ""
+                }>5 người</option>
+                <option value="7 người" ${
+                  booking.type === "7 người" ? "selected" : ""
+                }>7 người</option>
+                <option value="11 người" ${
+                  booking.type === "11 người" ? "selected" : ""
+                }>11 người</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ngày đặt <span style="color: red;">*</span></label>
+              <input type="date" name="date" required class="form-control" value="${
+                booking.date
+              }">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Giờ bắt đầu <span style="color: red;">*</span></label>
+                <select name="time" required class="form-control">
+                  ${Array.from({ length: 14 }, (_, i) => i + 7)
+                    .map(
+                      (h) =>
+                        `<option value="${h}" ${
+                          parseInt(booking.time) === h ? "selected" : ""
+                        }>${h}:00</option>`
+                    )
+                    .join("")}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Thời lượng <span style="color: red;">*</span></label>
+                <select name="duration" required class="form-control">
+                  <option value="1" ${
+                    booking.duration == 1 ? "selected" : ""
+                  }>1 giờ</option>
+                  <option value="2" ${
+                    booking.duration == 2 ? "selected" : ""
+                  }>2 giờ</option>
+                  <option value="3" ${
+                    booking.duration == 3 ? "selected" : ""
+                  }>3 giờ</option>
+                  <option value="4" ${
+                    booking.duration == 4 ? "selected" : ""
+                  }>4 giờ</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Trạng thái</label>
+              <select name="status" class="form-control">
+                <option value="Confirmed" ${
+                  booking.status === "Confirmed" || !booking.status
+                    ? "selected"
+                    : ""
+                }>Đã xác nhận</option>
+                <option value="Pending" ${
+                  booking.status === "Pending" ? "selected" : ""
+                }>Chờ xác nhận</option>
+                <option value="Completed" ${
+                  booking.status === "Completed" ? "selected" : ""
+                }>Hoàn thành</option>
+                <option value="Cancelled" ${
+                  booking.status === "Cancelled" ? "selected" : ""
+                }>Đã hủy</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ghi chú</label>
+              <textarea name="note" class="form-control" rows="2">${
+                booking.note || ""
+              }</textarea>
+            </div>
+          </form>
+        `;
 
         formModal.show("Chỉnh Sửa Đặt Sân", formHTML, async (data) => {
           try {
-            data.id = booking.id || booking.madatlich;
-            await crudManager.saveToXML("DatLich.xml", data, "update");
+            LoadingOverlay.show();
+            data.id = booking.id;
+            await crudManager.saveToXML("Bookings.xml", data, "update");
             formModal.close();
             Toast.success("Cập nhật đặt sân thành công!");
             await loadBookings();
           } catch (error) {
-            Toast.error("Lỗi khi cập nhật đặt sân!");
+            console.error("Error updating booking:", error);
+            Toast.error("Lỗi khi cập nhật đặt sân: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
       function deleteBooking(id) {
-        const booking = allBookings.find((b) => (b.id || b.madatlich) === id);
-        if (!booking) return;
+        const booking = allBookings.find((b) => b.id === id);
+        if (!booking) {
+          Toast.error("Không tìm thấy đặt sân!");
+          return;
+        }
 
         ConfirmDialog.show(
-          `Bạn có chắc chắn muốn xóa đặt sân "${booking.madatlich}"?`,
+          `Bạn có chắc chắn muốn xóa đặt sân <strong>#${booking.id}</strong> của khách hàng <strong>"${booking.customer}"</strong>?`,
           async () => {
             try {
+              LoadingOverlay.show();
               await crudManager.saveToXML(
-                "DatLich.xml",
-                { id: booking.id || booking.madatlich },
+                "Bookings.xml",
+                { id: booking.id },
                 "delete"
               );
               Toast.success("Xóa đặt sân thành công!");
               await loadBookings();
             } catch (error) {
-              Toast.error("Lỗi khi xóa đặt sân!");
+              console.error("Error deleting booking:", error);
+              Toast.error("Lỗi khi xóa đặt sân: " + error.message);
+            } finally {
+              LoadingOverlay.hide();
             }
           },
           "Xác Nhận Xóa"
         );
+      }
+
+      // Export bookings to XML
+      function exportBookingsXML() {
+        crudManager.downloadXML("Bookings.xml", "Bookings", "Booking");
+        Toast.success("Đã xuất file Bookings.xml!");
       }
     </script>
   </body>

@@ -35,19 +35,7 @@ const server = http.createServer((req, res) => {
   filePath = path.normalize(filePath).replace(/^(\.\.[\/\\])+/, "");
 
   // Build full path
-  let fullPath;
-
-  // Nếu request đến /Data/..., trỏ đến thư mục Data ở ngoài (cùng cấp với Web)
-  if (filePath.startsWith("/Data/")) {
-    // __dirname = .../Debug/Web
-    // Cần lấy .../Debug/Data
-    fullPath = path.join(__dirname, "..", filePath);
-    console.log(`  → Đọc XML từ: ${fullPath}`);
-  } else {
-    // File trong thư mục Web
-    fullPath = path.join(__dirname, filePath);
-  }
-
+  const fullPath = path.join(__dirname, filePath);
   const ext = path.extname(fullPath).toLowerCase();
   const contentType = mimeTypes[ext] || "application/octet-stream";
 
@@ -102,7 +90,6 @@ server.listen(PORT, () => {
   console.log("╚════════════════════════════════════════════════════════╝\n");
   console.log(`✓ Server đang chạy tại: http://localhost:${PORT}`);
   console.log(`✓ Thư mục Web: ${__dirname}`);
-  console.log(`✓ Thư mục Data: ${path.join(__dirname, "..", "Data")}`);
   console.log(`✓ Nhấn Ctrl+C để dừng server\n`);
   console.log("📂 Các trang có sẵn:");
   console.log(`   → http://localhost:${PORT}/index.html`);
@@ -112,11 +99,6 @@ server.listen(PORT, () => {
   console.log(`   → http://localhost:${PORT}/fields.html`);
   console.log(`   → http://localhost:${PORT}/bookings.html`);
   console.log(`   → http://localhost:${PORT}/debug-xml.html`);
-  console.log("\n📊 XML Data có sẵn:");
-  console.log(`   → http://localhost:${PORT}/Data/Branches.xml`);
-  console.log(`   → http://localhost:${PORT}/Data/Customers.xml`);
-  console.log(`   → http://localhost:${PORT}/Data/Fields.xml`);
-  console.log(`   → http://localhost:${PORT}/Data/Bookings.xml`);
   console.log("\n🔥 Server sẵn sàng! Không còn CORS errors! 🎉\n");
 });
 

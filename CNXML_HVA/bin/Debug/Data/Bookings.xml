@@ -20,4 +20,13 @@
     <note>
     </note>
   </Booking>
+  <Booking id="B003">
+    <customer>Trần Thị Thu Hà</customer>
+    <field>Sân C1 - Professional 11</field>
+    <type>5 người</type>
+    <date>2025-12-14</date>
+    <time>8:00</time>
+    <duration>4</duration>
+    <note>hvjkl;;</note>
+  </Booking>
 </Bookings>

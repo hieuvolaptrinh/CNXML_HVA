@@ -4,28 +4,109 @@ class CRUDManager {
     this.xmlManager = new XMLManager();
   }
 
-  // Save data to XML (simulated - in real app, needs backend)
+  // Save data to XML (simulated - stores in localStorage and can export to XML)
   async saveToXML(filename, data, operation = "create") {
     console.log(`${operation.toUpperCase()} operation:`, filename, data);
 
-    // In a real implementation, this would call a backend API
-    // For demo purposes, we'll store in localStorage
+    // Determine the storage key based on the actual filename
     const storageKey = `xml_${filename}`;
     let existingData = JSON.parse(localStorage.getItem(storageKey) || "[]");
 
     if (operation === "create") {
+      // Generate ID if not exists
+      if (!data.id) {
+        data.id = this.generateNewId(existingData);
+      }
       existingData.push(data);
+      console.log(`✅ Created new item with ID: ${data.id}`);
     } else if (operation === "update") {
       const index = existingData.findIndex((item) => item.id === data.id);
       if (index !== -1) {
         existingData[index] = { ...existingData[index], ...data };
+        console.log(`✅ Updated item with ID: ${data.id}`);
+      } else {
+        // If not found in localStorage, add it as new
+        existingData.push(data);
+        console.log(`✅ Added item to localStorage: ${data.id}`);
       }
     } else if (operation === "delete") {
+      const initialLength = existingData.length;
       existingData = existingData.filter((item) => item.id !== data.id);
+      if (existingData.length < initialLength) {
+        console.log(`✅ Deleted item with ID: ${data.id}`);
+      } else {
+        console.log(`⚠️ Item with ID ${data.id} not found in localStorage`);
+      }
     }
 
     localStorage.setItem(storageKey, JSON.stringify(existingData));
     return { success: true, message: "Operation completed successfully" };
+  }
+
+  // Generate a new unique ID
+  generateNewId(existingData) {
+    const maxId = existingData.reduce((max, item) => {
+      const idNum = parseInt(item.id?.replace(/\D/g, "") || "0");
+      return idNum > max ? idNum : max;
+    }, 0);
+    return `NEW${String(maxId + 1).padStart(3, "0")}`;
+  }
+
+  // Export localStorage data to XML string
+  exportToXML(filename, rootElement, itemElement) {
+    const storageKey = `xml_${filename}`;
+    const data = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<${rootElement}>\n`;
+
+    data.forEach((item) => {
+      xml += `  <${itemElement} id="${item.id}">\n`;
+      Object.entries(item).forEach(([key, value]) => {
+        if (
+          key !== "id" &&
+          key !== "_source" &&
+          value !== undefined &&
+          value !== null
+        ) {
+          xml += `    <${key}>${this.escapeXML(String(value))}</${key}>\n`;
+        }
+      });
+      xml += `  </${itemElement}>\n`;
+    });
+
+    xml += `</${rootElement}>`;
+    return xml;
+  }
+
+  // Escape special XML characters
+  escapeXML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+  }
+
+  // Download XML file
+  downloadXML(filename, rootElement, itemElement) {
+    const xml = this.exportToXML(filename, rootElement, itemElement);
+    const blob = new Blob([xml], { type: "application/xml" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Clear localStorage for a specific file
+  clearLocalStorage(filename) {
+    const storageKey = `xml_${filename}`;
+    localStorage.removeItem(storageKey);
+    console.log(`🗑️ Cleared localStorage for ${filename}`);
   }
 
   // Parse XML element recursively
@@ -92,6 +173,7 @@ class CRUDManager {
           customer: "customer",
           branch: "branch",
           equipment: "equipment",
+          fieldType: "field_type",
           field_type: "field_type",
         };
 
@@ -159,7 +241,7 @@ class CRUDManager {
         }
 
         // Chuẩn hóa field names cho FieldType
-        if (rootTag === "field_type") {
+        if (rootTag === "field_type" || rootTag === "fieldType") {
           obj.maloaisan = obj.id || obj.code || obj.maloaisan;
           obj.tenloaisan = obj.name || obj.tenloaisan;
           obj.songuoi =
@@ -206,10 +288,22 @@ class CRUDManager {
 class ImageModal {
   constructor() {
     this.modal = null;
+    this.initialized = false;
     this.init();
   }
 
   init() {
+    // Wait for DOM to be ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => this._initModal());
+    } else {
+      this._initModal();
+    }
+  }
+
+  _initModal() {
+    if (this.initialized) return;
+
     // Create modal HTML
     const modalHTML = `
       <div id="imageModal" class="modal">
@@ -227,7 +321,7 @@ class ImageModal {
       </div>
     `;
 
-    if (!document.getElementById("imageModal")) {
+    if (!document.getElementById("imageModal") && document.body) {
       document.body.insertAdjacentHTML("beforeend", modalHTML);
       this.modal = document.getElementById("imageModal");
 
@@ -237,19 +331,34 @@ class ImageModal {
           this.close();
         }
       });
+      this.initialized = true;
     }
   }
 
   show(imageUrl, title = "Image Preview") {
+    // Ensure modal is initialized
+    if (!this.initialized) {
+      this._initModal();
+    }
+
+    const modalElement = document.getElementById("imageModal");
+    if (!modalElement) {
+      console.error("ImageModal element not found!");
+      return;
+    }
+
     document.getElementById("modalImage").src = imageUrl;
     document.getElementById("imageModalTitle").textContent = title;
-    document.getElementById("imageModal").classList.add("active");
+    modalElement.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
   close() {
-    document.getElementById("imageModal").classList.remove("active");
-    document.body.style.overflow = "";
+    const modalElement = document.getElementById("imageModal");
+    if (modalElement) {
+      modalElement.classList.remove("active");
+      document.body.style.overflow = "";
+    }
   }
 }
 
@@ -257,10 +366,22 @@ class ImageModal {
 class DetailModal {
   constructor() {
     this.modal = null;
+    this.initialized = false;
     this.init();
   }
 
   init() {
+    // Wait for DOM to be ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => this._initModal());
+    } else {
+      this._initModal();
+    }
+  }
+
+  _initModal() {
+    if (this.initialized) return;
+
     const modalHTML = `
       <div id="detailModal" class="modal">
         <div class="modal-content" style="max-width: 700px;">
@@ -282,7 +403,7 @@ class DetailModal {
       </div>
     `;
 
-    if (!document.getElementById("detailModal")) {
+    if (!document.getElementById("detailModal") && document.body) {
       document.body.insertAdjacentHTML("beforeend", modalHTML);
       this.modal = document.getElementById("detailModal");
 
@@ -291,13 +412,25 @@ class DetailModal {
           this.close();
         }
       });
+      this.initialized = true;
     }
   }
 
   show(title, content) {
+    // Ensure modal is initialized
+    if (!this.initialized) {
+      this._initModal();
+    }
+
+    const modalElement = document.getElementById("detailModal");
+    if (!modalElement) {
+      console.error("DetailModal element not found!");
+      return;
+    }
+
     document.getElementById("detailModalTitle").textContent = title;
     document.getElementById("detailModalBody").innerHTML = content;
-    document.getElementById("detailModal").classList.add("active");
+    modalElement.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
@@ -312,10 +445,22 @@ class FormModal {
   constructor() {
     this.modal = null;
     this.onSubmitCallback = null;
+    this.initialized = false;
     this.init();
   }
 
   init() {
+    // Wait for DOM to be ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => this._initModal());
+    } else {
+      this._initModal();
+    }
+  }
+
+  _initModal() {
+    if (this.initialized) return;
+
     const modalHTML = `
       <div id="formModal" class="modal">
         <div class="modal-content">
@@ -340,7 +485,7 @@ class FormModal {
       </div>
     `;
 
-    if (!document.getElementById("formModal")) {
+    if (!document.getElementById("formModal") && document.body) {
       document.body.insertAdjacentHTML("beforeend", modalHTML);
       this.modal = document.getElementById("formModal");
 
@@ -349,14 +494,26 @@ class FormModal {
           this.close();
         }
       });
+      this.initialized = true;
     }
   }
 
   show(title, formHTML, onSubmit) {
+    // Ensure modal is initialized
+    if (!this.initialized) {
+      this._initModal();
+    }
+
+    const modalElement = document.getElementById("formModal");
+    if (!modalElement) {
+      console.error("FormModal element not found!");
+      return;
+    }
+
     document.getElementById("formModalTitle").textContent = title;
     document.getElementById("formModalBody").innerHTML = formHTML;
     this.onSubmitCallback = onSubmit;
-    document.getElementById("formModal").classList.add("active");
+    modalElement.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
@@ -516,11 +673,38 @@ class LoadingOverlay {
   }
 }
 
-// Initialize global instances
+// Initialize CRUDManager immediately (doesn't need DOM)
 const crudManager = new CRUDManager();
-const imageModal = new ImageModal();
-const detailModal = new DetailModal();
-const formModal = new FormModal();
+window.crudManager = crudManager;
+
+// Initialize modals - delay until DOM is ready
+let imageModal, detailModal, formModal;
+
+function initializeModals() {
+  if (!imageModal) imageModal = new ImageModal();
+  if (!detailModal) detailModal = new DetailModal();
+  if (!formModal) formModal = new FormModal();
+
+  // Export to window
+  window.imageModal = imageModal;
+  window.detailModal = detailModal;
+  window.formModal = formModal;
+}
+
+// Initialize modals when DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeModals);
+} else {
+  // DOM already ready, initialize immediately
+  initializeModals();
+}
+
+// Also initialize on next tick to catch any edge cases
+setTimeout(() => {
+  if (!window.formModal || !window.detailModal || !window.imageModal) {
+    initializeModals();
+  }
+}, 0);
 
 // Add to existing app.js functions
 // Extend formatCurrency function
@@ -534,21 +718,39 @@ function formatCurrency(amount) {
 // Extend formatDate function
 function formatDate(dateString) {
   if (!dateString) return "N/A";
-  const date = new Date(dateString);
-  return new Intl.DateFormat("vi-VN").format(date);
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // Return original if invalid
+
+    // Manual formatting to avoid Intl issues
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return dateString;
+  }
 }
 
 // Format DateTime
 function formatDateTime(dateString) {
   if (!dateString) return "N/A";
-  const date = new Date(dateString);
-  return new Intl.DateFormat("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+
+    // Manual formatting
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  } catch (error) {
+    console.error("Error formatting datetime:", error);
+    return dateString;
+  }
 }
 
 // Generate unique ID
@@ -590,10 +792,6 @@ function animateValue(element, start, end, duration = 1000) {
 
 // Export all utilities
 window.CRUDManager = CRUDManager;
-window.crudManager = crudManager;
-window.imageModal = imageModal;
-window.detailModal = detailModal;
-window.formModal = formModal;
 window.Toast = Toast;
 window.ConfirmDialog = ConfirmDialog;
 window.LoadingOverlay = LoadingOverlay;

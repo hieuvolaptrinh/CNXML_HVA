@@ -161,28 +161,87 @@
     <script>
       let allFields = [];
       let filteredFields = [];
+      let allBranches = [];
+      let allFieldTypes = [];
 
       document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("sidebar").innerHTML = createSidebar("fields");
         requireAuth();
-        await loadFields();
+        await loadAllData();
         setupEventListeners();
       });
 
-      async function loadFields() {
+      async function loadAllData() {
         try {
           LoadingOverlay.show();
-          allFields = await crudManager.getMergedData("Fields.xml", "field");
+          // Load fields, branches, and field types in parallel
+          const [fields, branches, fieldTypes] = await Promise.all([
+            crudManager.getMergedData("Fields.xml", "field"),
+            crudManager.getMergedData("Branches.xml", "branch"),
+            crudManager.getMergedData("FieldTypes.xml", "fieldType"),
+          ]);
+
+          allFields = fields;
+          allBranches = branches;
+          allFieldTypes = fieldTypes;
+
+          console.log("Loaded fields:", allFields);
+          console.log("Loaded branches:", allBranches);
+          console.log("Loaded fieldTypes:", allFieldTypes);
+
           filteredFields = [...allFields];
           renderFields();
           updateStats();
           populateFilters();
           LoadingOverlay.hide();
         } catch (error) {
-          console.error("Error loading fields:", error);
+          console.error("Error loading data:", error);
           LoadingOverlay.hide();
           Toast.error("Không thể tải dữ liệu sân bóng");
         }
+      }
+
+      async function loadFields() {
+        await loadAllData();
+      }
+
+      // Generate next field ID
+      function getNextFieldId() {
+        const maxNum = allFields.reduce((max, f) => {
+          const id = f.masan || f.id || "";
+          const num = parseInt(id.replace(/\D/g, "") || "0");
+          return num > max ? num : max;
+        }, 0);
+        return `SAN${String(maxNum + 1).padStart(3, "0")}`;
+      }
+
+      // Generate branch options
+      function getBranchOptions(selectedBranch = "") {
+        return allBranches
+          .map((b) => {
+            const id = b.machinhanh || b.id;
+            const name = b.tenchinhanh || b.name || id;
+            const selected = id === selectedBranch ? "selected" : "";
+            return `<option value="${id}" ${selected}>${name} (${id})</option>`;
+          })
+          .join("");
+      }
+
+      // Generate field type options
+      function getFieldTypeOptions(selectedType = "") {
+        if (!allFieldTypes || allFieldTypes.length === 0) {
+          return '<option value="">-- Đang tải loại sân --</option>';
+        }
+        return allFieldTypes
+          .map((ft) => {
+            const id = ft.maloaisan || ft.id || ft.code;
+            const name = ft.tenloaisan || ft.name || id;
+            const songuoi = ft.songuoi || ft.total_capacity || "";
+            const displayName = songuoi ? `${name} (${songuoi})` : name;
+            const selected = id === selectedType ? "selected" : "";
+            return `<option value="${id}" ${selected}>${displayName}</option>`;
+          })
+          .join("");
       }
 
       function renderFields() {
@@ -347,165 +406,272 @@
       }
 
       function showAddFieldForm() {
+        const nextId = getNextFieldId();
         const formHTML = `
-                <form id="fieldForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã sân <span style="color: red;">*</span></label>
-                        <input type="text" name="masan" required class="form-control" placeholder="SAN-001">
-                    </div>
-                    <div class="form-group">
-                        <label>Tên sân <span style="color: red;">*</span></label>
-                        <input type="text" name="tensan" required class="form-control" placeholder="Sân số 1">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Mã chi nhánh <span style="color: red;">*</span></label>
-                            <input type="text" name="machinhanh" required class="form-control" placeholder="CN-HN">
-                        </div>
-                        <div class="form-group">
-                            <label>Mã loại sân <span style="color: red;">*</span></label>
-                            <input type="text" name="maloaisan" required class="form-control" placeholder="LS-5">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Giá thuê (VNĐ/giờ) <span style="color: red;">*</span></label>
-                        <input type="number" name="gia" required class="form-control" placeholder="500000" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả</label>
-                        <textarea name="mota" class="form-control" rows="3" placeholder="Mô tả sân..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh URL</label>
-                        <input type="url" name="hinhanh" class="form-control" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label>Trạng thái</label>
-                        <select name="trangthai" class="form-control">
-                            <option value="Available">Sẵn sàng</option>
-                            <option value="Maintenance">Bảo trì</option>
-                            <option value="Booked">Đã đặt</option>
-                        </select>
-                    </div>
-                </form>
-            `;
+          <form id="fieldForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã sân <span style="color: red;">*</span></label>
+              <input type="text" name="masan" required class="form-control" value="${nextId}">
+            </div>
+            <div class="form-group">
+              <label>Tên sân <span style="color: red;">*</span></label>
+              <input type="text" name="tensan" required class="form-control" placeholder="Sân số 1">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Chi nhánh <span style="color: red;">*</span></label>
+                <select name="machinhanh" required class="form-control">
+                  <option value="">-- Chọn chi nhánh --</option>
+                  ${getBranchOptions()}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Loại sân <span style="color: red;">*</span></label>
+                <select name="maloaisan" required class="form-control">
+                  <option value="">-- Chọn loại sân --</option>
+                  ${getFieldTypeOptions()}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Giá thuê (VNĐ/giờ) <span style="color: red;">*</span></label>
+              <input type="number" name="gia" required class="form-control" placeholder="500000" min="0" step="10000">
+            </div>
+            <div class="form-group">
+              <label>Mô tả</label>
+              <textarea name="mota" class="form-control" rows="3" placeholder="Mô tả về sân bóng..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Hình ảnh URL</label>
+              <input type="url" name="hinhanh" class="form-control" placeholder="https://example.com/image.jpg">
+            </div>
+            <div class="form-group">
+              <label>Trạng thái</label>
+              <select name="trangthai" class="form-control">
+                <option value="Available">Sẵn sàng</option>
+                <option value="Maintenance">Bảo trì</option>
+                <option value="Booked">Đã đặt</option>
+              </select>
+            </div>
+          </form>
+        `;
 
         formModal.show("Thêm Sân Bóng Mới", formHTML, async (data) => {
           try {
-            data.id = generateId("FD");
-            await crudManager.saveToXML("San.xml", data, "create");
+            LoadingOverlay.show();
+            if (!data.tensan || !data.machinhanh || !data.maloaisan) {
+              Toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+              LoadingOverlay.hide();
+              return;
+            }
+            data.id = data.masan;
+            await crudManager.saveToXML("Fields.xml", data, "create");
             formModal.close();
             Toast.success("Thêm sân bóng thành công!");
             await loadFields();
           } catch (error) {
-            Toast.error("Lỗi khi thêm sân bóng!");
+            console.error("Error adding field:", error);
+            Toast.error("Lỗi khi thêm sân bóng: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
+      function viewField(id) {
+        const field = allFields.find((f) => (f.masan || f.id) === id);
+        if (!field) {
+          Toast.error("Không tìm thấy sân bóng!");
+          return;
+        }
+
+        const statusColors = {
+          Available: { bg: "#4CAF50", text: "Sẵn sàng" },
+          Maintenance: { bg: "#FF9800", text: "Bảo trì" },
+          Booked: { bg: "#f44336", text: "Đã đặt" },
+        };
+        const status = statusColors[field.trangthai] || statusColors.Available;
+
+        const content = `
+          <div style="padding: 10px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img src="${
+                field.hinhanh ||
+                "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=400&h=200&fit=crop"
+              }" 
+                   style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px;"
+                   onerror="this.src='https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=400&h=200&fit=crop'">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                <h4 style="color: #4CAF50; margin-bottom: 15px;"><i class="fas fa-info-circle"></i> Thông tin sân</h4>
+                <table style="width: 100%;">
+                  <tr><td style="padding: 8px 0; color: #666;">Mã sân:</td><td style="font-weight: bold;">${
+                    field.masan
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Tên sân:</td><td style="font-weight: bold;">${
+                    field.tensan
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Chi nhánh:</td><td>${
+                    field.machinhanh
+                  }</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Loại sân:</td><td>${
+                    field.maloaisan
+                  }</td></tr>
+                </table>
+              </div>
+              <div>
+                <h4 style="color: #4CAF50; margin-bottom: 15px;"><i class="fas fa-dollar-sign"></i> Giá & Trạng thái</h4>
+                <table style="width: 100%;">
+                  <tr><td style="padding: 8px 0; color: #666;">Giá/giờ:</td><td style="font-weight: bold; color: #4CAF50;">${formatCurrency(
+                    field.gia || 0
+                  )}</td></tr>
+                  <tr><td style="padding: 8px 0; color: #666;">Trạng thái:</td><td><span style="background: ${
+                    status.bg
+                  }; color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.85em;">${
+          status.text
+        }</span></td></tr>
+                </table>
+              </div>
+            </div>
+            ${
+              field.mota
+                ? `
+              <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                <h4 style="color: #666; margin-bottom: 10px;"><i class="fas fa-align-left"></i> Mô tả</h4>
+                <p style="margin: 0;">${field.mota}</p>
+              </div>
+            `
+                : ""
+            }
+          </div>
+        `;
+        detailModal.show(`Chi tiết sân - ${field.tensan}`, content);
+      }
+
       async function editField(id) {
-        const field = allFields.find((f) => (f.id || f.masan) === id);
-        if (!field) return;
+        const field = allFields.find((f) => (f.masan || f.id) === id);
+        if (!field) {
+          Toast.error("Không tìm thấy sân bóng!");
+          return;
+        }
 
         const formHTML = `
-                <form id="fieldForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã sân <span style="color: red;">*</span></label>
-                        <input type="text" name="masan" required class="form-control" value="${
-                          field.masan || ""
-                        }" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Tên sân <span style="color: red;">*</span></label>
-                        <input type="text" name="tensan" required class="form-control" value="${
-                          field.tensan || ""
-                        }">
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group">
-                            <label>Mã chi nhánh <span style="color: red;">*</span></label>
-                            <input type="text" name="machinhanh" required class="form-control" value="${
-                              field.machinhanh || ""
-                            }">
-                        </div>
-                        <div class="form-group">
-                            <label>Mã loại sân <span style="color: red;">*</span></label>
-                            <input type="text" name="maloaisan" required class="form-control" value="${
-                              field.maloaisan || ""
-                            }">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Giá thuê (VNĐ/giờ) <span style="color: red;">*</span></label>
-                        <input type="number" name="gia" required class="form-control" value="${
-                          field.gia || 0
-                        }" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả</label>
-                        <textarea name="mota" class="form-control" rows="3">${
-                          field.mota || ""
-                        }</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh URL</label>
-                        <input type="url" name="hinhanh" class="form-control" value="${
-                          field.hinhanh || ""
-                        }">
-                    </div>
-                    <div class="form-group">
-                        <label>Trạng thái</label>
-                        <select name="trangthai" class="form-control">
-                            <option value="Available" ${
-                              field.trangthai === "Available" ? "selected" : ""
-                            }>Sẵn sàng</option>
-                            <option value="Maintenance" ${
-                              field.trangthai === "Maintenance"
-                                ? "selected"
-                                : ""
-                            }>Bảo trì</option>
-                            <option value="Booked" ${
-                              field.trangthai === "Booked" ? "selected" : ""
-                            }>Đã đặt</option>
-                        </select>
-                    </div>
-                </form>
-            `;
+          <form id="fieldForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã sân</label>
+              <input type="text" name="masan" class="form-control" value="${
+                field.masan || ""
+              }" readonly style="background: #f5f5f5;">
+            </div>
+            <div class="form-group">
+              <label>Tên sân <span style="color: red;">*</span></label>
+              <input type="text" name="tensan" required class="form-control" value="${
+                field.tensan || ""
+              }">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Chi nhánh <span style="color: red;">*</span></label>
+                <select name="machinhanh" required class="form-control">
+                  <option value="">-- Chọn chi nhánh --</option>
+                  ${getBranchOptions(field.machinhanh)}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Loại sân <span style="color: red;">*</span></label>
+                <select name="maloaisan" required class="form-control">
+                  <option value="">-- Chọn loại sân --</option>
+                  ${getFieldTypeOptions(field.maloaisan)}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Giá thuê (VNĐ/giờ) <span style="color: red;">*</span></label>
+              <input type="number" name="gia" required class="form-control" value="${
+                field.gia || 0
+              }" min="0" step="10000">
+            </div>
+            <div class="form-group">
+              <label>Mô tả</label>
+              <textarea name="mota" class="form-control" rows="3">${
+                field.mota || ""
+              }</textarea>
+            </div>
+            <div class="form-group">
+              <label>Hình ảnh URL</label>
+              <input type="url" name="hinhanh" class="form-control" value="${
+                field.hinhanh || ""
+              }">
+            </div>
+            <div class="form-group">
+              <label>Trạng thái</label>
+              <select name="trangthai" class="form-control">
+                <option value="Available" ${
+                  field.trangthai === "Available" ? "selected" : ""
+                }>Sẵn sàng</option>
+                <option value="Maintenance" ${
+                  field.trangthai === "Maintenance" ? "selected" : ""
+                }>Bảo trì</option>
+                <option value="Booked" ${
+                  field.trangthai === "Booked" ? "selected" : ""
+                }>Đã đặt</option>
+              </select>
+            </div>
+          </form>
+        `;
 
         formModal.show("Chỉnh Sửa Sân Bóng", formHTML, async (data) => {
           try {
-            data.id = field.id || field.masan;
-            await crudManager.saveToXML("San.xml", data, "update");
+            LoadingOverlay.show();
+            data.id = field.masan || field.id;
+            await crudManager.saveToXML("Fields.xml", data, "update");
             formModal.close();
             Toast.success("Cập nhật sân bóng thành công!");
             await loadFields();
           } catch (error) {
-            Toast.error("Lỗi khi cập nhật sân bóng!");
+            console.error("Error updating field:", error);
+            Toast.error("Lỗi khi cập nhật sân bóng: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
       function deleteField(id) {
-        const field = allFields.find((f) => (f.id || f.masan) === id);
-        if (!field) return;
+        const field = allFields.find((f) => (f.masan || f.id) === id);
+        if (!field) {
+          Toast.error("Không tìm thấy sân bóng!");
+          return;
+        }
 
         ConfirmDialog.show(
-          `Bạn có chắc chắn muốn xóa sân "${field.tensan}"?`,
+          `Bạn có chắc chắn muốn xóa sân <strong>"${field.tensan}"</strong>?<br><small style="color: #666;">Mã sân: ${field.masan}</small>`,
           async () => {
             try {
+              LoadingOverlay.show();
               await crudManager.saveToXML(
-                "San.xml",
-                { id: field.id || field.masan },
+                "Fields.xml",
+                { id: field.masan || field.id },
                 "delete"
               );
               Toast.success("Xóa sân bóng thành công!");
               await loadFields();
             } catch (error) {
-              Toast.error("Lỗi khi xóa sân bóng!");
+              console.error("Error deleting field:", error);
+              Toast.error("Lỗi khi xóa sân bóng: " + error.message);
+            } finally {
+              LoadingOverlay.hide();
             }
           },
           "Xác Nhận Xóa"
         );
+      }
+
+      // Export fields to XML
+      function exportFieldsXML() {
+        crudManager.downloadXML("Fields.xml", "Fields", "field");
+        Toast.success("Đã xuất file Fields.xml!");
       }
     </script>
   </body>

@@ -136,8 +136,9 @@
           LoadingOverlay.show();
           allFieldTypes = await crudManager.getMergedData(
             "FieldTypes.xml",
-            "field_type"
+            "fieldType"
           );
+          console.log("Loaded field types:", allFieldTypes);
           filteredFieldTypes = [...allFieldTypes];
           renderFieldTypes();
           updateStats();
@@ -147,6 +148,16 @@
           LoadingOverlay.hide();
           Toast.error("Không thể tải dữ liệu loại sân");
         }
+      }
+
+      // Generate next field type ID
+      function getNextFieldTypeId() {
+        const maxNum = allFieldTypes.reduce((max, t) => {
+          const id = t.maloaisan || t.code || t.id || "";
+          const num = parseInt(id.replace(/\D/g, "") || "0");
+          return num > max ? num : max;
+        }, 0);
+        return `LS${String(maxNum + 1).padStart(3, "0")}`;
       }
 
       function renderFieldTypes() {
@@ -249,117 +260,296 @@
       }
 
       function showAddFieldTypeForm() {
+        const nextId = getNextFieldTypeId();
         const formHTML = `
-                <form id="fieldTypeForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã loại sân <span style="color: red;">*</span></label>
-                        <input type="text" name="maloaisan" required class="form-control" placeholder="LS-5">
-                    </div>
-                    <div class="form-group">
-                        <label>Tên loại sân <span style="color: red;">*</span></label>
-                        <input type="text" name="tenloaisan" required class="form-control" placeholder="Sân 5 người">
-                    </div>
-                    <div class="form-group">
-                        <label>Số người <span style="color: red;">*</span></label>
-                        <input type="text" name="songuoi" required class="form-control" placeholder="5 người">
-                    </div>
-                    <div class="form-group">
-                        <label>Kích thước</label>
-                        <input type="text" name="kichthuoc" class="form-control" placeholder="20m x 40m">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả</label>
-                        <textarea name="mota" class="form-control" rows="3" placeholder="Mô tả loại sân..."></textarea>
-                    </div>
-                </form>
-            `;
+          <form id="fieldTypeForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã loại sân <span style="color: red;">*</span></label>
+              <input type="text" name="maloaisan" required class="form-control" value="${nextId}">
+            </div>
+            <div class="form-group">
+              <label>Tên loại sân <span style="color: red;">*</span></label>
+              <input type="text" name="tenloaisan" required class="form-control" placeholder="Sân 5 người">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Số người <span style="color: red;">*</span></label>
+                <select name="songuoi" required class="form-control">
+                  <option value="">Chọn số người</option>
+                  <option value="5 người">5 người</option>
+                  <option value="7 người">7 người</option>
+                  <option value="11 người">11 người</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Kích thước</label>
+                <select name="kichthuoc" class="form-control">
+                  <option value="">Chọn kích thước</option>
+                  <option value="20m x 40m">20m x 40m (Sân 5)</option>
+                  <option value="30m x 50m">30m x 50m (Sân 7)</option>
+                  <option value="68m x 105m">68m x 105m (Sân 11)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mô tả</label>
+              <textarea name="mota" class="form-control" rows="3" placeholder="Mô tả đặc điểm loại sân..."></textarea>
+            </div>
+          </form>
+        `;
 
         formModal.show("Thêm Loại Sân Mới", formHTML, async (data) => {
           try {
-            data.id = generateId("FT");
-            await crudManager.saveToXML("LoaiSan.xml", data, "create");
+            LoadingOverlay.show();
+            if (!data.tenloaisan || !data.songuoi) {
+              Toast.error("Vui lòng điền đầy đủ thông tin bắt buộc!");
+              LoadingOverlay.hide();
+              return;
+            }
+            data.id = data.maloaisan;
+            await crudManager.saveToXML("FieldTypes.xml", data, "create");
             formModal.close();
             Toast.success("Thêm loại sân thành công!");
             await loadFieldTypes();
           } catch (error) {
-            Toast.error("Lỗi khi thêm loại sân!");
+            console.error("Error adding field type:", error);
+            Toast.error("Lỗi khi thêm loại sân: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
+      function viewFieldType(id) {
+        const type = allFieldTypes.find(
+          (t) => (t.maloaisan || t.code || t.id) === id
+        );
+        if (!type) {
+          Toast.error("Không tìm thấy loại sân!");
+          return;
+        }
+
+        const content = `
+          <div style="padding: 10px;">
+            <div style="text-align: center; margin-bottom: 25px;">
+              <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-futbol" style="font-size: 2.5em; color: white;"></i>
+              </div>
+              <h2 style="color: #333; margin: 0;">${
+                type.tenloaisan || type.name
+              }</h2>
+              <span style="background: #667eea; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; display: inline-block; margin-top: 10px;">
+                ${type.maloaisan || type.code || type.id}
+              </span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div style="padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                <i class="fas fa-users" style="font-size: 2em; color: #667eea; margin-bottom: 10px;"></i>
+                <h4 style="margin: 0; color: #333;">Số người</h4>
+                <p style="font-size: 1.2em; font-weight: bold; color: #4CAF50; margin: 10px 0 0;">${
+                  type.songuoi || type.total_capacity || "N/A"
+                }</p>
+              </div>
+              <div style="padding: 20px; background: #f8f9fa; border-radius: 10px; text-align: center;">
+                <i class="fas fa-ruler-combined" style="font-size: 2em; color: #667eea; margin-bottom: 10px;"></i>
+                <h4 style="margin: 0; color: #333;">Kích thước</h4>
+                <p style="font-size: 1.2em; font-weight: bold; color: #4CAF50; margin: 10px 0 0;">${
+                  type.kichthuoc || type.size_display || "N/A"
+                }</p>
+              </div>
+            </div>
+            ${
+              type.mota || type.description
+                ? `
+              <div style="margin-top: 20px; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+                <h4 style="color: #666; margin-bottom: 10px;"><i class="fas fa-align-left"></i> Mô tả</h4>
+                <p style="margin: 0;">${type.mota || type.description}</p>
+              </div>
+            `
+                : ""
+            }
+          </div>
+        `;
+        detailModal.show(
+          `Chi tiết loại sân - ${type.tenloaisan || type.name}`,
+          content
+        );
+      }
+
+      // Generate field type options for reference
+      function getFieldTypeReferenceOptions(selectedType = "", excludeId = "") {
+        return allFieldTypes
+          .filter((ft) => (ft.maloaisan || ft.id || ft.code) !== excludeId)
+          .map((ft) => {
+            const id = ft.maloaisan || ft.id || ft.code;
+            const name = ft.tenloaisan || ft.name || id;
+            const selected = id === selectedType ? "selected" : "";
+            return `<option value="${id}" ${selected}>${name}</option>`;
+          })
+          .join("");
+      }
+
       async function editFieldType(id) {
-        const type = allFieldTypes.find((t) => (t.id || t.maloaisan) === id);
-        if (!type) return;
+        const type = allFieldTypes.find(
+          (t) => (t.maloaisan || t.code || t.id) === id
+        );
+        if (!type) {
+          Toast.error("Không tìm thấy loại sân!");
+          return;
+        }
+
+        const maloaisan = type.maloaisan || type.code || "";
+        const tenloaisan = type.tenloaisan || type.name || "";
+        const songuoi = type.songuoi || type.total_capacity || "";
+        const kichthuoc = type.kichthuoc || type.size_display || "";
+        const mota = type.mota || type.description || "";
 
         const formHTML = `
-                <form id="fieldTypeForm" style="display: grid; gap: 15px;">
-                    <div class="form-group">
-                        <label>Mã loại sân <span style="color: red;">*</span></label>
-                        <input type="text" name="maloaisan" required class="form-control" value="${
-                          type.maloaisan || ""
-                        }" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>Tên loại sân <span style="color: red;">*</span></label>
-                        <input type="text" name="tenloaisan" required class="form-control" value="${
-                          type.tenloaisan || ""
-                        }">
-                    </div>
-                    <div class="form-group">
-                        <label>Số người <span style="color: red;">*</span></label>
-                        <input type="text" name="songuoi" required class="form-control" value="${
-                          type.songuoi || ""
-                        }">
-                    </div>
-                    <div class="form-group">
-                        <label>Kích thước</label>
-                        <input type="text" name="kichthuoc" class="form-control" value="${
-                          type.kichthuoc || ""
-                        }">
-                    </div>
-                    <div class="form-group">
-                        <label>Mô tả</label>
-                        <textarea name="mota" class="form-control" rows="3">${
-                          type.mota || ""
-                        }</textarea>
-                    </div>
-                </form>
-            `;
+          <form id="fieldTypeForm" style="display: grid; gap: 15px;">
+            <div class="form-group">
+              <label>Mã loại sân</label>
+              <input type="text" name="maloaisan" class="form-control" value="${maloaisan}" readonly style="background: #f5f5f5;">
+            </div>
+            <div class="form-group">
+              <label>Tên loại sân <span style="color: red;">*</span></label>
+              <input type="text" name="tenloaisan" required class="form-control" value="${tenloaisan}">
+            </div>
+            <div class="form-group">
+              <label>Tham khảo từ loại sân khác (tùy chọn)</label>
+              <select name="referenceType" class="form-control" id="fieldTypeReferenceSelect">
+                <option value="">-- Chọn loại sân để tham khảo --</option>
+                ${getFieldTypeReferenceOptions("", id)}
+              </select>
+              <small style="color: #666; font-size: 0.85em;">Chọn loại sân khác để copy thông tin</small>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+              <div class="form-group">
+                <label>Số người <span style="color: red;">*</span></label>
+                <select name="songuoi" required class="form-control" id="fieldTypeSonguoi">
+                  <option value="">Chọn số người</option>
+                  <option value="5 người" ${
+                    songuoi === "5 người" || songuoi === "5" ? "selected" : ""
+                  }>5 người</option>
+                  <option value="7 người" ${
+                    songuoi === "7 người" || songuoi === "7" ? "selected" : ""
+                  }>7 người</option>
+                  <option value="11 người" ${
+                    songuoi === "11 người" || songuoi === "11" ? "selected" : ""
+                  }>11 người</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Kích thước</label>
+                <select name="kichthuoc" class="form-control" id="fieldTypeKichthuoc">
+                  <option value="">Chọn kích thước</option>
+                  <option value="20m x 40m" ${
+                    kichthuoc === "20m x 40m" ? "selected" : ""
+                  }>20m x 40m (Sân 5)</option>
+                  <option value="30m x 50m" ${
+                    kichthuoc === "30m x 50m" ? "selected" : ""
+                  }>30m x 50m (Sân 7)</option>
+                  <option value="68m x 105m" ${
+                    kichthuoc === "68m x 105m" ? "selected" : ""
+                  }>68m x 105m (Sân 11)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mô tả</label>
+              <textarea name="mota" class="form-control" rows="3" id="fieldTypeMota">${mota}</textarea>
+            </div>
+          </form>
+        `;
+
+        // Setup reference type change handler after modal is shown
+        setTimeout(() => {
+          const refSelect = document.getElementById("fieldTypeReferenceSelect");
+          if (refSelect) {
+            refSelect.addEventListener("change", function() {
+              const typeId = this.value;
+              if (!typeId) return;
+              const refType = allFieldTypes.find(t => (t.maloaisan || t.id || t.code) === typeId);
+              if (refType) {
+                const songuoi = refType.songuoi || refType.total_capacity || "";
+                const kichthuoc = refType.kichthuoc || refType.size_display || "";
+                const mota = refType.mota || refType.description || "";
+                
+                const songuoiSelect = document.getElementById("fieldTypeSonguoi");
+                const kichthuocSelect = document.getElementById("fieldTypeKichthuoc");
+                const motaTextarea = document.getElementById("fieldTypeMota");
+                
+                if (songuoiSelect && songuoi) {
+                  songuoiSelect.value = songuoi;
+                }
+                if (kichthuocSelect && kichthuoc) {
+                  kichthuocSelect.value = kichthuoc;
+                }
+                if (motaTextarea && mota) {
+                  motaTextarea.value = mota;
+                }
+                
+                Toast.info("Đã tải thông tin từ loại sân tham khảo!");
+              }
+            });
+          }
+        }, 100);
 
         formModal.show("Chỉnh Sửa Loại Sân", formHTML, async (data) => {
           try {
-            data.id = type.id || type.maloaisan;
-            await crudManager.saveToXML("LoaiSan.xml", data, "update");
+            LoadingOverlay.show();
+            data.id = type.id || type.maloaisan || type.code;
+            await crudManager.saveToXML("FieldTypes.xml", data, "update");
             formModal.close();
             Toast.success("Cập nhật loại sân thành công!");
             await loadFieldTypes();
           } catch (error) {
-            Toast.error("Lỗi khi cập nhật loại sân!");
+            console.error("Error updating field type:", error);
+            Toast.error("Lỗi khi cập nhật loại sân: " + error.message);
+          } finally {
+            LoadingOverlay.hide();
           }
         });
       }
 
       function deleteFieldType(id) {
-        const type = allFieldTypes.find((t) => (t.id || t.maloaisan) === id);
-        if (!type) return;
+        const type = allFieldTypes.find(
+          (t) => (t.maloaisan || t.code || t.id) === id
+        );
+        if (!type) {
+          Toast.error("Không tìm thấy loại sân!");
+          return;
+        }
 
+        const name = type.tenloaisan || type.name || id;
         ConfirmDialog.show(
-          `Bạn có chắc chắn muốn xóa loại sân "${type.tenloaisan}"?`,
+          `Bạn có chắc chắn muốn xóa loại sân <strong>"${name}"</strong>?<br><small style="color: #666;">Mã: ${
+            type.maloaisan || type.code
+          }</small>`,
           async () => {
             try {
+              LoadingOverlay.show();
               await crudManager.saveToXML(
-                "LoaiSan.xml",
-                { id: type.id || type.maloaisan },
+                "FieldTypes.xml",
+                { id: type.id || type.maloaisan || type.code },
                 "delete"
               );
               Toast.success("Xóa loại sân thành công!");
               await loadFieldTypes();
             } catch (error) {
-              Toast.error("Lỗi khi xóa loại sân!");
+              console.error("Error deleting field type:", error);
+              Toast.error("Lỗi khi xóa loại sân: " + error.message);
+            } finally {
+              LoadingOverlay.hide();
             }
           },
           "Xác Nhận Xóa"
         );
+      }
+
+      // Export field types to XML
+      function exportFieldTypesXML() {
+        crudManager.downloadXML("FieldTypes.xml", "FieldTypes", "fieldType");
+        Toast.success("Đã xuất file FieldTypes.xml!");
       }
     </script>
   </body>
