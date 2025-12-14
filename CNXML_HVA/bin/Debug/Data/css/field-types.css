@@ -1,0 +1,69 @@
+/* FIELD TYPES PAGE - MODERN DARK UI */
+body.field-types-page {
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(79, 172, 254, 0.2), transparent 60%),
+    radial-gradient(900px 450px at 100% 0%, rgba(0, 242, 254, 0.15), transparent 55%), #0b1220;
+  color: #e5e7eb;
+  min-height: 100vh;
+  --surface: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(229, 231, 235, 0.72);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+  --primary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+body.field-types-page .grass-pattern {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.2), rgba(0, 242, 254, 0.15)),
+    rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.field-types-page .stat-card {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+body.field-types-page .stat-card:hover { transform: translateY(-4px); }
+
+body.field-types-page .toolbar-container {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+body.field-types-page .toolbar-container input,
+body.field-types-page .toolbar-container select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+}
+
+body.field-types-page .btn-primary {
+  background: var(--primary);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 10px;
+}
+
+body.field-types-page .field-type-card {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  transition: transform 0.3s ease;
+}
+
+body.field-types-page .field-type-card:hover { transform: translateY(-6px); }
+body.field-types-page .field-type-card h3 { color: #fff !important; }
+body.field-types-page .field-type-card div[style*="color: #555"] { color: var(--muted) !important; }
+body.field-types-page .field-type-card div[style*="background: #f8f9fa"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+body.field-types-page .field-type-card div[style*="background: #f8f9fa"] p { color: var(--muted) !important; }

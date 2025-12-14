@@ -1,0 +1,286 @@
+/* ===========================
+   CUSTOMERS PAGE - MODERN UI
+   Synchronized with Dashboard Theme
+   =========================== */
+
+body.customers-page {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  background: radial-gradient(
+      1200px 600px at 20% -10%,
+      rgba(132, 250, 176, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 450px at 100% 0%,
+      rgba(143, 211, 244, 0.15),
+      transparent 55%
+    ),
+    #0b1220;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+body.customers-page * {
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+body.customers-page {
+  --sidebar-w: 280px;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(229, 231, 235, 0.72);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+  --primary: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  --accent: #84fab0;
+  --vip: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Main Content */
+body.customers-page .main-content {
+  margin-left: var(--sidebar-w);
+  padding: 26px;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  body.customers-page .main-content {
+    margin-left: 0;
+    padding: 18px;
+  }
+}
+
+/* Hero Section */
+body.customers-page .hero,
+body.customers-page .grass-pattern {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 28px 22px;
+  margin-bottom: 24px;
+  background: linear-gradient(
+      135deg,
+      rgba(132, 250, 176, 0.18),
+      rgba(143, 211, 244, 0.15)
+    ),
+    radial-gradient(
+      700px 260px at 15% 0%,
+      rgba(255, 255, 255, 0.14),
+      transparent 60%
+    ),
+    rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.customers-page .hero h1,
+body.customers-page .grass-pattern h1 {
+  color: #fff;
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.customers-page .hero p,
+body.customers-page .grass-pattern p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Stat Cards */
+body.customers-page .stat-card {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.customers-page .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.customers-page .stat-card::after {
+  content: "";
+  position: absolute;
+  inset: -40px -60px auto auto;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  filter: blur(18px);
+}
+
+body.customers-page .stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+body.customers-page .stat-details {
+  position: relative;
+  z-index: 1;
+}
+
+body.customers-page .stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+body.customers-page .stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Toolbar Container */
+body.customers-page .toolbar-container {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 20px !important;
+  margin-bottom: 24px !important;
+}
+
+body.customers-page .toolbar-container input,
+body.customers-page .toolbar-container select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  transition: all 0.3s ease;
+}
+
+body.customers-page .toolbar-container input:focus,
+body.customers-page .toolbar-container select:focus {
+  outline: none;
+  border-color: rgba(132, 250, 176, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(132, 250, 176, 0.15);
+}
+
+body.customers-page .toolbar-container input::placeholder {
+  color: var(--muted);
+}
+
+/* Buttons */
+body.customers-page .btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.customers-page .btn-primary {
+  background: var(--primary);
+  color: #1a1a2e;
+}
+
+body.customers-page .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(132, 250, 176, 0.4);
+}
+
+body.customers-page .btn-sm {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+body.customers-page .btn-info {
+  background: rgba(33, 150, 243, 0.2);
+  color: #64b5f6;
+  border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+body.customers-page .btn-danger {
+  background: rgba(244, 67, 54, 0.2);
+  color: #ef5350;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Customer Cards */
+body.customers-page .customer-card {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.customers-page .customer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+body.customers-page .customer-card h3 {
+  color: #fff !important;
+}
+
+body.customers-page .customer-card span,
+body.customers-page .customer-card div[style*="color: #555"] {
+  color: var(--muted) !important;
+}
+
+body.customers-page .customer-card div[style*="background: #f8f9fa"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.customers-page .customer-card div[style*="background: #f8f9fa"] div {
+  color: #81c784 !important;
+}
+
+/* VIP Badge */
+body.customers-page .vip-badge {
+  background: linear-gradient(135deg, #ffd700, #ffb347) !important;
+  color: #1a1a2e !important;
+}
+
+/* Grid Container */
+body.customers-page #customersGrid {
+  gap: 24px;
+}
+
+/* Empty State */
+body.customers-page .empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--muted);
+}

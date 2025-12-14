@@ -1,0 +1,292 @@
+/* ===========================
+   BRANCHES PAGE - MODERN UI
+   Synchronized with Dashboard Theme
+   =========================== */
+
+body.branches-page {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  background: radial-gradient(
+      1200px 600px at 20% -10%,
+      rgba(240, 147, 251, 0.2),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 450px at 100% 0%,
+      rgba(245, 87, 108, 0.15),
+      transparent 55%
+    ),
+    #0b1220;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+body.branches-page * {
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+body.branches-page {
+  --sidebar-w: 280px;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(229, 231, 235, 0.72);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+  --primary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --accent: #f093fb;
+}
+
+/* Main Content */
+body.branches-page .main-content {
+  margin-left: var(--sidebar-w);
+  padding: 26px;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  body.branches-page .main-content {
+    margin-left: 0;
+    padding: 18px;
+  }
+}
+
+/* Hero Section */
+body.branches-page .hero,
+body.branches-page .grass-pattern {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 28px 22px;
+  margin-bottom: 24px;
+  background: linear-gradient(
+      135deg,
+      rgba(240, 147, 251, 0.2),
+      rgba(245, 87, 108, 0.16)
+    ),
+    radial-gradient(
+      700px 260px at 15% 0%,
+      rgba(255, 255, 255, 0.14),
+      transparent 60%
+    ),
+    rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.branches-page .hero h1,
+body.branches-page .grass-pattern h1 {
+  color: #fff;
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.branches-page .hero p,
+body.branches-page .grass-pattern p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Stat Cards */
+body.branches-page .stat-card {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.branches-page .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.branches-page .stat-card::after {
+  content: "";
+  position: absolute;
+  inset: -40px -60px auto auto;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  filter: blur(18px);
+}
+
+body.branches-page .stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+body.branches-page .stat-details {
+  position: relative;
+  z-index: 1;
+}
+
+body.branches-page .stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+body.branches-page .stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Toolbar Container */
+body.branches-page .toolbar-container {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 20px !important;
+  margin-bottom: 24px !important;
+}
+
+body.branches-page .toolbar-container input,
+body.branches-page .toolbar-container select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  transition: all 0.3s ease;
+}
+
+body.branches-page .toolbar-container input:focus,
+body.branches-page .toolbar-container select:focus {
+  outline: none;
+  border-color: rgba(240, 147, 251, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(240, 147, 251, 0.15);
+}
+
+body.branches-page .toolbar-container input::placeholder {
+  color: var(--muted);
+}
+
+/* Buttons */
+body.branches-page .btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.branches-page .btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+body.branches-page .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4);
+}
+
+body.branches-page .btn-sm {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+body.branches-page .btn-danger {
+  background: rgba(244, 67, 54, 0.2);
+  color: #ef5350;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Branch Cards */
+body.branches-page .branch-card {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.branches-page .branch-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+body.branches-page .branch-card img {
+  border-bottom: 1px solid var(--border);
+}
+
+body.branches-page .branch-card h3 {
+  color: #fff !important;
+}
+
+body.branches-page .branch-card span,
+body.branches-page .branch-card p {
+  color: var(--muted) !important;
+}
+
+body.branches-page .branch-card div[style*="background: #f1f8f4"],
+body.branches-page .branch-card div[style*="background: white"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: var(--muted) !important;
+}
+
+body.branches-page .branch-card div[style*="border-top"] {
+  border-top: 1px solid var(--border) !important;
+}
+
+/* Status Badges */
+body.branches-page .status-active {
+  background: rgba(76, 175, 80, 0.2) !important;
+  color: #81c784 !important;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+body.branches-page .status-inactive {
+  background: rgba(244, 67, 54, 0.2) !important;
+  color: #ef5350 !important;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Grid Container */
+body.branches-page .grid-container {
+  gap: 24px;
+}
+
+/* Empty State */
+body.branches-page .empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--muted);
+}

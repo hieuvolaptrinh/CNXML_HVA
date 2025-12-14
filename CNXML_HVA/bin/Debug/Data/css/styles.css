@@ -689,3 +689,199 @@ select.form-control {
     width: 95%;
   }
 }
+
+/* ============================================
+   DARK THEME MODAL STYLES
+   For pages with dark theme body classes
+   ============================================ */
+
+/* Dark theme modal overlay */
+body[class*="-page"] .modal {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+/* Dark theme modal content */
+body[class*="-page"] .modal-content {
+  background: linear-gradient(180deg, #1a1f2e 0%, #151a27 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark theme modal header */
+body[class*="-page"] .modal-header {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.25) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+body[class*="-page"] .modal-header h3 {
+  color: #fff;
+  font-weight: 600;
+}
+
+body[class*="-page"] .modal-header .btn-icon {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body[class*="-page"] .modal-header .btn-icon:hover {
+  background: rgba(244, 67, 54, 0.3);
+  border-color: rgba(244, 67, 54, 0.5);
+}
+
+/* Dark theme modal body */
+body[class*="-page"] .modal-body {
+  background: transparent;
+  color: #e5e7eb;
+}
+
+body[class*="-page"] .modal-body p,
+body[class*="-page"] .modal-body span,
+body[class*="-page"] .modal-body td,
+body[class*="-page"] .modal-body label {
+  color: #e5e7eb;
+}
+
+body[class*="-page"] .modal-body td[style*="color: #666"] {
+  color: rgba(229, 231, 235, 0.7) !important;
+}
+
+body[class*="-page"] .modal-body div[style*="background: #f5f5f5"],
+body[class*="-page"] .modal-body div[style*="background: #f8f9fa"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+body[class*="-page"] .modal-body h4 {
+  color: #8b9dc3 !important;
+}
+
+/* Dark theme modal footer */
+body[class*="-page"] .modal-footer {
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Dark theme form controls */
+body[class*="-page"] .form-control,
+body[class*="-page"] .modal-body input,
+body[class*="-page"] .modal-body select,
+body[class*="-page"] .modal-body textarea {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+}
+
+body[class*="-page"] .form-control:focus,
+body[class*="-page"] .modal-body input:focus,
+body[class*="-page"] .modal-body select:focus,
+body[class*="-page"] .modal-body textarea:focus {
+  border-color: rgba(102, 126, 234, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15) !important;
+  outline: none !important;
+}
+
+body[class*="-page"] .form-control::placeholder,
+body[class*="-page"] .modal-body input::placeholder,
+body[class*="-page"] .modal-body textarea::placeholder {
+  color: rgba(229, 231, 235, 0.5) !important;
+}
+
+body[class*="-page"] .modal-body select option {
+  background: #1a1f2e;
+  color: #e5e7eb;
+}
+
+body[class*="-page"] .form-group label {
+  color: #c9d1d9 !important;
+}
+
+/* Dark theme buttons in modal */
+body[class*="-page"] .modal .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+}
+
+body[class*="-page"] .modal .btn-primary:hover {
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+body[class*="-page"] .modal .btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+body[class*="-page"] .modal .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+body[class*="-page"] .modal .btn-danger {
+  background: linear-gradient(135deg, #f44336 0%, #e53935 100%);
+  color: #fff;
+  border: none;
+}
+
+body[class*="-page"] .modal .btn-danger:hover {
+  box-shadow: 0 8px 25px rgba(244, 67, 54, 0.4);
+}
+
+/* Dark theme alert boxes in forms */
+body[class*="-page"] .modal-body .alert,
+body[class*="-page"] .modal-body div[style*="background: linear-gradient"] {
+  background: rgba(102, 126, 234, 0.15) !important;
+  border: 1px solid rgba(102, 126, 234, 0.3) !important;
+  border-radius: 10px;
+}
+
+body[class*="-page"] .modal-body .alert i,
+body[class*="-page"] .modal-body .alert span {
+  color: #8b9dc3 !important;
+}
+
+/* Dark theme toast notifications */
+body[class*="-page"] .toast {
+  background: linear-gradient(180deg, #1a1f2e 0%, #151a27 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e5e7eb !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+body[class*="-page"] .toast-success {
+  border-left: 4px solid #4caf50 !important;
+}
+
+body[class*="-page"] .toast-error {
+  border-left: 4px solid #f44336 !important;
+}
+
+body[class*="-page"] .toast-info {
+  border-left: 4px solid #2196f3 !important;
+}
+
+/* Dark theme loading overlay */
+body[class*="-page"] .loading-overlay {
+  background: rgba(11, 18, 32, 0.95) !important;
+}
+
+body[class*="-page"] .loading-overlay .spinner {
+  border-color: rgba(255, 255, 255, 0.1);
+  border-top-color: #667eea;
+}
+
+body[class*="-page"] .loading-overlay p {
+  color: #8b9dc3 !important;
+}
+
+/* Sidebar dark theme adjustments */
+body[class*="-page"] #sidebar > div {
+  background: linear-gradient(180deg, #0d1117 0%, #161b22 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+

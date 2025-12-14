@@ -1,0 +1,69 @@
+/* FIELDS PAGE - MODERN DARK UI */
+body.fields-page {
+  font-family: Inter, system-ui, sans-serif;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(76, 175, 80, 0.2), transparent 60%),
+    radial-gradient(900px 450px at 100% 0%, rgba(33, 150, 243, 0.15), transparent 55%), #0b1220;
+  color: #e5e7eb;
+  min-height: 100vh;
+  --surface: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(229, 231, 235, 0.72);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+  --primary: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
+}
+
+body.fields-page .grass-pattern {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(33, 150, 243, 0.15)),
+    rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.fields-page .stat-card {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+body.fields-page .stat-card:hover { transform: translateY(-4px); }
+
+body.fields-page .toolbar-container {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+body.fields-page .toolbar-container input,
+body.fields-page .toolbar-container select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+}
+
+body.fields-page .btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+}
+
+body.fields-page .field-card {
+  background: linear-gradient(180deg, var(--surface), rgba(255, 255, 255, 0.03)) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  transition: transform 0.3s ease;
+}
+
+body.fields-page .field-card:hover { transform: translateY(-6px); }
+body.fields-page .field-card h3 { color: #fff !important; }
+body.fields-page .field-card div[style*="color: #555"] { color: var(--muted) !important; }
+body.fields-page .field-card div[style*="background: #f1f8f4"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+body.fields-page .field-card div[style*="background: #f1f8f4"] p { color: var(--muted) !important; }

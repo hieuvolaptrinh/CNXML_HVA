@@ -1,0 +1,298 @@
+/* ===========================
+   BOOKING PAGE - MODERN UI
+   Synchronized with Dashboard Theme
+   =========================== */
+
+body.booking-page {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
+  background: radial-gradient(
+      1200px 600px at 20% -10%,
+      rgba(102, 126, 234, 0.25),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 450px at 100% 0%,
+      rgba(118, 75, 162, 0.18),
+      transparent 55%
+    ),
+    #0b1220;
+  color: #e5e7eb;
+  min-height: 100vh;
+}
+
+body.booking-page * {
+  box-sizing: border-box;
+}
+
+/* CSS Variables */
+body.booking-page {
+  --sidebar-w: 280px;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.1);
+  --muted: rgba(229, 231, 235, 0.72);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+  --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --danger: #f44336;
+  --info: #2196F3;
+}
+
+/* Main Content */
+body.booking-page .main-content {
+  margin-left: var(--sidebar-w);
+  padding: 26px;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
+  body.booking-page .main-content {
+    margin-left: 0;
+    padding: 18px;
+  }
+}
+
+/* Hero Section */
+body.booking-page .hero,
+body.booking-page .grass-pattern {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 28px 22px;
+  margin-bottom: 24px;
+  background: linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.22),
+      rgba(118, 75, 162, 0.18)
+    ),
+    radial-gradient(
+      700px 260px at 15% 0%,
+      rgba(255, 255, 255, 0.14),
+      transparent 60%
+    ),
+    rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.booking-page .hero h1,
+body.booking-page .grass-pattern h1 {
+  color: #fff;
+  font-size: 2rem;
+  margin: 0 0 8px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.booking-page .hero p,
+body.booking-page .grass-pattern p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* Stat Cards */
+body.booking-page .stat-card {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.booking-page .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+body.booking-page .stat-card::after {
+  content: "";
+  position: absolute;
+  inset: -40px -60px auto auto;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  filter: blur(18px);
+}
+
+body.booking-page .stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+body.booking-page .stat-details {
+  position: relative;
+  z-index: 1;
+}
+
+body.booking-page .stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+body.booking-page .stat-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Toolbar Container */
+body.booking-page .toolbar-container {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  ) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow) !important;
+  padding: 20px !important;
+  margin-bottom: 24px !important;
+}
+
+body.booking-page .toolbar-container input,
+body.booking-page .toolbar-container select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--border) !important;
+  color: #e5e7eb !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  transition: all 0.3s ease;
+}
+
+body.booking-page .toolbar-container input:focus,
+body.booking-page .toolbar-container select:focus {
+  outline: none;
+  border-color: rgba(102, 126, 234, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+body.booking-page .toolbar-container input::placeholder {
+  color: var(--muted);
+}
+
+/* Buttons */
+body.booking-page .btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body.booking-page .btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+body.booking-page .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+body.booking-page .btn-sm {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
+body.booking-page .btn-info {
+  background: rgba(33, 150, 243, 0.2);
+  color: #64b5f6;
+  border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+body.booking-page .btn-danger {
+  background: rgba(244, 67, 54, 0.2);
+  color: #ef5350;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Table Styles */
+body.booking-page table {
+  width: 100%;
+  border-collapse: collapse;
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  );
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+body.booking-page thead {
+  background: var(--primary) !important;
+}
+
+body.booking-page th {
+  padding: 16px !important;
+  color: #fff !important;
+  font-weight: 600;
+  text-align: left;
+}
+
+body.booking-page tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: transparent !important;
+  transition: background 0.2s ease;
+}
+
+body.booking-page tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+body.booking-page td {
+  padding: 16px !important;
+  color: #e5e7eb !important;
+}
+
+/* Status Badges */
+body.booking-page .status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* Empty State */
+body.booking-page .empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+body.booking-page .empty-state i {
+  font-size: 4rem;
+  opacity: 0.3;
+  margin-bottom: 16px;
+  display: block;
+}
