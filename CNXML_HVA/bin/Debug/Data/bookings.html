@@ -91,16 +91,7 @@
         </div>
       </div>
 
-      <div
-        class="toolbar-container"
-        style="
-          background: white;
-          padding: 20px;
-          border-radius: 12px;
-          margin-bottom: 25px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        "
-      >
+      <div class="toolbar-container">
         <div
           style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center"
         >
@@ -139,15 +130,7 @@
         </div>
       </div>
 
-      <div
-        id="bookingsTable"
-        style="
-          background: white;
-          border-radius: 12px;
-          overflow: hidden;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        "
-      >
+      <div id="bookingsTable" class="table-container">
         <table style="width: 100%; border-collapse: collapse">
           <thead
             style="
@@ -253,9 +236,7 @@
             const endTime = startTime + duration;
 
             return `
-            <tr style="border-bottom: 1px solid #eee; ${
-              index % 2 === 0 ? "background: #fafafa;" : ""
-            }">
+            <tr>
               <td style="padding: 15px;"><strong>${
                 booking.id || "N/A"
               }</strong></td>

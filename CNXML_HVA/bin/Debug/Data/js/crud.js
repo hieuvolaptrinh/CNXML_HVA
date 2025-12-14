@@ -235,9 +235,25 @@ class CRUDManager {
           // Không cần mapping vì XML đã dùng image_url
         }
 
-        // Chuẩn hóa field names cho Equipment - giữ nguyên image_url từ XML
+        // Chuẩn hóa field names cho Equipment - map from English XML to Vietnamese
         if (rootTag === "equipment") {
-          // Không cần mapping vì XML đã dùng image_url
+          obj.madungcu = obj.id || obj.madungcu;
+          obj.tendungcu = obj.name || obj.tendungcu;
+          obj.loai = obj.category || obj.loai;
+          obj.thuonghieu = obj.brand || obj.thuonghieu;
+          obj.model = obj.model;
+          obj.soluong = obj.quantity_total || obj.soluong;
+          obj.soluongconlai = obj.quantity_available || obj.soluongconlai;
+          obj.giathue = obj.rental_price || obj.giathue;
+          obj.gia = obj.purchase_price || obj.gia;
+          obj.tinhtrang = obj.condition || obj.tinhtrang;
+          obj.mota = obj.description || obj.mota;
+          obj.machinhanh = obj.branch_id || obj.machinhanh;
+          obj.nhacungcap = obj.supplier || obj.nhacungcap;
+          obj.ngaymua = obj.purchase_date || obj.ngaymua;
+          obj.thoigianbaohanh = obj.warranty_period || obj.thoigianbaohanh;
+          obj.trangthai = obj.status || obj.trangthai || "Active";
+          obj.hinhanh = obj.image_url || obj.hinhanh;
         }
 
         // Chuẩn hóa field names cho FieldType

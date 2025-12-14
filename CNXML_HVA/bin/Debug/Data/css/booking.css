@@ -296,3 +296,16 @@ body.booking-page .empty-state i {
   margin-bottom: 16px;
   display: block;
 }
+
+/* Table Container */
+body.booking-page .table-container {
+  background: linear-gradient(
+    180deg,
+    var(--surface),
+    rgba(255, 255, 255, 0.03)
+  );
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
