@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -823,6 +824,86 @@ namespace CNXML_HVA
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi import XML: {ex.Message}");
+            }
+        }
+
+        // Import dữ liệu từ SQL Server
+        private void ImportSQLButtonChiNhanh_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Dữ liệu từ SQL Server sẽ được thêm vào DataTable hiện tại.\nTiếp tục?",
+                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString);
+            try
+            {
+                conn.Open();
+                string sql = "SELECT * FROM Branches";
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dtSQL = new DataTable();
+                da.Fill(dtSQL);
+
+                if (dtSQL.Rows.Count == 0)
+                {
+                    MessageBox.Show("Bảng Branches trong SQL Server đang trống!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Clear DataTable hiện tại
+                branchTable.Clear();
+
+                // Import từng dòng từ SQL vào DataTable
+                foreach (DataRow sqlRow in dtSQL.Rows)
+                {
+                    DataRow newRow = branchTable.NewRow();
+                    
+                    // Mapping: SQL (English) -> DataTable (Tiếng Việt)
+                    newRow["Mã CN"] = sqlRow["id"] ?? "";
+                    newRow["Tên chi nhánh"] = sqlRow["name"] ?? "";
+                    newRow["Mã code"] = sqlRow["code"] ?? "";
+                    newRow["Thành phố"] = sqlRow["city"] ?? "";
+                    newRow["Quận"] = sqlRow["district"] ?? "";
+                    newRow["Đường"] = sqlRow["street"] ?? "";
+                    newRow["Số nhà"] = sqlRow["house_number"] ?? "";
+                    newRow["Mã bưu chính"] = sqlRow["postal_code"] ?? "";
+                    newRow["Điện thoại"] = sqlRow["phone"] ?? "";
+                    newRow["Email"] = sqlRow["email"] ?? "";
+                    newRow["Fax"] = sqlRow["fax"] ?? "";
+                    newRow["Mã quản lý"] = sqlRow["manager_id"] ?? "";
+                    newRow["Tên quản lý"] = sqlRow["manager_name"] ?? "";
+                    newRow["Giờ T2-T6"] = sqlRow["weekday_hours"] ?? "";
+                    newRow["Giờ T7-CN"] = sqlRow["weekend_hours"] ?? "";
+                    newRow["Số sân"] = sqlRow["total_fields"] != DBNull.Value ? Convert.ToInt32(sqlRow["total_fields"]) : 0;
+                    newRow["Ngày thành lập"] = sqlRow["established_date"] != DBNull.Value ? Convert.ToDateTime(sqlRow["established_date"]) : DateTime.Now;
+                    newRow["Doanh thu tháng"] = sqlRow["monthly_revenue"] != DBNull.Value ? Convert.ToDecimal(sqlRow["monthly_revenue"]) : 0;
+                    newRow["Số nhân viên"] = sqlRow["staff_count"] != DBNull.Value ? Convert.ToInt32(sqlRow["staff_count"]) : 0;
+                    newRow["Mô tả"] = sqlRow["description"] ?? "";
+                    newRow["Trạng thái"] = sqlRow["status"] ?? "";
+                    newRow["URL hình ảnh"] = sqlRow["image_url"] ?? "";
+
+                    branchTable.Rows.Add(newRow);
+                }
+
+                // Refresh DataGridView
+                dataGridViewBranches.DataSource = branchTable;
+                if (dataGridViewBranches.Rows.Count > 0)
+                {
+                    dataGridViewBranches.Rows[0].Selected = true;
+                    LoadSelectedBranchToForm();
+                }
+
+                MessageBox.Show($"Đã import thành công {dtSQL.Rows.Count} chi nhánh từ SQL Server!",
+                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối SQL Server: " + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 

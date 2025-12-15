@@ -98,6 +98,7 @@
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.ImportSQLButtonChiNhanh = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -126,7 +127,7 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(4);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1300, 86);
+            this.panelHeader.Size = new System.Drawing.Size(1282, 86);
             this.panelHeader.TabIndex = 0;
             // 
             // lblUserAvatar
@@ -135,7 +136,7 @@
             this.lblUserAvatar.AutoSize = true;
             this.lblUserAvatar.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblUserAvatar.ForeColor = System.Drawing.Color.White;
-            this.lblUserAvatar.Location = new System.Drawing.Point(1129, 38);
+            this.lblUserAvatar.Location = new System.Drawing.Point(1111, 38);
             this.lblUserAvatar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserAvatar.Name = "lblUserAvatar";
             this.lblUserAvatar.Size = new System.Drawing.Size(136, 25);
@@ -157,6 +158,7 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.ImportSQLButtonChiNhanh);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -167,7 +169,7 @@
             this.panelToolbar.Margin = new System.Windows.Forms.Padding(4);
             this.panelToolbar.Name = "panelToolbar";
             this.panelToolbar.Padding = new System.Windows.Forms.Padding(20, 15, 20, 15);
-            this.panelToolbar.Size = new System.Drawing.Size(1300, 74);
+            this.panelToolbar.Size = new System.Drawing.Size(1282, 74);
             this.panelToolbar.TabIndex = 1;
             // 
             // buttonImportXml
@@ -178,7 +180,7 @@
             this.buttonImportXml.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImportXml.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonImportXml.ForeColor = System.Drawing.Color.White;
-            this.buttonImportXml.Location = new System.Drawing.Point(1140, 17);
+            this.buttonImportXml.Location = new System.Drawing.Point(1122, 17);
             this.buttonImportXml.Margin = new System.Windows.Forms.Padding(4);
             this.buttonImportXml.Name = "buttonImportXml";
             this.buttonImportXml.Size = new System.Drawing.Size(147, 39);
@@ -195,7 +197,7 @@
             this.buttonExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.buttonExportExcel.ForeColor = System.Drawing.Color.White;
-            this.buttonExportExcel.Location = new System.Drawing.Point(985, 16);
+            this.buttonExportExcel.Location = new System.Drawing.Point(967, 16);
             this.buttonExportExcel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExportExcel.Name = "buttonExportExcel";
             this.buttonExportExcel.Size = new System.Drawing.Size(147, 39);
@@ -256,7 +258,7 @@
             this.panelMain.Margin = new System.Windows.Forms.Padding(4);
             this.panelMain.Name = "panelMain";
             this.panelMain.Padding = new System.Windows.Forms.Padding(10);
-            this.panelMain.Size = new System.Drawing.Size(1300, 540);
+            this.panelMain.Size = new System.Drawing.Size(1282, 540);
             this.panelMain.TabIndex = 2;
             this.panelMain.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMain_Paint);
             // 
@@ -268,7 +270,7 @@
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonAdd.ForeColor = System.Drawing.Color.White;
-            this.buttonAdd.Location = new System.Drawing.Point(790, 421);
+            this.buttonAdd.Location = new System.Drawing.Point(772, 421);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(160, 49);
@@ -285,7 +287,7 @@
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonEdit.ForeColor = System.Drawing.Color.White;
-            this.buttonEdit.Location = new System.Drawing.Point(960, 421);
+            this.buttonEdit.Location = new System.Drawing.Point(942, 421);
             this.buttonEdit.Margin = new System.Windows.Forms.Padding(4);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(160, 49);
@@ -302,7 +304,7 @@
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonDelete.ForeColor = System.Drawing.Color.White;
-            this.buttonDelete.Location = new System.Drawing.Point(1130, 421);
+            this.buttonDelete.Location = new System.Drawing.Point(1112, 421);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(160, 49);
@@ -335,7 +337,7 @@
             this.dataGridViewBranches.RowHeadersWidth = 51;
             this.dataGridViewBranches.RowTemplate.Height = 35;
             this.dataGridViewBranches.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewBranches.Size = new System.Drawing.Size(735, 517);
+            this.dataGridViewBranches.Size = new System.Drawing.Size(717, 517);
             this.dataGridViewBranches.TabIndex = 0;
             this.dataGridViewBranches.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewBranches_CellContentClick);
             this.dataGridViewBranches.SelectionChanged += new System.EventHandler(this.dataGridViewBranches_SelectionChanged);
@@ -352,7 +354,7 @@
             this.tabControlBranchInfo.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControlBranchInfo.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.tabControlBranchInfo.ItemSize = new System.Drawing.Size(100, 35);
-            this.tabControlBranchInfo.Location = new System.Drawing.Point(753, 0);
+            this.tabControlBranchInfo.Location = new System.Drawing.Point(735, 0);
             this.tabControlBranchInfo.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlBranchInfo.Name = "tabControlBranchInfo";
             this.tabControlBranchInfo.Padding = new System.Drawing.Point(10, 5);
@@ -1077,7 +1079,7 @@
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonSave.ForeColor = System.Drawing.Color.White;
-            this.buttonSave.Location = new System.Drawing.Point(1042, 478);
+            this.buttonSave.Location = new System.Drawing.Point(1024, 478);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(120, 49);
@@ -1095,7 +1097,7 @@
             this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.buttonCancel.ForeColor = System.Drawing.Color.White;
-            this.buttonCancel.Location = new System.Drawing.Point(1170, 478);
+            this.buttonCancel.Location = new System.Drawing.Point(1152, 478);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(120, 49);
@@ -1104,13 +1106,30 @@
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // ImportSQLButtonChiNhanh
+            // 
+            this.ImportSQLButtonChiNhanh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImportSQLButtonChiNhanh.BackColor = System.Drawing.Color.DarkBlue;
+            this.ImportSQLButtonChiNhanh.FlatAppearance.BorderSize = 0;
+            this.ImportSQLButtonChiNhanh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImportSQLButtonChiNhanh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.ImportSQLButtonChiNhanh.ForeColor = System.Drawing.Color.White;
+            this.ImportSQLButtonChiNhanh.Location = new System.Drawing.Point(812, 16);
+            this.ImportSQLButtonChiNhanh.Margin = new System.Windows.Forms.Padding(4);
+            this.ImportSQLButtonChiNhanh.Name = "ImportSQLButtonChiNhanh";
+            this.ImportSQLButtonChiNhanh.Size = new System.Drawing.Size(147, 39);
+            this.ImportSQLButtonChiNhanh.TabIndex = 5;
+            this.ImportSQLButtonChiNhanh.Text = "📊 Import SQL";
+            this.ImportSQLButtonChiNhanh.UseVisualStyleBackColor = false;
+            this.ImportSQLButtonChiNhanh.Click += new System.EventHandler(this.ImportSQLButtonChiNhanh_Click);
+            // 
             // ChiNhanh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(248)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(1300, 700);
+            this.ClientSize = new System.Drawing.Size(1282, 700);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelToolbar);
             this.Controls.Add(this.panelHeader);
@@ -1220,5 +1239,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblUserAvatar;
+        private System.Windows.Forms.Button ImportSQLButtonChiNhanh;
     }
 }

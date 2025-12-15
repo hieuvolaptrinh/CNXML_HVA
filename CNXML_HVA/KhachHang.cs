@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
-// using Excel = Microsoft.Office.Interop.Excel; // Mở comment nếu bạn đã thêm Reference Excel
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CNXML_HVA
 {
@@ -17,9 +17,6 @@ namespace CNXML_HVA
         private bool isEditing = false;
         private bool isAdding = false;
         private DataTable customerTable;
-
-        // CẤU HÌNH CHUỖI KẾT NỐI ĐẾN DB MỚI (dbSANBONG)
-        string strConnect = @"Data Source=LAPTOP-DR52OL6S;Initial Catalog=dbSANBONG;Integrated Security=True";
 
         public KhachHang()
         {
@@ -104,7 +101,7 @@ namespace CNXML_HVA
             if (MessageBox.Show("Dữ liệu từ SQL Server sẽ GHI ĐÈ lên file XML hiện tại.\nTiếp tục?",
                 "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
 
-            SqlConnection conn = new SqlConnection(strConnect);
+            SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString);
             try
             {
                 conn.Open();
@@ -165,7 +162,7 @@ namespace CNXML_HVA
         {
             if (MessageBox.Show("Đồng bộ dữ liệu từ XML lên SQL Server?", "Xác nhận", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
-            SqlConnection conn = new SqlConnection(strConnect);
+            SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString);
             try
             {
                 conn.Open();
@@ -405,8 +402,126 @@ namespace CNXML_HVA
         private void buttonCancel_Click(object sender, EventArgs e) { SetEditMode(false); LoadSelectedCustomerToForm(); }
         private void buttonRefresh_Click(object sender, EventArgs e) { LoadCustomersFromXML(); textBoxSearch.Clear(); }
 
-        // Chức năng Export Excel (để trống nếu bạn chưa cài thư viện)
-        private void buttonExportExcel_Click(object sender, EventArgs e) { /* Code excel cũ */ }
+        // Chức năng Export Excel
+        private void buttonExportExcel_Click(object sender, EventArgs e)
+        {
+            if (customerTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls";
+            saveDialog.Title = "Xuất danh sách khách hàng";
+            saveDialog.FileName = $"DanhSachKhachHang_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application excelApp = null;
+                Excel.Workbook workbook = null;
+                Excel.Worksheet worksheet = null;
+
+                try
+                {
+                    // Tạo ứng dụng Excel
+                    excelApp = new Excel.Application();
+                    excelApp.Visible = false;
+                    workbook = excelApp.Workbooks.Add();
+                    worksheet = (Excel.Worksheet)workbook.Sheets[1];
+                    worksheet.Name = "Khách Hàng";
+
+                    // Tiêu đề báo cáo
+                    worksheet.Cells[1, 1] = "DANH SÁCH KHÁCH HÀNG";
+                    Excel.Range titleRange = worksheet.Range["A1", "I1"];
+                    titleRange.Merge();
+                    titleRange.Font.Bold = true;
+                    titleRange.Font.Size = 16;
+                    titleRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    titleRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+                    titleRange.RowHeight = 30;
+
+                    // Ngày xuất
+                    worksheet.Cells[2, 1] = $"Ngày xuất: {DateTime.Now:dd/MM/yyyy HH:mm:ss}";
+                    Excel.Range dateRange = worksheet.Range["A2", "I2"];
+                    dateRange.Merge();
+                    dateRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    dateRange.Font.Italic = true;
+
+                    // Header (dòng 4)
+                    int headerRow = 4;
+                    for (int i = 0; i < customerTable.Columns.Count; i++)
+                    {
+                        worksheet.Cells[headerRow, i + 1] = customerTable.Columns[i].ColumnName;
+                    }
+
+                    // Format header
+                    Excel.Range headerRange = worksheet.Range[worksheet.Cells[headerRow, 1], worksheet.Cells[headerRow, customerTable.Columns.Count]];
+                    headerRange.Font.Bold = true;
+                    headerRange.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
+                    headerRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromArgb(33, 150, 243));
+                    headerRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                    headerRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+                    headerRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+
+                    // Dữ liệu (từ dòng 5)
+                    int startRow = 5;
+                    for (int i = 0; i < customerTable.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < customerTable.Columns.Count; j++)
+                        {
+                            worksheet.Cells[startRow + i, j + 1] = customerTable.Rows[i][j]?.ToString() ?? "";
+                        }
+                    }
+
+                    // Format dữ liệu
+                    Excel.Range dataRange = worksheet.Range[worksheet.Cells[startRow, 1], worksheet.Cells[startRow + customerTable.Rows.Count - 1, customerTable.Columns.Count]];
+                    dataRange.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                    dataRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                    dataRange.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter;
+
+                    // Tổng số bản ghi
+                    int summaryRow = startRow + customerTable.Rows.Count + 1;
+                    worksheet.Cells[summaryRow, 1] = $"Tổng số khách hàng: {customerTable.Rows.Count}";
+                    Excel.Range summaryRange = worksheet.Range[worksheet.Cells[summaryRow, 1], worksheet.Cells[summaryRow, 3]];
+                    summaryRange.Merge();
+                    summaryRange.Font.Bold = true;
+                    summaryRange.Font.Italic = true;
+
+                    // Auto-fit columns
+                    worksheet.Columns.AutoFit();
+
+                    // Lưu file
+                    workbook.SaveAs(saveDialog.FileName);
+                    workbook.Close();
+                    excelApp.Quit();
+
+                    MessageBox.Show($"Xuất Excel thành công!\nĐã lưu tại: {saveDialog.FileName}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Mở file Excel vừa tạo
+                    if (MessageBox.Show("Bạn có muốn mở file Excel vừa xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(saveDialog.FileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi xuất Excel: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Giải phóng tài nguyên COM
+                    if (worksheet != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+                    if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                    if (excelApp != null)
+                    {
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+                    }
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                }
+            }
+        }
 
         private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {

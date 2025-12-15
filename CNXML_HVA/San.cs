@@ -24,7 +24,6 @@ namespace CNXML_HVA
         private List<FieldType> allFieldTypes;
         private string currentStatusFilter = "All";
         private const string SEARCH_PLACEHOLDER = "Tìm theo tên, mã sân...";
-        private const string CONNECTION_STRING = "Data Source=HIEUVO;Initial Catalog=dbSANBONG;User ID=sa;Password=sa;TrustServerCertificate=True";
 
         public San()
         {
@@ -538,7 +537,7 @@ namespace CNXML_HVA
                 if (result != DialogResult.Yes)
                     return;
 
-                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                using (SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString))
                 {
                     conn.Open();
                     SqlTransaction transaction = conn.BeginTransaction();
@@ -668,7 +667,7 @@ namespace CNXML_HVA
 
                 List<Field> fieldsFromSql = new List<Field>();
 
-                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                using (SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString))
                 {
                     conn.Open();
                     string selectSql = "SELECT * FROM Fields ORDER BY id";

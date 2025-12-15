@@ -116,6 +116,7 @@
     <Compile Include="DangKy.Designer.cs">
       <DependentUpon>DangKy.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseConfig.cs" />
     <Compile Include="DataPaths.cs" />
     <Compile Include="DashBoard.cs">
       <SubType>Form</SubType>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -876,6 +877,81 @@ namespace CNXML_HVA
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi import XML: {ex.Message}");
+            }
+        }
+
+        // Import dữ liệu từ SQL Server
+        private void ImportSQLButtonDungCu_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Dữ liệu từ SQL Server sẽ được thêm vào DataTable hiện tại.\nTiếp tục?",
+                "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString);
+            try
+            {
+                conn.Open();
+                string sql = "SELECT * FROM Equipments";
+                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                DataTable dtSQL = new DataTable();
+                da.Fill(dtSQL);
+
+                if (dtSQL.Rows.Count == 0)
+                {
+                    MessageBox.Show("Bảng Equipments trong SQL Server đang trống!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Clear DataTable hiện tại
+                equipmentTable.Clear();
+
+                // Import từng dòng từ SQL vào DataTable
+                foreach (DataRow sqlRow in dtSQL.Rows)
+                {
+                    DataRow newRow = equipmentTable.NewRow();
+                    
+                    // Mapping: SQL (English) -> DataTable (Tiếng Việt)
+                    newRow["Mã DC"] = sqlRow["id"] ?? "";
+                    newRow["Tên dụng cụ"] = sqlRow["name"] ?? "";
+                    newRow["Danh mục"] = sqlRow["category"] ?? "";
+                    newRow["Thương hiệu"] = sqlRow["brand"] ?? "";
+                    newRow["Model"] = sqlRow["model"] ?? "";
+                    newRow["Tổng SL"] = sqlRow["quantity_total"] != DBNull.Value ? Convert.ToInt32(sqlRow["quantity_total"]) : 0;
+                    newRow["SL có sẵn"] = sqlRow["quantity_available"] != DBNull.Value ? Convert.ToInt32(sqlRow["quantity_available"]) : 0;
+                    newRow["Giá thuê"] = sqlRow["rental_price"] != DBNull.Value ? Convert.ToDecimal(sqlRow["rental_price"]) : 0;
+                    newRow["Giá mua"] = sqlRow["purchase_price"] != DBNull.Value ? Convert.ToDecimal(sqlRow["purchase_price"]) : 0;
+                    newRow["Tình trạng"] = sqlRow["condition"] ?? "";
+                    newRow["Chi nhánh"] = sqlRow["branch_id"] ?? "";
+                    newRow["Nhà cung cấp"] = sqlRow["supplier"] ?? "";
+                    newRow["Ngày mua"] = sqlRow["purchase_date"] != DBNull.Value ? Convert.ToDateTime(sqlRow["purchase_date"]) : DateTime.Now;
+                    newRow["BH (tháng)"] = sqlRow["warranty_period"] != DBNull.Value ? Convert.ToInt32(sqlRow["warranty_period"]) : 0;
+                    newRow["Trạng thái"] = sqlRow["status"] ?? "";
+                    newRow["Mô tả"] = sqlRow["description"] ?? "";
+                    newRow["URL hình ảnh"] = sqlRow["image_url"] ?? "";
+
+                    equipmentTable.Rows.Add(newRow);
+                }
+
+                // Refresh DataGridView
+                dataGridViewEquipment.DataSource = equipmentTable;
+                if (dataGridViewEquipment.Rows.Count > 0)
+                {
+                    dataGridViewEquipment.Rows[0].Selected = true;
+                    LoadSelectedEquipmentToForm();
+                }
+
+                MessageBox.Show($"Đã import thành công {dtSQL.Rows.Count} dụng cụ từ SQL Server!",
+                    "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi kết nối SQL Server: " + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 

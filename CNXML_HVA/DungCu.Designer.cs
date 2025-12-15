@@ -90,6 +90,7 @@
             this.panelFormActions = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.ImportSQLButtonDungCu = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelToolbar.SuspendLayout();
             this.panelMain.SuspendLayout();
@@ -154,6 +155,7 @@
             // panelToolbar
             // 
             this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.ImportSQLButtonDungCu);
             this.panelToolbar.Controls.Add(this.buttonImportXml);
             this.panelToolbar.Controls.Add(this.buttonExportExcel);
             this.panelToolbar.Controls.Add(this.buttonRefresh);
@@ -1003,6 +1005,23 @@
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // ImportSQLButtonDungCu
+            // 
+            this.ImportSQLButtonDungCu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ImportSQLButtonDungCu.BackColor = System.Drawing.Color.DarkBlue;
+            this.ImportSQLButtonDungCu.FlatAppearance.BorderSize = 0;
+            this.ImportSQLButtonDungCu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ImportSQLButtonDungCu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.ImportSQLButtonDungCu.ForeColor = System.Drawing.Color.White;
+            this.ImportSQLButtonDungCu.Location = new System.Drawing.Point(840, 17);
+            this.ImportSQLButtonDungCu.Margin = new System.Windows.Forms.Padding(4);
+            this.ImportSQLButtonDungCu.Name = "ImportSQLButtonDungCu";
+            this.ImportSQLButtonDungCu.Size = new System.Drawing.Size(147, 39);
+            this.ImportSQLButtonDungCu.TabIndex = 6;
+            this.ImportSQLButtonDungCu.Text = "📊 Import SQL";
+            this.ImportSQLButtonDungCu.UseVisualStyleBackColor = false;
+            this.ImportSQLButtonDungCu.Click += new System.EventHandler(this.ImportSQLButtonDungCu_Click);
+            // 
             // DungCu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1115,5 +1134,6 @@
         private System.Windows.Forms.ComboBox comboBox;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblUserAvatar;
+        private System.Windows.Forms.Button ImportSQLButtonDungCu;
     }
 }

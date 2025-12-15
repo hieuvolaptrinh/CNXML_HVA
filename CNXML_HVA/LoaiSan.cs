@@ -20,7 +20,6 @@ namespace CNXML_HVA
         private BindingSource bindingFieldTypes;
         private List<FieldType> allFieldTypes;
         private const string SEARCH_PLACEHOLDER = "Tìm loại sân...";
-        private const string CONNECTION_STRING = "Data Source=HIEUVO;Initial Catalog=dbSANBONG;User ID=sa;Password=sa;TrustServerCertificate=True";
 
         public LoaiSan()
         {
@@ -358,7 +357,7 @@ namespace CNXML_HVA
                 if (result != DialogResult.Yes)
                     return;
 
-                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                using (SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString))
                 {
                     conn.Open();
                     SqlTransaction transaction = conn.BeginTransaction();
@@ -443,7 +442,7 @@ namespace CNXML_HVA
 
                 List<FieldType> fieldTypesFromSql = new List<FieldType>();
 
-                using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
+                using (SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString))
                 {
                     conn.Open();
                     string selectSql = "SELECT * FROM FieldTypes ORDER BY id";

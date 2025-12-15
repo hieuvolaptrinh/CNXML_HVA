@@ -346,7 +346,7 @@ namespace CNXML_HVA
             // 
             this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.textBoxSearch.Location = new System.Drawing.Point(100, 9);
+            this.textBoxSearch.Location = new System.Drawing.Point(119, 9);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(450, 27);
             this.textBoxSearch.TabIndex = 1;
