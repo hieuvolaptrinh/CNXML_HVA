@@ -139,7 +139,6 @@
     <Compile Include="FieldTypeEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HtmlGenerator.cs" />
     <Compile Include="KhachHang.cs">
       <SubType>Form</SubType>
     </Compile>

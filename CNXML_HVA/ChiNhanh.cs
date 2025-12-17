@@ -643,120 +643,122 @@ namespace CNXML_HVA
 
         private void buttonExportExcel_Click(object sender, EventArgs e)
         {
-            try
+            if (branchTable.Rows.Count == 0)
             {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "CSV Files (*.csv)|*.csv|Excel Files (*.xls)|*.xls|All Files (*.*)|*.*";
-                saveFileDialog.FilterIndex = 1;
-                saveFileDialog.RestoreDirectory = true;
-                saveFileDialog.FileName = $"ChiNhanh_{DateTime.Now:yyyyMMdd_HHmmss}.csv";
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls";
+            saveDialog.Title = "Xuất danh sách chi nhánh";
+            saveDialog.FileName = $"DanhSachChiNhanh_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                Microsoft.Office.Interop.Excel.Application excelApp = null;
+                Microsoft.Office.Interop.Excel.Workbook workbook = null;
+                Microsoft.Office.Interop.Excel.Worksheet worksheet = null;
+
+                try
                 {
-                    ExportToCSV(saveFileDialog.FileName);
-                    MessageBox.Show($"Xuất file thành công!\nĐã xuất {branchTable.Rows.Count} chi nhánh.", 
-                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                    // Hỏi người dùng có muốn mở file không
-                    DialogResult result = MessageBox.Show("Bạn có muốn mở file vừa xuất?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
+                    // Tạo ứng dụng Excel
+                    excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    excelApp.Visible = false;
+                    workbook = excelApp.Workbooks.Add();
+                    worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.Sheets[1];
+                    worksheet.Name = "Chi Nhánh";
+
+                    // Tiêu đề báo cáo
+                    worksheet.Cells[1, 1] = "DANH SÁCH CHI NHÁNH";
+                    Microsoft.Office.Interop.Excel.Range titleRange = worksheet.Range["A1", "U1"];
+                    titleRange.Merge();
+                    titleRange.Font.Bold = true;
+                    titleRange.Font.Size = 16;
+                    titleRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    titleRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                    titleRange.RowHeight = 30;
+
+                    // Ngày xuất
+                    worksheet.Cells[2, 1] = $"Ngày xuất: {DateTime.Now:dd/MM/yyyy HH:mm:ss}";
+                    Microsoft.Office.Interop.Excel.Range dateRange = worksheet.Range["A2", "U2"];
+                    dateRange.Merge();
+                    dateRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    dateRange.Font.Italic = true;
+
+                    // Header (dòng 4)
+                    int headerRow = 4;
+                    for (int i = 0; i < branchTable.Columns.Count; i++)
                     {
-                        System.Diagnostics.Process.Start(saveFileDialog.FileName);
+                        worksheet.Cells[headerRow, i + 1] = branchTable.Columns[i].ColumnName;
+                    }
+
+                    // Format header
+                    Microsoft.Office.Interop.Excel.Range headerRange = worksheet.Range[worksheet.Cells[headerRow, 1], worksheet.Cells[headerRow, branchTable.Columns.Count]];
+                    headerRange.Font.Bold = true;
+                    headerRange.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
+                    headerRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromArgb(255, 152, 0));
+                    headerRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    headerRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                    headerRange.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+
+                    // Dữ liệu (từ dòng 5)
+                    int startRow = 5;
+                    for (int i = 0; i < branchTable.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < branchTable.Columns.Count; j++)
+                        {
+                            worksheet.Cells[startRow + i, j + 1] = branchTable.Rows[i][j]?.ToString() ?? "";
+                        }
+                    }
+
+                    // Format dữ liệu
+                    Microsoft.Office.Interop.Excel.Range dataRange = worksheet.Range[worksheet.Cells[startRow, 1], worksheet.Cells[startRow + branchTable.Rows.Count - 1, branchTable.Columns.Count]];
+                    dataRange.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                    dataRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    dataRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+                    // Tổng số bản ghi
+                    int summaryRow = startRow + branchTable.Rows.Count + 1;
+                    worksheet.Cells[summaryRow, 1] = $"Tổng số chi nhánh: {branchTable.Rows.Count}";
+                    Microsoft.Office.Interop.Excel.Range summaryRange = worksheet.Range[worksheet.Cells[summaryRow, 1], worksheet.Cells[summaryRow, 3]];
+                    summaryRange.Merge();
+                    summaryRange.Font.Bold = true;
+                    summaryRange.Font.Italic = true;
+
+                    // Auto-fit columns
+                    worksheet.Columns.AutoFit();
+
+                    // Lưu file
+                    workbook.SaveAs(saveDialog.FileName);
+                    workbook.Close();
+                    excelApp.Quit();
+
+                    MessageBox.Show($"Xuất Excel thành công!\nĐã lưu tại: {saveDialog.FileName}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Mở file Excel vừa tạo
+                    if (MessageBox.Show("Bạn có muốn mở file Excel vừa xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(saveDialog.FileName);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi xuất file: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void ExportToCSV(string filePath)
-        {
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(filePath, false, new UTF8Encoding(true)))
+                catch (Exception ex)
                 {
-                    // Header - viết từng cột rõ ràng
-                    var headers = new List<string>
+                    MessageBox.Show($"Lỗi xuất Excel: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Giải phóng tài nguyên COM
+                    if (worksheet != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+                    if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                    if (excelApp != null)
                     {
-                        "Mã CN", "Tên chi nhánh", "Mã code", "Thành phố", "Quận", "Đường",
-                        "Số nhà", "Mã bưu chính", "Điện thoại", "Email", "Fax",
-                        "Mã quản lý", "Tên quản lý", "Giờ T2-T6", "Giờ T7-CN",
-                        "Số sân", "Ngày thành lập", "Doanh thu tháng", "Số nhân viên",
-                        "Mô tả", "Trạng thái"
-                    };
-                    
-                    // Ghi header với dấu phân cách rõ ràng
-                    sw.WriteLine(string.Join(";", headers));
-
-                    // Dữ liệu - ghi từng dòng
-                    foreach (DataRow row in branchTable.Rows)
-                    {
-                        var values = new List<string>();
-                        
-                        // Lấy giá trị từng cột theo thứ tự
-                        values.Add(CleanValue(row["Mã CN"]));
-                        values.Add(CleanValue(row["Tên chi nhánh"]));
-                        values.Add(CleanValue(row["Mã code"]));
-                        values.Add(CleanValue(row["Thành phố"]));
-                        values.Add(CleanValue(row["Quận"]));
-                        values.Add(CleanValue(row["Đường"]));
-                        values.Add(CleanValue(row["Số nhà"]));
-                        values.Add(CleanValue(row["Mã bưu chính"]));
-                        values.Add(CleanValue(row["Điện thoại"]));
-                        values.Add(CleanValue(row["Email"]));
-                        values.Add(CleanValue(row["Fax"]));
-                        values.Add(CleanValue(row["Mã quản lý"]));
-                        values.Add(CleanValue(row["Tên quản lý"]));
-                        values.Add(CleanValue(row["Giờ T2-T6"]));
-                        values.Add(CleanValue(row["Giờ T7-CN"]));
-                        values.Add(CleanValue(row["Số sân"]));
-                        
-                        // Format ngày tháng
-                        if (row["Ngày thành lập"] != DBNull.Value)
-                        {
-                            DateTime date = Convert.ToDateTime(row["Ngày thành lập"]);
-                            values.Add(date.ToString("dd/MM/yyyy"));
-                        }
-                        else
-                        {
-                            values.Add("");
-                        }
-                        
-                        values.Add(CleanValue(row["Doanh thu tháng"]));
-                        values.Add(CleanValue(row["Số nhân viên"]));
-                        values.Add(CleanValue(row["Mô tả"]));
-                        values.Add(CleanValue(row["Trạng thái"]));
-
-                        // Ghi dòng dữ liệu với dấu phân cách ;
-                        sw.WriteLine(string.Join(";", values));
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
                     }
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception($"Lỗi khi ghi file CSV: {ex.Message}");
-            }
-        }
-
-        private string CleanValue(object value)
-        {
-            if (value == null || value == DBNull.Value)
-                return "";
-            
-            string strValue = value.ToString().Trim();
-            
-            // Loại bỏ dấu xuống dòng và ký tự đặc biệt
-            strValue = strValue.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ");
-            
-            // Nếu có dấu phẩy, chấm phẩy hoặc dấu ngoặc kép thì bao quanh bằng dấu ngoặc kép
-            if (strValue.Contains(";") || strValue.Contains(",") || strValue.Contains("\""))
-            {
-                strValue = "\"" + strValue.Replace("\"", "\"\"") + "\"";
-            }
-            
-            return strValue;
         }
 
         private void buttonImportXml_Click(object sender, EventArgs e)

@@ -473,38 +473,137 @@ namespace CNXML_HVA
 
         private void btnExportCsv_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            var currentList = bindingFields.DataSource as List<Field>;
+            if (currentList == null || currentList.Count == 0)
             {
-                sfd.Filter = "CSV Files (*.csv)|*.csv";
-                sfd.Title = "Xuất dữ liệu ra CSV";
-                sfd.FileName = $"Fields_{DateTime.Now:yyyyMMdd}.csv";
+                MessageBox.Show("Không có dữ liệu để xuất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                if (sfd.ShowDialog() == DialogResult.OK)
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx|Excel 97-2003 (*.xls)|*.xls";
+            saveDialog.Title = "Xuất danh sách sân bóng";
+            saveDialog.FileName = $"DanhSachSan_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                Microsoft.Office.Interop.Excel.Application excelApp = null;
+                Microsoft.Office.Interop.Excel.Workbook workbook = null;
+                Microsoft.Office.Interop.Excel.Worksheet worksheet = null;
+
+                try
                 {
-                    try
-                    {
-                        var csv = new StringBuilder();
-                        csv.AppendLine("Mã sân,Tên sân,Loại sân,Trạng thái,Địa chỉ,Mô tả");
+                    // Tạo ứng dụng Excel
+                    excelApp = new Microsoft.Office.Interop.Excel.Application();
+                    excelApp.Visible = false;
+                    workbook = excelApp.Workbooks.Add();
+                    worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.Sheets[1];
+                    worksheet.Name = "Danh Sách Sân";
 
-                        var currentList = bindingFields.DataSource as List<Field>;
-                        if (currentList != null)
-                        {
-                            foreach (var field in currentList)
-                            {
-                                csv.AppendLine($"\"{field.Id}\",\"{field.Name}\",\"{field.TypeName}\"," +
-                                    $"\"{field.Status}\",\"{field.Address}\",\"{field.Description}\"");
-                            }
-                        }
+                    // Tiêu đề báo cáo
+                    worksheet.Cells[1, 1] = "DANH SÁCH SÂN BÓNG";
+                    Microsoft.Office.Interop.Excel.Range titleRange = worksheet.Range["A1", "O1"];
+                    titleRange.Merge();
+                    titleRange.Font.Bold = true;
+                    titleRange.Font.Size = 16;
+                    titleRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    titleRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                    titleRange.RowHeight = 30;
 
-                        File.WriteAllText(sfd.FileName, csv.ToString(), Encoding.UTF8);
-                        MessageBox.Show("Export CSV thành công!", "Thông báo",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
+                    // Ngày xuất
+                    worksheet.Cells[2, 1] = $"Ngày xuất: {DateTime.Now:dd/MM/yyyy HH:mm:ss}";
+                    Microsoft.Office.Interop.Excel.Range dateRange = worksheet.Range["A2", "O2"];
+                    dateRange.Merge();
+                    dateRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    dateRange.Font.Italic = true;
+
+                    // Header (dòng 4)
+                    int headerRow = 4;
+                    string[] headers = { "Mã sân", "Tên sân", "Loại sân", "Chi nhánh", "Thành phố", "Quận/Huyện", 
+                                        "Đường", "Số nhà", "Giá/giờ (VNĐ)", "Sức chứa", "Mô tả", "Tiện ích", 
+                                        "Trạng thái", "Ngày tạo", "Bảo trì gần nhất" };
+                    
+                    for (int i = 0; i < headers.Length; i++)
                     {
-                        MessageBox.Show($"Lỗi khi export: {ex.Message}", "Lỗi",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        worksheet.Cells[headerRow, i + 1] = headers[i];
                     }
+
+                    // Format header
+                    Microsoft.Office.Interop.Excel.Range headerRange = worksheet.Range[worksheet.Cells[headerRow, 1], worksheet.Cells[headerRow, headers.Length]];
+                    headerRange.Font.Bold = true;
+                    headerRange.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.White);
+                    headerRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromArgb(76, 175, 80));
+                    headerRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                    headerRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+                    headerRange.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+
+                    // Dữ liệu (từ dòng 5)
+                    int startRow = 5;
+                    for (int i = 0; i < currentList.Count; i++)
+                    {
+                        var field = currentList[i];
+                        worksheet.Cells[startRow + i, 1] = field.Id ?? "";
+                        worksheet.Cells[startRow + i, 2] = field.Name ?? "";
+                        worksheet.Cells[startRow + i, 3] = field.TypeName ?? "";
+                        worksheet.Cells[startRow + i, 4] = field.BranchId ?? "";
+                        worksheet.Cells[startRow + i, 5] = field.Address?.City ?? "";
+                        worksheet.Cells[startRow + i, 6] = field.Address?.District ?? "";
+                        worksheet.Cells[startRow + i, 7] = field.Address?.Street ?? "";
+                        worksheet.Cells[startRow + i, 8] = field.Address?.HouseNumber ?? "";
+                        worksheet.Cells[startRow + i, 9] = field.PricePerHour.ToString("N0");
+                        worksheet.Cells[startRow + i, 10] = field.Capacity;
+                        worksheet.Cells[startRow + i, 11] = field.Description ?? "";
+                        worksheet.Cells[startRow + i, 12] = field.Facilities ?? "";
+                        worksheet.Cells[startRow + i, 13] = field.Status ?? "";
+                        worksheet.Cells[startRow + i, 14] = field.CreatedDate.ToString("dd/MM/yyyy");
+                        worksheet.Cells[startRow + i, 15] = field.LastMaintenance.ToString("dd/MM/yyyy");
+                    }
+
+                    // Format dữ liệu
+                    Microsoft.Office.Interop.Excel.Range dataRange = worksheet.Range[worksheet.Cells[startRow, 1], worksheet.Cells[startRow + currentList.Count - 1, headers.Length]];
+                    dataRange.Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+                    dataRange.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    dataRange.VerticalAlignment = Microsoft.Office.Interop.Excel.XlVAlign.xlVAlignCenter;
+
+                    // Tổng số bản ghi
+                    int summaryRow = startRow + currentList.Count + 1;
+                    worksheet.Cells[summaryRow, 1] = $"Tổng số sân: {currentList.Count}";
+                    Microsoft.Office.Interop.Excel.Range summaryRange = worksheet.Range[worksheet.Cells[summaryRow, 1], worksheet.Cells[summaryRow, 3]];
+                    summaryRange.Merge();
+                    summaryRange.Font.Bold = true;
+                    summaryRange.Font.Italic = true;
+
+                    // Auto-fit columns
+                    worksheet.Columns.AutoFit();
+
+                    // Lưu file
+                    workbook.SaveAs(saveDialog.FileName);
+                    workbook.Close();
+                    excelApp.Quit();
+
+                    MessageBox.Show($"Xuất Excel thành công!\nĐã lưu tại: {saveDialog.FileName}", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Mở file Excel vừa tạo
+                    if (MessageBox.Show("Bạn có muốn mở file Excel vừa xuất không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(saveDialog.FileName);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi xuất Excel: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Giải phóng tài nguyên COM
+                    if (worksheet != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+                    if (workbook != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+                    if (excelApp != null)
+                    {
+                        System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
+                    }
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
             }
         }

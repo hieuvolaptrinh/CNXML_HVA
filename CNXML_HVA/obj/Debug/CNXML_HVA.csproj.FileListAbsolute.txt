@@ -355,5 +355,5 @@ C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.csproj.Up2D
 C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe
 C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.pdb
 C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DangKy.resources
-C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe.config
 F:\new\OneDrive - University of Technology and Education\Dai_hoc\2025-2026\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.DangKy.resources
+C:\Users\Admin\Downloads\XML\CNXML_HVA\CNXML_HVA\obj\Debug\CNXML_HVA.exe.config
