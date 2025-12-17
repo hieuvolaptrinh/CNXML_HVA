@@ -43,6 +43,7 @@
             this.btnDangXuat = new System.Windows.Forms.Button();
             this.btnMoWebsite = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.lblAppName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panelContent = new System.Windows.Forms.Panel();
@@ -61,9 +62,6 @@
             this.labelTotalRevenue = new System.Windows.Forms.Label();
             this.lblTotalRevenue = new System.Windows.Forms.Label();
             this.panelTiles = new System.Windows.Forms.Panel();
-            this.panelTile6 = new System.Windows.Forms.Panel();
-            this.lblOrdersCount = new System.Windows.Forms.Label();
-            this.labelTile6 = new System.Windows.Forms.Label();
             this.panelTile5 = new System.Windows.Forms.Panel();
             this.lblBranchesCount = new System.Windows.Forms.Label();
             this.labelTile5 = new System.Windows.Forms.Label();
@@ -80,7 +78,6 @@
             this.lblCustomersCount = new System.Windows.Forms.Label();
             this.labelTile1 = new System.Windows.Forms.Label();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
-            this.lblTitle = new System.Windows.Forms.Label();
             this.panelLeft.SuspendLayout();
             this.panelMenuItems.SuspendLayout();
             this.panelLogo.SuspendLayout();
@@ -91,7 +88,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartOverview)).BeginInit();
             this.panelRevenueContainer.SuspendLayout();
             this.panelTiles.SuspendLayout();
-            this.panelTile6.SuspendLayout();
             this.panelTile5.SuspendLayout();
             this.panelTile4.SuspendLayout();
             this.panelTile3.SuspendLayout();
@@ -320,6 +316,19 @@
             this.panelLogo.Size = new System.Drawing.Size(320, 172);
             this.panelLogo.TabIndex = 8;
             // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(87, 25);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(130, 89);
+            this.lblTitle.TabIndex = 2;
+            this.lblTitle.Text = "⚽";
+            // 
             // lblAppName
             // 
             this.lblAppName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
@@ -370,7 +379,7 @@
             this.panelActivitiesContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelActivitiesContainer.Name = "panelActivitiesContainer";
             this.panelActivitiesContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelActivitiesContainer.Size = new System.Drawing.Size(589, 504);
+            this.panelActivitiesContainer.Size = new System.Drawing.Size(669, 504);
             this.panelActivitiesContainer.TabIndex = 3;
             // 
             // listBoxActivities
@@ -383,7 +392,7 @@
             this.listBoxActivities.Location = new System.Drawing.Point(27, 74);
             this.listBoxActivities.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(535, 405);
+            this.listBoxActivities.Size = new System.Drawing.Size(615, 405);
             this.listBoxActivities.TabIndex = 1;
             // 
             // lblActivitiesTitle
@@ -394,7 +403,7 @@
             this.lblActivitiesTitle.Location = new System.Drawing.Point(27, 25);
             this.lblActivitiesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblActivitiesTitle.Name = "lblActivitiesTitle";
-            this.lblActivitiesTitle.Size = new System.Drawing.Size(535, 49);
+            this.lblActivitiesTitle.Size = new System.Drawing.Size(615, 49);
             this.lblActivitiesTitle.TabIndex = 0;
             this.lblActivitiesTitle.Text = "📋 Hoạt Động Gần Đây";
             this.lblActivitiesTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -452,7 +461,7 @@
             this.panelRevenueContainer.Margin = new System.Windows.Forms.Padding(4);
             this.panelRevenueContainer.Name = "panelRevenueContainer";
             this.panelRevenueContainer.Padding = new System.Windows.Forms.Padding(27, 25, 27, 25);
-            this.panelRevenueContainer.Size = new System.Drawing.Size(1320, 135);
+            this.panelRevenueContainer.Size = new System.Drawing.Size(1400, 135);
             this.panelRevenueContainer.TabIndex = 2;
             // 
             // lblRevenueTitle
@@ -463,7 +472,7 @@
             this.lblRevenueTitle.Location = new System.Drawing.Point(27, 25);
             this.lblRevenueTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRevenueTitle.Name = "lblRevenueTitle";
-            this.lblRevenueTitle.Size = new System.Drawing.Size(1266, 43);
+            this.lblRevenueTitle.Size = new System.Drawing.Size(1346, 43);
             this.lblRevenueTitle.TabIndex = 0;
             this.lblRevenueTitle.Text = "💰 Tổng Quan Doanh Thu";
             this.lblRevenueTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -536,7 +545,6 @@
             // 
             // panelTiles
             // 
-            this.panelTiles.Controls.Add(this.panelTile6);
             this.panelTiles.Controls.Add(this.panelTile5);
             this.panelTiles.Controls.Add(this.panelTile4);
             this.panelTiles.Controls.Add(this.panelTile3);
@@ -545,46 +553,8 @@
             this.panelTiles.Location = new System.Drawing.Point(33, 25);
             this.panelTiles.Margin = new System.Windows.Forms.Padding(4);
             this.panelTiles.Name = "panelTiles";
-            this.panelTiles.Size = new System.Drawing.Size(1320, 148);
+            this.panelTiles.Size = new System.Drawing.Size(1400, 148);
             this.panelTiles.TabIndex = 0;
-            // 
-            // panelTile6
-            // 
-            this.panelTile6.BackColor = System.Drawing.Color.White;
-            this.panelTile6.Controls.Add(this.lblOrdersCount);
-            this.panelTile6.Controls.Add(this.labelTile6);
-            this.panelTile6.Location = new System.Drawing.Point(1093, 0);
-            this.panelTile6.Margin = new System.Windows.Forms.Padding(4);
-            this.panelTile6.Name = "panelTile6";
-            this.panelTile6.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.panelTile6.Size = new System.Drawing.Size(213, 135);
-            this.panelTile6.TabIndex = 5;
-            // 
-            // lblOrdersCount
-            // 
-            this.lblOrdersCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblOrdersCount.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblOrdersCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(142)))), ((int)(((byte)(60)))));
-            this.lblOrdersCount.Location = new System.Drawing.Point(20, 56);
-            this.lblOrdersCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblOrdersCount.Name = "lblOrdersCount";
-            this.lblOrdersCount.Size = new System.Drawing.Size(173, 61);
-            this.lblOrdersCount.TabIndex = 2;
-            this.lblOrdersCount.Text = "0";
-            this.lblOrdersCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelTile6
-            // 
-            this.labelTile6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelTile6.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.labelTile6.ForeColor = System.Drawing.Color.Green;
-            this.labelTile6.Location = new System.Drawing.Point(20, 18);
-            this.labelTile6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelTile6.Name = "labelTile6";
-            this.labelTile6.Size = new System.Drawing.Size(173, 38);
-            this.labelTile6.TabIndex = 1;
-            this.labelTile6.Text = "🛒 Đơn hàng";
-            this.labelTile6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelTile5
             // 
@@ -776,19 +746,6 @@
             this.labelTile1.Text = "👥 Khách hàng";
             this.labelTile1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 40F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(87, 25);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(130, 89);
-            this.lblTitle.TabIndex = 2;
-            this.lblTitle.Text = "⚽";
-            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -814,7 +771,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartOverview)).EndInit();
             this.panelRevenueContainer.ResumeLayout(false);
             this.panelTiles.ResumeLayout(false);
-            this.panelTile6.ResumeLayout(false);
             this.panelTile5.ResumeLayout(false);
             this.panelTile4.ResumeLayout(false);
             this.panelTile3.ResumeLayout(false);
@@ -860,9 +816,6 @@
         private System.Windows.Forms.Panel panelTile5;
         private System.Windows.Forms.Label lblBranchesCount;
         private System.Windows.Forms.Label labelTile5;
-        private System.Windows.Forms.Panel panelTile6;
-        private System.Windows.Forms.Label lblOrdersCount;
-        private System.Windows.Forms.Label labelTile6;
         private System.Windows.Forms.Panel panelRevenueContainer;
         private System.Windows.Forms.Label lblRevenueTitle;
         private System.Windows.Forms.Label lblTotalRevenue;

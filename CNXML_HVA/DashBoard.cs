@@ -54,7 +54,6 @@ namespace CNXML_HVA
             int equipments = CountRootChildren("Equipments.xml");
             int bookings = CountRootChildren("Bookings.xml");
             int branches = CountRootChildren("Branches.xml");
-            int orders = CountRootChildren("Orders.xml");
 
             // Thiết lập giá trị đích cho animation
             targetValues[lblCustomersCount] = customers;
@@ -62,7 +61,7 @@ namespace CNXML_HVA
             targetValues[lblEquipmentsCount] = equipments;
             targetValues[lblBookingsCount] = bookings;
             targetValues[lblBranchesCount] = branches;
-            targetValues[lblOrdersCount] = orders;
+      
 
             // Khởi tạo giá trị hiện tại
             currentValues[lblCustomersCount] = 0;
@@ -70,7 +69,7 @@ namespace CNXML_HVA
             currentValues[lblEquipmentsCount] = 0;
             currentValues[lblBookingsCount] = 0;
             currentValues[lblBranchesCount] = 0;
-            currentValues[lblOrdersCount] = 0;
+       
 
             // Bắt đầu animation đếm số
             StartCounterAnimation();
@@ -126,7 +125,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string path = DataPaths.GetXmlFilePath("Orders.xml");
+                string path = DataPaths.GetXmlFilePath("Bookings.xml");
                 if (!File.Exists(path))
                 {
                     lblTotalRevenue.Text = "0 VNĐ";
@@ -136,22 +135,31 @@ namespace CNXML_HVA
                 }
 
                 var doc = XDocument.Load(path);
-                var orders = doc.Root.Elements("order");
+                var bookings = doc.Root.Elements("Booking");
 
                 decimal totalRevenue = 0;
                 decimal paidRevenue = 0;
                 decimal pendingRevenue = 0;
 
-                foreach (var order in orders)
+                foreach (var booking in bookings)
                 {
-                    decimal amount = decimal.Parse(order.Element("total_amount")?.Value ?? "0");
-                    string paymentStatus = order.Element("payment_status")?.Value ?? "";
+                    // Lấy giá từ booking - có thể là totalPrice hoặc price
+                    decimal amount = 0;
+                    var totalPriceElement = booking.Element("totalPrice");
+                    var priceElement = booking.Element("price");
+                    
+                    if (totalPriceElement != null)
+                        decimal.TryParse(totalPriceElement.Value, out amount);
+                    else if (priceElement != null)
+                        decimal.TryParse(priceElement.Value, out amount);
+
+                    string status = booking.Element("status")?.Value ?? "";
 
                     totalRevenue += amount;
 
-                    if (paymentStatus == "Paid")
+                    if (status == "Đã thanh toán" || status == "Paid" || status == "Confirmed")
                         paidRevenue += amount;
-                    else if (paymentStatus == "Pending")
+                    else if (status == "Chờ xác nhận" || status == "Pending")
                         pendingRevenue += amount;
                 }
 
@@ -221,99 +229,85 @@ namespace CNXML_HVA
         }
 
         private void LoadRecentActivities()
-{
-    try
-    {
-        listBoxActivities.Items.Clear();
-        var activities = new List<(DateTime dateTime, string text)>();
-
-        // Load bookings
-        string bookingsPath = DataPaths.GetXmlFilePath("Bookings.xml");
-        if (File.Exists(bookingsPath))
         {
-            var bookingsDoc = XDocument.Load(bookingsPath);
-            var bookings = bookingsDoc.Root.Elements("Booking")
-                .Take(10);
-
-            foreach (var booking in bookings)
+            try
             {
-                string customer = booking.Element("customer")?.Value ?? "N/A";
-                string field = booking.Element("field")?.Value ?? "N/A";
-                string dateStr = booking.Element("date")?.Value ?? "";
-                string timeStr = booking.Element("time")?.Value ?? "";
+                listBoxActivities.Items.Clear();
+                var activities = new List<(DateTime dateTime, string text)>();
 
-                // Parse date for sorting
-                if (DateTime.TryParse(dateStr, out DateTime bookingDate))
+                // Load bookings
+                string bookingsPath = DataPaths.GetXmlFilePath("Bookings.xml");
+                if (File.Exists(bookingsPath))
                 {
-                    string displayText = $"🏟️  ĐẶT SÂN";
-                    displayText += $"\n     {customer} • {field}";
-                    displayText += $"\n     📅 {dateStr} ⏰ {timeStr}h";
-                    
-                    activities.Add((bookingDate, displayText));
+                    var bookingsDoc = XDocument.Load(bookingsPath);
+                    var bookings = bookingsDoc.Root.Elements("Booking")
+                        .Take(15);
+
+                    foreach (var booking in bookings)
+                    {
+                        string customer = booking.Element("customer")?.Value ?? "N/A";
+                        string field = booking.Element("field")?.Value ?? "N/A";
+                        string dateStr = booking.Element("date")?.Value ?? "";
+                        string timeStr = booking.Element("time")?.Value ?? "";
+                        string status = booking.Element("status")?.Value ?? "";
+                        
+                        // Lấy giá
+                        decimal amount = 0;
+                        var totalPriceElement = booking.Element("totalPrice");
+                        var priceElement = booking.Element("price");
+                        if (totalPriceElement != null)
+                            decimal.TryParse(totalPriceElement.Value, out amount);
+                        else if (priceElement != null)
+                            decimal.TryParse(priceElement.Value, out amount);
+
+                        // Parse date for sorting
+                        if (DateTime.TryParse(dateStr, out DateTime bookingDate))
+                        {
+                            string statusIcon = (status == "Đã thanh toán" || status == "Paid" || status == "Confirmed") ? "✅" : 
+                                               (status == "Chờ xác nhận" || status == "Pending") ? "⏳" : "🏟️";
+                            string statusText = (status == "Đã thanh toán" || status == "Paid" || status == "Confirmed") ? "Đã thanh toán" : 
+                                               (status == "Chờ xác nhận" || status == "Pending") ? "Chờ xác nhận" : status;
+                            
+                            string displayText = $"{statusIcon}  ĐẶT SÂN";
+                            displayText += $"\n     {customer} • {field}";
+                            displayText += $"\n     � {dateStr} ⏰ {timeStr}h";
+                            if (amount > 0)
+                                displayText += $"\n     💰 {FormatCurrency(amount)} - {statusText}";
+                            
+                            activities.Add((bookingDate, displayText));
+                        }
+                    }
+                }
+
+                // Sort by date and take top 10
+                var sortedActivities = activities
+                    .OrderByDescending(a => a.dateTime)
+                    .Take(10);
+
+                // Add to listbox with separators
+                bool isFirst = true;
+                foreach (var activity in sortedActivities)
+                {
+                    if (!isFirst)
+                    {
+                        listBoxActivities.Items.Add("─────────────────────────");
+                    }
+                    listBoxActivities.Items.Add(activity.text);
+                    isFirst = false;
+                }
+
+                if (listBoxActivities.Items.Count == 0)
+                {
+                    listBoxActivities.Items.Add("📭 Chưa có hoạt động nào");
                 }
             }
-        }
-
-        // Load orders
-        string ordersPath = DataPaths.GetXmlFilePath("Orders.xml");
-        if (File.Exists(ordersPath))
-        {
-            var ordersDoc = XDocument.Load(ordersPath);
-            var orders = ordersDoc.Root.Elements("order")
-                .Take(10);
-
-            foreach (var order in orders)
+            catch (Exception ex)
             {
-                string orderId = order.Attribute("id")?.Value ?? "N/A";
-                string amount = order.Element("total_amount")?.Value ?? "0";
-                string status = order.Element("payment_status")?.Value ?? "N/A";
-                string dateStr = order.Element("order_date")?.Value ?? "";
-                
-                string statusIcon = status == "Paid" ? "✅" : status == "Pending" ? "⏳" : "❌";
-                string statusText = status == "Paid" ? "Đã thanh toán" : 
-                                   status == "Pending" ? "Chờ thanh toán" : "Thất bại";
-
-                if (DateTime.TryParse(dateStr, out DateTime orderDate))
-                {
-                    decimal amt = decimal.Parse(amount);
-                    string displayText = $"{statusIcon}  ĐơN HÀNG #{orderId}";
-                    displayText += $"\n     💰 {FormatCurrency(amt)}";
-                    displayText += $"\n     {statusText}";
-                    
-                    activities.Add((orderDate, displayText));
-                }
+                listBoxActivities.Items.Clear();
+                listBoxActivities.Items.Add("❌ Không thể tải dữ liệu");
+                listBoxActivities.Items.Add($"    Lỗi: {ex.Message}");
             }
         }
-
-        // Sort by date and take top 10
-        var sortedActivities = activities
-            .OrderByDescending(a => a.dateTime)
-            .Take(10);
-
-        // Add to listbox with separators
-        bool isFirst = true;
-        foreach (var activity in sortedActivities)
-        {
-            if (!isFirst)
-            {
-                listBoxActivities.Items.Add("─────────────────────────");
-            }
-            listBoxActivities.Items.Add(activity.text);
-            isFirst = false;
-        }
-
-        if (listBoxActivities.Items.Count == 0)
-        {
-            listBoxActivities.Items.Add("📭 Chưa có hoạt động nào");
-        }
-    }
-    catch (Exception ex)
-    {
-        listBoxActivities.Items.Clear();
-        listBoxActivities.Items.Add("❌ Không thể tải dữ liệu");
-        listBoxActivities.Items.Add($"    Lỗi: {ex.Message}");
-    }
-}
 
         private void UpdateChart()
         {
@@ -360,7 +354,6 @@ namespace CNXML_HVA
                 Color.FromArgb(102, 187, 106),  // Light Green
                 Color.FromArgb(129, 199, 132),  // Lighter Green
                 Color.FromArgb(165, 214, 167),  // Pale Green
-                Color.FromArgb(56, 142, 60)     // Forest Green
             };
 
             series.Points.AddXY("Khách hàng", SafeParse(lblCustomersCount.Text));
@@ -368,7 +361,7 @@ namespace CNXML_HVA
             series.Points.AddXY("Dụng cụ", SafeParse(lblEquipmentsCount.Text));
             series.Points.AddXY("Đặt lịch", SafeParse(lblBookingsCount.Text));
             series.Points.AddXY("Chi nhánh", SafeParse(lblBranchesCount.Text));
-            series.Points.AddXY("Đơn hàng", SafeParse(lblOrdersCount.Text));
+          
 
             for (int i = 0; i < series.Points.Count; i++)
             {
@@ -401,7 +394,7 @@ namespace CNXML_HVA
             AddShadowEffect(panelTile3);
             AddShadowEffect(panelTile4);
             AddShadowEffect(panelTile5);
-            AddShadowEffect(panelTile6);
+  
             AddShadowEffect(panelChartContainer);
             AddShadowEffect(panelRevenueContainer);
             AddShadowEffect(panelActivitiesContainer);
@@ -412,7 +405,7 @@ namespace CNXML_HVA
             SetRoundedCorners(panelTile3, 12);
             SetRoundedCorners(panelTile4, 12);
             SetRoundedCorners(panelTile5, 12);
-            SetRoundedCorners(panelTile6, 12);
+    
             SetRoundedCorners(panelChartContainer, 12);
             SetRoundedCorners(panelRevenueContainer, 12);
             SetRoundedCorners(panelActivitiesContainer, 12);
@@ -436,7 +429,7 @@ namespace CNXML_HVA
             AddTileHoverEffect(panelTile3);
             AddTileHoverEffect(panelTile4);
             AddTileHoverEffect(panelTile5);
-            AddTileHoverEffect(panelTile6);
+       
         }
 
         private void StyleMenuButton(Button btn)
@@ -565,7 +558,7 @@ namespace CNXML_HVA
             panelTile3.Top += offset;
             panelTile4.Top += offset;
             panelTile5.Top += offset;
-            panelTile6.Top += offset;
+    
             panelChartContainer.Top += offset;
             panelRevenueContainer.Top += offset;
             panelActivitiesContainer.Top += offset;
@@ -576,7 +569,7 @@ namespace CNXML_HVA
             panelTile3.Visible = false;
             panelTile4.Visible = false;
             panelTile5.Visible = false;
-            panelTile6.Visible = false;
+        
             panelChartContainer.Visible = false;
             panelRevenueContainer.Visible = false;
             panelActivitiesContainer.Visible = false;
@@ -597,7 +590,7 @@ namespace CNXML_HVA
                 if (delayCounter == 9) panelTile3.Visible = true;
                 if (delayCounter == 12) panelTile4.Visible = true;
                 if (delayCounter == 15) panelTile5.Visible = true;
-                if (delayCounter == 18) panelTile6.Visible = true;
+         
                 if (delayCounter == 21) panelRevenueContainer.Visible = true;
                 if (delayCounter == 24) panelChartContainer.Visible = true;
                 if (delayCounter == 27) panelActivitiesContainer.Visible = true;
@@ -616,8 +609,7 @@ namespace CNXML_HVA
                     panelTile4.Top = dy;
                 if (panelTile5.Visible && panelTile5.Top < 0)
                     panelTile5.Top = dy;
-                if (panelTile6.Visible && panelTile6.Top < 0)
-                    panelTile6.Top = dy;
+       
                 if (panelRevenueContainer.Visible && panelRevenueContainer.Top < 150)
                     panelRevenueContainer.Top = 150 + dy;
                 if (panelChartContainer.Visible && panelChartContainer.Top < 270)
@@ -633,7 +625,7 @@ namespace CNXML_HVA
                     panelTile3.Top = 0;
                     panelTile4.Top = 0;
                     panelTile5.Top = 0;
-                    panelTile6.Top = 0;
+               
                     panelRevenueContainer.Top = 150;
                     panelChartContainer.Top = 270;
                     panelActivitiesContainer.Top = 270;
@@ -895,7 +887,7 @@ namespace CNXML_HVA
         {
             try
             {
-                string path = DataPaths.GetXmlFilePath("Orders.xml");
+                string path = DataPaths.GetXmlFilePath("Bookings.xml");
                 
                 // Tạo dữ liệu candlestick
                 var candlestickData = new List<CandlestickData>();
@@ -903,24 +895,38 @@ namespace CNXML_HVA
                 if (File.Exists(path))
                 {
                     var doc = XDocument.Load(path);
-                    var orders = doc.Root.Elements("order");
+                    var bookings = doc.Root.Elements("Booking");
 
-                    // Nhóm doanh thu theo ngày
-                    var dailyRevenue = orders
-                        .Where(o => o.Element("payment_status")?.Value == "Paid")
-                        .GroupBy(o => DateTime.Parse(o.Element("order_date")?.Value ?? DateTime.Now.ToString()))
+                    // Nhóm doanh thu theo ngày từ bookings đã thanh toán
+                    var dailyRevenue = bookings
+                        .Where(b => {
+                            var status = b.Element("status")?.Value ?? "";
+                            return status == "Đã thanh toán" || status == "Paid" || status == "Confirmed";
+                        })
+                        .Where(b => DateTime.TryParse(b.Element("date")?.Value, out _))
+                        .GroupBy(b => DateTime.Parse(b.Element("date")?.Value ?? DateTime.Now.ToString()))
                         .Select(g => new
                         {
                             Date = g.Key,
-                            Orders = g.ToList()
+                            Bookings = g.ToList()
                         })
                         .OrderBy(x => x.Date)
                         .ToList();
 
                     foreach (var day in dailyRevenue)
                     {
-                        var amounts = day.Orders
-                            .Select(o => decimal.Parse(o.Element("total_amount")?.Value ?? "0"))
+                        var amounts = day.Bookings
+                            .Select(b => {
+                                decimal amt = 0;
+                                var totalPriceEl = b.Element("totalPrice");
+                                var priceEl = b.Element("price");
+                                if (totalPriceEl != null)
+                                    decimal.TryParse(totalPriceEl.Value, out amt);
+                                else if (priceEl != null)
+                                    decimal.TryParse(priceEl.Value, out amt);
+                                return amt;
+                            })
+                            .Where(a => a > 0)
                             .ToList();
 
                         if (amounts.Any())
@@ -962,5 +968,7 @@ namespace CNXML_HVA
                 MessageBox.Show("Lỗi khi tải biểu đồ doanh thu: " + ex.Message + "\n" + ex.StackTrace, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
     }
 }

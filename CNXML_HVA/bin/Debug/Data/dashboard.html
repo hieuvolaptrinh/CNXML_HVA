@@ -78,7 +78,7 @@
         </div>
       </section>
 
-      <!-- Charts row -->
+      <!-- 
       <section class="section grid-12">
         <div class="card-modern col-6">
           <div class="card-head">
@@ -90,7 +90,7 @@
               <canvas id="bookingStatusChart"></canvas>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="card-modern col-6">
           <div class="card-head">
@@ -262,102 +262,142 @@
       }
 
       async function loadRevenueTrend() {
-        const ctx = document
-          .getElementById("revenueTrendChart")
-          .getContext("2d");
+        try {
+          const [bookings, fields] = await Promise.all([
+            crudManager.getMergedData("Bookings.xml", "booking"),
+            crudManager.getMergedData("Fields.xml", "field"),
+          ]);
 
-        const months = [
-          "Tháng 7",
-          "Tháng 8",
-          "Tháng 9",
-          "Tháng 10",
-          "Tháng 11",
-          "Tháng 12",
-        ];
-        const revenue = [
-          50000000, 65000000, 55000000, 75000000, 85000000, 95000000,
-        ];
-        const bookings = [45, 58, 52, 68, 75, 82];
+          // Tạo map field để lấy giá
+          const fieldMap = {};
+          fields.forEach((f) => {
+            fieldMap[f.name] = parseInt(f.price_per_hour || 0);
+            fieldMap[f.id] = parseInt(f.price_per_hour || 0);
+          });
 
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: months,
-            datasets: [
-              {
-                label: "Doanh thu (VNĐ)",
-                data: revenue,
-                borderColor: "rgba(76,175,80,1)",
-                backgroundColor: "rgba(76,175,80,.10)",
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 3,
-                pointHoverRadius: 5,
-                yAxisID: "y",
-              },
-              {
-                label: "Số lượng booking",
-                data: bookings,
-                borderColor: "rgba(33,150,243,1)",
-                backgroundColor: "rgba(33,150,243,.10)",
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 3,
-                pointHoverRadius: 5,
-                yAxisID: "y1",
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: "index", intersect: false },
-            plugins: {
-              legend: { display: true, position: "top" },
-              tooltip: {
-                padding: 12,
-                callbacks: {
-                  label: function (context) {
-                    let label = context.dataset.label || "";
-                    if (context.parsed.y !== null) {
-                      if (context.datasetIndex === 0) {
-                        label += ": " + formatCurrency(context.parsed.y);
-                      } else {
-                        label += ": " + context.parsed.y + " bookings";
+          // Tính doanh thu và số booking theo tháng từ Bookings.xml
+          const monthlyData = {};
+          const monthNames = [
+            "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6",
+            "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
+          ];
+
+          // Xử lý bookings
+          bookings.forEach((b) => {
+            const date = b.date || b.booking_date;
+            if (date) {
+              const month = new Date(date).getMonth();
+              const year = new Date(date).getFullYear();
+              const key = `${year}-${month}`;
+              if (!monthlyData[key]) {
+                monthlyData[key] = { revenue: 0, count: 0, month, year };
+              }
+              const fieldPrice = fieldMap[b.field] || 150000;
+              const duration = parseInt(b.duration || 1);
+              monthlyData[key].revenue += fieldPrice * duration;
+              monthlyData[key].count += 1;
+            }
+          });
+
+          // Sắp xếp và lấy 6 tháng gần nhất có dữ liệu
+          const sortedKeys = Object.keys(monthlyData).sort();
+          const recentKeys = sortedKeys.slice(-6);
+
+          const months = recentKeys.map((k) => monthNames[monthlyData[k].month]);
+          const revenue = recentKeys.map((k) => monthlyData[k].revenue);
+          const bookingCounts = recentKeys.map((k) => monthlyData[k].count);
+
+          // Nếu không có dữ liệu, hiển thị mặc định
+          const displayMonths = months.length > 0 ? months : ["Không có dữ liệu"];
+          const displayRevenue = revenue.length > 0 ? revenue : [0];
+          const displayBookings = bookingCounts.length > 0 ? bookingCounts : [0];
+
+          const ctx = document
+            .getElementById("revenueTrendChart")
+            .getContext("2d");
+
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: displayMonths,
+              datasets: [
+                {
+                  label: "Doanh thu (VNĐ)",
+                  data: displayRevenue,
+                  borderColor: "rgba(76,175,80,1)",
+                  backgroundColor: "rgba(76,175,80,.10)",
+                  borderWidth: 3,
+                  fill: true,
+                  tension: 0.4,
+                  pointRadius: 3,
+                  pointHoverRadius: 5,
+                  yAxisID: "y",
+                },
+                {
+                  label: "Số lượng booking",
+                  data: displayBookings,
+                  borderColor: "rgba(33,150,243,1)",
+                  backgroundColor: "rgba(33,150,243,.10)",
+                  borderWidth: 3,
+                  fill: true,
+                  tension: 0.4,
+                  pointRadius: 3,
+                  pointHoverRadius: 5,
+                  yAxisID: "y1",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              interaction: { mode: "index", intersect: false },
+              plugins: {
+                legend: { display: true, position: "top" },
+                tooltip: {
+                  padding: 12,
+                  callbacks: {
+                    label: function (context) {
+                      let label = context.dataset.label || "";
+                      if (context.parsed.y !== null) {
+                        if (context.datasetIndex === 0) {
+                          label += ": " + formatCurrency(context.parsed.y);
+                        } else {
+                          label += ": " + context.parsed.y + " bookings";
+                        }
                       }
-                    }
-                    return label;
+                      return label;
+                    },
                   },
                 },
               },
-            },
-            scales: {
-              x: {
-                grid: { color: "rgba(255,255,255,.06)" },
-                ticks: { color: "rgba(229,231,235,.75)" },
-              },
-              y: {
-                type: "linear",
-                display: true,
-                position: "left",
-                grid: { color: "rgba(255,255,255,.06)" },
-                ticks: {
-                  callback: (value) => value / 1000000 + "M",
-                  color: "rgba(229,231,235,.75)",
+              scales: {
+                x: {
+                  grid: { color: "rgba(255,255,255,.06)" },
+                  ticks: { color: "rgba(229,231,235,.75)" },
+                },
+                y: {
+                  type: "linear",
+                  display: true,
+                  position: "left",
+                  grid: { color: "rgba(255,255,255,.06)" },
+                  ticks: {
+                    callback: (value) => value / 1000000 + "M",
+                    color: "rgba(229,231,235,.75)",
+                  },
+                },
+                y1: {
+                  type: "linear",
+                  display: true,
+                  position: "right",
+                  grid: { drawOnChartArea: false },
+                  ticks: { color: "rgba(229,231,235,.75)" },
                 },
               },
-              y1: {
-                type: "linear",
-                display: true,
-                position: "right",
-                grid: { drawOnChartArea: false },
-                ticks: { color: "rgba(229,231,235,.75)" },
-              },
             },
-          },
-        });
+          });
+        } catch (error) {
+          console.error("Error loading revenue trend:", error);
+        }
       }
 
       async function loadBookingStatus() {
@@ -412,12 +452,18 @@
       async function loadFieldUtilization() {
         try {
           const fields = await crudManager.getMergedData("Fields.xml", "field");
-          const statusCounts = { Available: 0, Booked: 0, Maintenance: 0 };
+          const statusCounts = {};
+          const statusColors = { Available: "#4caf50", Booked: "#ff9800", Maintenance: "#9e9e9e" };
 
           fields.forEach((f) => {
             const status = f.status || "Available";
-            if (statusCounts[status] !== undefined) statusCounts[status]++;
+            statusCounts[status] = (statusCounts[status] || 0) + 1;
           });
+
+          // Chỉ lấy các status có dữ liệu > 0
+          const labels = Object.keys(statusCounts).filter(k => statusCounts[k] > 0);
+          const data = labels.map(k => statusCounts[k]);
+          const colors = labels.map(k => statusColors[k] || "#9e9e9e");
 
           const ctx = document
             .getElementById("fieldUtilizationChart")
@@ -426,11 +472,11 @@
           new Chart(ctx, {
             type: "doughnut",
             data: {
-              labels: Object.keys(statusCounts),
+              labels: labels,
               datasets: [
                 {
-                  data: Object.values(statusCounts),
-                  backgroundColor: ["#4caf50", "#ff9800", "#9e9e9e"],
+                  data: data,
+                  backgroundColor: colors,
                   borderWidth: 2,
                   borderColor: "rgba(255,255,255,.9)",
                   hoverOffset: 8,
@@ -458,24 +504,30 @@
             "Customers.xml",
             "customer"
           );
-          const membershipCounts = { VIP: 0, Gold: 0, Silver: 0, None: 0 };
+          const membershipCounts = {};
+          const membershipColors = { VIP: "#ffd700", Gold: "#c0c0c0", Silver: "#cd7f32", None: "#9e9e9e" };
 
           customers.forEach((c) => {
             const m = c.membership || "None";
-            if (membershipCounts[m] !== undefined) membershipCounts[m]++;
+            membershipCounts[m] = (membershipCounts[m] || 0) + 1;
           });
+
+          // Chỉ lấy các membership có dữ liệu > 0
+          const labels = Object.keys(membershipCounts).filter(k => membershipCounts[k] > 0);
+          const data = labels.map(k => membershipCounts[k]);
+          const colors = labels.map(k => membershipColors[k] || "#9e9e9e");
 
           const ctx = document.getElementById("customerChart").getContext("2d");
 
           new Chart(ctx, {
             type: "bar",
             data: {
-              labels: Object.keys(membershipCounts),
+              labels: labels,
               datasets: [
                 {
                   label: "Customers",
-                  data: Object.values(membershipCounts),
-                  backgroundColor: ["#ffd700", "#c0c0c0", "#cd7f32", "#9e9e9e"],
+                  data: data,
+                  backgroundColor: colors,
                   borderWidth: 0,
                   borderRadius: 10,
                 },
@@ -510,16 +562,23 @@
             "equipment"
           );
 
-          const totalAvailable = equipments.reduce(
-            (sum, eq) => sum + parseInt(eq.quantity_available || 0),
-            0
-          );
+          // Đếm theo category (loại thiết bị) và số lượng
+          const categoryCounts = {};
+          const categoryColors = [
+            "#4caf50", "#2196f3", "#ff9800", "#9c27b0", "#f44336", 
+            "#00bcd4", "#8bc34a", "#ff5722", "#673ab7", "#009688"
+          ];
 
-          const totalRented = equipments.reduce((sum, eq) => {
-            const total = parseInt(eq.quantity_total || 0);
-            const available = parseInt(eq.quantity_available || 0);
-            return sum + (total - available);
-          }, 0);
+          equipments.forEach((eq) => {
+            const category = eq.category || "Khác";
+            const quantity = parseInt(eq.quantity_total || 0);
+            categoryCounts[category] = (categoryCounts[category] || 0) + quantity;
+          });
+
+          // Chỉ lấy các category có số lượng > 0
+          const labels = Object.keys(categoryCounts).filter(k => categoryCounts[k] > 0);
+          const data = labels.map(k => categoryCounts[k]);
+          const colors = labels.map((k, i) => categoryColors[i % categoryColors.length]);
 
           const ctx = document
             .getElementById("equipmentChart")
@@ -528,11 +587,11 @@
           new Chart(ctx, {
             type: "doughnut",
             data: {
-              labels: ["Available", "Rented"],
+              labels: labels,
               datasets: [
                 {
-                  data: [totalAvailable, totalRented],
-                  backgroundColor: ["#4caf50", "#ff9800"],
+                  data: data,
+                  backgroundColor: colors,
                   borderWidth: 2,
                   borderColor: "rgba(255,255,255,.9)",
                   hoverOffset: 8,
