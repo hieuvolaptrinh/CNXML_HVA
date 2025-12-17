@@ -277,3 +277,14 @@ VALUES
 ('EQ006', N'Bình nước thể thao', N'Phụ kiện', 'Decathlon', 'Isotonic 750ml', 150, 140, 10000, 50000, N'Tốt', N'Bình nước thể thao 750ml', 'B01', N'Decathlon Vietnam', '2023-06-01', 3, 'Active', 'https://images.unsplash.com/photo-1523362628745-0c100150b504?w=800');
 
 SELECT * FROM Branches;
+
+-- Insert sample data for FieldTypes (from XML)
+INSERT INTO FieldTypes (id, name, code, length, width, dimension_unit, size_display, players_per_team, total_capacity, goal_height, goal_width, goal_unit, surface_type, base_price, peak_hour_multiplier, weekend_multiplier, description, features, minimum_booking_hours, maximum_booking_hours, status)
+VALUES
+('FT01', N'Sân 5 người', 'S5sss', 43.00, 20.00, N'mét', '20m x 43m', 5, 10, 2.90, 3.00, N'mét', N'Cỏ tự nhiên', 100000, 1.00, 1.30, N'Sân bóng đá mini 5 người, phù hợp cho các trận đấu giải trí', N'Mái che, Đèn chiếu sáng, Vây lưới bảo vệ', 1, 4, 'Active'),
+
+('FT02', N'Sân 7 người', 'S7', 60.00, 40.00, N'mét', '40m x 60m', 7, 14, 2.10, 5.00, N'mét', N'Cỏ nhân tạo', 150000, 1.50, 1.30, N'Sân bóng đá 7 người, thích hợp cho các giải đấu nghiệp dư', N'Đèn chiếu sáng chuyên nghiệp, Hệ thống tưới, Khán đài nhỏ', 1, 6, 'Active'),
+
+('FT03', N'Sân 11 người', 'S11', 105.00, 68.00, N'mét', '68m x 105m', 11, 22, 2.44, 7.32, N'mét', N'Cỏ tự nhiên', 200000, 1.50, 1.30, N'Sân bóng đá tiêu chuẩn quốc tế 11 người theo chuẩn FIFA', N'Cỏ tự nhiên, Hệ thống tưới tự động, Khán đài, Phòng thay đồ, Căng tin', 2, 8, 'Active');
+
+SELECT * FROM FieldTypes;

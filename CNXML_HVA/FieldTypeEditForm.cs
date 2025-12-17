@@ -111,7 +111,7 @@ namespace CNXML_HVA
             AddLabel("Chiều dài (m):", labelX, y, true);
             numLength = CreateNumericUpDown(controlX, y, halfWidth, 0, 200, 1);
             AddLabel("Chiều rộng (m):", controlX + halfWidth + 20, y, true);
-            numWidth = CreateNumericUpDown(controlX + halfWidth + 20 + 150, y, halfWidth - 150, 0, 200, 1);
+            numWidth = CreateNumericUpDown(controlX + halfWidth + 20 + 130, y, halfWidth - 130, 0, 200, 1);
             y += 30;
             lblDimensionError = AddErrorLabel(controlX, y);
             y += 25;
@@ -120,7 +120,7 @@ namespace CNXML_HVA
             AddLabel("Khung thành - Cao (m):", labelX, y);
             numGoalHeight = CreateNumericUpDown(controlX, y, halfWidth, 0, 10, 0.1m);
             AddLabel("Rộng (m):", controlX + halfWidth + 20, y);
-            numGoalWidth = CreateNumericUpDown(controlX + halfWidth + 20 + 100, y, halfWidth - 100, 0, 20, 0.1m);
+            numGoalWidth = CreateNumericUpDown(controlX + halfWidth + 20 + 90, y, halfWidth - 90, 0, 20, 0.1m);
             y += 50;
 
             // ========== THÔNG TIN CẦU THỦ ==========
@@ -133,7 +133,7 @@ namespace CNXML_HVA
 
             // Total Capacity
             AddLabel("Tổng sức chứa:", controlX + halfWidth + 20, y, true);
-            numCapacity = CreateNumericUpDown(controlX + halfWidth + 20 + 150, y, halfWidth - 150, 1, 100, 1);
+            numCapacity = CreateNumericUpDown(controlX + halfWidth + 20 + 130, y, halfWidth - 130, 1, 100, 1);
             y += 50;
 
             // ========== LOẠI BỀ MẶT ==========
@@ -181,7 +181,7 @@ namespace CNXML_HVA
 
             // Weekend Multiplier
             AddLabel("Hệ số cuối tuần:", controlX + halfWidth + 20, y);
-            numWeekendMultiplier = CreateNumericUpDown(controlX + halfWidth + 20 + 150, y, halfWidth - 150, 1, 3, 0.1m);
+            numWeekendMultiplier = CreateNumericUpDown(controlX + halfWidth + 20 + 130, y, halfWidth - 130, 1, 3, 0.1m);
             numWeekendMultiplier.Value = 1.3m;
             y += 50;
 
@@ -195,7 +195,7 @@ namespace CNXML_HVA
             numMinBookingHours.Value = 1;
 
             AddLabel("Số giờ tối đa:", controlX + halfWidth + 20, y);
-            numMaxBookingHours = CreateNumericUpDown(controlX + halfWidth + 20 + 150, y, halfWidth - 150, 1, 24, 1);
+            numMaxBookingHours = CreateNumericUpDown(controlX + halfWidth + 20 + 120, y, halfWidth - 120, 1, 24, 1);
             numMaxBookingHours.Value = 4;
             y += 50;
 
@@ -312,7 +312,8 @@ namespace CNXML_HVA
             var label = new Label();
             label.Text = text + (required ? " *" : "");
             label.Location = new Point(x, y + 3);
-            label.Size = new Size(160, 20);
+            label.AutoSize = true;
+            label.MaximumSize = new Size(160, 0);
             label.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label.ForeColor = Color.FromArgb(43, 43, 43);
             this.Controls.Add(label);

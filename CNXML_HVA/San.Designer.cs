@@ -460,7 +460,6 @@
             this.pnlFieldDetails.Size = new System.Drawing.Size(350, 550);
             this.pnlFieldDetails.TabIndex = 2;
             this.pnlFieldDetails.Visible = false;
-            this.pnlFieldDetails.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlFieldDetails_Paint);
             // 
             // lblDetailTitle
             // 

@@ -93,15 +93,26 @@ namespace CNXML_HVA
                 XDocument doc = XDocument.Load(xmlFieldTypesPath);
                 allFieldTypes = doc.Descendants("field_type").Select(ft => new FieldType
                 {
-                    Id = ft.Element("id")?.Value,
+                    Id = ft.Attribute("id")?.Value ?? ft.Element("id")?.Value,
                     Name = ft.Element("name")?.Value,
                     Code = ft.Element("code")?.Value,
+                    Length = decimal.TryParse(ft.Element("dimensions")?.Element("length")?.Value, out decimal len) ? len : 0,
+                    Width = decimal.TryParse(ft.Element("dimensions")?.Element("width")?.Value, out decimal wid) ? wid : 0,
+                    DimensionUnit = ft.Element("dimensions")?.Element("unit")?.Value,
                     SizeDisplay = ft.Element("size_display")?.Value,
                     PlayersPerTeam = int.TryParse(ft.Element("players_per_team")?.Value, out int ppt) ? ppt : 0,
                     TotalCapacity = int.TryParse(ft.Element("total_capacity")?.Value, out int tc) ? tc : 0,
+                    GoalHeight = decimal.TryParse(ft.Element("goal_size")?.Element("height")?.Value, out decimal gh) ? gh : 0,
+                    GoalWidth = decimal.TryParse(ft.Element("goal_size")?.Element("width")?.Value, out decimal gw) ? gw : 0,
+                    GoalUnit = ft.Element("goal_size")?.Element("unit")?.Value,
                     SurfaceType = ft.Element("surface_type")?.Value,
                     BasePrice = decimal.TryParse(ft.Element("base_price")?.Value, out decimal bp) ? bp : 0,
+                    PeakHourMultiplier = decimal.TryParse(ft.Element("peak_hour_multiplier")?.Value, out decimal phm) ? phm / 100 : 1.5m,
+                    WeekendMultiplier = decimal.TryParse(ft.Element("weekend_multiplier")?.Value, out decimal wm) ? wm / 100 : 1.3m,
                     Description = ft.Element("description")?.Value,
+                    Features = ft.Element("features")?.Value,
+                    MinimumBookingHours = int.TryParse(ft.Element("minimum_booking_hours")?.Value, out int minh) ? minh : 1,
+                    MaximumBookingHours = int.TryParse(ft.Element("maximum_booking_hours")?.Value, out int maxh) ? maxh : 4,
                     Status = ft.Element("status")?.Value
                 }).ToList();
             }

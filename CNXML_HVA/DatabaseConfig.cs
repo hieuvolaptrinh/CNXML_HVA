@@ -10,10 +10,10 @@ namespace CNXML_HVA
         {
             get
             {
-                return @"Data Source=HIEUVO;
+                return @"Data Source=localhost;
                          Initial Catalog=dbSANBONG;
                          User ID=sa;
-                         Password=sa;
+                         Password=1234567;
                          Encrypt=True;
                          TrustServerCertificate=True;";
             }
