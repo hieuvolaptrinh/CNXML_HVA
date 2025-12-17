@@ -1,0 +1,277 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\xml\\cnxml_hva\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\xml\\cnxml_hva\\cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\xml\\cnxml_hva\\cnxml_hva\\dashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|c:\\users\\admin\\downloads\\xml\\cnxml_hva\\cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\khachhang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\san.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\loaisan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\dungcu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\chinhanh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\san.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\san.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\cnxml_hva\\fieldtypeeditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{AF99A759-1E52-48F8-A9D3-4BB0F6B0B0DB}|CNXML_HVA\\CNXML_HVA.csproj|solutionrelative:cnxml_hva\\fieldtypeeditform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{25f7e850-ffa1-11d0-b63f-00a0c922e851}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DashBoard.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAewDcAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:50:53.266Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DashBoard.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.Designer.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.Designer.cs",
+              "ViewState": "AgIAADkDAAAAAAAAAAAqwG8DAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:48:07.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashBoard.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DashBoard.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DashBoard.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DashBoard.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:47:58.977Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "KhachHang.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.cs",
+              "ViewState": "AgIAAO0BAAAAAAAAAAAIwAsCAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:22:08.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "KhachHang.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\KhachHang.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\KhachHang.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\KhachHang.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:22:05.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DungCu.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.cs",
+              "ViewState": "AgIAAMACAAAAAAAAAAAAAMUCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:15:18.211Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DungCu.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\DungCu.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\DungCu.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\DungCu.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:15:17.018Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ChiNhanh.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.cs",
+              "ViewState": "AgIAAIICAAAAAAAAAAAAAIMCAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:14:59.143Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ChiNhanh.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\ChiNhanh.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\ChiNhanh.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\ChiNhanh.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T13:14:45.015Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "San.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\San.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs",
+              "RelativeToolTip": "CNXML_HVA\\San.cs",
+              "ViewState": "AgIAAA4CAAAAAAAAAAAAwGECAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:59:33.033Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LoaiSan.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\LoaiSan.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\LoaiSan.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\LoaiSan.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:53:52.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "San.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\San.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\San.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:59:29.313Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FieldTypeEditForm.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\FieldTypeEditForm.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\FieldTypeEditForm.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\FieldTypeEditForm.cs [Design]",
+              "RelativeToolTip": "CNXML_HVA\\FieldTypeEditForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:54:06.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "San.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.Designer.cs",
+              "RelativeDocumentMoniker": "CNXML_HVA\\San.Designer.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\XML\\CNXML_HVA\\CNXML_HVA\\San.Designer.cs",
+              "RelativeToolTip": "CNXML_HVA\\San.Designer.cs",
+              "ViewState": "AgIAAL8BAAAAAAAAAADwv80BAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:59:54.182Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

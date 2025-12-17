@@ -234,35 +234,48 @@
 
         grid.innerHTML = filteredBranches
           .map((branch) => {
+            // Support both Vietnamese and English field names
             const address = branch.address || {};
             const contact = branch.contact || {};
             const openingHours = branch.openinghours || {};
-            const fullAddress = `${address.housenumber || ""} ${
-              address.street || ""
-            }, ${address.district || ""}, ${address.city || ""}`.trim();
+            
+            // Get values with fallback to Vietnamese field names
+            const branchName = branch.tenchinhanh || branch.name || "N/A";
+            const branchCode = branch.machinhanh || branch.code || "N/A";
+            const branchStatus = branch.trangthai || branch.status || "Active";
+            const branchDescription = branch.mota || branch.description || "Không có mô tả";
+            const branchImage = branch.hinhanh || branch.image_url || "https://via.placeholder.com/400x200?text=No+Image";
+            const managerName = branch.quanly || branch.managername || "N/A";
+            const totalFields = branch.sosan || branch.totalfields || "0";
+            const staffCount = branch.sonhanvien || branch.staffcount || "0";
+            const monthlyRevenue = branch.doanhthu || branch.monthlyrevenue || 0;
+            const phone = branch.sdt || contact.phone || "N/A";
+            const email = branch.email || contact.email || "N/A";
+            
+            // Handle address - support both flat and nested structure
+            const fullAddress = branch.diachi || 
+              `${address.housenumber || ""} ${address.street || ""}, ${address.district || ""}, ${address.city || ""}`.trim() ||
+              "N/A";
 
             return `
                 <div class="branch-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s;">
                     <div style="position: relative;">
-                        <img src="${
-                          branch.image_url ||
-                          "https://via.placeholder.com/400x200?text=No+Image"
-                        }" 
-                             alt="${branch.name || "Branch"}" 
+                        <img src="${branchImage}" 
+                             alt="${branchName}" 
                              style="width: 100%; height: 200px; object-fit: cover;"
                              onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
                         <span class="status-badge ${
-                          branch.status === "Active"
+                          branchStatus === "Active"
                             ? "status-active"
                             : "status-inactive"
                         }" 
                               style="position: absolute; top: 15px; right: 15px; padding: 6px 12px; border-radius: 20px; font-size: 0.8em; color: white; font-weight: bold; background: ${
-                                branch.status === "Active"
+                                branchStatus === "Active"
                                   ? "#4CAF50"
                                   : "#f44336"
                               };">
                             ${
-                              branch.status === "Active"
+                              branchStatus === "Active"
                                 ? "Hoạt động"
                                 : "Tạm đóng"
                             }
@@ -270,72 +283,56 @@
                     </div>
                     <div style="padding: 20px;">
                         <div style="margin-bottom: 15px;">
-                            <h3 style="font-size: 1.4em; color: #333; margin-bottom: 5px;">${
-                              branch.name || "N/A"
-                            }</h3>
+                            <h3 style="font-size: 1.4em; color: #333; margin-bottom: 5px;">${branchName}</h3>
                             <span style="background: #4CAF50; color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8em;">
-                                ${branch.code || "N/A"}
+                                ${branchCode}
                             </span>
                         </div>
                         <div style="margin: 15px 0; color: #555;">
                             <div style="display: flex; align-items: center; margin: 8px 0;">
                                 <i class="fas fa-map-marker-alt" style="width: 20px; color: #4CAF50;"></i>
-                                <span style="font-size: 0.9em;">${
-                                  fullAddress || "N/A"
-                                }</span>
+                                <span style="font-size: 0.9em;">${fullAddress}</span>
                             </div>
                             <div style="display: flex; align-items: center; margin: 8px 0;">
                                 <i class="fas fa-phone" style="width: 20px; color: #4CAF50;"></i>
-                                <span style="font-size: 0.9em;">${
-                                  contact.phone || "N/A"
-                                }</span>
+                                <span style="font-size: 0.9em;">${phone}</span>
                             </div>
                             <div style="display: flex; align-items: center; margin: 8px 0;">
                                 <i class="fas fa-envelope" style="width: 20px; color: #4CAF50;"></i>
-                                <span style="font-size: 0.9em;">${
-                                  contact.email || "N/A"
-                                }</span>
+                                <span style="font-size: 0.9em;">${email}</span>
                             </div>
                             <div style="display: flex; align-items: center; margin: 8px 0;">
                                 <i class="fas fa-user" style="width: 20px; color: #4CAF50;"></i>
-                                <span style="font-size: 0.9em;">Quản lý: ${
-                                  branch.managername || "N/A"
-                                }</span>
+                                <span style="font-size: 0.9em;">Quản lý: ${managerName}</span>
                             </div>
                         </div>
                         <div style="background: #f1f8f4; padding: 10px; border-radius: 8px; margin: 15px 0;">
-                            <p style="font-size: 0.9em; color: #555; margin: 0;">${
-                              branch.description || "Không có mô tả"
-                            }</p>
+                            <p style="font-size: 0.9em; color: #555; margin: 0;">${branchDescription}</p>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 15px; border-top: 1px solid #eee;">
                             <div style="text-align: center;">
-                                <div style="font-size: 1.3em; font-weight: bold; color: #4CAF50;">${
-                                  branch.totalfields || "0"
-                                }</div>
+                                <div style="font-size: 1.3em; font-weight: bold; color: #4CAF50;">${totalFields}</div>
                                 <div style="font-size: 0.8em; color: #666;">Sân</div>
                             </div>
                             <div style="text-align: center;">
-                                <div style="font-size: 1.3em; font-weight: bold; color: #4CAF50;">${
-                                  branch.staffcount || "0"
-                                }</div>
+                                <div style="font-size: 1.3em; font-weight: bold; color: #4CAF50;">${staffCount}</div>
                                 <div style="font-size: 0.8em; color: #666;">Nhân viên</div>
                             </div>
                             <div style="text-align: center;">
                                 <div style="font-size: 1.1em; font-weight: bold; color: #4CAF50;">${formatCurrency(
-                                  branch.monthlyrevenue || 0
+                                  monthlyRevenue
                                 )}</div>
                                 <div style="font-size: 0.8em; color: #666;">Doanh thu</div>
                             </div>
                         </div>
                         <div style="display: flex; gap: 10px; margin-top: 15px;">
                             <button class="btn btn-sm btn-primary" onclick="editBranch('${
-                              branch.id
+                              branch.id || branch.machinhanh
                             }')" style="flex: 1;">
                                 <i class="fas fa-edit"></i> Sửa
                             </button>
                             <button class="btn btn-sm btn-danger" onclick="deleteBranch('${
-                              branch.id
+                              branch.id || branch.machinhanh
                             }')" style="flex: 1;">
                                 <i class="fas fa-trash"></i> Xóa
                             </button>
