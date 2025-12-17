@@ -22,12 +22,14 @@ class CRUDManager {
     } else if (operation === "update") {
       const index = existingData.findIndex((item) => item.id === data.id);
       if (index !== -1) {
+        // Update existing item in localStorage
         existingData[index] = { ...existingData[index], ...data };
-        console.log(`✅ Updated item with ID: ${data.id}`);
+        console.log(`✅ Updated existing item in localStorage with ID: ${data.id}`);
       } else {
-        // If not found in localStorage, add it as new
+        // Item from XML not yet in localStorage - add it with updates
+        // This marks the XML item as "modified" by storing it in localStorage
+        console.log(`✅ Item ${data.id} from XML - adding to localStorage with updates`);
         existingData.push(data);
-        console.log(`✅ Added item to localStorage: ${data.id}`);
       }
     } else if (operation === "delete") {
       const initialLength = existingData.length;
@@ -282,13 +284,19 @@ class CRUDManager {
         return obj;
       });
 
-      // Merge with localStorage data
+      // Merge with localStorage data - localStorage overrides XML for same IDs
+      const localIds = new Set(localData.map(item => item.id));
+      
+      // Filter out XML items that have been modified in localStorage
+      const xmlFiltered = xmlObjects.filter(xmlItem => !localIds.has(xmlItem.id));
+      
+      // Merge: XML items (not in localStorage) + localStorage items (overrides)
       const merged = [
-        ...xmlObjects,
+        ...xmlFiltered,
         ...localData.map((item) => ({ ...item, _source: "local" })),
       ];
 
-      console.log(`✓ Loaded ${merged.length} items from ${filename}`);
+      console.log(`✓ Loaded ${merged.length} items from ${filename} (${xmlFiltered.length} from XML, ${localData.length} from localStorage)`);
       if (merged.length > 0) {
         console.log(`  Sample item:`, merged[0]);
       }
