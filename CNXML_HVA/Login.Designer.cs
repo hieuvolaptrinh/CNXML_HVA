@@ -46,9 +46,9 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.lblRegister = new System.Windows.Forms.Label();
             this.pnlLeft = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.lblSubTitle = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.pnlRight.SuspendLayout();
             this.pnlLoginContainer.SuspendLayout();
             this.pnlEmail.SuspendLayout();
@@ -288,6 +288,19 @@
             this.pnlLeft.Size = new System.Drawing.Size(467, 554);
             this.pnlLeft.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 56F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(152, 72);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(182, 125);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "⚽";
+            // 
             // lblWelcome
             // 
             this.lblWelcome.BackColor = System.Drawing.Color.Transparent;
@@ -314,19 +327,6 @@
             this.lblSubTitle.Text = "Hệ thống quản lý đặt sân bóng đá\r\nHiện đại - Tiện lợi - Nhanh chóng";
             this.lblSubTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(140)))), ((int)(((byte)(58)))));
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 56F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(152, 72);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(182, 125);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "⚽";
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -338,6 +338,7 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng nhập - Quản lý sân bóng";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.pnlRight.ResumeLayout(false);
             this.pnlLoginContainer.ResumeLayout(false);
             this.pnlLoginContainer.PerformLayout();

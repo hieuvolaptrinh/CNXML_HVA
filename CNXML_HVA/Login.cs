@@ -146,5 +146,10 @@ namespace CNXML_HVA
         {
 
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

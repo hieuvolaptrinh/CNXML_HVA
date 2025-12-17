@@ -351,11 +351,49 @@ namespace CNXML_HVA
                     return;
                 }
 
-                var result = MessageBox.Show("Xuất dữ liệu sang SQL Server sẽ XÓA toàn bộ dữ liệu loại sân hiện có trong database.\n\nBạn có chắc chắn muốn tiếp tục?",
+                // Thông báo về việc export cả sân vì có liên kết foreign key
+                var result = MessageBox.Show(
+                    "⚠️ LƯU Ý: Vì bảng Sân (Fields) có liên kết với bảng Loại Sân (FieldTypes), " +
+                    "hệ thống sẽ thực hiện theo thứ tự sau:\n\n" +
+                    "1️⃣ Export dữ liệu Loại Sân sang SQL Server\n" +
+                    "2️⃣ Export dữ liệu Sân sang SQL Server\n" +
+                    "3️⃣ Xóa dữ liệu Sân cũ trong database\n" +
+                    "4️⃣ Xóa dữ liệu Loại Sân cũ trong database\n\n" +
+                    "Bạn có chắc chắn muốn tiếp tục?",
                     "Xác nhận xuất SQL", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result != DialogResult.Yes)
                     return;
+
+                // Load dữ liệu sân từ XML
+                string xmlFieldsPath = DataPaths.GetXmlFilePath("Fields.xml");
+                List<Field> allFields = new List<Field>();
+                
+                if (File.Exists(xmlFieldsPath))
+                {
+                    XDocument docFields = XDocument.Load(xmlFieldsPath);
+                    allFields = docFields.Descendants("field").Select(f => new Field
+                    {
+                        Id = f.Attribute("id")?.Value,
+                        Name = f.Element("name")?.Value,
+                        FieldTypeId = f.Element("field_type_id")?.Value,
+                        BranchId = f.Element("branch_id")?.Value,
+                        Address = new Address
+                        {
+                            City = f.Element("address")?.Element("city")?.Value,
+                            District = f.Element("address")?.Element("district")?.Value,
+                            Street = f.Element("address")?.Element("street")?.Value,
+                            HouseNumber = f.Element("address")?.Element("house_number")?.Value
+                        },
+                        PricePerHour = decimal.TryParse(f.Element("price_per_hour")?.Value, out decimal price) ? price : 0,
+                        Capacity = int.TryParse(f.Element("capacity")?.Value, out int cap) ? cap : 0,
+                        Description = f.Element("description")?.Value,
+                        Facilities = f.Element("facilities")?.Value,
+                        Status = f.Element("status")?.Value,
+                        CreatedDate = DateTime.TryParse(f.Element("created_date")?.Value, out DateTime cd) ? cd : DateTime.Now,
+                        LastMaintenance = DateTime.TryParse(f.Element("last_maintenance")?.Value, out DateTime lm) ? lm : DateTime.Now
+                    }).ToList();
+                }
 
                 using (SqlConnection conn = new SqlConnection(DatabaseConfig.ConnectionString))
                 {
@@ -364,15 +402,22 @@ namespace CNXML_HVA
 
                     try
                     {
-                        // Xóa toàn bộ dữ liệu bảng FieldTypes
-                        string deleteSql = "DELETE FROM FieldTypes";
-                        using (SqlCommand deleteCmd = new SqlCommand(deleteSql, conn, transaction))
+                        // BƯỚC 1: Xóa sân trước (vì sân phụ thuộc vào loại sân - foreign key)
+                        string deleteFieldsSql = "DELETE FROM Fields";
+                        using (SqlCommand deleteFieldsCmd = new SqlCommand(deleteFieldsSql, conn, transaction))
                         {
-                            deleteCmd.ExecuteNonQuery();
+                            deleteFieldsCmd.ExecuteNonQuery();
                         }
 
-                        // Insert dữ liệu từ XML
-                        string insertSql = @"INSERT INTO FieldTypes 
+                        // BƯỚC 2: Xóa loại sân
+                        string deleteFieldTypesSql = "DELETE FROM FieldTypes";
+                        using (SqlCommand deleteFieldTypesCmd = new SqlCommand(deleteFieldTypesSql, conn, transaction))
+                        {
+                            deleteFieldTypesCmd.ExecuteNonQuery();
+                        }
+
+                        // BƯỚC 3: Insert loại sân trước (vì sân cần tham chiếu đến loại sân)
+                        string insertFieldTypeSql = @"INSERT INTO FieldTypes 
                             (id, name, code, length, width, dimension_unit, size_display, 
                              players_per_team, total_capacity, goal_height, goal_width, goal_unit, 
                              surface_type, base_price, peak_hour_multiplier, weekend_multiplier, 
@@ -385,7 +430,7 @@ namespace CNXML_HVA
 
                         foreach (var ft in allFieldTypes)
                         {
-                            using (SqlCommand cmd = new SqlCommand(insertSql, conn, transaction))
+                            using (SqlCommand cmd = new SqlCommand(insertFieldTypeSql, conn, transaction))
                             {
                                 cmd.Parameters.AddWithValue("@id", ft.Id ?? (object)DBNull.Value);
                                 cmd.Parameters.AddWithValue("@name", ft.Name ?? (object)DBNull.Value);
@@ -413,9 +458,102 @@ namespace CNXML_HVA
                             }
                         }
 
+                        // BƯỚC 4: Insert sân sau khi đã có loại sân
+                        int fieldSuccessCount = 0;
+                        StringBuilder fieldErrorLog = new StringBuilder();
+
+                        if (allFields.Count > 0)
+                        {
+                            string insertFieldSql = @"INSERT INTO Fields 
+                                (id, name, field_type_id, branch_id, city, district, street, house_number, 
+                                 price_per_hour, capacity, description, facilities, status, created_date, last_maintenance)
+                                VALUES 
+                                (@id, @name, @field_type_id, @branch_id, @city, @district, @street, @house_number, 
+                                 @price_per_hour, @capacity, @description, @facilities, @status, @created_date, @last_maintenance)";
+
+                            foreach (var field in allFields)
+                            {
+                                try
+                                {
+                                    // Kiểm tra các trường bắt buộc
+                                    if (string.IsNullOrEmpty(field.Id))
+                                    {
+                                        fieldErrorLog.AppendLine($"Bỏ qua: Thiếu ID");
+                                        continue;
+                                    }
+                                    if (string.IsNullOrEmpty(field.Name))
+                                    {
+                                        fieldErrorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu tên");
+                                        continue;
+                                    }
+                                    if (string.IsNullOrEmpty(field.FieldTypeId))
+                                    {
+                                        fieldErrorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu field_type_id");
+                                        continue;
+                                    }
+                                    if (string.IsNullOrEmpty(field.BranchId))
+                                    {
+                                        fieldErrorLog.AppendLine($"Bỏ qua {field.Id}: Thiếu branch_id");
+                                        continue;
+                                    }
+
+                                    using (SqlCommand cmd = new SqlCommand(insertFieldSql, conn, transaction))
+                                    {
+                                        cmd.Parameters.AddWithValue("@id", field.Id);
+                                        cmd.Parameters.AddWithValue("@name", field.Name);
+                                        cmd.Parameters.AddWithValue("@field_type_id", field.FieldTypeId);
+                                        cmd.Parameters.AddWithValue("@branch_id", field.BranchId);
+                                        cmd.Parameters.AddWithValue("@city", field.Address?.City ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@district", field.Address?.District ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@street", field.Address?.Street ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@house_number", field.Address?.HouseNumber ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@price_per_hour", field.PricePerHour);
+                                        cmd.Parameters.AddWithValue("@capacity", field.Capacity);
+                                        cmd.Parameters.AddWithValue("@description", field.Description ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@facilities", field.Facilities ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@status", field.Status ?? (object)DBNull.Value);
+                                        cmd.Parameters.AddWithValue("@created_date", field.CreatedDate);
+                                        cmd.Parameters.AddWithValue("@last_maintenance", field.LastMaintenance);
+
+                                        cmd.ExecuteNonQuery();
+                                        fieldSuccessCount++;
+                                    }
+                                }
+                                catch (SqlException sqlEx)
+                                {
+                                    if (sqlEx.Message.Contains("FK_Fields_Branches"))
+                                    {
+                                        fieldErrorLog.AppendLine($"Lỗi {field?.Id ?? "Unknown"}: Chi nhánh '{field?.BranchId}' không tồn tại trong database.");
+                                    }
+                                    else if (sqlEx.Message.Contains("FK_Fields_FieldTypes"))
+                                    {
+                                        fieldErrorLog.AppendLine($"Lỗi {field?.Id ?? "Unknown"}: Loại sân '{field?.FieldTypeId}' không tồn tại.");
+                                    }
+                                    else
+                                    {
+                                        fieldErrorLog.AppendLine($"Lỗi insert {field?.Id ?? "Unknown"}: {sqlEx.Message}");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    fieldErrorLog.AppendLine($"Lỗi insert {field?.Id ?? "Unknown"}: {ex.Message}");
+                                }
+                            }
+                        }
+
                         transaction.Commit();
-                        MessageBox.Show($"Đã xuất thành công {allFieldTypes.Count} loại sân sang SQL Server!",
-                            "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Hiển thị kết quả
+                        string resultMessage = $"✅ Đã xuất thành công:\n" +
+                            $"   • {allFieldTypes.Count} loại sân\n" +
+                            $"   • {fieldSuccessCount} sân";
+
+                        if (fieldErrorLog.Length > 0)
+                        {
+                            resultMessage += $"\n\n⚠️ Một số sân không được xuất:\n{fieldErrorLog}";
+                        }
+
+                        MessageBox.Show(resultMessage, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {

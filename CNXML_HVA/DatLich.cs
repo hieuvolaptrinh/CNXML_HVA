@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using System.Drawing.Printing;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CNXML_HVA
@@ -235,6 +236,7 @@ namespace CNXML_HVA
 
             dgvBookings.Enabled = !editMode;
             textBoxSearch.Enabled = !editMode;
+            btnExportPDF.Enabled = !editMode && dgvBookings.CurrentRow != null;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -620,6 +622,342 @@ namespace CNXML_HVA
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApp);
             }
+        }
+
+        private void btnExportPDF_Click(object sender, EventArgs e)
+        {
+            if (dgvBookings.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn một đặt lịch để xuất PDF!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var row = dgvBookings.CurrentRow;
+            string bookingId = row.Cells["Mã đặt"].Value?.ToString() ?? "";
+            string customer = row.Cells["Khách hàng"].Value?.ToString() ?? "";
+            string field = row.Cells["Sân"].Value?.ToString() ?? "";
+            string fieldType = row.Cells["Loại sân"].Value?.ToString() ?? "";
+            string date = row.Cells["Ngày đặt"].Value?.ToString() ?? "";
+            string time = row.Cells["Giờ bắt đầu"].Value?.ToString() ?? "";
+            string duration = row.Cells["Thời lượng"].Value?.ToString() ?? "";
+            string note = row.Cells["Ghi chú"].Value?.ToString() ?? "";
+
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "PDF files (*.pdf)|*.pdf";
+            saveDialog.FilterIndex = 1;
+            saveDialog.RestoreDirectory = true;
+            saveDialog.FileName = $"DatLich_{bookingId}_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Create PDF content
+                    ExportBookingToPdf(saveDialog.FileName, bookingId, customer, field, fieldType, date, time, duration, note);
+                    MessageBox.Show($"Xuất PDF thành công!\nĐường dẫn: {saveDialog.FileName}",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xuất PDF: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ExportBookingToPdf(string filePath, string bookingId, string customer, string field, 
+            string fieldType, string date, string time, string duration, string note)
+        {
+            // Create traditional office-style HTML content
+            string htmlContent = $@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Phiếu đặt sân - {bookingId}</title>
+    <style>
+        body {{
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #1a1a2e;
+            padding: 30px;
+            margin: 0;
+        }}
+        
+        .paper {{
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fffef5;
+            border: 3px solid #2d3748;
+            box-shadow: 8px 8px 0 #000;
+        }}
+        
+        .header {{
+            background: #1e3a5f;
+            color: #fff;
+            padding: 25px 30px;
+            border-bottom: 4px solid #c9a227;
+            text-align: center;
+        }}
+        
+        .header h1 {{
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            letter-spacing: 3px;
+        }}
+        
+        .header h2 {{
+            font-size: 16px;
+            font-weight: normal;
+            margin: 0;
+            border: 2px solid #fff;
+            display: inline-block;
+            padding: 5px 20px;
+        }}
+        
+        .booking-code {{
+            background: #c9a227;
+            color: #1e3a5f;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            border: 2px solid #1e3a5f;
+        }}
+        
+        .content {{
+            padding: 30px;
+        }}
+        
+        .info-table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }}
+        
+        .info-table th,
+        .info-table td {{
+            border: 2px solid #2d3748;
+            padding: 12px 15px;
+            text-align: left;
+        }}
+        
+        .info-table th {{
+            background: #e8e4d9;
+            font-weight: bold;
+            width: 35%;
+            color: #1e3a5f;
+        }}
+        
+        .info-table td {{
+            background: #fff;
+            font-size: 15px;
+        }}
+        
+        .info-table .highlight {{
+            background: #fff8dc;
+            font-weight: bold;
+            color: #8b4513;
+        }}
+        
+        .note-box {{
+            background: #fff8dc;
+            border: 2px solid #c9a227;
+            padding: 15px;
+            margin-bottom: 30px;
+        }}
+        
+        .note-box strong {{
+            color: #8b4513;
+        }}
+        
+        .signature-section {{
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }}
+        
+        .sign-box {{
+            width: 45%;
+            text-align: center;
+        }}
+        
+        .sign-box .title {{
+            font-weight: bold;
+            margin-bottom: 80px;
+            font-size: 14px;
+            border-bottom: 1px solid #2d3748;
+            padding-bottom: 5px;
+        }}
+        
+        .sign-box .line {{
+            border-bottom: 2px solid #2d3748;
+            margin-bottom: 8px;
+        }}
+        
+        .sign-box .hint {{
+            font-size: 12px;
+            font-style: italic;
+            color: #666;
+        }}
+        
+        .footer {{
+            background: #2d3748;
+            color: #fff;
+            padding: 12px 30px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 3px solid #c9a227;
+        }}
+        
+        @media print {{
+            body {{ background: none; padding: 0; }}
+            .paper {{ box-shadow: none; border: 2px solid #000; }}
+        }}
+    </style>
+</head>
+<body>
+    <div class='paper'>
+        <div class='header'>
+            <h1>⚽ SÂN BÓNG MINI ⚽</h1>
+            <h2>PHIẾU XÁC NHẬN ĐẶT SÂN</h2>
+            <div class='booking-code'>MÃ PHIẾU: {bookingId}</div>
+        </div>
+        
+        <div class='content'>
+            <table class='info-table'>
+                <tr>
+                    <th>Khách hàng</th>
+                    <td class='highlight'>{customer}</td>
+                </tr>
+                <tr>
+                    <th>Sân bóng</th>
+                    <td class='highlight'>{field}</td>
+                </tr>
+                <tr>
+                    <th>Loại sân</th>
+                    <td>{fieldType}</td>
+                </tr>
+                <tr>
+                    <th>Ngày đặt</th>
+                    <td class='highlight'>{date}</td>
+                </tr>
+                <tr>
+                    <th>Giờ bắt đầu</th>
+                    <td class='highlight'>{time}</td>
+                </tr>
+                <tr>
+                    <th>Thời lượng</th>
+                    <td>{duration} giờ</td>
+                </tr>
+            </table>
+            
+            {(string.IsNullOrWhiteSpace(note) ? "" : $@"
+            <div class='note-box'>
+                <strong>📝 GHI CHÚ:</strong> {note}
+            </div>
+            ")}
+            
+            <div class='signature-section'>
+                <div class='sign-box'>
+                    <div class='title'>NGƯỜI ĐẶT SÂN</div>
+                    <div class='line'></div>
+                    <div class='hint'>(Ký và ghi rõ họ tên)</div>
+                </div>
+                <div class='sign-box'>
+                    <div class='title'>NHÂN VIÊN</div>
+                    <div class='line'></div>
+                    <div class='hint'>(Ký và ghi rõ họ tên)</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class='footer'>
+            Ngày xuất phiếu: {DateTime.Now:dd/MM/yyyy HH:mm} | Cảm ơn quý khách đã sử dụng dịch vụ!
+        </div>
+    </div>
+</body>
+</html>";
+
+            // Save as HTML first
+            string htmlPath = Path.ChangeExtension(filePath, ".html");
+            File.WriteAllText(htmlPath, htmlContent, System.Text.Encoding.UTF8);
+
+            // Try to convert to PDF using Microsoft Edge headless mode
+            bool pdfCreated = false;
+            try
+            {
+                // Try using Microsoft Edge to convert HTML to PDF
+                string edgePath = @"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe";
+                if (!File.Exists(edgePath))
+                {
+                    edgePath = @"C:\Program Files\Microsoft\Edge\Application\msedge.exe";
+                }
+
+                if (File.Exists(edgePath))
+                {
+                    var psi = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = edgePath,
+                        Arguments = $"--headless --disable-gpu --print-to-pdf=\"{filePath}\" \"{htmlPath}\"",
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    };
+
+                    using (var process = System.Diagnostics.Process.Start(psi))
+                    {
+                        process.WaitForExit(10000); // Wait max 10 seconds
+                        
+                        // Check if PDF was created
+                        if (File.Exists(filePath))
+                        {
+                            pdfCreated = true;
+                            // Delete the HTML file since PDF was created
+                            try { File.Delete(htmlPath); } catch { }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Edge conversion failed, fall back to HTML
+            }
+
+            if (!pdfCreated)
+            {
+                // If PDF creation failed, open HTML in browser for manual print
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = htmlPath,
+                        UseShellExecute = true
+                    });
+
+                    MessageBox.Show(
+                        $"⚠️ Không thể tự động tạo PDF.\n\n" +
+                        $"Đã tạo file HTML tại:\n{htmlPath}\n\n" +
+                        $"Để lưu dưới dạng PDF:\n" +
+                        $"1. File HTML đã mở trong trình duyệt\n" +
+                        $"2. Nhấn Ctrl+P để in\n" +
+                        $"3. Chọn 'Save as PDF' hoặc 'Microsoft Print to PDF'",
+                        "Hướng dẫn xuất PDF", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show(
+                        $"Đã tạo file HTML tại:\n{htmlPath}\n\n" +
+                        $"Vui lòng mở file này trong trình duyệt và in dưới dạng PDF.",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void lblTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

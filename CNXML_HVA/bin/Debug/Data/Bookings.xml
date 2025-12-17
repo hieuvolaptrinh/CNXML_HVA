@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bookings>
   <Booking id="B001">
-    <customer>Nguyen Van A</customer>
-    <field>Sân A1</field>
+    <customer>Trần Thị Thu Hà</customer>
+    <field>Sân C1 - Professional 11</field>
     <type>7 người</type>
     <date>2025-10-30</date>
     <time>7</time>
     <duration>1</duration>
-    <note>
-    </note>
+    <note>12ewdasd</note>
   </Booking>
   <Booking id="B002">
     <customer>Nguyen Van A</customer>

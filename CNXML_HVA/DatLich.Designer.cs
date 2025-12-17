@@ -55,6 +55,7 @@ namespace CNXML_HVA
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnLoadXML = new System.Windows.Forms.Button();
             this.btnExportExcel = new System.Windows.Forms.Button();
+            this.btnExportPDF = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.groupBoxInfo.SuspendLayout();
             this.panelSearch.SuspendLayout();
@@ -91,12 +92,13 @@ namespace CNXML_HVA
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(13, 20);
+            this.lblTitle.Location = new System.Drawing.Point(13, 18);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(342, 41);
             this.lblTitle.TabIndex = 9;
             this.lblTitle.Text = "⚽ QUẢN LÝ ĐẶT LỊCH";
+            this.lblTitle.Click += new System.EventHandler(this.lblTitle_Click);
             // 
             // groupBoxInfo
             // 
@@ -121,7 +123,7 @@ namespace CNXML_HVA
             this.groupBoxInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(87)))), ((int)(((byte)(34)))));
             this.groupBoxInfo.Location = new System.Drawing.Point(20, 90);
             this.groupBoxInfo.Name = "groupBoxInfo";
-            this.groupBoxInfo.Size = new System.Drawing.Size(960, 240);
+            this.groupBoxInfo.Size = new System.Drawing.Size(940, 240);
             this.groupBoxInfo.TabIndex = 1;
             this.groupBoxInfo.TabStop = false;
             this.groupBoxInfo.Text = "   Thông tin đặt lịch   ";
@@ -164,7 +166,7 @@ namespace CNXML_HVA
             this.cboCustomer.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.cboCustomer.Location = new System.Drawing.Point(470, 32);
             this.cboCustomer.Name = "cboCustomer";
-            this.cboCustomer.Size = new System.Drawing.Size(450, 28);
+            this.cboCustomer.Size = new System.Drawing.Size(291, 28);
             this.cboCustomer.TabIndex = 3;
             // 
             // labelField
@@ -350,7 +352,7 @@ namespace CNXML_HVA
             this.dgvBookings.RowHeadersWidth = 51;
             this.dgvBookings.RowTemplate.Height = 35;
             this.dgvBookings.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBookings.Size = new System.Drawing.Size(960, 220);
+            this.dgvBookings.Size = new System.Drawing.Size(960, 190);
             this.dgvBookings.TabIndex = 3;
             this.dgvBookings.SelectionChanged += new System.EventHandler(this.dgvBookings_SelectionChanged);
             // 
@@ -366,9 +368,10 @@ namespace CNXML_HVA
             this.panelButtons.Controls.Add(this.btnRefresh);
             this.panelButtons.Controls.Add(this.btnLoadXML);
             this.panelButtons.Controls.Add(this.btnExportExcel);
-            this.panelButtons.Location = new System.Drawing.Point(20, 625);
+            this.panelButtons.Controls.Add(this.btnExportPDF);
+            this.panelButtons.Location = new System.Drawing.Point(20, 591);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(960, 60);
+            this.panelButtons.Size = new System.Drawing.Size(967, 135);
             this.panelButtons.TabIndex = 4;
             // 
             // btnAdd
@@ -395,7 +398,7 @@ namespace CNXML_HVA
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnEdit.ForeColor = System.Drawing.Color.White;
-            this.btnEdit.Location = new System.Drawing.Point(125, 10);
+            this.btnEdit.Location = new System.Drawing.Point(229, 10);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(105, 40);
             this.btnEdit.TabIndex = 1;
@@ -411,7 +414,7 @@ namespace CNXML_HVA
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(240, 10);
+            this.btnDelete.Location = new System.Drawing.Point(14, 79);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(105, 40);
             this.btnDelete.TabIndex = 2;
@@ -427,7 +430,7 @@ namespace CNXML_HVA
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnSave.ForeColor = System.Drawing.Color.White;
-            this.btnSave.Location = new System.Drawing.Point(355, 10);
+            this.btnSave.Location = new System.Drawing.Point(454, 10);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(105, 40);
             this.btnSave.TabIndex = 3;
@@ -443,7 +446,7 @@ namespace CNXML_HVA
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(470, 10);
+            this.btnCancel.Location = new System.Drawing.Point(234, 79);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(105, 40);
             this.btnCancel.TabIndex = 4;
@@ -459,9 +462,9 @@ namespace CNXML_HVA
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnRefresh.ForeColor = System.Drawing.Color.White;
-            this.btnRefresh.Location = new System.Drawing.Point(585, 10);
+            this.btnRefresh.Location = new System.Drawing.Point(679, 10);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(105, 40);
+            this.btnRefresh.Size = new System.Drawing.Size(124, 40);
             this.btnRefresh.TabIndex = 5;
             this.btnRefresh.Text = "🔄 Làm mới";
             this.btnRefresh.UseVisualStyleBackColor = false;
@@ -475,7 +478,7 @@ namespace CNXML_HVA
             this.btnLoadXML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadXML.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnLoadXML.ForeColor = System.Drawing.Color.White;
-            this.btnLoadXML.Location = new System.Drawing.Point(700, 10);
+            this.btnLoadXML.Location = new System.Drawing.Point(454, 79);
             this.btnLoadXML.Name = "btnLoadXML";
             this.btnLoadXML.Size = new System.Drawing.Size(105, 40);
             this.btnLoadXML.TabIndex = 6;
@@ -491,18 +494,34 @@ namespace CNXML_HVA
             this.btnExportExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportExcel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnExportExcel.ForeColor = System.Drawing.Color.White;
-            this.btnExportExcel.Location = new System.Drawing.Point(815, 10);
+            this.btnExportExcel.Location = new System.Drawing.Point(828, 10);
             this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(140, 40);
+            this.btnExportExcel.Size = new System.Drawing.Size(120, 40);
             this.btnExportExcel.TabIndex = 7;
             this.btnExportExcel.Text = "📊 Xuất Excel";
             this.btnExportExcel.UseVisualStyleBackColor = false;
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
             // 
+            // btnExportPDF
+            // 
+            this.btnExportPDF.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnExportPDF.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExportPDF.FlatAppearance.BorderSize = 0;
+            this.btnExportPDF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportPDF.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExportPDF.ForeColor = System.Drawing.Color.White;
+            this.btnExportPDF.Location = new System.Drawing.Point(679, 79);
+            this.btnExportPDF.Name = "btnExportPDF";
+            this.btnExportPDF.Size = new System.Drawing.Size(269, 40);
+            this.btnExportPDF.TabIndex = 8;
+            this.btnExportPDF.Text = "📄 Xuất PDF";
+            this.btnExportPDF.UseVisualStyleBackColor = false;
+            this.btnExportPDF.Click += new System.EventHandler(this.btnExportPDF_Click);
+            // 
             // DatLich
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.ClientSize = new System.Drawing.Size(999, 700);
+            this.ClientSize = new System.Drawing.Size(999, 723);
             this.Controls.Add(this.panelHeader);
             this.Controls.Add(this.groupBoxInfo);
             this.Controls.Add(this.panelSearch);
@@ -564,6 +583,7 @@ namespace CNXML_HVA
         private Button btnRefresh;
         private Button btnLoadXML;
         private Button btnExportExcel;
+        private Button btnExportPDF;
         private Label lblTitle;
         private Label lblUserAvatar;
     }
